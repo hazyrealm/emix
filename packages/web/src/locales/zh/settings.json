@@ -149,7 +149,9 @@
       "connections": "连接",
       "keybinds": "按键绑定",
       "desktop": "桌面端",
-      "instance": "实例"
+      "instance": "实例",
+      "profile": "个人资料",
+      "whatsNew": "新功能"
     },
     "logOut": "退出登录",
     "backToMenu": "返回设置菜单"
@@ -195,7 +197,9 @@
         "label": "关于我",
         "placeholder": "向大家介绍一下您自己吧…",
         "counter": "{{used}}/{{max}}"
-      }
+      },
+      "customize": "自定义个人资料 →",
+      "animatedTooLarge": "动态图片最大 {{max}} MB。"
     },
     "details": {
       "sectionTitle": "账号",
@@ -447,5 +451,172 @@
     },
     "version": "版本 {{version}}",
     "allReleases": "GitHub 上的所有版本"
+  },
+  "whatsNew": {
+    "title": "新功能",
+    "subtitle": "Emix 的所有更新，最新的在前。"
+  },
+  "profileStudio": {
+    "title": "个人资料",
+    "subtitle": "打造专属于你的个人资料：名字颜色、名牌、装饰、背景和特效。这里的一切对所有人免费。",
+    "replica": "此账号的个人资料由其主实例管理，因此无法在此保存这些设置。",
+    "none": "无",
+    "preview": "实时预览",
+    "unsaved": "你有未保存的更改",
+    "free": "所有自定义均免费",
+    "resetDefault": "恢复默认",
+    "position": {
+      "x": "水平位置",
+      "y": "垂直位置",
+      "zoom": "缩放"
+    },
+    "looks": {
+      "title": "风格",
+      "hint": "从一套完整风格开始，再在下方微调。你的代词、链接和图片会保留。",
+      "presets": {
+        "neonNight": "霓虹之夜",
+        "galaxy": "银河",
+        "cyber": "赛博",
+        "winter": "冬日",
+        "blaze": "烈焰",
+        "minimal": "极简"
+      },
+      "namePlaceholder": "为此风格命名",
+      "save": "保存风格",
+      "delete": "删除风格 {{name}}",
+      "local": "保存的风格仅保存在此设备上。"
+    },
+    "name": {
+      "title": "名字样式",
+      "hint": "你的显示名称在聊天、成员列表、好友、语音频道和个人资料中的样子。在空间内，角色颜色仍然优先。",
+      "effects": {
+        "solid": "纯色",
+        "gradient": "渐变",
+        "animated": "动态渐变",
+        "rainbow": "彩虹",
+        "neon": "霓虹光",
+        "shimmer": "闪光"
+      },
+      "color": "颜色 {{n}}",
+      "addColor": "添加颜色",
+      "removeColor": "移除颜色",
+      "glow": "柔光",
+      "lowContrast": "过暗的颜色会自动调亮，确保名字清晰可读。",
+      "palettes": {
+        "emix": "Emix",
+        "sunset": "日落",
+        "ocean": "海洋",
+        "aurora": "极光",
+        "gold": "金色",
+        "candy": "糖果",
+        "toxic": "荧光",
+        "ice": "冰雪"
+      }
+    },
+    "nameplate": {
+      "title": "名牌",
+      "hint": "显示在成员列表、好友、私信和语音频道中你的名字后面。",
+      "items": {
+        "neon-pulse": "霓虹脉冲",
+        "galaxy": "紫色银河",
+        "cyberpunk": "赛博朋克",
+        "fire-ice": "冰与火",
+        "starfield": "星空",
+        "holographic": "全息",
+        "aurora": "极光",
+        "glow-border": "发光边框",
+        "glass": "玻璃",
+        "digital": "数字网格",
+        "minimal": "极简线条",
+        "winter": "冬日",
+        "sakura": "樱花",
+        "spooky": "幽灵"
+      }
+    },
+    "decoration": {
+      "title": "头像装饰",
+      "hint": "环绕头像的装饰框，在头像足够大的地方显示。",
+      "items": {
+        "neon-ring": "霓虹环",
+        "glow-pulse": "脉冲光晕",
+        "flames": "火焰",
+        "hearts": "爱心",
+        "stars": "星星",
+        "snowflakes": "雪花",
+        "cyber": "赛博",
+        "sparkle": "闪烁",
+        "holo": "全息",
+        "orbit": "轨道",
+        "leaves": "秋叶",
+        "pumpkin": "万圣节"
+      }
+    },
+    "banner": {
+      "title": "横幅取景",
+      "hint": "选择横幅显示的部分。动态 GIF 横幅会在个人资料中播放。",
+      "noBanner": "你还没有添加横幅。",
+      "openAccount": "在“我的账号”中更改横幅、头像或显示名称"
+    },
+    "background": {
+      "title": "个人资料背景",
+      "hint": "整个个人资料卡背后的颜色或图片。文字始终带有深色遮罩，保持可读。",
+      "presets": {
+        "midnight": "午夜",
+        "emix": "Emix",
+        "nebula": "星云",
+        "sunset": "日落",
+        "ocean": "海洋",
+        "forest": "森林",
+        "ember": "余烬",
+        "mono": "石墨",
+        "aurora-flow": "流动极光",
+        "synthwave": "合成波"
+      },
+      "custom": "自定义",
+      "animate": "动画",
+      "uploadImage": "上传图片",
+      "changeImage": "更换图片",
+      "uploading": "正在上传…",
+      "imageHint": "PNG、JPEG、WebP 或动态 GIF，最大 {{max}} MB。",
+      "notImage": "请选择 PNG、JPEG、WebP、AVIF 或 GIF 图片。",
+      "tooLarge": "该图片超过 {{max}} MB。",
+      "uploadFailed": "图片上传失败，请重试。",
+      "opacity": "图片不透明度",
+      "blur": "图片模糊",
+      "glass": "玻璃卡片"
+    },
+    "effect": {
+      "title": "个人资料特效",
+      "hint": "有人打开你的个人资料时播放的简短动画。",
+      "items": {
+        "falling-stars": "流星",
+        "sparkles": "闪光",
+        "hearts": "漂浮爱心",
+        "snow": "飘雪",
+        "neon-particles": "霓虹粒子",
+        "galaxy": "银河",
+        "light-streaks": "光束",
+        "glow": "光晕",
+        "confetti": "彩纸",
+        "digital-rain": "数字雨"
+      },
+      "replay": "再次播放预览"
+    },
+    "about": {
+      "title": "关于你",
+      "hint": "显示在你的个人资料卡上。链接会在新标签页中打开。",
+      "pronouns": "代词",
+      "pronounsPlaceholder": "例如：她/她的",
+      "links": "链接（最多 {{max}} 个）",
+      "linkLabel": "标签",
+      "addLink": "添加链接",
+      "editBio": "在“我的账号”中编辑简介和状态",
+      "urlPlaceholder": "https://"
+    },
+    "motion": {
+      "title": "动画",
+      "label": "播放个人资料动画",
+      "hint": "仅适用于此设备。当系统要求减少动态效果时，动画也会停止。"
+    }
   }
 }

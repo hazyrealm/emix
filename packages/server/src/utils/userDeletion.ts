@@ -1,3 +1,4 @@
+import { normalizeProfileStyle } from '@backspace/shared/src/profileStyle.js';
 import crypto from 'crypto';
 import { eq, or, and, inArray, isNotNull } from 'drizzle-orm';
 import { getDb, schema } from '../db/index.js';
@@ -108,6 +109,8 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
   const filesToDelete: string[] = [];
   if (user.avatar) filesToDelete.push(user.avatar);
   if (user.banner) filesToDelete.push(user.banner);
+  const styleImage = normalizeProfileStyle(user.profileStyle)?.background?.image;
+  if (styleImage) filesToDelete.push(styleImage);
 
   const purge = options?.purgeContent !== false; // default true
 
@@ -273,6 +276,7 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
       customStatus: null,
       accentColor: null,
       avatarColor: null,
+      profileStyle: null,
       replicatedInstances: '[]',
       isDeleted: 1,
       status: 'offline',

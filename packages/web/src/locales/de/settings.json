@@ -149,7 +149,9 @@
       "connections": "Verbindungen",
       "keybinds": "Tastenkürzel",
       "desktop": "Desktop",
-      "instance": "Instanz"
+      "instance": "Instanz",
+      "profile": "Profil",
+      "whatsNew": "Neuigkeiten"
     },
     "logOut": "Abmelden",
     "backToMenu": "Zurück zum Einstellungsmenü"
@@ -195,7 +197,9 @@
         "label": "Über mich",
         "placeholder": "Erzähl der Welt etwas über dich…",
         "counter": "{{used}}/{{max}}"
-      }
+      },
+      "customize": "Profil gestalten →",
+      "animatedTooLarge": "Animierte Bilder dürfen bis zu {{max}} MB groß sein."
     },
     "details": {
       "sectionTitle": "Konto",
@@ -448,5 +452,172 @@
     },
     "version": "Version {{version}}",
     "allReleases": "Alle Versionen auf GitHub"
+  },
+  "whatsNew": {
+    "title": "Neuigkeiten",
+    "subtitle": "Alle Emix-Updates, die neuesten zuerst."
+  },
+  "profileStudio": {
+    "title": "Profil",
+    "subtitle": "Mach dein Profil zu deinem: Namensfarben, Namensschilder, Dekorationen, Hintergründe und Effekte. Alles hier ist für alle kostenlos.",
+    "replica": "Das Profil dieses Kontos wird von seiner Heiminstanz verwaltet, daher können diese Einstellungen hier nicht gespeichert werden.",
+    "none": "Keine",
+    "preview": "Live-Vorschau",
+    "unsaved": "Du hast ungespeicherte Änderungen",
+    "free": "Alle Anpassungen sind kostenlos",
+    "resetDefault": "Auf Standard zurücksetzen",
+    "position": {
+      "x": "Horizontale Position",
+      "y": "Vertikale Position",
+      "zoom": "Zoom"
+    },
+    "looks": {
+      "title": "Looks",
+      "hint": "Beginne mit einem kompletten Look und passe ihn unten an. Pronomen, Links und Bilder bleiben erhalten.",
+      "presets": {
+        "neonNight": "Neonnacht",
+        "galaxy": "Galaxie",
+        "cyber": "Cyber",
+        "winter": "Winter",
+        "blaze": "Glut",
+        "minimal": "Minimal"
+      },
+      "namePlaceholder": "Look benennen",
+      "save": "Look speichern",
+      "delete": "Look {{name}} löschen",
+      "local": "Gespeicherte Looks bleiben auf diesem Gerät."
+    },
+    "name": {
+      "title": "Namensstil",
+      "hint": "So erscheint dein Anzeigename im Chat, in Mitgliederlisten, bei Freunden, in Sprachkanälen und in deinem Profil. Rollenfarben eines Space haben dort weiterhin Vorrang.",
+      "effects": {
+        "solid": "Einfarbig",
+        "gradient": "Verlauf",
+        "animated": "Animierter Verlauf",
+        "rainbow": "Regenbogen",
+        "neon": "Neonleuchten",
+        "shimmer": "Schimmer"
+      },
+      "color": "Farbe {{n}}",
+      "addColor": "Farbe hinzufügen",
+      "removeColor": "Farbe entfernen",
+      "glow": "Sanftes Leuchten",
+      "lowContrast": "Sehr dunkle Farben werden automatisch aufgehellt, damit dein Name lesbar bleibt.",
+      "palettes": {
+        "emix": "Emix",
+        "sunset": "Sonnenuntergang",
+        "ocean": "Ozean",
+        "aurora": "Polarlicht",
+        "gold": "Gold",
+        "candy": "Bonbon",
+        "toxic": "Toxisch",
+        "ice": "Eis"
+      }
+    },
+    "nameplate": {
+      "title": "Namensschild",
+      "hint": "Erscheint hinter deinem Namen in Mitgliederlisten, bei Freunden, in Direktnachrichten und Sprachkanälen.",
+      "items": {
+        "neon-pulse": "Neonpuls",
+        "galaxy": "Violette Galaxie",
+        "cyberpunk": "Cyberpunk",
+        "fire-ice": "Feuer und Eis",
+        "starfield": "Sternenfeld",
+        "holographic": "Holografisch",
+        "aurora": "Polarlicht",
+        "glow-border": "Leuchtender Rand",
+        "glass": "Glas",
+        "digital": "Digitales Raster",
+        "minimal": "Schlichte Linie",
+        "winter": "Winter",
+        "sakura": "Kirschblüte",
+        "spooky": "Gruselig"
+      }
+    },
+    "decoration": {
+      "title": "Avatar-Dekoration",
+      "hint": "Ein Rahmen um dein Profilbild, überall dort, wo dein Avatar groß genug ist.",
+      "items": {
+        "neon-ring": "Neonring",
+        "glow-pulse": "Leuchtpuls",
+        "flames": "Flammen",
+        "hearts": "Herzen",
+        "stars": "Sterne",
+        "snowflakes": "Schneeflocken",
+        "cyber": "Cyber",
+        "sparkle": "Funkeln",
+        "holo": "Holografisch",
+        "orbit": "Umlaufbahn",
+        "leaves": "Herbstlaub",
+        "pumpkin": "Halloween"
+      }
+    },
+    "banner": {
+      "title": "Bannerausschnitt",
+      "hint": "Wähle, welcher Teil deines Banners zu sehen ist. Animierte GIF-Banner werden in deinem Profil abgespielt.",
+      "noBanner": "Du hast noch kein Banner hinzugefügt.",
+      "openAccount": "Banner, Avatar oder Anzeigenamen unter „Mein Konto“ ändern"
+    },
+    "background": {
+      "title": "Profilhintergrund",
+      "hint": "Farben oder ein Bild hinter deiner ganzen Profilkarte. Text bekommt immer eine dunkle Überlagerung, damit er lesbar bleibt.",
+      "presets": {
+        "midnight": "Mitternacht",
+        "emix": "Emix",
+        "nebula": "Nebel",
+        "sunset": "Sonnenuntergang",
+        "ocean": "Ozean",
+        "forest": "Wald",
+        "ember": "Glut",
+        "mono": "Graphit",
+        "aurora-flow": "Polarlicht-Fluss",
+        "synthwave": "Synthwave"
+      },
+      "custom": "Eigene",
+      "animate": "Animieren",
+      "uploadImage": "Bild hochladen",
+      "changeImage": "Bild ändern",
+      "uploading": "Wird hochgeladen…",
+      "imageHint": "PNG, JPEG, WebP oder animiertes GIF, bis {{max}} MB.",
+      "notImage": "Wähle ein PNG-, JPEG-, WebP-, AVIF- oder GIF-Bild.",
+      "tooLarge": "Dieses Bild ist größer als {{max}} MB.",
+      "uploadFailed": "Das Bild konnte nicht hochgeladen werden. Versuch es noch einmal.",
+      "opacity": "Bilddeckkraft",
+      "blur": "Bildunschärfe",
+      "glass": "Glaskarte"
+    },
+    "effect": {
+      "title": "Profileffekt",
+      "hint": "Eine kurze Animation, wenn jemand dein Profil öffnet.",
+      "items": {
+        "falling-stars": "Sternschnuppen",
+        "sparkles": "Funkeln",
+        "hearts": "Schwebende Herzen",
+        "snow": "Schneefall",
+        "neon-particles": "Neonpartikel",
+        "galaxy": "Galaxie",
+        "light-streaks": "Lichtstreifen",
+        "glow": "Leuchten",
+        "confetti": "Konfetti",
+        "digital-rain": "Digitaler Regen"
+      },
+      "replay": "Vorschau erneut abspielen"
+    },
+    "about": {
+      "title": "Über dich",
+      "hint": "Erscheint auf deiner Profilkarte. Links öffnen sich in einem neuen Tab.",
+      "pronouns": "Pronomen",
+      "pronounsPlaceholder": "z. B. sie/ihr, they/them",
+      "links": "Links (bis zu {{max}})",
+      "linkLabel": "Bezeichnung",
+      "addLink": "Link hinzufügen",
+      "editBio": "Bio und Status unter „Mein Konto“ bearbeiten",
+      "urlPlaceholder": "https://"
+    },
+    "motion": {
+      "title": "Animationen",
+      "label": "Profilanimationen abspielen",
+      "hint": "Gilt auf diesem Gerät. Animationen stoppen auch, wenn dein System reduzierte Bewegung anfordert."
+    }
   }
 }

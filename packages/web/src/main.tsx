@@ -5,6 +5,8 @@ import { App } from './App';
 import { startPendingMessageOrchestrator } from './stores/pendingMessageRehydrate';
 import i18n, { initI18n } from './i18n';
 import './styles/globals.css';
+import './styles/profileStyle.css';
+import './stores/profileMotionStore';
 import { initializeInterfaceScale } from './platform/interfaceScale';
 import { waitForEmojiShortcodeNames } from './utils/emojiShortcodes';
 

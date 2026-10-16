@@ -285,5 +285,54 @@
     "stillDenied": "麦克风访问仍被拒绝。请在浏览器或设备设置中允许此网站使用麦克风。",
     "notFound": "未检测到麦克风。",
     "failed": "无法访问麦克风。"
+  },
+  "devices": {
+    "audioMenu": "麦克风和扬声器选项",
+    "cameraMenu": "摄像头选项",
+    "microphone": "麦克风",
+    "speakers": "扬声器",
+    "camera": "摄像头",
+    "inputLevel": "输入音量",
+    "testSpeakers": "播放测试音",
+    "outputUnsupported": "此浏览器始终使用系统默认扬声器。",
+    "audioSettings": "音频设置…",
+    "cameraSettings": "摄像头画质与设置…",
+    "micPrompt": "允许访问麦克风以查看并选择设备。",
+    "micDenied": "麦克风访问已被阻止。请在浏览器或系统设置中允许。",
+    "allow": "允许访问",
+    "noCameras": "未找到摄像头",
+    "cameraN": "摄像头 {{n}}",
+    "switchLive": "切换会更改你的视频，而不会离开通话。",
+    "cameraStarting": "正在启动摄像头…",
+    "cameraUnavailable": "无法打开此摄像头，它可能正被其他应用使用。"
+  },
+  "effects": {
+    "title": "摄像头特效",
+    "brightness": "亮度",
+    "contrast": "对比度",
+    "saturation": "饱和度",
+    "softFocus": "柔焦",
+    "zoom": "缩放",
+    "mirror": "镜像我的预览",
+    "systemBlur": "背景虚化（系统）",
+    "localNote": "在此设备上处理。",
+    "reset": "原始画面",
+    "filters": {
+      "none": "原图",
+      "warm": "暖色",
+      "cool": "冷色",
+      "mono": "黑白",
+      "vivid": "鲜艳",
+      "soft": "柔光",
+      "noir": "黑色电影"
+    }
+  },
+  "preview": {
+    "title": "检查你的摄像头",
+    "callTitle": "准备好开始视频通话了吗？",
+    "privateNote": "只有你能看到此预览。开始之前不会发送任何内容。",
+    "always": "开启摄像头前先预览",
+    "start": "开启摄像头",
+    "startCall": "开始视频通话"
   }
 }

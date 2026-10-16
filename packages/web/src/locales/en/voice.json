@@ -287,5 +287,54 @@
     "stillDenied": "Microphone access is still denied. Allow it for this site in your browser or device settings.",
     "notFound": "No microphone detected.",
     "failed": "Could not access the microphone."
+  },
+  "devices": {
+    "audioMenu": "Microphone and speaker options",
+    "cameraMenu": "Camera options",
+    "microphone": "Microphone",
+    "speakers": "Speakers",
+    "camera": "Camera",
+    "inputLevel": "Input level",
+    "testSpeakers": "Play a test sound",
+    "outputUnsupported": "This browser always uses the system's default speakers.",
+    "audioSettings": "Audio settings…",
+    "cameraSettings": "Camera quality and settings…",
+    "micPrompt": "Allow microphone access to see and choose your devices.",
+    "micDenied": "Microphone access is blocked. Allow it in your browser or system settings.",
+    "allow": "Allow access",
+    "noCameras": "No cameras found",
+    "cameraN": "Camera {{n}}",
+    "switchLive": "Switching changes your video without leaving the call.",
+    "cameraStarting": "Starting camera…",
+    "cameraUnavailable": "This camera can't be opened. It may be in use by another app."
+  },
+  "effects": {
+    "title": "Camera effects",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "saturation": "Saturation",
+    "softFocus": "Soft focus",
+    "zoom": "Zoom",
+    "mirror": "Mirror my preview",
+    "systemBlur": "Background blur (system)",
+    "localNote": "Processed on this device.",
+    "reset": "Original camera",
+    "filters": {
+      "none": "Original",
+      "warm": "Warm",
+      "cool": "Cool",
+      "mono": "Black and white",
+      "vivid": "Vivid",
+      "soft": "Soft light",
+      "noir": "Noir"
+    }
+  },
+  "preview": {
+    "title": "Check your camera",
+    "callTitle": "Ready to start a video call?",
+    "privateNote": "Only you can see this preview. Nothing is sent until you start.",
+    "always": "Preview before turning my camera on",
+    "start": "Turn on camera",
+    "startCall": "Start video call"
   }
 }

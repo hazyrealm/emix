@@ -180,6 +180,98 @@ real networks cannot show real quality.
   `.github/assets/social-preview.png` (1280×640).
 - Private vulnerability reporting is enabled (Security → Advisories).
 
+## Emix 1.12.0: profiles, call controls, What's New
+
+### Audit before building (what already existed)
+
+| Area | Already there | Improved | Added |
+|---|---|---|---|
+| Profile basics | Display name vs username, per-space nicknames, bio (190), custom status with emoji, accent and avatar colours, banner upload with crop/zoom, discoverability and activity visibility, a preview in My Account | Banners: 132–190 px tall on cards (was 80–100), 2.5:1 at up to 1920 px, adjustable framing; GIF avatars/banners keep their animation (8 MB cap) | Profile editor tab with live preview: name styles, nameplates, decorations, backgrounds, effects, pronouns, links, saved looks, animation switch |
+| Camera/mic | Camera hot-swap (`cameraDeviceId`), mic hot-swap with fallback to default, speaker routing via `setSinkId`, camera preview and quality presets in Settings → Voice & Video | Those controls are now reachable from the call bar | Arrow menus beside the mic and camera buttons; camera preview before the camera goes live or a video call rings; local camera effects; OS background blur where the camera offers it |
+| Changelog | GitHub release notes template | Release notes are filled in from the changelog | `packages/shared/changelog.json` as the single source; `/api/changelog`; getemix.com/changelog; What's New popup with per-account acknowledgment; What's New settings tab with a New badge |
+
+Not built (and why): favourite games and profile badges (no data source to back
+them honestly), per-community themes, virtual/custom-image backgrounds and true
+background blur or skin smoothing (they need a person-segmentation model; the
+"Soft focus" slider is a gentle whole-frame smoothing, labelled as such).
+
+### How it works
+
+- **Profile style** is one validated JSON document per user
+  (`users.profile_style`, migration 0032). The shared `normalizeProfileStyle`
+  runs on the server before storing and on every client before drawing.
+  Everything is drawn from catalogue ids in `styles/profileStyle.css`: no user
+  CSS, no external images. A background image must be an upload on this
+  instance. Links are http(s) only and open in a new tab (the desktop app hands
+  them to the system browser).
+- **Role colours win inside spaces**: a member whose role has a colour shows
+  the role colour there; their own name style shows in DMs, friends, voice,
+  profiles and spaces where they have no coloured role.
+- **Animations** move only transform/opacity/background-position, stop under
+  `prefers-reduced-motion`, and can be switched off per device (Profile →
+  Animations). Profile effects play three short cycles and stop.
+- **Federation**: profile styles are local to this instance and not sent to
+  peers (Emix runs without federation today).
+- **Camera effects** run on the device (canvas, same resolution and frame rate
+  as the camera). With every effect at neutral, no processing runs and the
+  camera's own track is sent untouched, so the DSLR feed keeps full quality.
+  "Original camera" resets them.
+- **Changelog**: `scripts/changelog.py` (`emixctl changelog …`).
+  1. Before a release: `emixctl changelog draft 1.13.0` writes a draft entry
+     from the commits since the last tag. CI, test, docs, chore and `[skip ci]`
+     commits are skipped. Developer prefixes are stripped.
+  2. Edit the draft in `packages/shared/changelog.json`: reword items, delete
+     anything internal or unfinished, add a title and summary, and set
+     `"status": "published"`.
+  3. Commit, then `emixctl build`, `deploy staging`, check, `promote`.
+     - The server only announces published entries no newer than its own
+       version, so nothing reaches users before the build carrying it runs in
+       production.
+     - Staging shows it first.
+     - `promote` prints the version now announced.
+  4. getemix.com/changelog reads `/changelog.json`, which Caddy proxies to the
+     production app. The website therefore updates on promote with no landing
+     redeploy.
+  5. Pushing the `vX.Y.Z` tag puts the same notes into the GitHub release draft.
+- **What's New popup**: after sign-in it shows everything newer than the
+  account's acknowledged version, merged into one summary.
+  - A new account (or one that never acknowledged anything) sees only the
+    latest major release.
+  - Any way of closing it records the acknowledgment on the server (synced
+    across devices; survives reinstalling).
+  - It waits while you are in a call, while a call rings, or while another
+    dialog is open.
+  - If the changelog can't be loaded, nothing is shown and sign-in is
+    unaffected.
+
+### Manual tests that need real hardware or people
+
+1. **Camera preview and switching (your Sony).**
+   1. Join a voice channel and press the camera button. The preview opens and
+      is local only.
+   2. Pick the Sony and press Turn on camera.
+   3. In the call, open the arrow beside the camera button and switch to
+      another camera and back. The call must not drop.
+   4. Unplug the active camera. Emix should fall back or turn the camera off
+      with a toast.
+2. **Camera effects at 4K.** With the 4K preset:
+   1. Move brightness and choose a filter. Check the connection info for the
+      sent resolution and fps.
+   2. Press "Original camera" and confirm the fps returns to normal. Canvas
+      effects cost CPU/GPU at 4K60, so leave them neutral for best quality.
+3. **Microphone and speakers.** During a call:
+   1. Switch between the USB mic, headset and interface from the mic arrow.
+      The other person should keep hearing you.
+   2. Switch speakers from the same menu. Firefox and Safari don't allow
+      choosing speakers, and the menu says so.
+4. **System background blur.** The toggle only appears when Windows Studio
+   Effects (or the browser) offers it for that camera.
+5. **What's New.** With two browsers on one account:
+   1. Dismiss the popup in one browser.
+   2. Reload the other. It should not show again.
+6. **Profiles on mobile.** Open a styled profile and the member list on a
+   phone.
+
 ## Not done / open items
 
 | Item | Why it is open | Suggested next step |

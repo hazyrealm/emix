@@ -10,6 +10,8 @@ import { describeError } from '../../i18n/errors';
 import { useInstanceStore } from '../../stores/instanceStore';
 import { useUIStore } from '../../stores/uiStore';
 import { useFederationStore } from '../../stores/federationStore';
+import { Nameplate, StyledName, nameplateOf } from '../ui/profile/ProfileVisuals';
+import { profileStyleOf } from '../../utils/profileStyle';
 import { Avatar } from '../ui/Avatar';
 import { MemberListToggleButton } from '../layout/MemberListToggleButton';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
@@ -63,8 +65,9 @@ function ActivityFriendItem({
           onDmClick(friend, friend._instanceOrigin);
         }
       }}
-      className={rowClass}
+      className={`${rowClass} emx-plate-host`}
     >
+      <Nameplate id={nameplateOf(canonical)} />
       <Avatar
         src={canonical.avatar}
         name={friendDisplayName}
@@ -73,9 +76,10 @@ function ActivityFriendItem({
         className={isOffline ? 'opacity-60' : undefined}
         userId={canonical.homeUserId ?? canonical.id}
         avatarColor={canonical.avatarColor}
+        decoration={profileStyleOf(canonical)?.decoration ?? null}
       />
       <div className="flex-1 min-w-0">
-        <span className={`text-sm leading-[1.2] font-medium truncate ${isOffline ? 'text-txt-tertiary' : 'text-txt-primary'}`}>{friendDisplayName}</span>
+        <StyledName name={friendDisplayName} user={canonical} className={`inline-block max-w-full align-top text-sm leading-[1.2] font-medium truncate ${isOffline ? 'text-txt-tertiary opacity-80' : 'text-txt-primary'}`} />
         {!isOffline && isFederationGlobeApplicable(canonical) && (
           <div className="text-[10px] leading-[1.3] text-txt-tertiary truncate opacity-60">@{parseFederatedUsername(canonical.username).domain}</div>
         )}

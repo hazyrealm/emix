@@ -23,6 +23,8 @@ import { useShownStatus } from '../../hooks/useShownStatus';
 import { viewerCanEditMemberRoles } from '../../utils/roleHierarchy';
 import { ProfileRoles } from './ProfileRoles';
 import { ProfileSpaceNickname } from './ProfileSpaceNickname';
+import { profileStyleOf } from '../../utils/profileStyle';
+import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName } from './profile/ProfileVisuals';
 
 /** Gap between the card and the element it was opened from. */
 const ANCHOR_OFFSET = 8;
@@ -149,6 +151,9 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
         return mutedGradient(g.from, g.to);
       })();
 
+  const profileStyle = profileStyleOf(user);
+  const glass = profileStyle?.glass || !!profileStyle?.background;
+
   // Parked off-screen for the one layout pass before the card knows how tall it
   // is; `useLayoutEffect` places it before the browser paints, so it never
   // renders visibly in the wrong spot.
@@ -158,16 +163,18 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
     <div
       ref={cardRef}
       data-user-profile-popout
-      className="fixed z-[200] w-[340px] rounded-[12px] overflow-hidden animate-fade-in select-none glass-modal"
+      className="fixed z-[200] w-[340px] rounded-[12px] overflow-hidden animate-fade-in select-none glass-modal emx-surface"
       style={cardStyle}
     >
+      <ProfileBackgroundLayers background={profileStyle?.background} />
+      <ProfileEffect id={profileStyle?.effect} playKey={user.id} />
       {/* Banner */}
-      <div
-        className="h-[80px] rounded-t-[12px]"
-        style={bannerSrc
-          ? { backgroundImage: `url(${bannerSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-          : { background: bannerFallback }
-        }
+      <ProfileBanner
+        src={bannerSrc}
+        frame={profileStyle?.banner}
+        fallback={bannerFallback}
+        height={132}
+        className="rounded-t-[12px]"
       />
 
       {/* Body */}
@@ -188,18 +195,21 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
           className="mt-[-44px] mb-3"
         />
 
+        <div className={glass ? 'emx-glass rounded-[10px] p-3 -mx-1' : undefined}>
         {/* Name & info */}
         <div>
           <ProfileSpaceNickname member={member} />
-          <span className="text-[16px] font-semibold leading-tight">{displayName}</span>
+          <StyledName name={displayName} user={user} className="text-[17px] font-semibold leading-tight" />
           <div className="text-[13px] text-txt-tertiary">
             <Username username={user.username} showAt className="text-[13px] text-txt-tertiary" />
+            {profileStyle?.pronouns && <span className="text-txt-secondary"> · {profileStyle.pronouns}</span>}
           </div>
           {user.customStatus && (
             <div className="text-[13px] text-txt-secondary italic mt-1">
               {replaceEmojiShortcodes(user.customStatus)}
             </div>
           )}
+          <ProfileExtras style={profileStyle} className="mt-2" />
         </div>
 
         {/* Bio */}
@@ -247,6 +257,8 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
               )}
             </div>
           )}
+        </div>
+
         </div>
 
         {/* Actions. Nobody sends themselves a message. */}

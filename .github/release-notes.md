@@ -22,7 +22,7 @@ Already installed? Emix updates itself automatically. `latest.yml` and the `.blo
 
 ## What's new
 
-<!-- Fill in before publishing the draft. -->
+{{WHATS_NEW}}
 
 ---
 

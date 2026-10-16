@@ -20,6 +20,7 @@ import { AttachmentRenderer, attUrlOf } from './AttachmentRenderer';
 import { AttachmentProgress } from './AttachmentProgress';
 import { EmbedRenderer } from './EmbedRenderer';
 import { FederationGlobeIcon } from '../ui/Username';
+import { nameRender, profileStyleOf } from '../../utils/profileStyle';
 import { Tooltip } from '../ui/Tooltip';
 import { EmojiPicker } from './EmojiPicker';
 import { MobilePickerSheet } from './MobilePickerSheet';
@@ -83,15 +84,18 @@ function PendingAttachmentTile({ transferId }: PendingAttachmentTileProps) {
  * from another instance (`isFederationGlobeApplicable`), with the full
  * username as its tooltip. The same rule as the DM list and header.
  */
-function PersonName({ name, person, className, style }: {
+function PersonName({ name, person, className, style, styled }: {
   name: string;
-  person: Pick<User, 'username'>;
+  person: Pick<User, 'username'> & { profileStyle?: User['profileStyle'] };
   className: string;
   style?: React.CSSProperties;
+  /** Show the person's own name style (no role colour applies here). */
+  styled?: boolean;
 }) {
+  const render = styled ? nameRender(profileStyleOf(person)?.name) : null;
   return (
-    <span className={`inline-flex items-center gap-0.5 ${className}`} style={style}>
-      {name}
+    <span className={`inline-flex items-center gap-0.5 ${className}`} style={render ? undefined : style}>
+      {render ? <span className={render.className} style={render.style}>{name}</span> : name}
       {isFederationGlobeApplicable(person) && (
         <Tooltip content={person.username} position="top">
           <FederationGlobeIcon />
@@ -433,6 +437,8 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
   };
 
   const roleColor = getMemberDisplayColor(message.userId);
+  // The author's own name style shows where no space role colours the name.
+  const authorStyled = isDmMessage || !memberNameColor(spaceMemberOf(message.userId) ?? { userId: message.userId, roles: [] }, ownerId);
 
   // A space message's author is a member of the space it was posted in; the
   // profile opened from it shows their roles there. message.userId is the id
@@ -586,6 +592,7 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
                 person={displayIdentity}
                 className="font-semibold cursor-pointer hover:underline text-[15px] leading-tight"
                 style={roleColor}
+                styled={authorStyled}
               />
             </span>
             <span className="text-[11px] text-txt-tertiary leading-tight hover:cursor-default">

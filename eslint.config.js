@@ -124,7 +124,7 @@ module.exports = tseslint.config(
     // and the two web config files. CommonJS by design, so the ES-module import
     // rule does not apply to them.
     files: ['**/*.js', '**/*.cjs'],
-    ignores: ['site/assets/**'],
+    ignores: ['site/assets/**', 'deploy/landing/assets/**'],
     languageOptions: {
       sourceType: 'commonjs',
       globals: commonjsGlobals,
@@ -149,8 +149,8 @@ module.exports = tseslint.config(
   },
 
   {
-    // The landing page's only script. Runs in the browser, no bundler.
-    files: ['site/assets/**/*.js'],
+    // The landing pages' scripts (upstream site/ and Emix deploy/landing/). Run in the browser, no bundler.
+    files: ['site/assets/**/*.js', 'deploy/landing/assets/**/*.js'],
     languageOptions: {
       sourceType: 'script',
       globals: browserGlobals,

@@ -1,3 +1,4 @@
+import type { ProfileStyle } from '@backspace/shared/src/profileStyle';
 import { useChannelPokeStore } from './channelPokeStore';
 import { useUnreadCountStore } from './unreadCountStore';
 import { useMemo } from 'react';
@@ -45,7 +46,7 @@ interface AuthState {
   register: (username: string, password: string, displayName?: string, avatarColor?: string) => Promise<void>;
   logout: () => void;
   loadUser: () => Promise<void>;
-  updateProfile: (data: { displayName?: string; avatar?: string; banner?: string; accentColor?: string; avatarColor?: string; bio?: string; customStatus?: string; status?: ChosenUserStatus }) => Promise<void>;
+  updateProfile: (data: { displayName?: string; avatar?: string; banner?: string; accentColor?: string; avatarColor?: string; bio?: string; customStatus?: string; status?: ChosenUserStatus; profileStyle?: ProfileStyle | null }) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
   deleteAccount: (password: string, username: string) => Promise<void>;
   setUser: (user: User) => void;

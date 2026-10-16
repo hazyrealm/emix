@@ -13,6 +13,7 @@
 #   emixctl snapshot <env>       take a manual database snapshot
 #   emixctl logs <env> [svc]     follow logs (svc: app | livekit)
 #   emixctl landing              publish deploy/landing to https://getemix.com
+#   emixctl changelog <cmd>      release notes: draft [version] | check | status | notes <version>
 #   emixctl set-desktop-release <version>
 #                                point /download/windows at that GitHub release's x64 installer
 set -euo pipefail
@@ -94,7 +95,13 @@ case "$cmd" in
   promote)
     tag="$(cat /srv/emix/staging/current-tag 2>/dev/null)" || die "nothing on staging"
     wait_healthy staging
-    run_env prod "$tag" ;;
+    run_env prod "$tag"
+    # What's New and getemix.com/changelog follow production: report what is now announced.
+    curl -fsS --max-time 10 --resolve app.getemix.com:443:127.0.0.1 https://app.getemix.com/api/changelog \
+      | python3 -c 'import json,sys; r=json.load(sys.stdin)["releases"]; print("==> announcing", r[0]["version"] if r else "no release")' \
+      || echo "emixctl: could not read the production changelog" >&2 ;;
+  changelog)
+    python3 "$REPO/scripts/changelog.py" "$@" ;;
   rollback)
     env="${1:?usage: emixctl rollback <env>}"
     prev="$(cat "/srv/emix/$env/previous-tag" 2>/dev/null)" || die "no previous image recorded for $env"

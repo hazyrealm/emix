@@ -1,6 +1,9 @@
 import React from 'react';
 import type { User } from '@backspace/shared';
+import type { AvatarDecorationId } from '@backspace/shared/src/profileStyle';
 import { getAvatarGradient, getSpaceGradient } from '../../utils/gradients';
+import { profileStyleOf } from '../../utils/profileStyle';
+import { AvatarDecoration } from './profile/ProfileVisuals';
 
 interface AvatarProps {
   src?: string | null;
@@ -19,7 +22,15 @@ interface AvatarProps {
    * icon (`getSpaceGradient`); people use `user`, the default.
    */
   palette?: 'user' | 'space';
+  /**
+   * The avatar decoration. Defaults to `user`'s own at 32px and larger
+   * (smaller avatars are too small to frame); `null` hides it, an id previews one.
+   */
+  decoration?: AvatarDecorationId | null;
 }
+
+/** Smallest avatar that shows its owner's decoration by default. */
+const DECORATION_MIN_SIZE = 32;
 
 const statusColors: Record<string, string> = {
   online: 'bg-status-online',
@@ -60,7 +71,7 @@ function getDotMetrics(avatarSize: number, ringWidth: number = 0) {
   return { dot, gap, inset: avatarInset + ringWidth };
 }
 
-export function Avatar({ src, name, size = 40, status, className = '', onClick, user, userId, ring, avatarColor, palette = 'user' }: AvatarProps) {
+export function Avatar({ src, name, size = 40, status, className = '', onClick, user, userId, ring, avatarColor, palette = 'user', decoration }: AvatarProps) {
   const initials = name.charAt(0).toUpperCase();
   const fontPx = Math.round(size * 0.4);
   const gradient = palette === 'space'
@@ -77,6 +88,9 @@ export function Avatar({ src, name, size = 40, status, className = '', onClick, 
     : undefined;
 
   const { dot: dotDiameter, inset: dotInset } = getDotMetrics(size, ringWidth);
+  const shownDecoration = decoration !== undefined
+    ? decoration
+    : (size >= DECORATION_MIN_SIZE ? profileStyleOf(user)?.decoration ?? null : null);
 
   return (
     <div
@@ -118,10 +132,11 @@ export function Avatar({ src, name, size = 40, status, className = '', onClick, 
           {initials}
         </div>
       </div>
+      {shownDecoration && <AvatarDecoration id={shownDecoration} />}
       {/* Status dot — outside the masked div so it isn't clipped */}
       {status && (
         <div
-          className={`absolute rounded-full ${statusColors[status] ?? 'bg-status-offline'}`}
+          className={`absolute z-[2] rounded-full ${statusColors[status] ?? 'bg-status-offline'}`}
           style={{
             width: dotDiameter,
             height: dotDiameter,

@@ -21,6 +21,8 @@ import { config } from '../config.js';
 import { buildFederationHeaders, getOurOrigin, normalizeOriginForCompare, canonicalizeHomeInstance } from '../utils/federationAuth.js';
 import { extractDomain } from './federation.js';
 import path from 'path';
+import fs from 'node:fs';
+import { normalizeProfileStyle, PROFILE_STYLE_MAX_JSON } from '@backspace/shared/src/profileStyle.js';
 
 /**
  * Canonicalize a caller-supplied remote instance origin to the single storage
@@ -218,7 +220,7 @@ export async function userRoutes(app: FastifyInstance): Promise<void> {
   });
 
   app.patch<{ Body: UpdateUserRequest }>('/api/users/@me', { preHandler: authenticate }, async (request, reply) => {
-    const { displayName, avatar, banner, accentColor, avatarColor, bio, customStatus, status, replicatedInstances, homeUserId, profileUpdatedAt, discoverable, showActivity } = request.body;
+    const { displayName, avatar, banner, accentColor, avatarColor, bio, profileStyle, customStatus, status, replicatedInstances, homeUserId, profileUpdatedAt, discoverable, showActivity } = request.body;
     const db = getDb();
 
     const updateData: Record<string, string | null | undefined> = {};
@@ -237,7 +239,7 @@ export async function userRoutes(app: FastifyInstance): Promise<void> {
     // accounts (federation_home_orphaned = 1) have no home instance anymore and
     // manage their profile locally (detach spec §4.4).
     if (preUpdateUser.homeInstance && preUpdateUser.federationHomeOrphaned !== 1) {
-      const hasDurableField = DURABLE_PROFILE_FIELDS.some(f => (request.body as Record<string, unknown>)[f] !== undefined);
+      const hasDurableField = [...DURABLE_PROFILE_FIELDS, 'profileStyle'].some(f => (request.body as Record<string, unknown>)[f] !== undefined);
       if (hasDurableField) {
         return sendError(reply, 403, 'profile_managed_by_home');
       }
@@ -324,6 +326,25 @@ export async function userRoutes(app: FastifyInstance): Promise<void> {
         updateData.bio = trimmed || null;
       } else {
         updateData.bio = null;
+      }
+    }
+
+    // Emix profile customization. Stored normalized; a value that normalizes
+    // to nothing clears it. Its one image must be an upload on this instance.
+    let newStyleImage: string | null = null;
+    if (profileStyle !== undefined) {
+      if (profileStyle !== null && (typeof profileStyle !== 'object' || Array.isArray(profileStyle))) {
+        return sendError(reply, 400, 'validation_failed', { field: 'profileStyle', reason: 'must be an object or null' });
+      }
+      const normalized = profileStyle === null ? null : normalizeProfileStyle(profileStyle);
+      const json = normalized ? JSON.stringify(normalized) : null;
+      if (json && json.length > PROFILE_STYLE_MAX_JSON) {
+        return sendError(reply, 400, 'validation_failed', { field: 'profileStyle', reason: 'too large' });
+      }
+      updateData.profileStyle = json;
+      newStyleImage = normalized?.background?.image ?? null;
+      if (newStyleImage && !fs.existsSync(path.join(config.uploadDir, path.basename(newStyleImage)))) {
+        return sendError(reply, 400, 'validation_failed', { field: 'profileStyle.background.image', reason: 'not an upload on this instance' });
       }
     }
 
@@ -466,7 +487,7 @@ export async function userRoutes(app: FastifyInstance): Promise<void> {
     }
 
     // Detect profile changes and stamp timestamp
-    const hasProfileChange = ['displayName', 'avatar', 'banner', 'accentColor', 'avatarColor', 'bio', 'customStatus'].some(f => f in updateData);
+    const hasProfileChange = ['displayName', 'avatar', 'banner', 'accentColor', 'avatarColor', 'bio', 'customStatus', 'profileStyle'].some(f => f in updateData);
     const hasDurableChange = DURABLE_PROFILE_FIELDS.some(f => f in updateData);
     if (hasDurableChange) {
       (updateData as Record<string, unknown>).profileUpdatedAt = Date.now();
@@ -518,6 +539,19 @@ export async function userRoutes(app: FastifyInstance): Promise<void> {
     }
     if (updateData.banner && typeof updateData.banner === 'string' && updateData.banner.includes('/api/uploads/')) {
       deleteAttachmentByFilename(updateData.banner);
+    }
+
+    // The profile background image: same lifecycle as the banner.
+    if (profileStyle !== undefined) {
+      const oldStyleImage = normalizeProfileStyle(preUpdateUser.profileStyle)?.background?.image ?? null;
+      if (oldStyleImage && oldStyleImage !== newStyleImage) {
+        deleteUploadFile(oldStyleImage);
+        deleteAttachmentByFilename(oldStyleImage);
+      }
+      if (newStyleImage && newStyleImage !== oldStyleImage) {
+        deleteAttachmentByFilename(newStyleImage);
+        await resizeProfileImage(path.join(config.uploadDir, path.basename(newStyleImage)), 'banner');
+      }
     }
 
     // Resize profile images to optimal dimensions (safety net for federation, API clients, etc.)

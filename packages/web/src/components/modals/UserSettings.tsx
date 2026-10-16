@@ -9,6 +9,7 @@ import { useUIStore } from '../../stores/uiStore';
 import { useAuthStore } from '../../stores/authStore';
 import {
   AccountPanel,
+  ProfilePanel,
   AppearancePanel,
   VoicePanel,
   PrivacyPanel,
@@ -23,6 +24,8 @@ import { isElectron } from '../../platform/platform';
 import { useInstanceUpdateBadge } from '../../hooks/useInstanceUpdateBadge';
 import { SettingsSectionsProvider, useSettingsSectionsContext } from './SettingsSectionsContext';
 import { HiButton } from '../telemetry/answers/HiButton';
+import { useWhatsNewUnread } from '../../stores/changelogStore';
+import { WhatsNewPanel } from '../changelog/WhatsNewPanel';
 
 /**
  * Every tab of user settings, in nav order. The nav on both layouts, the
@@ -32,12 +35,14 @@ import { HiButton } from '../telemetry/answers/HiButton';
  */
 const USER_SETTINGS_TABS = [
   { id: 'account', group: 'user', label: 'settings:nav.tabs.account' },
+  { id: 'profile', group: 'user', label: 'settings:nav.tabs.profile' },
   { id: 'appearance', group: 'user', label: 'settings:nav.tabs.appearance' },
   { id: 'voice', group: 'user', label: 'settings:nav.tabs.voice' },
   { id: 'privacy', group: 'user', label: 'settings:nav.tabs.privacy' },
   { id: 'connections', group: 'app', label: 'settings:nav.tabs.connections' },
   { id: 'keybinds', group: 'app', label: 'settings:nav.tabs.keybinds' },
   { id: 'desktop', group: 'app', label: 'settings:nav.tabs.desktop' },
+  { id: 'whatsNew', group: 'app', label: 'settings:nav.tabs.whatsNew' },
   { id: 'instance', group: 'admin', label: 'settings:nav.tabs.instance' },
 ] as const;
 
@@ -120,6 +125,7 @@ export function UserSettingsModal() {
   const updateBadge = useInstanceUpdateBadge();
 
   const [tab, setTab] = useState<UserSettingsTab>('account');
+  const whatsNewUnread = useWhatsNewUnread();
   const [mobileView, setMobileView] = useState<'tabs' | 'content'>('tabs');
   // AGPL § 13: home-instance source offer. Fetched from the public info endpoint
   // so the source link reflects the version this instance is actually running.
@@ -185,10 +191,13 @@ export function UserSettingsModal() {
             <button
               key={entry.id}
               onClick={() => handleTabClick(entry.id)}
-              className={tabClass(entry.id)}
+              className={`${tabClass(entry.id)} flex items-center gap-1.5`}
               aria-current={tab === entry.id ? 'page' : undefined}
             >
-              {t(entry.label)}
+              <span className="flex-1 min-w-0 truncate text-left">{t(entry.label)}</span>
+              {entry.id === 'whatsNew' && whatsNewUnread && (
+                <span className="shrink-0 rounded-full bg-[#ff3ea5] px-1.5 py-px text-[9px] font-bold uppercase tracking-wide text-white">{t('common:changelog.newBadge')}</span>
+              )}
             </button>
           )
         ))}
@@ -197,6 +206,7 @@ export function UserSettingsModal() {
 
   const panels: Record<UserSettingsTab, () => ReactNode> = {
     account: () => <AccountPanel />,
+    profile: () => <ProfilePanel />,
     appearance: () => <AppearancePanel />,
     voice: () => <VoicePanel />,
     privacy: () => <PrivacyPanel />,
@@ -206,6 +216,7 @@ export function UserSettingsModal() {
       ? <DesktopPanel />
       : <DesktopDownloadPanel version={instanceInfo?.version ?? null} />),
     instance: () => (isAdmin ? <InstancePanel /> : null),
+    whatsNew: () => <WhatsNewPanel />,
   };
 
   return (

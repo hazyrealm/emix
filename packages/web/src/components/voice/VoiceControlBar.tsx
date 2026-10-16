@@ -6,8 +6,9 @@ import { useAuthStore } from '../../stores/authStore';
 import { useSpaceStore, getChannelOrigin, getMyUserIdForOrigin } from '../../stores/spaceStore';
 import { ScreenShareSettingsPopover } from './ScreenShareSettingsPopover';
 import { hasPermissionBit, PermissionBits } from '../../utils/permissions';
-import { handleMuteAction, handleDeafenAction, handleCameraAction, handleScreenShareAction, handleDisconnectAction } from '../../utils/voiceActions';
+import { handleMuteAction, handleDeafenAction, handleScreenShareAction, handleDisconnectAction } from '../../utils/voiceActions';
 import { VOICE_CHROME_ATTR } from '../../hooks/usePointerReveal';
+import { AudioDeviceMenu, CameraDeviceMenu, MenuArrowButton, requestCameraToggle } from './DeviceControls';
 
 const btnBase = 'w-10 h-10 flex items-center justify-center rounded-full transition-colors';
 const btnDefault = `${btnBase} bg-surface-channel text-txt-secondary hover:bg-surface-elevated hover:text-txt-primary`;
@@ -47,10 +48,14 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
   // popover (quality controls + the red stop action).
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
   const shareBtnRef = useRef<HTMLButtonElement>(null);
+  const [deviceMenu, setDeviceMenu] = useState<'audio' | 'camera' | null>(null);
+  const micArrowRef = useRef<HTMLButtonElement>(null);
+  const camArrowRef = useRef<HTMLButtonElement>(null);
+  const closeDeviceMenu = React.useCallback(() => setDeviceMenu(null), []);
 
   // An open share menu pins the bar: the popover hangs off it, so letting the
   // idle timer pull it away would take the menu with it.
-  const fullscreenVisibility = revealed || shareMenuOpen
+  const fullscreenVisibility = revealed || shareMenuOpen || deviceMenu !== null
     ? 'opacity-100'
     : 'opacity-0 focus-within:opacity-100 [@media(hover:none)]:opacity-100 [@media(any-pointer:coarse)]:opacity-100';
   const containerClassName = voiceFullscreen
@@ -65,7 +70,7 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
     handleDeafenAction(isSpaceDeafened);
   }, [isSpaceDeafened]);
 
-  const handleCamera = () => handleCameraAction();
+  const handleCamera = () => requestCameraToggle();
 
   const handleScreenShare = () => {
     if (isScreenSharing) {
@@ -109,7 +114,8 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
       {...(voiceFullscreen ? { [VOICE_CHROME_ATTR]: '' } : {})}
     >
       <div className="pointer-events-auto flex items-center gap-1.5 rounded-full px-3 py-2 glass-bubble">
-        {/* Mute */}
+        {/* Mute, with the audio device menu on its arrow */}
+        <div className="flex items-center">
         <button
           onClick={handleMute}
           className={(isSpaceMuted || isSpaceDeafened)
@@ -129,6 +135,16 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
           </svg>
         </button>
 
+        <MenuArrowButton
+          ref={micArrowRef}
+          open={deviceMenu === 'audio'}
+          onClick={() => setDeviceMenu((m) => (m === 'audio' ? null : 'audio'))}
+          label={t('voice:devices.audioMenu')}
+          className="w-5 h-10 -ml-0.5"
+        />
+        {deviceMenu === 'audio' && <AudioDeviceMenu anchorRef={micArrowRef} onClose={closeDeviceMenu} />}
+        </div>
+
         {/* Deafen */}
         <button
           onClick={handleDeafen}
@@ -146,8 +162,9 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
           </svg>
         </button>
 
-        {/* Camera */}
+        {/* Camera, with the camera menu on its arrow */}
         {canSpeak && (
+          <div className="flex items-center">
           <button
             onClick={handleCamera}
             className={isCameraOn ? btnGreen : btnDefault}
@@ -164,6 +181,15 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
               </svg>
             )}
           </button>
+          <MenuArrowButton
+            ref={camArrowRef}
+            open={deviceMenu === 'camera'}
+            onClick={() => setDeviceMenu((m) => (m === 'camera' ? null : 'camera'))}
+            label={t('voice:devices.cameraMenu')}
+            className="w-5 h-10 -ml-0.5"
+          />
+          {deviceMenu === 'camera' && <CameraDeviceMenu anchorRef={camArrowRef} onClose={closeDeviceMenu} />}
+          </div>
         )}
 
         {/* Screen Share — picker when idle, settings + stop menu when live */}

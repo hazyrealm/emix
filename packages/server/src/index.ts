@@ -23,6 +23,7 @@ import { settingsRoutes } from './routes/settings.js';
 import { notificationSettingsRoutes } from './routes/notificationSettings.js';
 import { utilRoutes } from './routes/utils.js';
 import { instanceRoutes } from './routes/instance.js';
+import { changelogRoutes } from './routes/changelog.js';
 import { invitesRoutes } from './routes/invites.js';
 import { exploreRoutes } from './routes/explore.js';
 import { directoryRoutes } from './routes/directory.js';
@@ -234,6 +235,7 @@ async function main(): Promise<void> {
   await app.register(notificationSettingsRoutes);
   await app.register(utilRoutes);
   await app.register(instanceRoutes);
+  await app.register(changelogRoutes);
   await app.register(invitesRoutes);
   await app.register(exploreRoutes);
   await app.register(directoryRoutes);

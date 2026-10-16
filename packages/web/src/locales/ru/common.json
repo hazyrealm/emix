@@ -134,5 +134,29 @@
   "devices": {
     "newAudioInput": "Обнаружено устройство «{{label}}». Выберите его в настройках голоса, чтобы переключиться на него.",
     "unnamedAudioInput": "Новое аудиоустройство"
+  },
+  "changelog": {
+    "eyebrow": "Обновление Emix",
+    "title": "Что нового в Emix",
+    "fullTitle": "История изменений Emix",
+    "version": "Версия {{version}}",
+    "combined": "Обновления с вашего последнего визита: версии {{versions}}",
+    "gotIt": "Понятно",
+    "viewFull": "Вся история изменений",
+    "newBadge": "Новое",
+    "unavailable": "Сейчас не удаётся загрузить историю изменений. Попробуйте позже.",
+    "empty": "Обновлений пока нет.",
+    "siteLink": "getemix.com/changelog",
+    "sections": {
+      "new": "Новое",
+      "improved": "Улучшено",
+      "fixed": "Исправлено",
+      "performance": "Производительность",
+      "security": "Безопасность"
+    },
+    "more_one": "…и ещё {{count}}",
+    "more_few": "…и ещё {{count}}",
+    "more_many": "…и ещё {{count}}",
+    "more_other": "…и ещё {{count}}"
   }
 }

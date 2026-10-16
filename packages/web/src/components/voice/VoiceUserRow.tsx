@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import type { ProfileStyle } from '@backspace/shared/src/profileStyle';
 import { Avatar } from '../ui/Avatar';
+import { StyledName } from '../ui/profile/ProfileVisuals';
 
 export interface VoiceUserRowProps {
   userId: string;
@@ -19,6 +21,8 @@ export interface VoiceUserRowProps {
   connectionWarning?: string | null;
   size?: 'compact' | 'default';
   className?: string;
+  /** The participant's profile style, for their name colours. */
+  profileStyle?: ProfileStyle | null;
 }
 
 export function VoiceUserRow({
@@ -39,6 +43,7 @@ export function VoiceUserRow({
   connectionWarning,
   size = 'default',
   className = '',
+  profileStyle,
 }: VoiceUserRowProps) {
   const { t } = useTranslation(['voice', 'common']);
   const avatarSize = size === 'compact' ? 20 : 24;
@@ -62,7 +67,7 @@ export function VoiceUserRow({
         className={isSpeaking ? 'rounded-full ring-2 ring-status-online' : ''}
       />
       <span className="text-[13px] text-txt-secondary truncate flex-1 min-w-0">
-        {displayName}
+        <StyledName name={displayName} style={profileStyle ?? null} />
       </span>
       {/* Status badges */}
       <div className="flex items-center gap-1 flex-shrink-0">

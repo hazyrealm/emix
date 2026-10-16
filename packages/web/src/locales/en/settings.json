@@ -149,7 +149,9 @@
       "connections": "Connections",
       "keybinds": "Keybinds",
       "desktop": "Desktop",
-      "instance": "Instance"
+      "instance": "Instance",
+      "profile": "Profile",
+      "whatsNew": "What's New"
     },
     "logOut": "Log Out",
     "backToMenu": "Back to settings menu"
@@ -195,7 +197,9 @@
         "label": "About Me",
         "placeholder": "Tell the world about yourself…",
         "counter": "{{used}}/{{max}}"
-      }
+      },
+      "customize": "Customize profile →",
+      "animatedTooLarge": "Animated images can be up to {{max}} MB."
     },
     "details": {
       "sectionTitle": "Account",
@@ -448,5 +452,172 @@
     },
     "version": "Version {{version}}",
     "allReleases": "All releases on GitHub"
+  },
+  "profileStudio": {
+    "title": "Profile",
+    "subtitle": "Make your profile yours: name colours, nameplates, decorations, backgrounds and effects. Everything here is free for everyone.",
+    "replica": "This account's profile is managed by its home instance, so these settings can't be saved here.",
+    "none": "None",
+    "preview": "Live preview",
+    "unsaved": "You have unsaved changes",
+    "free": "All customization is free",
+    "resetDefault": "Reset to default",
+    "position": {
+      "x": "Horizontal position",
+      "y": "Vertical position",
+      "zoom": "Zoom"
+    },
+    "looks": {
+      "title": "Looks",
+      "hint": "Start from a complete look, then fine-tune it below. Your pronouns, links and images are kept.",
+      "presets": {
+        "neonNight": "Neon Night",
+        "galaxy": "Galaxy",
+        "cyber": "Cyber",
+        "winter": "Winter",
+        "blaze": "Blaze",
+        "minimal": "Minimal"
+      },
+      "namePlaceholder": "Name this look",
+      "save": "Save look",
+      "delete": "Delete look {{name}}",
+      "local": "Saved looks are kept on this device."
+    },
+    "name": {
+      "title": "Name style",
+      "hint": "How your display name appears in chat, member lists, friends, voice channels and your profile. Space role colours still take priority inside a space.",
+      "effects": {
+        "solid": "Solid",
+        "gradient": "Gradient",
+        "animated": "Animated gradient",
+        "rainbow": "Rainbow",
+        "neon": "Neon glow",
+        "shimmer": "Shimmer"
+      },
+      "color": "Colour {{n}}",
+      "addColor": "Add a colour",
+      "removeColor": "Remove a colour",
+      "glow": "Soft glow",
+      "lowContrast": "Very dark colours are brightened automatically so your name stays readable.",
+      "palettes": {
+        "emix": "Emix",
+        "sunset": "Sunset",
+        "ocean": "Ocean",
+        "aurora": "Aurora",
+        "gold": "Gold",
+        "candy": "Candy",
+        "toxic": "Toxic",
+        "ice": "Ice"
+      }
+    },
+    "nameplate": {
+      "title": "Nameplate",
+      "hint": "Shown behind your name in member lists, friends, direct messages and voice channels.",
+      "items": {
+        "neon-pulse": "Neon pulse",
+        "galaxy": "Purple galaxy",
+        "cyberpunk": "Cyberpunk",
+        "fire-ice": "Fire and ice",
+        "starfield": "Starfield",
+        "holographic": "Holographic",
+        "aurora": "Aurora",
+        "glow-border": "Glowing border",
+        "glass": "Glass",
+        "digital": "Digital grid",
+        "minimal": "Minimal line",
+        "winter": "Winter",
+        "sakura": "Sakura",
+        "spooky": "Spooky"
+      }
+    },
+    "decoration": {
+      "title": "Avatar decoration",
+      "hint": "A frame around your profile picture, shown wherever your avatar is large enough.",
+      "items": {
+        "neon-ring": "Neon ring",
+        "glow-pulse": "Glow pulse",
+        "flames": "Flames",
+        "hearts": "Hearts",
+        "stars": "Stars",
+        "snowflakes": "Snowflakes",
+        "cyber": "Cyber",
+        "sparkle": "Sparkle",
+        "holo": "Holographic",
+        "orbit": "Orbit",
+        "leaves": "Autumn leaves",
+        "pumpkin": "Halloween"
+      }
+    },
+    "banner": {
+      "title": "Banner framing",
+      "hint": "Choose which part of your banner shows. Animated GIF banners play on your profile.",
+      "noBanner": "You haven't added a banner yet.",
+      "openAccount": "Change banner, avatar or display name in My Account"
+    },
+    "background": {
+      "title": "Profile background",
+      "hint": "Colours or an image behind your whole profile card. Text always gets a dark overlay so it stays readable.",
+      "presets": {
+        "midnight": "Midnight",
+        "emix": "Emix",
+        "nebula": "Nebula",
+        "sunset": "Sunset",
+        "ocean": "Ocean",
+        "forest": "Forest",
+        "ember": "Ember",
+        "mono": "Graphite",
+        "aurora-flow": "Aurora flow",
+        "synthwave": "Synthwave"
+      },
+      "custom": "Custom",
+      "animate": "Animate",
+      "uploadImage": "Upload image",
+      "changeImage": "Change image",
+      "uploading": "Uploading…",
+      "imageHint": "PNG, JPEG, WebP or animated GIF, up to {{max}} MB.",
+      "notImage": "Choose a PNG, JPEG, WebP, AVIF or GIF image.",
+      "tooLarge": "That image is larger than {{max}} MB.",
+      "uploadFailed": "The image could not be uploaded. Try again.",
+      "opacity": "Image opacity",
+      "blur": "Image blur",
+      "glass": "Glass card"
+    },
+    "effect": {
+      "title": "Profile effect",
+      "hint": "A short animation that plays when someone opens your profile.",
+      "items": {
+        "falling-stars": "Falling stars",
+        "sparkles": "Sparkles",
+        "hearts": "Floating hearts",
+        "snow": "Snowfall",
+        "neon-particles": "Neon particles",
+        "galaxy": "Galaxy",
+        "light-streaks": "Light streaks",
+        "glow": "Glow",
+        "confetti": "Confetti",
+        "digital-rain": "Digital rain"
+      },
+      "replay": "Play preview again"
+    },
+    "about": {
+      "title": "About you",
+      "hint": "Shown on your profile card. Links open in a new tab.",
+      "pronouns": "Pronouns",
+      "pronounsPlaceholder": "e.g. she/her, they/them",
+      "links": "Links (up to {{max}})",
+      "linkLabel": "Label",
+      "addLink": "Add a link",
+      "editBio": "Edit your bio and status in My Account",
+      "urlPlaceholder": "https://"
+    },
+    "motion": {
+      "title": "Animations",
+      "label": "Play profile animations",
+      "hint": "Applies on this device. Animations also stop when your system asks for reduced motion."
+    }
+  },
+  "whatsNew": {
+    "title": "What's New",
+    "subtitle": "Every Emix update, newest first."
   }
 }

@@ -9,7 +9,7 @@ const FFMPEG_TIMEOUT = 10_000; // 10 seconds
 
 let ffmpegAvailable: boolean | null = null;
 
-const PROFILE_LIMITS = { avatar: 256, icon: 256, banner: 1280 } as const;
+const PROFILE_LIMITS = { avatar: 256, icon: 256, banner: 1920 } as const;
 
 /**
  * Resize a profile image (avatar, icon, or banner) to the target max dimension.

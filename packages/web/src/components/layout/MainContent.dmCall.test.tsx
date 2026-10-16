@@ -27,6 +27,8 @@ import { useUIStore } from '../../stores/uiStore';
 import { useVoiceStore } from '../../stores/voiceStore';
 import { wsSend } from '../../hooks/useWebSocket';
 import { MainContent } from './MainContent';
+import { useCameraEffectsStore } from '../../stores/cameraEffectsStore';
+import { useCameraPreviewStore } from '../../stores/cameraPreviewStore';
 
 const partner = { id: 'partner', username: 'alice' } as User;
 const dm = { id: 'dm-1', members: [partner], ownerId: null } as DmChannel;
@@ -58,10 +60,24 @@ describe('desktop DM header call actions', () => {
   });
 
   it('starts a video call: the same call, with the camera to go on once connected', () => {
+    useCameraEffectsStore.setState({ alwaysPreview: false });
     renderDm();
     fireEvent.click(screen.getByTitle('Start Video Call'));
     expect(useVoiceStore.getState().outgoingCall).toEqual({ dmChannelId: dm.id, withCamera: true });
     expect(wsSend).toHaveBeenCalledWith({ type: 'dm_call_start', dmChannelId: dm.id }, '');
+  });
+
+  it('shows the camera preview before a video call rings anyone', () => {
+    useCameraEffectsStore.setState({ alwaysPreview: true });
+    renderDm();
+    fireEvent.click(screen.getByTitle('Start Video Call'));
+    expect(useVoiceStore.getState().outgoingCall).toBeNull();
+    expect(wsSend).not.toHaveBeenCalled();
+    const confirm = useCameraPreviewStore.getState().onConfirm;
+    expect(confirm).toBeTypeOf('function');
+    confirm?.();
+    expect(useVoiceStore.getState().outgoingCall).toEqual({ dmChannelId: dm.id, withCamera: true });
+    useCameraPreviewStore.getState().close();
   });
 
   it('offers no call in a 1-on-1 whose partner was deleted', () => {

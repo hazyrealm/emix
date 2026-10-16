@@ -69,7 +69,15 @@ jobs:
         shell: bash
         run: |
           v="${GITHUB_REF_NAME#v}"
-          sed "s/{{VERSION}}/$v/g" .github/release-notes.md > "$RUNNER_TEMP/notes.md"
+          # "What's new" comes from the reviewed changelog (packages/shared/changelog.json).
+          python scripts/changelog.py notes "$v" > "$RUNNER_TEMP/whats-new.md"
+          [ -s "$RUNNER_TEMP/whats-new.md" ] || echo "<!-- No published changelog entry for $v: write the notes before publishing. -->" > "$RUNNER_TEMP/whats-new.md"
+          python - "$RUNNER_TEMP/whats-new.md" "$v" > "$RUNNER_TEMP/notes.md" <<'PY'
+          import sys
+          notes, v = open(sys.argv[1], encoding="utf-8").read().strip(), sys.argv[2]
+          tpl = open(".github/release-notes.md", encoding="utf-8").read()
+          sys.stdout.write(tpl.replace("{{VERSION}}", v).replace("{{WHATS_NEW}}", notes))
+          PY
           gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --draft --title "Emix $v" --notes-file "$RUNNER_TEMP/notes.md"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -289,5 +289,54 @@
     "stillDenied": "O acesso ao microfone continua negado. Permita-o para este site nas configurações do navegador ou do dispositivo.",
     "notFound": "Nenhum microfone encontrado.",
     "failed": "Não foi possível acessar o microfone."
+  },
+  "devices": {
+    "audioMenu": "Opções de microfone e alto-falantes",
+    "cameraMenu": "Opções da câmera",
+    "microphone": "Microfone",
+    "speakers": "Alto-falantes",
+    "camera": "Câmera",
+    "inputLevel": "Nível de entrada",
+    "testSpeakers": "Reproduzir som de teste",
+    "outputUnsupported": "Este navegador usa sempre os alto-falantes predefinidos do sistema.",
+    "audioSettings": "Configurações de áudio…",
+    "cameraSettings": "Qualidade e configurações da câmera…",
+    "micPrompt": "Permita o acesso ao microfone para ver e escolher os seus dispositivos.",
+    "micDenied": "O acesso ao microfone está bloqueado. Permita-o nas configurações do navegador ou do sistema.",
+    "allow": "Permitir acesso",
+    "noCameras": "Nenhuma câmera encontrada",
+    "cameraN": "Câmera {{n}}",
+    "switchLive": "Trocar altera o seu vídeo sem sair da chamada.",
+    "cameraStarting": "Iniciando a câmera…",
+    "cameraUnavailable": "Não é possível abrir esta câmera. Pode estar a ser usada por outra aplicativo."
+  },
+  "effects": {
+    "title": "Efeitos da câmera",
+    "brightness": "Brilho",
+    "contrast": "Contraste",
+    "saturation": "Saturação",
+    "softFocus": "Foco suave",
+    "zoom": "Zoom",
+    "mirror": "Espelhar a minha pré-visualização",
+    "systemBlur": "Desfoque de fundo (sistema)",
+    "localNote": "Processado neste dispositivo.",
+    "reset": "Câmera original",
+    "filters": {
+      "none": "Original",
+      "warm": "Quente",
+      "cool": "Frio",
+      "mono": "Preto e branco",
+      "vivid": "Vívido",
+      "soft": "Luz suave",
+      "noir": "Noir"
+    }
+  },
+  "preview": {
+    "title": "Verifique a sua câmera",
+    "callTitle": "Pronto para iniciar uma videochamada?",
+    "privateNote": "Só você vê esta pré-visualização. Nada é enviado até começar.",
+    "always": "Pré-visualizar antes de ligar a câmera",
+    "start": "Ligar câmera",
+    "startCall": "Iniciar videochamada"
   }
 }

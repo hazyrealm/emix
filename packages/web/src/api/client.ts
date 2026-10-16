@@ -1,4 +1,5 @@
 import type { PersonalSticker } from '@backspace/shared/src/stickers';
+import type { ChangelogResponse, ChangelogStateResponse } from '@backspace/shared/src/changelog';
 import { isErrorCode, type ErrorCode, type ErrorDetails } from '@backspace/shared/src/errors';
 import type {
   NotificationSetting,
@@ -355,6 +356,12 @@ export class BackspaceApiClient {
 
   readonly instance: {
     info: () => Promise<InstanceInfoResponse>;
+  };
+
+  readonly changelog: {
+    list: () => Promise<ChangelogResponse>;
+    state: () => Promise<ChangelogStateResponse>;
+    acknowledge: (version: string) => Promise<ChangelogStateResponse>;
   };
 
   readonly roles: {
@@ -776,6 +783,12 @@ export class BackspaceApiClient {
 
     this.instance = {
       info: () => request<InstanceInfoResponse>('GET', '/instance/info', undefined, false),
+    };
+
+    this.changelog = {
+      list: () => request<ChangelogResponse>('GET', '/changelog', undefined, false),
+      state: () => request<ChangelogStateResponse>('GET', '/changelog/state'),
+      acknowledge: (version: string) => request<ChangelogStateResponse>('POST', '/changelog/ack', { version }),
     };
 
     this.roles = {

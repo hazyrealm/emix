@@ -39,6 +39,11 @@ import { useDelayedLoading } from '../../hooks/useDelayedLoading';
 import { useWebSocket } from '../../hooks/useWebSocket';
 import { useFederationToasts } from '../../hooks/useFederationToasts';
 import { useLiveKit } from '../../hooks/useLiveKit';
+import { CameraPreviewDialog } from '../voice/DeviceControls';
+import { WhatsNewController } from '../changelog/WhatsNew';
+import { installCameraEffectsSync } from '../../utils/cameraEffects';
+
+installCameraEffectsSync();
 import { useKeybinds } from '../../hooks/useKeybinds';
 import { useDeepLinkHandler } from '../../platform/deepLink';
 import { initActivityBridge, teardownActivityBridge } from '../../platform/activityBridge';
@@ -428,6 +433,8 @@ export function AppLayout() {
         {/* MemberRolesModal is desktop-only: it opens from the profile card's
             Edit Roles, and its two-pane layout has no mobile form. */}
         <IncomingCallModal />
+        <CameraPreviewDialog />
+        <WhatsNewController />
         <ImagePreview />
         {/* PictureInPicture is desktop-only. Mobile has its own purpose-built
             voice chrome (MobileVoiceMiniBar + MobileVoiceFullScreen) mounted
@@ -479,6 +486,8 @@ export function AppLayout() {
       <ConnectAndJoinModal />
       <MemberRolesModal />
       <IncomingCallModal />
+      <CameraPreviewDialog />
+      <WhatsNewController />
       <ImagePreview />
       <PictureInPicture />
       <SoundController />

@@ -134,5 +134,26 @@
   "devices": {
     "newAudioInput": "检测到 {{label}}。可在语音设置中选择切换。",
     "unnamedAudioInput": "新的音频设备"
+  },
+  "changelog": {
+    "eyebrow": "Emix 更新",
+    "title": "Emix 新功能",
+    "fullTitle": "Emix 更新日志",
+    "version": "版本 {{version}}",
+    "combined": "自你上次访问以来的更新：版本 {{versions}}",
+    "gotIt": "知道了",
+    "viewFull": "查看完整更新日志",
+    "newBadge": "新",
+    "unavailable": "暂时无法加载更新日志，请稍后再试。",
+    "empty": "尚未发布任何更新。",
+    "siteLink": "getemix.com/changelog",
+    "sections": {
+      "new": "新增",
+      "improved": "改进",
+      "fixed": "修复",
+      "performance": "性能",
+      "security": "安全"
+    },
+    "more_other": "…还有 {{count}} 项"
   }
 }

@@ -8,6 +8,7 @@ import { MessageList } from '../chat/MessageList';
 import { MessageInput } from '../chat/MessageInput';
 import { VoiceGrid } from '../voice/VoiceGrid';
 import { VoiceControlBar } from '../voice/VoiceControlBar';
+import { requestVideoCall } from '../../stores/cameraPreviewStore';
 import { VoiceChatPanel } from '../voice/VoiceChatPanel';
 import { FriendsPage } from '../chat/FriendsPage';
 import { ExplorePage } from '../chat/ExplorePage';
@@ -235,8 +236,14 @@ export function MainContent() {
     // The video button does the same with the camera on once connected.
     const handleStartCall = (withCamera: boolean) => {
       if (!currentChannelId) return;
-      if (dmCallRunning) joinDmCall(currentChannelId, { withCamera });
-      else startDmCall(currentChannelId, { withCamera });
+      const channelId = currentChannelId;
+      const start = () => {
+        if (dmCallRunning) joinDmCall(channelId, { withCamera });
+        else startDmCall(channelId, { withCamera });
+      };
+      // A video call opens with a local camera preview first.
+      if (withCamera) requestVideoCall(start);
+      else start();
     };
 
     const handleCancelCall = () => {

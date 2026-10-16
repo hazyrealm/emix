@@ -4,6 +4,8 @@ import { useSpaceStore } from '../../stores/spaceStore';
 import { useSelfIdInChannel } from '../../utils/channelUser';
 import { useContextMenuStore, type ContextMenuItem } from '../../stores/contextMenuStore';
 import { buildVoiceModMenuItems, VolumeSliderItem } from './voiceMenuItems';
+import { Nameplate, nameplateOf } from '../ui/profile/ProfileVisuals';
+import { profileStyleOf } from '../../utils/profileStyle';
 import { VoiceUserRow } from './VoiceUserRow';
 import { useTranslation } from 'react-i18next';
 import { useFormatters } from '../../i18n/formatters';
@@ -246,7 +248,7 @@ export function VoiceChannel({ channelId, channelName, onClick, locked, canManag
             return (
               <div
                 key={userId}
-                className={`px-[10px] py-1 rounded-[6px] hover:bg-interactive-hover transition-colors ${
+                className={`emx-plate-host px-[10px] py-1 rounded-[6px] hover:bg-interactive-hover transition-colors ${
                   isDraggable ? 'cursor-grab active:cursor-grabbing' : ''
                 } ${isBeingDragged ? 'opacity-50' : ''}`}
                 draggable={isDraggable}
@@ -254,7 +256,9 @@ export function VoiceChannel({ channelId, channelName, onClick, locked, canManag
                 onDragEnd={isDraggable ? userDrag!.onDragEnd : undefined}
                 onContextMenu={(e) => handleContextMenu(e, userId)}
               >
+                <Nameplate id={nameplateOf(member?.user)} />
                 <VoiceUserRow
+                  profileStyle={profileStyleOf(member?.user)}
                   userId={member?.user.homeUserId ?? userId}
                   displayName={displayName}
                   avatar={avatar}

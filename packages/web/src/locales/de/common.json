@@ -134,5 +134,27 @@
   "devices": {
     "newAudioInput": "{{label}} erkannt. Wähle es in den Sprach-Einstellungen aus, um zu wechseln.",
     "unnamedAudioInput": "Neues Audiogerät"
+  },
+  "changelog": {
+    "eyebrow": "Emix-Update",
+    "title": "Neu in Emix",
+    "fullTitle": "Emix-Änderungsprotokoll",
+    "version": "Version {{version}}",
+    "combined": "Updates seit deinem letzten Besuch: Versionen {{versions}}",
+    "gotIt": "Verstanden",
+    "viewFull": "Ganzes Änderungsprotokoll",
+    "newBadge": "Neu",
+    "unavailable": "Das Änderungsprotokoll kann gerade nicht geladen werden. Versuch es später noch einmal.",
+    "empty": "Es wurden noch keine Updates veröffentlicht.",
+    "siteLink": "getemix.com/changelog",
+    "sections": {
+      "new": "Neu",
+      "improved": "Verbessert",
+      "fixed": "Behoben",
+      "performance": "Leistung",
+      "security": "Sicherheit"
+    },
+    "more_one": "…und {{count}} weiterer",
+    "more_other": "…und {{count}} weitere"
   }
 }

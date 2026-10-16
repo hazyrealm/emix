@@ -1,0 +1,47 @@
+[
+  {
+    "version": "1.12.0",
+    "date": "2026-10-16",
+    "status": "published",
+    "major": true,
+    "title": "Make your profile yours, and take control of your camera and mic",
+    "summary": "Free profile customization for everyone, a camera preview before you go live, and device switching without leaving a call.",
+    "sections": {
+      "new": [
+        "Profile customization, free for everyone: name colours, gradients, rainbow, neon and shimmer effects",
+        "Nameplates behind your name in member lists, friends, direct messages and voice channels",
+        "Avatar decorations: neon rings, flames, hearts, stars, snowflakes, holographic frames and more",
+        "Profile backgrounds: preset themes, custom gradients or your own image, with position, zoom, opacity, blur and a glass card",
+        "Profile effects that play when someone opens your profile, from falling stars to digital rain",
+        "Pronouns and up to five links on your profile, plus saved looks you can switch between",
+        "A new Profile editor in Settings with a live preview",
+        "Camera preview before you turn your camera on or start a video call",
+        "Camera and microphone menus on the call bar: switch camera, microphone or speakers without leaving the call",
+        "Camera effects processed on your device: brightness, contrast, saturation, colour filters, soft focus and zoom",
+        "What's New: release notes in the app and at getemix.com/changelog"
+      ],
+      "improved": [
+        "Larger, higher-resolution profile banners with adjustable framing",
+        "Animated GIF avatars and banners now keep their animation",
+        "Microphone level meter in the device menu, so you can check your input before you speak"
+      ]
+    }
+  },
+  {
+    "version": "1.11.1",
+    "date": "2026-10-16",
+    "status": "published",
+    "title": "Welcome to Emix",
+    "summary": "The first Emix release: private messaging, voice and video calls, and screen sharing.",
+    "sections": {
+      "new": [
+        "The new Emix design, with dark surfaces and pink, purple and blue accents",
+        "Video quality settings: 720p to 4K at 30 or 60 fps, with a bitrate choice",
+        "The Emix desktop app for Windows, with automatic updates"
+      ],
+      "security": [
+        "Usage statistics and telemetry are removed: Emix sends no analytics anywhere"
+      ]
+    }
+  }
+]

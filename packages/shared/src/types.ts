@@ -1,4 +1,5 @@
 import type { ErrorCode, ErrorDetails } from './errors.js';
+import type { ProfileStyle } from './profileStyle.js';
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -18,6 +19,8 @@ export interface User {
   accentColor: string | null;
   avatarColor: AvatarColor | null;
   bio: string | null;
+  /** Emix profile customization (name style, nameplate, decoration, background, effect, pronouns, links); null when unset. */
+  profileStyle?: ProfileStyle | null;
   status: UserStatus;
   customStatus: string | null;
   isAdmin: boolean;
@@ -904,6 +907,8 @@ export interface UpdateUserRequest {
   accentColor?: string;
   avatarColor?: string;
   bio?: string;
+  /** Replaces the whole document; null clears it. */
+  profileStyle?: ProfileStyle | null;
   customStatus?: string;
   status?: ChosenUserStatus;
   replicatedInstances?: ReplicatedInstance[];
@@ -1054,6 +1059,7 @@ export interface Friend {
   accentColor: string | null;
   avatarColor: AvatarColor | null;
   bio: string | null;
+  profileStyle?: ProfileStyle | null;
   status: UserStatus;
   customStatus: string | null;
   createdAt: number;

@@ -1,0 +1,283 @@
+/* ── Emix profile customization ────────────────────────────────────────────
+   Name effects, nameplates, avatar decorations, profile backgrounds and
+   profile effects. Everything is drawn here from an id (see
+   @backspace/shared/src/profileStyle.ts); users never supply CSS.
+
+   Motion budget: animations move only transform, opacity or
+   background-position, run slowly, and stop entirely under
+   prefers-reduced-motion or the "Profile animations" setting
+   (html[data-emx-motion="off"]). */
+
+/* ── Names ─────────────────────────────────────────────────────────────── */
+.emx-name { --n1: #ff3ea5; --n2: #9333ea; --n3: #22a0ff; --n4: var(--n3); --glow: var(--n1); }
+.emx-name-fill {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  /* The gradient spans the text box, not just the glyphs' line. */
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.emx-name-gradient { background-image: linear-gradient(90deg, var(--n1), var(--n2), var(--n3), var(--n4)); }
+.emx-name-animated {
+  background-image: linear-gradient(90deg, var(--n1), var(--n2), var(--n3), var(--n4), var(--n1));
+  background-size: 200% 100%;
+  animation: emx-name-pan 6s linear infinite;
+}
+.emx-name-rainbow {
+  background-image: linear-gradient(90deg, #ff6b8b, #ffb35c, #ffe066, #6ee7a8, #5cc8ff, #a78bfa, #ff6b8b);
+  background-size: 200% 100%;
+  animation: emx-name-pan 5s linear infinite;
+}
+.emx-name-shimmer {
+  background-image:
+    linear-gradient(100deg, transparent 35%, rgb(255 255 255 / 0.9) 50%, transparent 65%),
+    linear-gradient(90deg, var(--n1), var(--n2), var(--n3), var(--n4));
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  animation: emx-name-shine 3.2s ease-in-out infinite;
+}
+.emx-name-neon {
+  color: #fff;
+  text-shadow: 0 0 1px #fff, 0 0 4px var(--glow), 0 0 10px var(--glow), 0 0 18px var(--glow);
+}
+.emx-name-glow { filter: drop-shadow(0 0 4px var(--glow)) drop-shadow(0 0 1px var(--glow)); }
+.emx-name-neon.emx-name-glow { filter: none; }
+@keyframes emx-name-pan { to { background-position: -200% 0; } }
+@keyframes emx-name-shine { 0% { background-position: 150% 0, 0 0; } 60%, 100% { background-position: -100% 0, 0 0; } }
+
+/* ── Nameplates (behind a row in member, friend, DM and voice lists) ──── */
+.emx-plate-host { position: relative; isolation: isolate; }
+.emx-plate {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+  /* Fade in from the left so the avatar and the start of the name stay on a calm ground. */
+  -webkit-mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.35) 0%, #000 55%);
+  mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.35) 0%, #000 55%);
+  opacity: 0.9;
+}
+.emx-plate::before, .emx-plate::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+
+.emx-plate-neon-pulse { background: linear-gradient(90deg, rgb(255 62 165 / 0.10), rgb(255 62 165 / 0.28) 45%, rgb(34 160 255 / 0.38)); }
+.emx-plate-neon-pulse::after { box-shadow: inset -2px 0 0 rgb(34 160 255 / 0.9), inset 0 0 14px rgb(255 62 165 / 0.35); animation: emx-pulse 3s ease-in-out infinite; }
+
+.emx-plate-galaxy {
+  background:
+    radial-gradient(1px 1px at 20% 30%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 62% 70%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 82% 25%, #e9d5ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 92% 80%, #fff 50%, transparent 51%),
+    radial-gradient(120% 140% at 85% 50%, rgb(147 51 234 / 0.55), transparent 60%),
+    radial-gradient(80% 120% at 60% 100%, rgb(34 160 255 / 0.35), transparent 60%),
+    linear-gradient(90deg, rgb(20 10 40 / 0.2), rgb(40 16 80 / 0.6));
+}
+.emx-plate-galaxy::after { background: radial-gradient(60% 90% at 70% 40%, rgb(255 62 165 / 0.25), transparent 70%); animation: emx-drift 12s ease-in-out infinite alternate; }
+
+.emx-plate-cyberpunk {
+  background:
+    repeating-linear-gradient(115deg, transparent 0 10px, rgb(255 230 0 / 0.10) 10px 12px),
+    linear-gradient(90deg, rgb(255 0 128 / 0.08), rgb(255 0 128 / 0.30) 60%, rgb(0 240 255 / 0.30));
+}
+.emx-plate-cyberpunk::after { border-right: 3px solid rgb(255 230 0 / 0.85); box-shadow: inset 0 -1px 0 rgb(0 240 255 / 0.7); }
+
+.emx-plate-fire-ice { background: linear-gradient(90deg, rgb(255 94 58 / 0.10), rgb(255 120 40 / 0.35) 40%, rgb(120 90 255 / 0.25) 65%, rgb(80 200 255 / 0.40)); background-size: 200% 100%; animation: emx-bg-pan 10s ease-in-out infinite alternate; }
+
+.emx-plate-starfield {
+  background-color: rgb(8 8 24 / 0.5);
+  background-image:
+    radial-gradient(1px 1px at 10px 8px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 34px 22px, #cfe8ff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58px 12px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 80px 30px, #fff 50%, transparent 51%);
+  background-size: 96px 40px;
+  animation: emx-stars 18s linear infinite;
+}
+
+.emx-plate-holographic {
+  background: linear-gradient(110deg, rgb(255 154 213 / 0.30), rgb(160 196 255 / 0.30), rgb(170 255 230 / 0.30), rgb(255 240 170 / 0.30), rgb(255 154 213 / 0.30));
+  background-size: 300% 100%;
+  animation: emx-bg-pan 8s linear infinite;
+}
+.emx-plate-holographic::after { background: linear-gradient(100deg, transparent 40%, rgb(255 255 255 / 0.18) 50%, transparent 60%); background-size: 250% 100%; animation: emx-bg-pan 4s linear infinite; }
+
+.emx-plate-aurora {
+  background:
+    radial-gradient(80% 160% at 70% 120%, rgb(52 211 153 / 0.40), transparent 60%),
+    radial-gradient(70% 160% at 95% -20%, rgb(147 51 234 / 0.45), transparent 60%),
+    linear-gradient(90deg, rgb(6 30 40 / 0.1), rgb(6 40 60 / 0.5));
+  background-size: 160% 100%;
+  animation: emx-bg-pan 14s ease-in-out infinite alternate;
+}
+
+.emx-plate-glow-border::after { box-shadow: inset 0 0 0 1px rgb(var(--accent-primary) / 0.7), inset 0 0 16px rgb(var(--accent-primary) / 0.35); animation: emx-pulse 2.6s ease-in-out infinite; }
+.emx-plate-glow-border { -webkit-mask-image: none; mask-image: none; }
+
+.emx-plate-glass {
+  background: linear-gradient(120deg, rgb(255 255 255 / 0.10), rgb(255 255 255 / 0.03));
+  -webkit-mask-image: none; mask-image: none;
+}
+.emx-plate-glass::after { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), inset 0 0 0 1px rgb(255 255 255 / 0.08); }
+
+.emx-plate-digital {
+  background:
+    repeating-linear-gradient(0deg, rgb(34 211 238 / 0.14) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(90deg, rgb(34 211 238 / 0.14) 0 1px, transparent 1px 6px),
+    linear-gradient(90deg, transparent, rgb(6 182 212 / 0.30));
+}
+.emx-plate-digital::after { background: linear-gradient(90deg, transparent, rgb(165 243 252 / 0.35), transparent); width: 30%; animation: emx-scan 4s ease-in-out infinite; }
+
+.emx-plate-minimal { -webkit-mask-image: none; mask-image: none; }
+.emx-plate-minimal::after { top: auto; height: 2px; background: linear-gradient(90deg, transparent, #ff3ea5, #9333ea, #22a0ff, transparent); background-size: 200% 100%; animation: emx-bg-pan 5s linear infinite; }
+
+.emx-plate-winter {
+  background-color: rgb(120 180 255 / 0.12);
+  background-image:
+    radial-gradient(1.5px 1.5px at 12px 10px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 40px 26px, #fff 50%, transparent 51%),
+    radial-gradient(2px 2px at 66px 6px, #e0f2fe 50%, transparent 51%),
+    linear-gradient(90deg, transparent, rgb(147 197 253 / 0.30));
+  background-size: 80px 36px, 80px 36px, 80px 36px, 100% 100%;
+  animation: emx-snowdrift 10s linear infinite;
+}
+
+.emx-plate-sakura {
+  background-color: rgb(255 182 213 / 0.10);
+  background-image:
+    radial-gradient(3px 2px at 14px 10px, rgb(255 182 213 / 0.9) 50%, transparent 51%),
+    radial-gradient(2px 3px at 52px 26px, rgb(255 205 225 / 0.9) 50%, transparent 51%),
+    linear-gradient(90deg, transparent, rgb(244 114 182 / 0.30));
+  background-size: 84px 36px, 84px 36px, 100% 100%;
+  animation: emx-snowdrift 14s linear infinite;
+}
+
+.emx-plate-spooky {
+  background:
+    radial-gradient(60% 160% at 95% 50%, rgb(249 115 22 / 0.45), transparent 60%),
+    linear-gradient(90deg, rgb(30 10 40 / 0.2), rgb(88 28 135 / 0.45));
+}
+.emx-plate-spooky::after { background: radial-gradient(30% 80% at 90% 50%, rgb(253 186 116 / 0.35), transparent 70%); animation: emx-flicker 3.5s steps(1) infinite; }
+
+@keyframes emx-pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@keyframes emx-drift { to { transform: translate3d(-12%, 4%, 0) scale(1.1); } }
+@keyframes emx-bg-pan { to { background-position: -200% 0; } }
+@keyframes emx-stars { to { background-position: -96px 0; } }
+@keyframes emx-snowdrift { to { background-position: -80px 36px, -80px 36px, -80px 36px, 0 0; } }
+@keyframes emx-scan { 0% { transform: translateX(-100%); } 100% { transform: translateX(340%); } }
+@keyframes emx-flicker { 0%, 100% { opacity: 1; } 47% { opacity: 0.6; } 49% { opacity: 1; } 83% { opacity: 0.75; } }
+
+/* ── Avatar decorations ─────────────────────────────────────────────────── */
+.emx-deco {
+  position: absolute;
+  inset: -14%;
+  pointer-events: none;
+  border-radius: 9999px;
+  z-index: 1;
+}
+.emx-deco-ring {
+  position: absolute;
+  inset: 5%;
+  border-radius: 9999px;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--deco-w, 3px)), #000 calc(100% - var(--deco-w, 3px) + 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - var(--deco-w, 3px)), #000 calc(100% - var(--deco-w, 3px) + 1px));
+}
+.emx-deco-neon-ring .emx-deco-ring { background: conic-gradient(#ff3ea5, #9333ea, #22a0ff, #ff3ea5); filter: drop-shadow(0 0 4px #ff3ea5); animation: emx-spin 6s linear infinite; }
+.emx-deco-glow-pulse .emx-deco-ring { background: rgb(var(--accent-primary)); box-shadow: 0 0 12px 2px rgb(var(--accent-primary) / 0.8); -webkit-mask: none; mask: none; inset: 9%; opacity: 0.55; animation: emx-glow 2.4s ease-in-out infinite; }
+.emx-deco-flames .emx-deco-ring { --deco-w: 4px; background: conic-gradient(from 90deg, #ff5e3a, #ffb020, #ff3a1f, #ffd36b, #ff5e3a); filter: blur(0.6px) drop-shadow(0 0 5px #ff7a1a); animation: emx-spin 3s linear infinite, emx-flame 0.9s ease-in-out infinite alternate; }
+.emx-deco-cyber .emx-deco-ring { --deco-w: 3px; background: repeating-conic-gradient(#22d3ee 0 18deg, transparent 18deg 30deg); filter: drop-shadow(0 0 3px #22d3ee); animation: emx-spin 10s linear infinite; }
+.emx-deco-cyber .emx-deco-ring + .emx-deco-ring { inset: 0; --deco-w: 2px; background: repeating-conic-gradient(#ff2fbf 0 40deg, transparent 40deg 90deg); filter: drop-shadow(0 0 3px #ff2fbf); animation-direction: reverse; animation-duration: 14s; }
+.emx-deco-holo .emx-deco-ring { --deco-w: 4px; background: conic-gradient(#ffb3e1, #b3c8ff, #b3ffe9, #fff3b3, #ffb3e1); animation: emx-spin 5s linear infinite; }
+.emx-deco-orbit .emx-deco-ring { --deco-w: 1.5px; background: rgb(255 255 255 / 0.35); }
+.emx-deco-orbit .emx-deco-sat { position: absolute; inset: 5%; animation: emx-spin 4s linear infinite; }
+.emx-deco-orbit .emx-deco-sat::before { content: ''; position: absolute; top: -3px; left: 50%; width: 7px; height: 7px; margin-left: -3.5px; border-radius: 9999px; background: #22a0ff; box-shadow: 0 0 8px #22a0ff; }
+.emx-deco-pumpkin .emx-deco-ring { --deco-w: 3px; background: repeating-conic-gradient(#f97316 0 30deg, #7c3aed 30deg 45deg); filter: drop-shadow(0 0 4px #f97316); animation: emx-spin 16s linear infinite; }
+.emx-deco-hearts .emx-deco-ring,
+.emx-deco-stars .emx-deco-ring,
+.emx-deco-snowflakes .emx-deco-ring,
+.emx-deco-sparkle .emx-deco-ring,
+.emx-deco-leaves .emx-deco-ring { --deco-w: 2px; opacity: 0.85; }
+.emx-deco-hearts .emx-deco-ring { background: linear-gradient(135deg, #ff6b9a, #ff3ea5); }
+.emx-deco-stars .emx-deco-ring { background: linear-gradient(135deg, #ffe066, #ffb020); }
+.emx-deco-snowflakes .emx-deco-ring { background: linear-gradient(135deg, #e0f2fe, #7dd3fc); }
+.emx-deco-sparkle .emx-deco-ring { background: linear-gradient(135deg, #f5d0fe, #a78bfa); }
+.emx-deco-leaves .emx-deco-ring { background: linear-gradient(135deg, #f59e0b, #b45309); }
+.emx-deco-glyph {
+  position: absolute;
+  width: 26%;
+  height: 26%;
+  max-width: 22px;
+  max-height: 22px;
+  min-width: 8px;
+  min-height: 8px;
+  transform: translate(-50%, -50%);
+  animation: emx-bob 2.8s ease-in-out infinite;
+}
+.emx-deco-glyph svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 0 2px rgb(0 0 0 / 0.6)); }
+@keyframes emx-spin { to { transform: rotate(360deg); } }
+@keyframes emx-glow { 0%, 100% { opacity: 0.35; transform: scale(1); } 50% { opacity: 0.75; transform: scale(1.05); } }
+@keyframes emx-flame { to { transform: rotate(360deg) scale(1.04); } }
+@keyframes emx-bob { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-50%, -64%) scale(1.08); } }
+
+/* ── Profile card surfaces ──────────────────────────────────────────────── */
+.emx-surface { position: relative; isolation: isolate; }
+.emx-surface-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; border-radius: inherit; pointer-events: none; }
+.emx-surface-bg > * { position: absolute; inset: 0; }
+.emx-surface-img { width: 100%; height: 100%; object-fit: cover; }
+/* Keeps text readable over any background or image. */
+.emx-surface-scrim { background: linear-gradient(180deg, rgb(10 9 18 / 0.35), rgb(10 9 18 / 0.72)); }
+.emx-surface-animated { background-size: 240% 240% !important; animation: emx-bg-flow 16s ease-in-out infinite alternate; }
+@keyframes emx-bg-flow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+.emx-glass {
+  background: rgb(14 12 24 / 0.42);
+  border: 1px solid rgb(255 255 255 / 0.10);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+/* ── Profile effects (overlay when a profile opens) ─────────────────────── */
+.emx-fx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 5; border-radius: inherit; }
+.emx-fx > i { position: absolute; display: block; font-style: normal; opacity: 0; will-change: transform, opacity; animation-iteration-count: 3; animation-fill-mode: both; }
+.emx-fx-falling-stars > i { top: -10%; width: 2px; height: 34px; background: linear-gradient(180deg, transparent, #fff); border-radius: 2px; animation-name: emx-fx-streak; animation-timing-function: ease-in; transform: rotate(25deg); }
+.emx-fx-sparkles > i, .emx-fx-galaxy > i { width: 10px; height: 10px; background: radial-gradient(circle, #fff 0 18%, transparent 20%), conic-gradient(from 45deg, transparent 0 20deg, #fff 22deg 26deg, transparent 28deg 110deg, #fff 112deg 116deg, transparent 118deg 200deg, #fff 202deg 206deg, transparent 208deg 290deg, #fff 292deg 296deg, transparent 298deg); border-radius: 50%; animation-name: emx-fx-twinkle; animation-timing-function: ease-in-out; }
+.emx-fx-hearts > i { bottom: -12%; width: 14px; height: 14px; color: #ff4f9a; animation-name: emx-fx-rise; animation-timing-function: ease-out; }
+.emx-fx-hearts > i svg { width: 100%; height: 100%; filter: drop-shadow(0 0 4px rgb(255 79 154 / 0.7)); }
+.emx-fx-snow > i { top: -6%; width: 6px; height: 6px; border-radius: 50%; background: #fff; box-shadow: 0 0 6px rgb(255 255 255 / 0.8); animation-name: emx-fx-fall; animation-timing-function: linear; }
+.emx-fx-neon-particles > i { bottom: -6%; width: 5px; height: 5px; border-radius: 50%; background: #ff3ea5; box-shadow: 0 0 8px 2px #ff3ea5; animation-name: emx-fx-rise; animation-timing-function: ease-out; }
+.emx-fx-neon-particles > i:nth-child(even) { background: #22a0ff; box-shadow: 0 0 8px 2px #22a0ff; }
+.emx-fx-galaxy::before { content: ''; position: absolute; inset: -30%; background: conic-gradient(from 0deg, rgb(147 51 234 / 0.18), rgb(34 160 255 / 0.12), rgb(255 62 165 / 0.18), rgb(147 51 234 / 0.18)); filter: blur(30px); animation: emx-spin 24s linear infinite; }
+.emx-fx-light-streaks > i { left: -40%; width: 40%; height: 2px; background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.9), transparent); animation-name: emx-fx-sweep; animation-timing-function: ease-in-out; }
+.emx-fx-glow::before { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 60px rgb(var(--accent-primary) / 0.45); animation: emx-pulse 3s ease-in-out 3 both; }
+.emx-fx-confetti > i { top: -6%; width: 6px; height: 10px; border-radius: 1px; animation-name: emx-fx-confetti; animation-timing-function: linear; }
+.emx-fx-confetti > i:nth-child(4n+1) { background: #ff3ea5; }
+.emx-fx-confetti > i:nth-child(4n+2) { background: #22a0ff; }
+.emx-fx-confetti > i:nth-child(4n+3) { background: #ffe066; }
+.emx-fx-confetti > i:nth-child(4n) { background: #a78bfa; }
+.emx-fx-digital-rain > i { top: -40%; font: 600 11px/1.05 ui-monospace, SFMono-Regular, Menlo, monospace; color: #5eead4; text-shadow: 0 0 6px #14b8a6; writing-mode: vertical-rl; letter-spacing: 2px; animation-name: emx-fx-rain; animation-timing-function: linear; }
+@keyframes emx-fx-streak { 0% { opacity: 0; transform: translate(0, 0) rotate(25deg); } 10% { opacity: 1; } 100% { opacity: 0; transform: translate(-120px, 260px) rotate(25deg); } }
+@keyframes emx-fx-twinkle { 0%, 100% { opacity: 0; transform: scale(0.3) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+@keyframes emx-fx-rise { 0% { opacity: 0; transform: translateY(0) scale(0.6); } 15% { opacity: 0.95; } 100% { opacity: 0; transform: translateY(-320px) scale(1.1); } }
+@keyframes emx-fx-fall { 0% { opacity: 0; transform: translate(0, 0); } 10% { opacity: 0.9; } 50% { transform: translate(14px, 200px); } 100% { opacity: 0; transform: translate(-6px, 420px); } }
+@keyframes emx-fx-sweep { 0% { opacity: 0; transform: translateX(0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateX(460px); } }
+@keyframes emx-fx-confetti { 0% { opacity: 0; transform: translate(0, 0) rotate(0); } 8% { opacity: 1; } 100% { opacity: 0; transform: translate(30px, 440px) rotate(720deg); } }
+@keyframes emx-fx-rain { 0% { opacity: 0; transform: translateY(0); } 10% { opacity: 0.9; } 100% { opacity: 0; transform: translateY(560px); } }
+
+/* ── Motion off: reduced-motion or the Profile animations setting ──────── */
+@media (prefers-reduced-motion: reduce) {
+  .emx-name, .emx-plate, .emx-plate::before, .emx-plate::after,
+  .emx-deco *, .emx-deco-sat, .emx-surface-animated { animation: none !important; }
+  .emx-fx { display: none; }
+}
+html[data-emx-motion="off"] .emx-name,
+html[data-emx-motion="off"] .emx-plate,
+html[data-emx-motion="off"] .emx-plate::before,
+html[data-emx-motion="off"] .emx-plate::after,
+html[data-emx-motion="off"] .emx-deco *,
+html[data-emx-motion="off"] .emx-surface-animated { animation: none !important; }
+html[data-emx-motion="off"] .emx-fx { display: none; }
+/* A static shimmer would leave its highlight parked mid-name. */
+html[data-emx-motion="off"] .emx-name-shimmer { background-position: 200% 0, 0 0; }
+@media (prefers-reduced-motion: reduce) { .emx-name-shimmer { background-position: 200% 0, 0 0; } }

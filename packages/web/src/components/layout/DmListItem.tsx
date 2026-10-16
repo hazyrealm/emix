@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { DmChannel, User } from '@backspace/shared';
+import { Nameplate, StyledName, nameplateOf } from '../ui/profile/ProfileVisuals';
 import { Avatar } from '../ui/Avatar';
 import { AvatarStack } from '../ui/AvatarStack';
 import { Tooltip } from '../ui/Tooltip';
@@ -126,8 +127,9 @@ export function DmListItem({ dm, isActive, isUnread, user, onSelect, onClose, on
   const itemJsx = (
     <div
       onClick={handleClick}
-      className={containerClass}
+      className={`${containerClass} emx-plate-host`}
     >
+      {!isGroup && <Nameplate id={nameplateOf(firstOther)} />}
       {/* Selected accent bar */}
       {isActive && (
         <div
@@ -151,9 +153,7 @@ export function DmListItem({ dm, isActive, isUnread, user, onSelect, onClose, on
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1 min-w-0">
-          <span className={nameClass}>
-            {displayName}
-          </span>
+          <StyledName name={displayName} user={isGroup ? null : firstOther} className={nameClass} />
           {showGroupGlobe && (
             <Tooltip content={groupFederatedMembers.map(m => m.username).join(', ')} position="top">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className={fedBadgeClass}>

@@ -162,3 +162,46 @@ h1, h2, h3 { font-family: "DM Sans", "Inter", system-ui, sans-serif; letter-spac
 .doc a:not(.btn) { color: var(--cyan); }
 .doc-lead { margin-top: 18px !important; font-size: 19px; }
 .notice { padding: 18px 22px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); color: var(--fg) !important; font-size: 15px; line-height: 1.7; }
+
+/* ── Changelog (/changelog/) ─────────────────────────────────────────── */
+.changelog { max-width: 820px; }
+.changelog-status { margin-top: 28px !important; }
+.release {
+  margin-top: 28px;
+  padding: 26px 28px;
+  border-radius: 18px;
+  background: rgb(255 255 255 / 0.03);
+  border: 1px solid rgb(255 255 255 / 0.07);
+}
+.release-latest {
+  background: linear-gradient(160deg, rgb(255 62 165 / 0.07), rgb(147 51 234 / 0.06) 50%, rgb(34 160 255 / 0.06));
+  border-color: rgb(168 85 247 / 0.35);
+}
+.release-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.doc .release-head h2 { margin: 0; font-size: 26px; }
+.release-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 999px; color: #fff;
+  background: linear-gradient(100deg, #e0369a, #9333ea 55%, #2f7fff);
+}
+.release-date { color: var(--muted); font-size: 14px; }
+.doc .release-title { margin: 10px 0 2px; color: var(--fg); font-size: 18px; font-weight: 600; }
+.doc .release-summary { margin: 0 0 6px; }
+.release-section { margin-top: 18px; }
+.doc .release-section h3 { margin: 0 0 8px; }
+.chip {
+  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 999px; border: 1px solid;
+}
+.chip-new { color: #ff7cc4; background: rgb(255 62 165 / 0.12); border-color: rgb(255 62 165 / 0.35); }
+.chip-improved { color: #7cc6ff; background: rgb(34 160 255 / 0.12); border-color: rgb(34 160 255 / 0.35); }
+.chip-fixed { color: #6ee7a8; background: rgb(52 211 153 / 0.12); border-color: rgb(52 211 153 / 0.35); }
+.chip-performance { color: #fcd34d; background: rgb(245 158 11 / 0.12); border-color: rgb(245 158 11 / 0.35); }
+.chip-security { color: #c79bff; background: rgb(168 85 247 / 0.12); border-color: rgb(168 85 247 / 0.35); }
+.release ul { margin: 0; padding-left: 20px; color: var(--muted); }
+.release li { margin: 6px 0; line-height: 1.55; }
+.release-shot { display: block; width: 100%; margin-top: 10px; border-radius: 12px; border: 1px solid rgb(255 255 255 / 0.08); }
+@media (max-width: 640px) {
+  .release { padding: 20px 18px; }
+  .doc .release-head h2 { font-size: 22px; }
+}

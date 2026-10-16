@@ -287,5 +287,54 @@
     "stillDenied": "Der Mikrofonzugriff ist weiterhin verweigert. Erlaube ihn für diese Seite in den Browser- oder Geräteeinstellungen.",
     "notFound": "Kein Mikrofon gefunden.",
     "failed": "Auf das Mikrofon konnte nicht zugegriffen werden."
+  },
+  "devices": {
+    "audioMenu": "Mikrofon- und Lautsprecheroptionen",
+    "cameraMenu": "Kameraoptionen",
+    "microphone": "Mikrofon",
+    "speakers": "Lautsprecher",
+    "camera": "Kamera",
+    "inputLevel": "Eingangspegel",
+    "testSpeakers": "Testton abspielen",
+    "outputUnsupported": "Dieser Browser nutzt immer die Standardlautsprecher des Systems.",
+    "audioSettings": "Audioeinstellungen…",
+    "cameraSettings": "Kameraqualität und Einstellungen…",
+    "micPrompt": "Erlaube den Mikrofonzugriff, um deine Geräte zu sehen und auszuwählen.",
+    "micDenied": "Der Mikrofonzugriff ist blockiert. Erlaube ihn in den Browser- oder Systemeinstellungen.",
+    "allow": "Zugriff erlauben",
+    "noCameras": "Keine Kameras gefunden",
+    "cameraN": "Kamera {{n}}",
+    "switchLive": "Ein Wechsel ändert dein Video, ohne den Anruf zu verlassen.",
+    "cameraStarting": "Kamera wird gestartet…",
+    "cameraUnavailable": "Diese Kamera kann nicht geöffnet werden. Möglicherweise wird sie von einer anderen App verwendet."
+  },
+  "effects": {
+    "title": "Kameraeffekte",
+    "brightness": "Helligkeit",
+    "contrast": "Kontrast",
+    "saturation": "Sättigung",
+    "softFocus": "Weichzeichner",
+    "zoom": "Zoom",
+    "mirror": "Meine Vorschau spiegeln",
+    "systemBlur": "Hintergrundunschärfe (System)",
+    "localNote": "Wird auf diesem Gerät verarbeitet.",
+    "reset": "Originalkamera",
+    "filters": {
+      "none": "Original",
+      "warm": "Warm",
+      "cool": "Kühl",
+      "mono": "Schwarzweiß",
+      "vivid": "Lebendig",
+      "soft": "Weiches Licht",
+      "noir": "Noir"
+    }
+  },
+  "preview": {
+    "title": "Kamera prüfen",
+    "callTitle": "Bereit für einen Videoanruf?",
+    "privateNote": "Nur du siehst diese Vorschau. Es wird nichts gesendet, bevor du startest.",
+    "always": "Vor dem Einschalten der Kamera eine Vorschau zeigen",
+    "start": "Kamera einschalten",
+    "startCall": "Videoanruf starten"
   }
 }

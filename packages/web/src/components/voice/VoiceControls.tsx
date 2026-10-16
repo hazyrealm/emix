@@ -5,7 +5,8 @@ import { useSpaceStore } from '../../stores/spaceStore';
 import { ScreenShareSettingsPopover } from './ScreenShareSettingsPopover';
 import { ConnectionInfoPopover } from './ConnectionInfoPopover';
 import { hasPermissionBit, PermissionBits } from '../../utils/permissions';
-import { handleCameraAction, handleDisconnectAction, handleScreenShareAction, reconnectVoice } from '../../utils/voiceActions';
+import { handleDisconnectAction, handleScreenShareAction, reconnectVoice } from '../../utils/voiceActions';
+import { CameraDeviceMenu, MenuArrowButton, requestCameraToggle } from './DeviceControls';
 
 /**
  * VoiceControls renders the voice status + button rows.
@@ -28,6 +29,8 @@ export function VoiceControls() {
   const [showConnectionInfo, setShowConnectionInfo] = useState(false);
   const connectionBtnRef = useRef<HTMLButtonElement>(null);
   const shareBtnRef = useRef<HTMLButtonElement>(null);
+  const [camMenuOpen, setCamMenuOpen] = useState(false);
+  const camArrowRef = useRef<HTMLButtonElement>(null);
 
   const activeDmCall = useVoiceStore((s) => s.activeDmCall);
   const channelPerms = useSpaceStore((s) => currentVoiceChannelId ? s.channelPermissions.get(currentVoiceChannelId) : undefined);
@@ -165,8 +168,9 @@ export function VoiceControls() {
       {/* Row 2: Camera, Screen Share, Noise Suppression */}
       <div className="relative flex items-center gap-1 px-3 pb-2 pt-1">
         {canSpeak && (
+          <div className="flex-1 flex items-center gap-0.5">
           <button
-            onClick={handleCameraAction}
+            onClick={requestCameraToggle}
             className={`${btnBase} ${
               isCameraOn
                 ? 'bg-surface-base text-status-online hover:bg-surface-channel'
@@ -185,6 +189,15 @@ export function VoiceControls() {
               </svg>
             )}
           </button>
+          <MenuArrowButton
+            ref={camArrowRef}
+            open={camMenuOpen}
+            onClick={() => setCamMenuOpen((v) => !v)}
+            label={t('voice:devices.cameraMenu')}
+            className="w-5 h-[34px] !rounded-[4px]"
+          />
+          {camMenuOpen && <CameraDeviceMenu anchorRef={camArrowRef} onClose={() => setCamMenuOpen(false)} />}
+          </div>
         )}
 
         {canStream && (

@@ -134,5 +134,27 @@
   "devices": {
     "newAudioInput": "{{label}} detected. Choose it in Voice settings to switch.",
     "unnamedAudioInput": "New audio device"
+  },
+  "changelog": {
+    "eyebrow": "Emix update",
+    "title": "What's New in Emix",
+    "fullTitle": "Emix changelog",
+    "version": "Version {{version}}",
+    "combined": "Updates since your last visit: versions {{versions}}",
+    "gotIt": "Got it",
+    "viewFull": "View full changelog",
+    "newBadge": "New",
+    "more_one": "…and {{count}} more",
+    "more_other": "…and {{count}} more",
+    "unavailable": "The changelog can't be loaded right now. Try again later.",
+    "empty": "No updates have been published yet.",
+    "sections": {
+      "new": "New",
+      "improved": "Improved",
+      "fixed": "Fixed",
+      "performance": "Performance",
+      "security": "Security"
+    },
+    "siteLink": "getemix.com/changelog"
   }
 }

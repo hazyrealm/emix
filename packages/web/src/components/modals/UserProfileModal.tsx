@@ -25,6 +25,8 @@ import { replaceEmojiShortcodes, useEmojiShortcodeNames } from '../../utils/emoj
 import { getProfileMember, useProfileMemberRoles } from '../../hooks/useProfileMember';
 import { useShownStatus } from '../../hooks/useShownStatus';
 import { ProfileRoles } from '../ui/ProfileRoles';
+import { profileStyleOf } from '../../utils/profileStyle';
+import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName } from '../ui/profile/ProfileVisuals';
 
 type Tab = 'about' | 'friends' | 'spaces';
 
@@ -233,17 +235,21 @@ export function UserProfileModal() {
     { key: 'spaces', label: t('social:profile.tabs.mutualSpaces'), count: mutualSpaces.length },
   ];
 
+  const profileStyle = profileStyleOf(user);
+
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center animate-fade-in">
       <div className="absolute inset-0 bg-black/50" onClick={closeModal} />
-      <div className="relative max-w-lg w-full mx-4 max-h-[calc(calc(100*var(--app-vh))-2rem)] flex flex-col glass-modal rounded-lg animate-slide-up overflow-hidden">
+      <div className="relative max-w-lg w-full mx-4 max-h-[calc(calc(100*var(--app-vh))-2rem)] flex flex-col glass-modal rounded-lg animate-slide-up overflow-hidden emx-surface">
+        <ProfileBackgroundLayers background={profileStyle?.background} />
+        <ProfileEffect id={profileStyle?.effect} playKey={user.id} />
         {/* Banner */}
-        <div
-          className="h-[100px] flex-shrink-0 relative"
-          style={bannerSrc
-            ? { backgroundImage: `url(${bannerSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-            : { background: bannerFallback }
-          }
+        <ProfileBanner
+          src={bannerSrc}
+          frame={profileStyle?.banner}
+          fallback={bannerFallback}
+          height={190}
+          className="flex-shrink-0"
         >
           {/* Close button */}
           <button
@@ -254,7 +260,7 @@ export function UserProfileModal() {
               <path d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
             </svg>
           </button>
-        </div>
+        </ProfileBanner>
 
         {/* Header (avatar + name) */}
         <div className="px-5 flex-shrink-0 relative">
@@ -271,15 +277,17 @@ export function UserProfileModal() {
 
           <div className="mb-3">
             <ProfileSpaceNickname member={memberContext} />
-            <span className="text-[20px] font-bold leading-tight">{displayName}</span>
+            <StyledName name={displayName} user={user} className="text-[22px] font-bold leading-tight" />
             <div className="text-[14px] text-txt-tertiary mt-0.5">
               <Username username={user.username} showAt className="text-[14px] text-txt-tertiary" />
+              {profileStyle?.pronouns && <span className="text-txt-secondary"> · {profileStyle.pronouns}</span>}
             </div>
             {user.customStatus && (
               <div className="text-[13px] text-txt-secondary italic mt-1">
                 {replaceEmojiShortcodes(user.customStatus)}
               </div>
             )}
+            <ProfileExtras style={profileStyle} className="mt-2" />
           </div>
         </div>
 

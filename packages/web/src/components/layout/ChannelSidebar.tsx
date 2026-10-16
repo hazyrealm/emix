@@ -10,6 +10,7 @@ import { useShownStatus } from '../../hooks/useShownStatus';
 import { useInstanceStore } from '../../stores/instanceStore';
 import { VoiceChannel } from '../voice/VoiceChannel';
 import { VoiceControls } from '../voice/VoiceControls';
+import { useWhatsNewUnread } from '../../stores/changelogStore';
 import { useVoiceStore } from '../../stores/voiceStore';
 import { ProfileAvatar } from '../ui/ProfileAvatar';
 import { Mascot } from '../ui/Mascot';
@@ -866,6 +867,7 @@ function UserAreaPanel({
   const setInputDevice = useVoiceStore((s) => s.setInputDevice);
   const setOutputDevice = useVoiceStore((s) => s.setOutputDevice);
   const updateBadge = useInstanceUpdateBadge();
+  const whatsNewUnread = useWhatsNewUnread();
   const shownStatus = useShownStatus(user, '', user.status);
 
   // Shared hook drives lists, permission state, and live devicechange refresh.
@@ -1230,6 +1232,9 @@ function UserAreaPanel({
             </svg>
             {updateBadge && (
               <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-accent-amber" />
+            )}
+            {!updateBadge && whatsNewUnread && (
+              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-[#ff3ea5]" />
             )}
           </button>
         </div>

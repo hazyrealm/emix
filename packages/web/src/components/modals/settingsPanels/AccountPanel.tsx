@@ -17,6 +17,8 @@ import type { User, ChosenUserStatus, AvatarColor } from '@backspace/shared';
 import { describeError } from '../../../i18n/errors';
 
 const BIO_MAX_LENGTH = 190;
+/** Largest animated GIF accepted for an avatar or banner. */
+const ANIMATED_MAX_BYTES = 8 * 1024 * 1024;
 
 export function AccountPanel() {
   const { t } = useTranslation(['settings', 'common']);
@@ -174,18 +176,48 @@ export function AccountPanel() {
       })();
 
   // ── File selection handlers ──
-  const handleAvatarSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Animated GIFs skip the cropper (a canvas crop keeps only the first
+  // frame) and are uploaded as they are; the server scales them down with
+  // every frame kept. Framing comes from the Profile tab instead.
+  const uploadAnimated = async (file: File, kind: 'avatar' | 'banner'): Promise<boolean> => {
+    if (file.type !== 'image/gif') return false;
+    if (file.size > ANIMATED_MAX_BYTES) {
+      setError(t('settings:account.profile.animatedTooLarge', { max: ANIMATED_MAX_BYTES / (1024 * 1024) }));
+      return true;
+    }
+    const blobUrl = URL.createObjectURL(file);
+    const setPreview = kind === 'avatar' ? setAvatarPreview : setBannerPreview;
+    const setUploading = kind === 'avatar' ? setUploadingAvatar : setUploadingBanner;
+    setPreview(blobUrl);
+    setUploading(true);
+    try {
+      const tid = await useTransferStore.getState().startUpload(file, { tray: false });
+      const { filename } = await waitForTransferAttachment(tid);
+      (kind === 'avatar' ? setAvatarFilename : setBannerFilename)(filename);
+    } catch {
+      setError(t(kind === 'avatar' ? 'settings:account.profile.avatar.uploadFailed' : 'settings:account.profile.banner.uploadFailed'));
+      setPreview(null);
+      URL.revokeObjectURL(blobUrl);
+    } finally {
+      setUploading(false);
+    }
+    return true;
+  };
+
+  const handleAvatarSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (await uploadAnimated(file, 'avatar')) { if (avatarInputRef.current) avatarInputRef.current.value = ''; return; }
     const reader = new FileReader();
     reader.onload = () => setAvatarCropSrc(reader.result as string);
     reader.readAsDataURL(file);
     if (avatarInputRef.current) avatarInputRef.current.value = '';
   };
 
-  const handleBannerSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBannerSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (await uploadAnimated(file, 'banner')) { if (bannerInputRef.current) bannerInputRef.current.value = ''; return; }
     const reader = new FileReader();
     reader.onload = () => setBannerCropSrc(reader.result as string);
     reader.readAsDataURL(file);
@@ -340,15 +372,24 @@ export function AccountPanel() {
       )}
       {/* ── Profile Customization ── */}
       <div>
-        <div className="text-[11px] font-semibold text-txt-tertiary uppercase tracking-wider mb-1.5">
-          {t('settings:account.profile.sectionTitle')}
+        <div className="flex items-center justify-between mb-1.5">
+          <div className="text-[11px] font-semibold text-txt-tertiary uppercase tracking-wider">
+            {t('settings:account.profile.sectionTitle')}
+          </div>
+          <button
+            type="button"
+            onClick={() => useUIStore.getState().openModal('userSettings', { tab: 'profile' })}
+            className="text-xs font-medium text-accent-primary hover:underline"
+          >
+            {t('settings:account.profile.customize')}
+          </button>
         </div>
 
         {/* Live Preview Card */}
         <div className="rounded-lg overflow-hidden border border-white/[0.06] mb-4 bg-surface-channel">
           {/* Banner area */}
           <div
-            className="h-[80px]"
+            className="h-[120px]"
             style={displayBannerSrc
               ? { backgroundImage: `url(${displayBannerSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }
               : { background: bannerFallback }
@@ -805,8 +846,8 @@ export function AccountPanel() {
         onCropComplete={handleBannerCropComplete}
         title={t('settings:account.profile.banner.cropTitle')}
         cropShape="rect"
-        aspectRatio={3}
-        maxOutputDimension={1280}
+        aspectRatio={2.5}
+        maxOutputDimension={1920}
       />
 
       <DeleteAccountModal

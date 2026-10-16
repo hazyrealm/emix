@@ -1,4 +1,5 @@
 import type { User, ReplicatedInstance } from '@backspace/shared';
+import { normalizeProfileStyle } from '@backspace/shared/src/profileStyle.js';
 import { schema } from '../db/index.js';
 
 export function sanitizeUser(row: typeof schema.users.$inferSelect, isSelf = false): User {
@@ -13,6 +14,7 @@ export function sanitizeUser(row: typeof schema.users.$inferSelect, isSelf = fal
       accentColor: null,
       avatarColor: null,
       bio: null,
+      profileStyle: null,
       status: 'offline',
       customStatus: null,
       isAdmin: false,
@@ -45,6 +47,7 @@ export function sanitizeUser(row: typeof schema.users.$inferSelect, isSelf = fal
     accentColor: row.accentColor ?? null,
     avatarColor: (row.avatarColor as User['avatarColor']) ?? null,
     bio: row.bio ?? null,
+    profileStyle: row.profileStyle ? normalizeProfileStyle(row.profileStyle) : null,
     status: (row.status ?? 'offline') as User['status'],
     customStatus: row.customStatus,
     isAdmin: row.isAdmin === 1,

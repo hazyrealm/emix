@@ -134,5 +134,28 @@
   "devices": {
     "newAudioInput": "{{label}} detectado. Escolha-o nas configurações de voz para trocar.",
     "unnamedAudioInput": "Novo dispositivo de áudio"
+  },
+  "changelog": {
+    "eyebrow": "Atualização do Emix",
+    "title": "Novidades no Emix",
+    "fullTitle": "Registro de alterações do Emix",
+    "version": "Versão {{version}}",
+    "combined": "Atualizações desde a sua última visita: versões {{versions}}",
+    "gotIt": "Entendi",
+    "viewFull": "Ver registro completo",
+    "newBadge": "Novo",
+    "unavailable": "Não é possível carregar o registro de alterações agora. Tente mais tarde.",
+    "empty": "Ainda não foram publicadas atualizações.",
+    "siteLink": "getemix.com/changelog",
+    "sections": {
+      "new": "Novo",
+      "improved": "Melhorado",
+      "fixed": "Corrigido",
+      "performance": "Desempenho",
+      "security": "Segurança"
+    },
+    "more_one": "…e mais {{count}}",
+    "more_other": "…e mais {{count}}",
+    "more_many": "…e mais {{count}}"
   }
 }

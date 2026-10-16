@@ -17,9 +17,16 @@ getemix.com {
 	# /download/windows -> the current installer. Written by `emixctl set-desktop-release`.
 	import /srv/caddy-extra/*.caddy
 
+	# The changelog page's data: the release notes production is running,
+	# served by the app itself, so the page updates when a release is promoted.
+	handle /changelog.json {
+		rewrite * /api/changelog
+		reverse_proxy emix-prod-app:3000
+	}
+
 	handle {
 		root * /srv/site
-		header Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+		header Content-Security-Policy "default-src 'self'; img-src 'self' data: https://app.getemix.com; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
 		file_server
 	}
 }

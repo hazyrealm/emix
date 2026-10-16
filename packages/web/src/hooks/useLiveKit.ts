@@ -10,6 +10,7 @@ import {
   ConnectionState,
   ConnectionQuality,
   LocalAudioTrack,
+  LocalVideoTrack,
   LocalTrackPublication,
   DisconnectReason,
   TrackEvent,
@@ -86,6 +87,13 @@ function toVoiceConnectionQuality(quality: ConnectionQuality): VoiceConnectionQu
 
 export function getActiveRoom(): Room | null {
   return _activeRoom;
+}
+
+let _refreshParticipants: (() => void) | null = null;
+
+/** Re-read the room's tracks into the store (after a camera processor starts or stops). */
+export function refreshVoiceParticipants(): void {
+  _refreshParticipants?.();
 }
 
 export interface ParticipantInfo {
@@ -398,7 +406,13 @@ export function useLiveKit() {
         if (!mt || mt.readyState !== 'live') return;
 
         if (pub.source === Track.Source.Microphone) audioTrack = mt;
-        else if (pub.source === Track.Source.Camera && p.isCameraEnabled) { videoTrack = mt; lkVideoTrack = track; }
+        else if (pub.source === Track.Source.Camera && p.isCameraEnabled) {
+          // Your own tile shows the camera as others receive it: with effects
+          // applied when a processor runs (utils/cameraEffects.ts).
+          const processed = isLocal ? (track as LocalVideoTrack).getProcessor?.()?.processedTrack : undefined;
+          videoTrack = processed && processed.readyState === 'live' ? processed : mt;
+          lkVideoTrack = track;
+        }
         else if (pub.source === Track.Source.ScreenShare) { screenTrack = mt; lkScreenTrack = track; }
         else if (pub.source === Track.Source.ScreenShareAudio) screenAudioTrack = mt;
       });
@@ -501,6 +515,11 @@ export function useLiveKit() {
         updateParticipants();
       }
     } catch { }
+  }, [updateParticipants]);
+
+  useEffect(() => {
+    _refreshParticipants = updateParticipants;
+    return () => { if (_refreshParticipants === updateParticipants) _refreshParticipants = null; };
   }, [updateParticipants]);
 
   // Handle Input Device & Mute Logic via AudioManager

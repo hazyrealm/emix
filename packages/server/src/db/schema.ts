@@ -26,6 +26,10 @@ export const users = sqliteTable('users', {
   accentColor: text('accent_color'),
   avatarColor: text('avatar_color'),
   bio: text('bio'),
+  /** Emix profile customization, a JSON document (`normalizeProfileStyle` in @backspace/shared). Local only: not relayed to peers. */
+  profileStyle: text('profile_style'),
+  /** The newest changelog version this user acknowledged in the What's New dialog; null = never. */
+  changelogAck: text('changelog_ack'),
   isDeleted: integer('is_deleted').default(0),
   discoverable: integer('discoverable').default(1),
   profileUpdatedAt: integer('profile_updated_at'),
