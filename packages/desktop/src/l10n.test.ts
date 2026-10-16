@@ -27,14 +27,14 @@ describe('resolveDesktopLanguage', () => {
 
 describe('translateDesktop', () => {
   it('returns the string for the language', () => {
-    expect(translateDesktop('en', 'tray.show')).toBe('Show Backspace');
-    expect(translateDesktop('ru', 'tray.show')).toBe('Показать Backspace');
-    expect(translateDesktop('de', 'tray.show')).toBe('Backspace anzeigen');
+    expect(translateDesktop('en', 'tray.show')).toBe('Show Emix');
+    expect(translateDesktop('ru', 'tray.show')).toBe('Показать Emix');
+    expect(translateDesktop('de', 'tray.show')).toBe('Emix anzeigen');
   });
 
   it('interpolates a version into the download item', () => {
-    expect(translateDesktop('en', 'update.downloadVersion', { version: '1.2.3' })).toBe('Download Backspace 1.2.3…');
-    expect(translateDesktop('de', 'update.downloadVersion', { version: '1.2.3' })).toBe('Backspace 1.2.3 herunterladen…');
+    expect(translateDesktop('en', 'update.downloadVersion', { version: '1.2.3' })).toBe('Download Emix 1.2.3…');
+    expect(translateDesktop('de', 'update.downloadVersion', { version: '1.2.3' })).toBe('Emix 1.2.3 herunterladen…');
   });
 });
 

@@ -3,12 +3,12 @@
   "version": "1.11.0",
   "private": true,
   "license": "AGPL-3.0-only",
-  "description": "Backspace",
+  "description": "Emix",
   "author": {
-    "name": "Jannis Braun",
-    "email": "backspace@backspace.chat"
+    "name": "Emix",
+    "email": "155575468+hazyrealm@users.noreply.github.com"
   },
-  "homepage": "https://github.com/TheZwiss/backspace",
+  "homepage": "https://github.com/hazyrealm/emix",
   "main": "dist/main.js",
   "desktopName": "io.github.TheZwiss.backspace.desktop",
   "scripts": {

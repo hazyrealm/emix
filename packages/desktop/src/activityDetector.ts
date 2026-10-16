@@ -35,7 +35,7 @@ interface VersionedDictionary {
 
 const VALID_TYPES = new Set(['playing', 'listening', 'watching', 'streaming']);
 const POLL_INTERVAL_MS = 15_000;
-const REMOTE_URL = 'https://raw.githubusercontent.com/TheZwiss/backspace/main/packages/desktop/resources/games.json';
+const REMOTE_URL = 'https://raw.githubusercontent.com/hazyrealm/emix/main/packages/desktop/resources/games.json';
 
 // ─── Module state ───────────────────────────────────────────────────────────
 

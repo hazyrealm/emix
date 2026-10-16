@@ -63,9 +63,9 @@ import {
 import { getDesktopLanguage, isDesktopLanguage, saveStoredLanguage, translateDesktop } from './l10n';
 
 // Override Electron's package.json-derived app name so userData lives at
-// "<appData>/Backspace" instead of leaking the monorepo's "@backspace/desktop"
+// "<appData>/Emix" instead of leaking the monorepo's "@backspace/desktop"
 // package name. Must run before any app.getPath('userData') consumer.
-app.setName('Backspace');
+app.setName('Emix');
 
 // One-time migration from the historical scoped path. After the move the old
 // folder is gone, so subsequent launches hit the old-missing no-op branch.
@@ -74,7 +74,7 @@ app.setName('Backspace');
   const oldParent = path.join(appDataDir, '@backspace');
   const result = migrateUserData({
     oldDir: path.join(oldParent, 'desktop'),
-    newDir: path.join(appDataDir, 'Backspace'),
+    newDir: path.join(appDataDir, 'Emix'),
     oldParent,
   });
   if (result.kind === 'migrated') {
@@ -95,7 +95,11 @@ const knownInstanceOrigins = new Set<string>();
 // ─── AGPL-3.0 § 13 source offer ─────────────────────────────────────────────
 // Upstream fallback for the "Source code" menu items and the About panel.
 // Used when the connected instance can't be reached or advertises no source URL.
-const UPSTREAM_SOURCE_URL = 'https://github.com/TheZwiss/backspace';
+// Emix ships a modified build, so its own repository is the Corresponding Source.
+/** The instance the Emix desktop app opens when the user has not picked another. */
+const EMIX_DEFAULT_INSTANCE_URL = 'https://app.getemix.com';
+
+const UPSTREAM_SOURCE_URL = 'https://github.com/hazyrealm/emix';
 
 /**
  * Resolve the Corresponding Source URL for the instance the desktop app is
@@ -103,7 +107,7 @@ const UPSTREAM_SOURCE_URL = 'https://github.com/TheZwiss/backspace';
  * Falls back to the upstream repo when no instance is loaded or the probe fails.
  */
 async function resolveSourceUrl(): Promise<string> {
-  let base: string | null = process.env.BACKSPACE_URL ?? loadInstanceUrl();
+  let base: string | null = process.env.BACKSPACE_URL ?? loadInstanceUrl() ?? EMIX_DEFAULT_INSTANCE_URL;
   if (!base && mainWindow && !mainWindow.isDestroyed()) {
     const current = mainWindow.webContents.getURL();
     if (current.startsWith('http://') || current.startsWith('https://')) base = current;
@@ -264,7 +268,7 @@ function applyLoginItemSettings(openAtLogin: boolean, startMinimized: boolean): 
       enabled: openAtLogin,
       path: process.execPath,
       args: startMinimized ? ['--hidden'] : [],
-      name: 'Backspace',
+      name: 'Emix',
     });
   } else {
     // Linux: setLoginItemSettings creates ~/.config/autostart/<name>.desktop.
@@ -364,7 +368,7 @@ function createWindow(): void {
       : {}),
     minWidth: 940,
     minHeight: 500,
-    title: 'Backspace',
+    title: 'Emix',
     icon: path.join(__dirname, '..', 'build', 'icon.png'),
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'hidden',
     ...(process.platform !== 'darwin' ? {
@@ -395,17 +399,12 @@ function createWindow(): void {
   // URL resolution priority:
   // 1. BACKSPACE_URL env var (managed deployments)
   // 2. Saved instance URL from picker
-  // 3. No URL → show instance picker
+  // 3. Emix: the getemix.com instance (no picker on first launch)
   const envUrl = process.env.BACKSPACE_URL;
   if (envUrl) {
     mainWindow.loadURL(envUrl);
   } else {
-    const savedUrl = loadInstanceUrl();
-    if (savedUrl) {
-      mainWindow.loadURL(savedUrl);
-    } else {
-      mainWindow.loadFile(getPickerPath(), { query: { lang: getDesktopLanguage() } });
-    }
+    mainWindow.loadURL(loadInstanceUrl() ?? EMIX_DEFAULT_INSTANCE_URL);
   }
 
   mainWindow.once('ready-to-show', () => {
@@ -528,7 +527,7 @@ function createTray(): void {
   const icon = loadTrayIcon();
   tray = new Tray(icon);
 
-  tray.setToolTip('Backspace');
+  tray.setToolTip('Emix');
   // Context menu is set by the recoveryStore subscriber in app.whenReady,
   // which keeps the menu in sync with update/recovery state.
 
@@ -866,7 +865,7 @@ function registerIpcHandlers(): void {
       // executableWillLaunchAtLogin to honour Task Manager's StartupApproved state.
       const osState = app.getLoginItemSettings({ path: process.execPath });
       const ownEntry = osState.launchItems?.find(
-        (item) => item.name === 'Backspace' || item.path?.toLowerCase() === process.execPath.toLowerCase(),
+        (item) => item.name === 'Emix' || item.path?.toLowerCase() === process.execPath.toLowerCase(),
       );
       // When the Run entry exists, its args are the source of truth for startMinimized.
       // When the entry is absent (autostart is off), there is no OS state to read, so we
@@ -905,7 +904,7 @@ function registerIpcHandlers(): void {
     if (process.platform === 'win32') {
       const osState = app.getLoginItemSettings({ path: process.execPath });
       const ownEntry = osState.launchItems?.find(
-        (item) => item.name === 'Backspace' || item.path?.toLowerCase() === process.execPath.toLowerCase(),
+        (item) => item.name === 'Emix' || item.path?.toLowerCase() === process.execPath.toLowerCase(),
       );
       currentOpenAtLogin = osState.executableWillLaunchAtLogin ?? false;
       // See `get-auto-launch-settings`: when the entry is absent, fall back to disk
@@ -1026,7 +1025,7 @@ function notifyAboutUpdate(
 
   if (snapshot.status.phase === 'ready' && snapshot.capability === 'auto') {
     showNotification(
-      'Backspace update ready',
+      'Emix update ready',
       `Click to restart and install version ${version}.`,
       () => updater.quitAndInstall(),
     );
@@ -1034,7 +1033,7 @@ function notifyAboutUpdate(
   }
 
   showNotification(
-    `Backspace ${version} is available`,
+    `Emix ${version} is available`,
     'Click to open the download page.',
     () => { void shell.openExternal(RELEASES_URL); },
   );
@@ -1421,7 +1420,7 @@ if (!gotTheLock) {
 
     // AGPL-3.0 § 13: native About panel advertises the version + source repo.
     app.setAboutPanelOptions({
-      applicationName: 'Backspace',
+      applicationName: 'Emix',
       applicationVersion: app.getVersion(),
       copyright: `AGPL-3.0-only · Source: ${UPSTREAM_SOURCE_URL}`,
       website: UPSTREAM_SOURCE_URL,

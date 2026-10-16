@@ -21,7 +21,7 @@ export type DesktopLanguage = 'en' | 'ru' | 'de' | 'pt' | 'zh';
 const DESKTOP_LANGUAGES: readonly DesktopLanguage[] = ['en', 'ru', 'de', 'pt', 'zh'];
 
 const en = {
-  'tray.show': 'Show Backspace',
+  'tray.show': 'Show Emix',
   'tray.hide': 'Hide',
   'tray.changeInstance': 'Change Instance',
   'tray.sourceCode': 'Source code (AGPL)',
@@ -35,7 +35,7 @@ const en = {
   'update.ready': 'Update Ready',
   'update.available': 'Update Available',
   'update.restartToInstall': 'Restart to Install Update',
-  'update.downloadVersion': 'Download Backspace {version}…',
+  'update.downloadVersion': 'Download Emix {version}…',
   'update.download': 'Download the Update…',
 } as const;
 
@@ -44,7 +44,7 @@ export type DesktopStringKey = keyof typeof en;
 type Catalog = Record<DesktopStringKey, string>;
 
 const ru: Catalog = {
-  'tray.show': 'Показать Backspace',
+  'tray.show': 'Показать Emix',
   'tray.hide': 'Скрыть',
   'tray.changeInstance': 'Сменить сервер',
   'tray.sourceCode': 'Исходный код (AGPL)',
@@ -58,12 +58,12 @@ const ru: Catalog = {
   'update.ready': 'Обновление готово',
   'update.available': 'Доступно обновление',
   'update.restartToInstall': 'Перезапустить для установки',
-  'update.downloadVersion': 'Скачать Backspace {version}…',
+  'update.downloadVersion': 'Скачать Emix {version}…',
   'update.download': 'Скачать обновление…',
 };
 
 const de: Catalog = {
-  'tray.show': 'Backspace anzeigen',
+  'tray.show': 'Emix anzeigen',
   'tray.hide': 'Ausblenden',
   'tray.changeInstance': 'Instanz wechseln',
   'tray.sourceCode': 'Quellcode (AGPL)',
@@ -77,12 +77,12 @@ const de: Catalog = {
   'update.ready': 'Update bereit',
   'update.available': 'Update verfügbar',
   'update.restartToInstall': 'Neu starten und Update installieren',
-  'update.downloadVersion': 'Backspace {version} herunterladen…',
+  'update.downloadVersion': 'Emix {version} herunterladen…',
   'update.download': 'Update herunterladen…',
 };
 
 const zh: Catalog = {
-  'tray.show': '显示 Backspace',
+  'tray.show': '显示 Emix',
   'tray.hide': '隐藏',
   'tray.changeInstance': '切换实例',
   'tray.sourceCode': '源代码 (AGPL)',
@@ -96,12 +96,12 @@ const zh: Catalog = {
   'update.ready': '更新已就绪',
   'update.available': '有可用更新',
   'update.restartToInstall': '重启以安装更新',
-  'update.downloadVersion': '下载 Backspace {version}…',
+  'update.downloadVersion': '下载 Emix {version}…',
   'update.download': '下载更新…',
 };
 
 const pt: Catalog = {
-  'tray.show': 'Mostrar Backspace',
+  'tray.show': 'Mostrar Emix',
   'tray.hide': 'Ocultar',
   'tray.changeInstance': 'Mudar instância',
   'tray.sourceCode': 'Código-fonte (AGPL)',
@@ -115,7 +115,7 @@ const pt: Catalog = {
   'update.ready': 'Atualização pronta',
   'update.available': 'Atualização disponível',
   'update.restartToInstall': 'Reiniciar para instalar',
-  'update.downloadVersion': 'Baixar Backspace {version}…',
+  'update.downloadVersion': 'Baixar Emix {version}…',
   'update.download': 'Baixar atualização…',
 };
 
