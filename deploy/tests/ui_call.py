@@ -62,15 +62,21 @@ async def login(ctx, user):
     return page
 
 async def share(page, preset):
-    """Open the share setup, pick a preset, choose the (auto-selected) screen, start."""
+    """Real flow: Share Screen -> Choose (auto-selected screen) -> Stream Settings -> preset -> Start stream."""
     await page.locator('[title="Share Screen"]').first.click()
     await page.wait_for_timeout(1500)
-    if preset:
-        await page.get_by_role("button", name=preset, exact=True).first.click()
     await page.get_by_role("button", name="Choose", exact=True).first.click()
     await page.wait_for_timeout(3000)
+    if preset:
+        await page.get_by_role("button", name="Stream Settings").first.click()
+        await page.wait_for_timeout(800)
+        await page.get_by_role("button", name=preset, exact=True).first.click()
+        await page.wait_for_timeout(500)
+        await page.screenshot(path="/out/share-settings.png")
+        await page.keyboard.press("Escape")
+        await page.wait_for_timeout(500)
     await page.get_by_role("button", name="Start stream", exact=True).first.click()
-    await page.wait_for_timeout(2000)
+    await page.wait_for_timeout(2500)
     return True
 
 def summarize(label, a, b, secs):
@@ -111,6 +117,13 @@ async def main():
         await bob.locator('[title="Turn On Camera"]').first.click()
         if SHARE:
             print("alice share:", await share(alice, SHARE_PRESET)); print("bob share:", await share(bob, SHARE_PRESET))
+            # Screen shares are opt-in: each viewer clicks Watch, as a person would.
+            for viewer in (alice, bob):
+                await viewer.wait_for_timeout(1500)
+                w = viewer.get_by_role("button", name="Watch Stream")
+                if not await w.count(): w = viewer.get_by_role("button", name="Watch", exact=True)
+                print("watch buttons:", await w.count())
+                if await w.count(): await w.first.click()
         await alice.wait_for_timeout(SECONDS * 1000)
         a1, b1 = await alice.evaluate(STATS), await bob.evaluate(STATS)
         await alice.wait_for_timeout(10_000)
