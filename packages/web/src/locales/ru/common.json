@@ -1,5 +1,5 @@
 {
-  "appName": "Backspace",
+  "appName": "Emix",
   "actions": {
     "save": "Сохранить",
     "cancel": "Отмена",
@@ -119,7 +119,7 @@
     "details": "Подробности ошибки"
   },
   "app": {
-    "loading": "Загрузка Backspace"
+    "loading": "Загрузка Emix"
   },
   "chrome": {
     "toggleMemberList": "Показать или скрыть список участников",

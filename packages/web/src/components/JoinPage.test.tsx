@@ -123,7 +123,7 @@ describe('JoinPage for a space joined by request', () => {
     expect(await screen.findByText('Request sent to Quiet Harbor')).toBeInTheDocument();
     expect(screen.getByText('A manager will review it. The space appears in your list once they approve.')).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'Back to Backspace' }));
+    await user.click(screen.getByRole('button', { name: 'Back to Emix' }));
     expect(mockNavigate).toHaveBeenCalledWith('/channels/@me');
   });
 

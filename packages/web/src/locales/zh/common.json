@@ -1,5 +1,5 @@
 {
-  "appName": "Backspace",
+  "appName": "Emix",
   "actions": {
     "save": "保存",
     "cancel": "取消",
@@ -119,7 +119,7 @@
     "details": "错误详情"
   },
   "app": {
-    "loading": "正在加载 Backspace"
+    "loading": "正在加载 Emix"
   },
   "chrome": {
     "toggleMemberList": "切换成员列表显示",

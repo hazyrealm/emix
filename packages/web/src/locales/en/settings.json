@@ -288,10 +288,10 @@
   },
   "keybinds": {
     "portal": {
-      "description": "On Wayland, the desktop manages all Backspace shortcuts. Assign, change or remove keys in the system's keyboard shortcut settings, under Backspace. Local browser/X11 bindings are not used here.",
+      "description": "On Wayland, the desktop manages all Emix shortcuts. Assign, change or remove keys in the system's keyboard shortcut settings, under Emix. Local browser/X11 bindings are not used here.",
       "idle": "Preparing first-time registration of all available actions.",
       "pending": "Connecting to the desktop portal. If a system dialog appears, choose shortcuts for the actions you want to use.",
-      "ready": "Backspace is registered. Open your system's keyboard shortcut settings to change or remove assignments. The list below is read-only and refreshes when you return to Backspace.",
+      "ready": "Emix is registered. Open your system's keyboard shortcut settings to change or remove assignments. The list below is read-only and refreshes when you return to Emix.",
       "unavailable": "The portal is unavailable, permission was denied, or the session ended. A Global Shortcuts portal backend is required. Local bindings are disabled on Wayland.",
       "retry": "Register or reconnect shortcuts",
       "assigned": "System shortcut: {{shortcut}}",
@@ -333,7 +333,7 @@
     },
     "accessibility": {
       "title": "Accessibility Permission Required",
-      "description": "Backspace needs Accessibility permission for global shortcuts to work outside the app.",
+      "description": "Emix needs Accessibility permission for global shortcuts to work outside the app.",
       "grant": "Grant Permission"
     },
     "hookError": {
@@ -350,7 +350,7 @@
     "autoLaunch": {
       "openAtLogin": {
         "label": "Start at boot",
-        "description": "Automatically launch Backspace when you log in"
+        "description": "Automatically launch Emix when you log in"
       },
       "startMinimized": {
         "label": "Start minimized",
@@ -358,7 +358,7 @@
       }
     },
     "updates": {
-      "appName": "Backspace Desktop",
+      "appName": "Emix Desktop",
       "versionLabel": "Version {{version}}",
       "checking": "Checking for updates…",
       "checkingShort": "Checking…",
@@ -377,7 +377,7 @@
       "download": "Download",
       "restart": "Restart",
       "manualNote": "This build cannot install updates itself, so new versions are downloaded from GitHub and replace the app by hand. See the release notes for the steps on your platform.",
-      "externalNote": "Flatpak applies updates atomically outside the app. Use your software manager or the <code>flatpak update</code> command to update Backspace."
+      "externalNote": "Flatpak applies updates atomically outside the app. Use your software manager or the <code>flatpak update</code> command to update Emix."
     },
     "instance": {
       "current": "Currently connected instance",

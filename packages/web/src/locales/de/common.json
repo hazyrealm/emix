@@ -1,5 +1,5 @@
 {
-  "appName": "Backspace",
+  "appName": "Emix",
   "actions": {
     "save": "Speichern",
     "cancel": "Abbrechen",
@@ -119,7 +119,7 @@
     "details": "Fehlerdetails"
   },
   "app": {
-    "loading": "Backspace wird geladen"
+    "loading": "Emix wird geladen"
   },
   "chrome": {
     "toggleMemberList": "Mitgliederliste ein- oder ausblenden",

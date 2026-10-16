@@ -1,7 +1,7 @@
 {
   "general": {
     "title": "Allgemein",
-    "description": "Richte deine Backspace-Instanz ein. Diese Einstellungen gelten für alle Nutzer.",
+    "description": "Richte deine Emix-Instanz ein. Diese Einstellungen gelten für alle Nutzer.",
     "instanceName": {
       "label": "Instanzname",
       "description": "Der Name, der auf der Anmeldeseite und gegenüber föderierten Instanzen angezeigt wird.",

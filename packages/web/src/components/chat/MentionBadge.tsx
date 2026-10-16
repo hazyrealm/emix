@@ -5,7 +5,7 @@ import { useChannelUser } from '../../utils/channelUser';
 import { spaceMemberName } from '../../utils/identity';
 
 /** Resolved mention without a role colour (a DM, or a member with no role). */
-const ACCENT_COLOR = '#7c6cf6';
+const ACCENT_COLOR = '#9333ea';
 /** A mention this client cannot place in the channel. */
 const UNRESOLVED_COLOR = '#a0a0aa';
 

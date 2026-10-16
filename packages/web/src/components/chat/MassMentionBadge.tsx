@@ -4,7 +4,7 @@ import type { MassMentionKeyword } from '@backspace/shared/src/mentions';
 import { useSpaceStore } from '../../stores/spaceStore';
 
 /** `@everyone` / `@here`, and a role with no colour of its own. */
-const ACCENT_COLOR = '#7c6cf6';
+const ACCENT_COLOR = '#9333ea';
 /** A role token this client cannot place in the channel's space. */
 const UNRESOLVED_COLOR = '#a0a0aa';
 const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;

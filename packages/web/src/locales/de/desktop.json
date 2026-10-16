@@ -4,14 +4,14 @@
     "dismiss": "Dieses Update ausblenden",
     "failed": {
       "title": "Update konnte nicht installiert werden",
-      "body": "Backspace {{version}} wurde heruntergeladen, aber die Installation ist fehlgeschlagen. Du kannst es stattdessen von Hand installieren."
+      "body": "Emix {{version}} wurde heruntergeladen, aber die Installation ist fehlgeschlagen. Du kannst es stattdessen von Hand installieren."
     },
     "ready": {
       "title": "Update bereit",
-      "body": "Backspace {{version}} ist heruntergeladen und bereit zur Installation."
+      "body": "Emix {{version}} ist heruntergeladen und bereit zur Installation."
     },
     "available": {
-      "title": "Backspace {{version}} ist verfügbar",
+      "title": "Emix {{version}} ist verfügbar",
       "body": "Dieser Build kann sich nicht selbst aktualisieren. Lade die neue Version herunter, um darauf umzusteigen.",
       "bodyWithCurrent": "Du verwendest {{currentVersion}}. Dieser Build kann sich nicht selbst aktualisieren. Lade die neue Version herunter, um darauf umzusteigen."
     },

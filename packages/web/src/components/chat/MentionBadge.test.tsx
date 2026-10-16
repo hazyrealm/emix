@@ -77,7 +77,7 @@ describe('MentionBadge in a DM (#338)', () => {
   it('uses the accent colour in a DM, never a role colour from a loaded space roster', () => {
     useSpaceStore.setState({ dmChannels: [DM], members: [member('space-1', KAI, [RED_ROLE])] });
     render(<MentionBadge userId={KAI.id} channelId={DM.id} />);
-    expect(screen.getByText('@Kai')).toHaveStyle({ color: '#7c6cf6' });
+    expect(screen.getByText('@Kai')).toHaveStyle({ color: '#9333ea' });
   });
 
   it('opens the profile without a space member context in a DM', () => {

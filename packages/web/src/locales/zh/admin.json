@@ -1,7 +1,7 @@
 {
   "general": {
     "title": "常规",
-    "description": "配置您的 Backspace 实例。这些设置将影响所有用户。",
+    "description": "配置您的 Emix 实例。这些设置将影响所有用户。",
     "instanceName": {
       "label": "实例名称",
       "description": "显示在登录页面和对等联邦实例上的名称。",

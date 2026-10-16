@@ -1,7 +1,7 @@
 {
   "general": {
     "title": "Geral",
-    "description": "Configure sua instância do Backspace. Estas configurações afetam todos os usuários.",
+    "description": "Configure sua instância do Emix. Estas configurações afetam todos os usuários.",
     "instanceName": {
       "label": "Nome da instância",
       "description": "O nome exibido na página de login e para instâncias federadas.",

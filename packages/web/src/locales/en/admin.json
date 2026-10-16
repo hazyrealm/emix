@@ -1,7 +1,7 @@
 {
   "general": {
     "title": "General",
-    "description": "Configure your Backspace instance. These settings affect all users.",
+    "description": "Configure your Emix instance. These settings affect all users.",
     "instanceName": {
       "label": "Instance Name",
       "description": "The name shown on the login page and to federated instances.",

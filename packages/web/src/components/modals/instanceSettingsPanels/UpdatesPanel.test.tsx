@@ -54,7 +54,7 @@ describe('UpdatesPanel, what is running', () => {
   it('names the version, the commit, and how the instance gets its image', async () => {
     updateStatus.mockResolvedValue(status());
     render(<UpdatesPanel />);
-    expect(await screen.findByText('Backspace 1.0.3')).toBeInTheDocument();
+    expect(await screen.findByText('Emix 1.0.3')).toBeInTheDocument();
     expect(screen.getByText(/commit 73cc4fd/)).toBeInTheDocument();
     expect(screen.getByText(/prebuilt image/)).toBeInTheDocument();
   });
@@ -149,7 +149,7 @@ describe('UpdatesPanel, the lookup could not be made', () => {
   it('still shows the running version when GitHub is unreachable', async () => {
     updateStatus.mockResolvedValue(status({ state: 'unknown', reason: 'unreachable', latest: null }));
     render(<UpdatesPanel />);
-    expect(await screen.findByText('Backspace 1.0.3')).toBeInTheDocument();
+    expect(await screen.findByText('Emix 1.0.3')).toBeInTheDocument();
     expect(screen.getByText('Could not check for updates')).toBeInTheDocument();
     expect(screen.getByText(/says nothing about whether an/)).toBeInTheDocument();
   });
@@ -178,7 +178,7 @@ describe('UpdatesPanel, the lookup could not be made', () => {
 
     updateStatus.mockResolvedValue(status());
     await userEvent.click(screen.getByRole('button', { name: 'Try again' }));
-    expect(await screen.findByText('Backspace 1.0.3')).toBeInTheDocument();
+    expect(await screen.findByText('Emix 1.0.3')).toBeInTheDocument();
   });
 });
 
@@ -196,7 +196,7 @@ describe('UpdatesPanel, a stale store error must not eclipse a good status', () 
     render(<UpdatesPanel />);
 
     // The status view rendered...
-    expect(await screen.findByText('Backspace 1.0.3')).toBeInTheDocument();
+    expect(await screen.findByText('Emix 1.0.3')).toBeInTheDocument();
     // ...with the stale error surfaced inline...
     expect(screen.getByText('Network error')).toBeInTheDocument();
     // ...instead of the full-page error branch, which offers "Try again"
@@ -210,7 +210,7 @@ describe('UpdatesPanel, a stale store error must not eclipse a good status', () 
   it('keeps a prior successful status on screen after a later refresh fails', async () => {
     updateStatus.mockResolvedValueOnce(status());
     const { unmount } = render(<UpdatesPanel />);
-    expect(await screen.findByText('Backspace 1.0.3')).toBeInTheDocument();
+    expect(await screen.findByText('Emix 1.0.3')).toBeInTheDocument();
     expect(screen.queryByText('Network error')).not.toBeInTheDocument();
 
     updateStatus.mockRejectedValueOnce(new Error('Network error'));
@@ -218,7 +218,7 @@ describe('UpdatesPanel, a stale store error must not eclipse a good status', () 
 
     await waitFor(() => expect(screen.getByText('Network error')).toBeInTheDocument());
     // Still the status view, not replaced by the blocking error page.
-    expect(screen.getByText('Backspace 1.0.3')).toBeInTheDocument();
+    expect(screen.getByText('Emix 1.0.3')).toBeInTheDocument();
     expect(screen.getByText('You are on the latest release.')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Try again' })).not.toBeInTheDocument();
 
@@ -228,7 +228,7 @@ describe('UpdatesPanel, a stale store error must not eclipse a good status', () 
     // leaves it (nothing resets it between the failed check above and here).
     unmount();
     render(<UpdatesPanel />);
-    expect(await screen.findByText('Backspace 1.0.3')).toBeInTheDocument();
+    expect(await screen.findByText('Emix 1.0.3')).toBeInTheDocument();
     expect(screen.getByText('Network error')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Try again' })).not.toBeInTheDocument();
   });
