@@ -83,7 +83,11 @@ case "$cmd" in
     echo "built emix:$sha" ;;
   deploy)
     [[ "${1:-}" == staging ]] || die "deploy targets staging only; use 'emixctl promote' for production"
-    run_env staging "${2:-$(cat /srv/emix/last-build)}" ;;
+    tag="${2:-$(cat /srv/emix/last-build)}"
+    head="$(git -C "$REPO" rev-parse --short=12 HEAD)"
+    [[ -n "${2:-}" || "$tag" == "$head" ]] || \
+      echo "emixctl: WARNING: deploying emix:$tag but HEAD is $head (did 'emixctl build' fail?)" >&2
+    run_env staging "$tag" ;;
   promote)
     tag="$(cat /srv/emix/staging/current-tag 2>/dev/null)" || die "nothing on staging"
     wait_healthy staging
