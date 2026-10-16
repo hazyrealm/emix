@@ -1,5 +1,8 @@
 # Emix deployment (getemix.com)
 
+See [HANDOFF.md](HANDOFF.md) for the current state, open items and what still
+needs real-world testing.
+
 Everything here runs on one VPS (Ubuntu 24.04, `140.235.125.77`). Code lives in
 `/opt/emix` (this repo); everything that changes at runtime lives outside it.
 
@@ -150,13 +153,14 @@ A restore of the latest backup into a throwaway container was tested on
 
 ## Admin and accounts
 
-- Admin: `hero` (password initially in `/root/emix-admin-prod.txt`; change it
-  in Settings, then `shred -u /root/emix-admin-prod.txt`).
+- Admin: `hero`. The initial password file has been removed; the password is
+  known only to the owner. Admin tasks are done in the web UI.
 - Registration is **closed**; invite people from the admin panel
   (Instance settings → Invites). Also set (2026-10-16, stored in the database,
   not in `app.env`): instance name `Emix`, federated account creation **off**,
   automatic federation peering **off** (an admin approves each new peer
-  server). Telemetry is off (default) and the global space directory is
+  server). Telemetry is removed in Emix (no endpoint; it cannot be enabled), the upstream
+  update check is off (`BACKSPACE_UPDATE_CHECK=false`), and the global space directory is
   disabled by `DIRECTORY_ENDPOINT=` in `app.env`. Roles, permissions, bans, voice moderation and
   instance-wide screen-share limits are all in the admin/space settings.
 - Staging has its own admin `hero` (`/root/emix-admin-staging.txt`) and two
