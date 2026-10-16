@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emix</title>
+<meta name="description" content="Emix: private messaging, voice, video and screen sharing.">
+<style>
+  :root { --bg:#0b0a14; --fg:#f2eefc; --muted:#a59fbf; --pink:#ff3ea5; --purple:#8b5cf6; --blue:#22d3ee; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px;
+         background:radial-gradient(60rem 40rem at 15% -10%, #ff3ea522, transparent 60%),
+                    radial-gradient(50rem 40rem at 110% 110%, #22d3ee1f, transparent 60%), var(--bg);
+         color:var(--fg); font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width:40rem; text-align:center; }
+  .logo { width:96px; height:96px; margin:0 auto 24px; border-radius:24px;
+          background:linear-gradient(135deg,var(--pink),var(--purple) 50%,var(--blue)); }
+  h1 { font-size:clamp(2.5rem,8vw,4rem); margin:0; letter-spacing:-.03em;
+       background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  p { color:var(--muted); font-size:1.15rem; margin:12px 0 32px; }
+  .actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  a.btn { padding:12px 22px; border-radius:12px; text-decoration:none; font-weight:600; color:var(--fg); }
+  a.primary { background:linear-gradient(135deg,var(--pink),var(--purple)); }
+  a.secondary { border:1px solid #ffffff2a; }
+  a.btn:hover { filter:brightness(1.12); }
+  footer { margin-top:48px; font-size:.85rem; color:#6f6990; }
+  footer a { color:inherit; }
+</style>
+</head>
+<body>
+<main>
+  <div class="logo" role="img" aria-label="Emix"></div>
+  <h1>Emix</h1>
+  <p>Private messaging, voice calls, webcams and screen sharing.</p>
+  <div class="actions">
+    <a class="btn primary" href="https://app.getemix.com">Open Emix</a>
+    <a class="btn secondary" href="/downloads/">Download for Windows</a>
+  </div>
+  <footer>Emix is based on <a href="https://github.com/TheZwiss/backspace">Backspace</a> and licensed under the AGPL-3.0. <a href="https://github.com/hazyrealm/emix">Source code</a>.</footer>
+</main>
+</body>
+</html>

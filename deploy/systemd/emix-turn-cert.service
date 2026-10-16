@@ -1,0 +1,7 @@
+[Unit]
+Description=Sync Caddy's turn.getemix.com certificate into LiveKit
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/emix/deploy/scripts/sync-turn-cert.sh
