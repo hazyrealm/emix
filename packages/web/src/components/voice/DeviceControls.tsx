@@ -79,10 +79,12 @@ export function CameraPreview({ deviceId, className = '', withEffects = true, on
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (isCameraOn) {
-      const live = localVideo ?? liveCameraTrack();
-      video.srcObject = live ? new MediaStream([live]) : null;
-      setState(live ? 'ready' : 'error');
+    // The call's own camera, when one is really live. A flag alone is not
+    // enough: without a live track the device is opened for the preview.
+    const live = isCameraOn ? (localVideo ?? liveCameraTrack()) : null;
+    if (live && live.readyState === 'live') {
+      video.srcObject = new MediaStream([live]);
+      setState('ready');
       onTrackRef.current?.(live);
       return () => { video.srcObject = null; };
     }
@@ -117,7 +119,8 @@ export function CameraPreview({ deviceId, className = '', withEffects = true, on
   }, [deviceId, isCameraOn, cameraConfig, localVideo]);
 
   // A live camera already carries its processed effects; a pre-call preview draws them with CSS.
-  const cssEffects = withEffects && !isCameraOn && effectsActive(effects);
+  const showingLive = isCameraOn && !!(localVideo ?? liveCameraTrack());
+  const cssEffects = withEffects && !showingLive && effectsActive(effects);
   const transforms = [mirror ? 'scaleX(-1)' : '', cssEffects && effects.zoom !== 100 ? `scale(${effects.zoom / 100})` : ''].filter(Boolean).join(' ');
 
   return (

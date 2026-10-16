@@ -1110,7 +1110,7 @@ export function useLiveKit() {
         // from seeing intermediate states (e.g., participants empty but still "connected"
         // → triggers user_leave sound before the disconnect sound).
         useVoiceStore.getState().setSpeakingParticipants(new Set());
-        useVoiceStore.setState({ participants: [], isLiveKitConnected: false });
+        useVoiceStore.setState({ participants: [], isLiveKitConnected: false, isCameraOn: false, isScreenSharing: false });
         useVoiceStore.getState().setVoiceConnectionStatus('disconnected');
 
         // Semantic terminal reasons must never auto-retry. An exhausted network
@@ -1201,7 +1201,9 @@ export function useLiveKit() {
     setConnectionState(ConnectionState.Disconnected);
     useVoiceStore.getState().setVoiceConnectionStatus('disconnected');
     useVoiceStore.getState().setSpeakingParticipants(new Set());
-    useVoiceStore.setState({ participants: [], isLiveKitConnected: false });
+    // Nothing is published once the room is gone: a camera or share flag left
+    // on would describe a call that has ended.
+    useVoiceStore.setState({ participants: [], isLiveKitConnected: false, isCameraOn: false, isScreenSharing: false });
   }, []);
 
   const toggleMic = useCallback(async () => { 
