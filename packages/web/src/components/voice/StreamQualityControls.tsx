@@ -115,6 +115,18 @@ export function systemAudioSwitch(
   }
 }
 
+/**
+ * Emix screen-share presets. "text" keeps every pixel sharp (VP9, resolution
+ * held under load); "motion" keeps the frame rate (H.264, usually encoded on
+ * the GPU); "quality" asks for the source's full resolution at 60 fps and lets
+ * the host limits and the network decide how much of it gets through.
+ */
+const SCREEN_PRESETS: { id: 'text' | 'motion' | 'quality'; config: Partial<ScreenShareConfig> }[] = [
+  { id: 'text', config: { height: 'native', fps: 30, mode: 'text', codec: 'vp9', customBitrateKbps: null } },
+  { id: 'motion', config: { height: 1080, fps: 60, mode: 'gaming', codec: 'h264', customBitrateKbps: null } },
+  { id: 'quality', config: { height: 'native', fps: 60, mode: 'text', codec: 'h264', customBitrateKbps: null } },
+];
+
 const pillBase = 'px-2.5 py-1.5 rounded-full text-[13px] font-medium transition-colors cursor-pointer select-none text-center';
 const pillSelected = 'bg-accent-primary text-white';
 const pillUnselected = 'bg-surface-elevated text-txt-secondary hover:bg-interactive-hover';
@@ -149,8 +161,30 @@ export function StreamQualityControls() {
   // What Auto resolves to right now, in kbps; also the slider's starting point when switching to Custom
   const autoKbps = Math.round(result.publish.videoEncoding.maxBitrate / 1000);
 
+  const activePreset = SCREEN_PRESETS.find((p) => Object.entries(p.config).every(([k, v]) => config[k as keyof ScreenShareConfig] === v))?.id ?? null;
+
   return (
     <div className="flex flex-col gap-3">
+      {/* Emix presets: one click sets resolution, frame rate, content mode and codec; host limits still apply. */}
+      <div>
+        <div className="text-[11px] text-txt-tertiary font-semibold uppercase tracking-wider mb-1.5">
+          {t('voice:streamSettings.presets.title')}
+        </div>
+        <div className="grid grid-cols-3 gap-1.5">
+          {SCREEN_PRESETS.map((p) => (
+            <button
+              key={p.id}
+              onClick={() => setConfig(p.config)}
+              aria-pressed={activePreset === p.id}
+              title={t(`voice:streamSettings.presets.${p.id}.hint`)}
+              className={`${pillBase} !rounded-lg leading-tight ${activePreset === p.id ? pillSelected : pillUnselected}`}
+            >
+              {t(`voice:streamSettings.presets.${p.id}.label`)}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Resolution */}
       <div>
         <div className="text-[11px] text-txt-tertiary font-semibold uppercase tracking-wider mb-1.5">

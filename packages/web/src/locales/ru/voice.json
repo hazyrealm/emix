@@ -61,7 +61,9 @@
       "encoderImplementation": "Кодировщик",
       "qpDelta": "Изменение суммы QP",
       "nackDelta": "Изменение NACK",
-      "pliDelta": "Изменение PLI"
+      "pliDelta": "Изменение PLI",
+      "hardware": "аппаратно",
+      "software": "программно"
     },
     "source": {
       "microphone": "Микрофон",
@@ -149,7 +151,22 @@
       "maintainFramerate": "приоритет частоты кадров",
       "balanced": "сбалансировано"
     },
-    "summary": "{{bitrate}} · {{degradation}}"
+    "summary": "{{bitrate}} · {{degradation}}",
+    "presets": {
+      "title": "Пресеты",
+      "text": {
+        "label": "Текст и слайды",
+        "hint": "Самый чёткий текст: исходное разрешение, 30 кадр/с"
+      },
+      "motion": {
+        "label": "Игры и динамика",
+        "hint": "Самое плавное движение: 1080p, 60 кадр/с"
+      },
+      "quality": {
+        "label": "Высокое качество",
+        "hint": "Полное разрешение при 60 кадр/с, если позволяет канал"
+      }
+    }
   },
   "stream": {
     "quality": "Качество трансляции",

@@ -61,7 +61,9 @@
       "encoderImplementation": "Implementação do codificador",
       "qpDelta": "Delta da soma de QP",
       "nackDelta": "Delta de NACK",
-      "pliDelta": "Delta de PLI"
+      "pliDelta": "Delta de PLI",
+      "hardware": "por hardware",
+      "software": "por software"
     },
     "source": {
       "microphone": "Microfone",
@@ -149,7 +151,22 @@
       "maintainFramerate": "manter taxa de quadros",
       "balanced": "equilibrado"
     },
-    "summary": "{{bitrate}} · {{degradation}}"
+    "summary": "{{bitrate}} · {{degradation}}",
+    "presets": {
+      "title": "Predefinições",
+      "text": {
+        "label": "Texto e slides",
+        "hint": "Texto mais nítido: resolução nativa, 30 fps"
+      },
+      "motion": {
+        "label": "Jogos e movimento",
+        "hint": "Movimento mais fluido: 1080p, 60 fps"
+      },
+      "quality": {
+        "label": "Alta qualidade",
+        "hint": "Resolução total a 60 fps quando a banda permitir"
+      }
+    }
   },
   "stream": {
     "quality": "Qualidade da transmissão",

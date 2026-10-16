@@ -99,6 +99,17 @@ function AudioTrackRow({ track }: { track: AudioTrackStat }) {
   );
 }
 
+/**
+ * Emix: tag the encoder name Chromium reports as hardware or software, so the
+ * stats answer "is my GPU encoding this?" without knowing the internal names.
+ */
+function describeEncoder(impl: string): string {
+  const hw = /Accelerator|MediaFoundation|NVENC|VideoToolbox|VAAPI|V4L2|D3D1[12]|QuickSync|AMF/i.test(impl);
+  const sw = /OpenH264|libvpx|libaom|dav1d|SVT|ffmpeg/i.test(impl);
+  const tag = hw ? i18n.t('voice:connectionInfo.video.hardware') : sw ? i18n.t('voice:connectionInfo.video.software') : null;
+  return tag ? `${impl} (${tag})` : impl;
+}
+
 function VideoTrackRow({ track }: { track: VideoTrackStat }) {
   const label = trackLabel(track.direction, track.source, track.participantName);
   const resolution = (track.width && track.height) ? `${track.width}\u00d7${track.height}` : null;
@@ -121,7 +132,7 @@ function VideoTrackRow({ track }: { track: VideoTrackStat }) {
           <span className="text-[11px] text-txt-tertiary">
             {track.direction === 'send' && (() => {
               const parts: string[] = [];
-              if (track.encoderImpl) parts.push(track.encoderImpl);
+              if (track.encoderImpl) parts.push(describeEncoder(track.encoderImpl));
               if (track.qualityLimitation && track.qualityLimitation !== 'none') parts.push(track.qualityLimitation);
               return parts.join(' · ') || null;
             })()}

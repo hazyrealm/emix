@@ -6,6 +6,7 @@ import { api, RateLimitError } from '../../api/client';
 import type { InstanceInfoResponse } from '@backspace/shared';
 import { SourceCodeLink } from '../ui/SourceCodeLink';
 import { describeError } from '../../i18n/errors';
+import { AuthShell, ButtonSpinner, PasswordInput } from './AuthShell';
 
 export function LoginPage() {
   const { t } = useTranslation(['auth', 'common']);
@@ -77,84 +78,87 @@ export function LoginPage() {
   const isDisabled = isLoading || retryAfter > 0;
 
   return (
-    <div className="h-full overflow-y-auto flex flex-col items-center bg-surface-base relative">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(var(--accent-primary)/0.06)_0%,transparent_50%)]" />
-      <div className="my-auto flex-shrink-0 w-full max-w-[480px] bg-surface-elevated rounded-md p-8 shadow-elevation-high relative z-10">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-txt-primary">{t('auth:login.title')}</h1>
-          <p className="text-txt-tertiary mt-1">{t('auth:login.subtitle')}</p>
-        </div>
+    <AuthShell>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-txt-primary">{t('auth:login.title')}</h1>
+        <p className="text-txt-tertiary mt-1">{t('auth:login.subtitle')}</p>
+      </div>
 
-        <form onSubmit={handleSubmit}>
-          {retryAfter > 0 && (
-            <div className="mb-4 p-3 bg-accent-amber/10 border border-accent-amber/30 rounded text-sm">
-              <p className="font-medium text-accent-amber">{t('auth:login.rateLimited.title')}</p>
-              <p className="text-txt-secondary mt-0.5">{t('auth:login.rateLimited.retryIn', { seconds: retryAfter })}</p>
-            </div>
-          )}
-
-          {error && (
-            <div className="mb-4 p-3 bg-accent-rose/10 border border-accent-rose/30 rounded text-txt-danger text-sm">
-              {error}
-            </div>
-          )}
-
-          <div className="mb-5">
-            <label className="block text-xs font-bold text-txt-secondary uppercase mb-2">
-              {t('common:labels.username')} <span className="text-txt-danger">*</span>
-            </label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="input-standard w-full py-2.5"
-              autoFocus
-              autoComplete="username"
-            />
-          </div>
-
-          <div className="mb-5">
-            <label className="block text-xs font-bold text-txt-secondary uppercase mb-2">
-              {t('common:labels.password')} <span className="text-txt-danger">*</span>
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input-standard w-full py-2.5"
-              autoComplete="current-password"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={isDisabled}
-            className="w-full py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {retryAfter > 0
-              ? t('auth:login.rateLimited.retryIn', { seconds: retryAfter })
-              : isLoading
-                ? t('auth:login.submitting')
-                : t('common:actions.logIn')}
-          </button>
-
-          <p className="mt-3 text-sm text-txt-tertiary">
-            <Trans
-              t={t}
-              i18nKey="auth:login.registerPrompt"
-              components={{
-                actionLink: <Link to={`/register${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ''}`} className="text-accent-primary hover:underline" />,
-              }}
-            />
-          </p>
-        </form>
-
-        {instanceInfo && (
-          <div className="mt-6 pt-4 border-t border-white/[0.04] flex justify-center">
-            <SourceCodeLink sourceCodeUrl={instanceInfo.sourceCodeUrl} version={instanceInfo.version} commit={instanceInfo.commit} />
+      <form onSubmit={handleSubmit} noValidate>
+        {retryAfter > 0 && (
+          <div role="alert" className="mb-4 p-3 bg-accent-amber/10 border border-accent-amber/30 rounded-lg text-sm">
+            <p className="font-medium text-accent-amber">{t('auth:login.rateLimited.title')}</p>
+            <p className="text-txt-secondary mt-0.5">{t('auth:login.rateLimited.retryIn', { seconds: retryAfter })}</p>
           </div>
         )}
-      </div>
-    </div>
+
+        {error && (
+          <div role="alert" className="mb-4 p-3 bg-accent-rose/10 border border-accent-rose/30 rounded-lg text-txt-danger text-sm">
+            {error}
+          </div>
+        )}
+
+        <div className="mb-4">
+          <label htmlFor="login-username" className="block text-xs font-bold text-txt-secondary uppercase mb-2">
+            {t('common:labels.username')} <span className="text-txt-danger">*</span>
+          </label>
+          <input
+            id="login-username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="input-standard w-full py-2.5"
+            autoFocus
+            autoComplete="username"
+            autoCapitalize="none"
+            spellCheck={false}
+          />
+        </div>
+
+        <div className="mb-2">
+          <label htmlFor="login-password" className="block text-xs font-bold text-txt-secondary uppercase mb-2">
+            {t('common:labels.password')} <span className="text-txt-danger">*</span>
+          </label>
+          <PasswordInput
+            id="login-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input-standard w-full py-2.5"
+            autoComplete="current-password"
+          />
+        </div>
+        <p className="mb-5 text-xs text-txt-tertiary">{t('auth:shell.recovery')}</p>
+
+        <button
+          type="submit"
+          disabled={isDisabled}
+          aria-busy={isLoading}
+          className="emix-gradient-button w-full py-2.5 text-white font-semibold rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isLoading && <ButtonSpinner />}
+          {retryAfter > 0
+            ? t('auth:login.rateLimited.retryIn', { seconds: retryAfter })
+            : isLoading
+              ? t('auth:login.submitting')
+              : t('common:actions.logIn')}
+        </button>
+
+        <p className="mt-4 text-sm text-txt-tertiary">
+          <Trans
+            t={t}
+            i18nKey="auth:login.registerPrompt"
+            components={{
+              actionLink: <Link to={`/register${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ''}`} className="text-txt-link hover:underline" />,
+            }}
+          />
+        </p>
+      </form>
+
+      {instanceInfo && (
+        <div className="mt-6 pt-4 border-t border-white/[0.06] flex justify-center text-center">
+          <SourceCodeLink sourceCodeUrl={instanceInfo.sourceCodeUrl} version={instanceInfo.version} commit={instanceInfo.commit} />
+        </div>
+      )}
+    </AuthShell>
   );
 }

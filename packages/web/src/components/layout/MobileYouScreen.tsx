@@ -7,9 +7,6 @@ import { ConfirmDialog } from '../ui/ConfirmDialog';
 import { parseFederatedUsername } from '../../utils/identity';
 import { replaceEmojiShortcodes, useEmojiShortcodeNames } from '../../utils/emojiShortcodes';
 import { useInstanceUpdateBadge } from '../../hooks/useInstanceUpdateBadge';
-import { useHubUpdateState } from '../../hooks/useHubUpdateState';
-import { BackspaceMark } from '../projectHub/BackspaceMark';
-import { HubUpdateDot } from '../projectHub/HubUpdateDot';
 
 /**
  * A row on the You screen. `badge` is drawn at the trailing edge, before the
@@ -31,7 +28,6 @@ export function MobileYouScreen() {
   const logout = useAuthStore((s) => s.logout);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const updateBadge = useInstanceUpdateBadge();
-  const hubUpdate = useHubUpdateState();
 
   if (!user) return null;
 
@@ -74,12 +70,6 @@ export function MobileYouScreen() {
         </svg>
       ),
       action: () => pushMobileScreen('settings-voice'),
-    },
-    {
-      label: t('project:nav.label'),
-      icon: <BackspaceMark size={20} className="w-5 h-5" />,
-      action: () => pushMobileScreen('backspace'),
-      badge: hubUpdate.state === 'updated' ? <HubUpdateDot /> : null,
     },
   ];
 

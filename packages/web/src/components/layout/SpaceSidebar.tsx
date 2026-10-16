@@ -84,17 +84,15 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
       };
     }
 
-    if (type === 'dm') {
-      const lit = active || isHovered;
-      return { background: lit ? 'rgb(var(--accent-primary))' : 'rgb(var(--interactive-muted))' };
-    }
+    // Emix: the home tile is the Emix icon itself, no backing colour.
+    if (type === 'dm') return undefined;
 
     // Space type — if it has a custom icon image, no gradient needed
     if (icon) return undefined;
 
     const spaceGrad = getSpaceGradient(id, name, avatarColor);
     return { background: spaceGrad.gradient };
-  }, [type, id, name, icon, avatarColor, isHovered, active]);
+  }, [type, id, name, icon, avatarColor, isHovered]);
 
   const getButtonClasses = () => {
     const base = 'w-10 h-10 flex items-center justify-center duration-200 overflow-hidden [transition:border-radius_0.2s,background_0.2s,color_0.2s]';
@@ -117,7 +115,7 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
   const buttonContent = (
     <button onClick={onClick} className={`${getButtonClasses()} ${dimmed ? 'opacity-40 saturate-50' : ''}`} style={backgroundStyle} title={tooltipText ? undefined : name} aria-current={active ? 'page' : undefined}>
       {type === 'dm' ? (
-        <img src="/icons/logo-mark.svg" alt={t('common:appName')} className="w-5 h-auto" />
+        <img src="/icons/emix-tile.png" alt={t('common:appName')} className={`w-full h-full object-cover transition-[filter] duration-200 ${active ? '' : 'brightness-90 hover:brightness-110'}`} draggable={false} />
       ) : type === 'action' ? (
         actionType === 'add' ? (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

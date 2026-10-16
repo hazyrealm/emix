@@ -653,3 +653,47 @@
 /* ── Electron window drag regions ── */
 .titlebar-drag { -webkit-app-region: drag; }
 .titlebar-no-drag { -webkit-app-region: no-drag; }
+
+/* ── Emix sign-in frame (AuthShell) ───────────────────────────────────────
+   Three blurred orbs drifting on transform only (composited, no layout or
+   paint per frame); stopped under prefers-reduced-motion. */
+.emix-auth-glow {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(120% 80% at 50% -10%, rgb(var(--accent-primary) / 0.10) 0%, transparent 60%);
+}
+.emix-auth-orb {
+  position: absolute;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.28;
+  will-change: transform;
+}
+.emix-auth-orb-pink { background: #ff3ea5; top: -18vmax; left: -12vmax; animation: emix-drift-a 26s ease-in-out infinite alternate; }
+.emix-auth-orb-purple { background: #7c3aed; bottom: -22vmax; left: 22%; opacity: 0.24; animation: emix-drift-b 32s ease-in-out infinite alternate; }
+.emix-auth-orb-blue { background: #22a0ff; top: 4vmax; right: -16vmax; opacity: 0.22; animation: emix-drift-c 29s ease-in-out infinite alternate; }
+@keyframes emix-drift-a { to { transform: translate3d(8vmax, 6vmax, 0) scale(1.08); } }
+@keyframes emix-drift-b { to { transform: translate3d(-6vmax, -5vmax, 0) scale(0.94); } }
+@keyframes emix-drift-c { to { transform: translate3d(-7vmax, 7vmax, 0) scale(1.05); } }
+@media (prefers-reduced-motion: reduce) {
+  .emix-auth-orb { animation: none; }
+}
+.emix-auth-card {
+  background: rgb(var(--bg-channel) / 0.78);
+  border: 1px solid rgb(255 255 255 / 0.07);
+  box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.65), inset 0 1px 0 rgb(255 255 255 / 0.04);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.emix-gradient-button {
+  background-image: linear-gradient(100deg, #e0369a 0%, #9333ea 50%, #2f7fff 100%);
+  background-size: 160% 100%;
+  background-position: 0% 0;
+  transition: background-position 0.4s ease, filter 0.2s ease, transform 0.1s ease;
+}
+.emix-gradient-button:hover:not(:disabled) { background-position: 100% 0; }
+.emix-gradient-button:active:not(:disabled) { transform: translateY(1px); }

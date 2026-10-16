@@ -6,7 +6,8 @@ import { wsSend } from '../hooks/useWebSocket';
 import { getChannelOrigin, getMyUserIdForOrigin, useSpaceStore } from '../stores/spaceStore';
 import { broadcastVoiceStatus, broadcastDeafenViaLiveKit, preArmMicrophone } from './voice';
 import { dmCallOrigin, dmCallRoomKey, sendDmCallEnd } from './dmCall';
-import { CAMERA_PRESET, stopScreenShare } from './screenShare';
+import { stopScreenShare } from './screenShare';
+import { buildCameraOptions, DEFAULT_CAMERA_CONFIG, isCameraConfig } from './cameraQuality';
 import { openScreenShareSetup } from '../stores/screenShareSetupStore';
 
 /**
@@ -94,21 +95,11 @@ export async function handleCameraAction(): Promise<void> {
   try {
     const willEnable = !isCameraOn;
     if (willEnable) {
-      const cameraDeviceId = useVoiceStore.getState().cameraDeviceId;
-      const captureOpts: VideoCaptureOptions = {
-        resolution: CAMERA_PRESET.resolution,
-        frameRate: CAMERA_PRESET.encoding.maxFramerate,
-      };
+      const { cameraDeviceId, cameraConfig } = useVoiceStore.getState();
+      const camera = buildCameraOptions(isCameraConfig(cameraConfig) ? cameraConfig : DEFAULT_CAMERA_CONFIG);
+      const captureOpts: VideoCaptureOptions = { ...camera.capture };
       if (cameraDeviceId) captureOpts.deviceId = cameraDeviceId;
-      await room.localParticipant.setCameraEnabled(
-        true,
-        captureOpts,
-        {
-          videoCodec: CAMERA_PRESET.codec,
-          videoEncoding: CAMERA_PRESET.encoding,
-          simulcast: true,
-        }
-      );
+      await room.localParticipant.setCameraEnabled(true, captureOpts, camera.publish);
     } else {
       // Mark this disable as intentional so the track-`ended` handler skips
       // its unplug/permission-revoke probe + toast.

@@ -1,0 +1,29 @@
+{
+  "title": "Willkommen bei Emix",
+  "tagline": "Dein Ort, um in Kontakt zu bleiben.",
+  "intro": "Emix bringt deine Unterhaltungen an einem Ort zusammen. Bleib mit Freunden in Kontakt – mit privaten Nachrichten, Sprachanrufen, hochwertigem Video und Bildschirmfreigabe.",
+  "intro2": "Ob beim Zocken, Abhängen oder Teilen deines Bildschirms: Mit Emix bleibst du ganz einfach verbunden.",
+  "features": {
+    "voice": {
+      "title": "Sprachchat",
+      "body": "Sprich in Echtzeit mit Freunden."
+    },
+    "video": {
+      "title": "Videoanrufe",
+      "body": "Triff dich von Angesicht zu Angesicht in hoher Videoqualität."
+    },
+    "screen": {
+      "title": "Bildschirmfreigabe",
+      "body": "Teile Spiele, Anwendungen oder deinen ganzen Bildschirm."
+    },
+    "messages": {
+      "title": "Private Nachrichten",
+      "body": "Halte deine Unterhaltungen geordnet und griffbereit."
+    },
+    "communities": {
+      "title": "Communitys",
+      "body": "Erstelle Spaces und Kanäle für deine Freunde."
+    }
+  },
+  "getStarted": "Los geht's"
+}

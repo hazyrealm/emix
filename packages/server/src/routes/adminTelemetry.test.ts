@@ -63,6 +63,9 @@ const utcToday = (): string => new Date().toISOString().slice(0, 10);
 
 beforeEach(async () => {
   callerIsAdmin = true;
+  // Upstream behaviour is exercised with a receiver configured; Emix ships none
+  // (see the 'Emix: no telemetry receiver' suite below).
+  (config.telemetry as { endpoint: string }).endpoint = 'https://receiver.test';
   sqlite = new Database(':memory:');
   applyMigrations(sqlite);
   ensureDefaults(sqlite);
@@ -181,5 +184,25 @@ describe('admin telemetry routes', () => {
     expect(stateRow().telemetry_id).not.toBeNull();
     const res = await app.inject({ method: 'GET', url: '/api/admin/telemetry/preview', headers: AUTH });
     expect((res.json() as { instance: string }).instance).toBe('preview');
+  });
+});
+
+describe('Emix: no telemetry receiver', () => {
+  beforeEach(() => {
+    (config.telemetry as { endpoint: string }).endpoint = '';
+  });
+
+  it('refuses to opt in, and stores nothing', async () => {
+    const res = await app.inject({ method: 'PUT', url: '/api/admin/telemetry', headers: AUTH, payload: { enabled: true } });
+    expect(res.statusCode).toBe(409);
+    expect(stateRow().telemetry_enabled).toBeNull();
+    expect(stateRow().telemetry_id).toBeNull();
+  });
+
+  it('still lets an instance that was opted in switch off', async () => {
+    sqlite.prepare("UPDATE instance_settings SET telemetry_enabled = 1, telemetry_id = 'old-id' WHERE id = 1").run();
+    const res = await app.inject({ method: 'PUT', url: '/api/admin/telemetry', headers: AUTH, payload: { enabled: false } });
+    expect(res.statusCode).toBe(200);
+    expect(stateRow().telemetry_enabled).toBe(0);
   });
 });

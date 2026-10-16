@@ -128,7 +128,9 @@
   "sourceCode": {
     "label": "源代码 (AGPL)",
     "labelWithBuild": "源代码 (AGPL) · {{build}}",
-    "title": "查看此实例运行版本的源代码 (AGPL-3.0)"
+    "title": "查看此实例运行版本的源代码 (AGPL-3.0)",
+    "attribution": "Emix 基于 Jannis Braun 开发的 Backspace",
+    "licenses": "许可证"
   },
   "devices": {
     "newAudioInput": "检测到 {{label}}。可在语音设置中选择切换。",

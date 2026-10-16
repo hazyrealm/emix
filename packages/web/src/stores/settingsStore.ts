@@ -46,12 +46,13 @@ interface SettingsState {
 }
 
 export const DEFAULT_STREAMING_LIMITS: InstanceStreamingLimits = {
-  maxBitrateKbps: 20000,
+  // Emix defaults: small calls, so allow up to 4K / native at 60 fps.
+  maxBitrateKbps: 50000,
   minBitrateKbps: 500,
   bitrateStepKbps: 500,
-  allowedResolutions: [540, 720, 1080],
-  allowedFramerates: [30, 45, 60],
-  maxResolution: 1080,
+  allowedResolutions: [720, 1080, 1440, 2160, 'native'],
+  allowedFramerates: [30, 60],
+  maxResolution: 2160,
   maxFramerate: 60,
   discoveryEnabled: true,
   directoryEnabled: false,

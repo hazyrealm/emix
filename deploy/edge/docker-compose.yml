@@ -20,6 +20,7 @@ services:
       - /srv/emix/edge/caddy-config:/config
       - /srv/emix/edge/site:/srv/site:ro
       - /srv/emix/edge/downloads:/srv/downloads:ro
+      - /srv/emix/edge/caddy-extra:/srv/caddy-extra:ro
     networks:
       - emix-edge
 

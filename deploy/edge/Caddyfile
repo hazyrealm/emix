@@ -14,6 +14,9 @@ getemix.com {
 	# Installers and the auto-update feed are GitHub Releases on the public repo.
 	redir /downloads* https://github.com/hazyrealm/emix/releases/latest 302
 
+	# /download/windows -> the current installer. Written by `emixctl set-desktop-release`.
+	import /srv/caddy-extra/*.caddy
+
 	handle {
 		root * /srv/site
 		header Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"

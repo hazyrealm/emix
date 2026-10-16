@@ -1,7 +1,7 @@
 {
   "connections": {
     "title": "Verbundene Instanzen",
-    "description": "Verknüpfe deine Konten über föderierte Backspace-Instanzen hinweg.",
+    "description": "Verknüpfe deine Konten über föderierte Server hinweg.",
     "empty": "Keine entfernten Instanzen verbunden. Füge eine hinzu, um mit der Föderation zu starten.",
     "addButton": "+ Instanz hinzufügen",
     "home": {

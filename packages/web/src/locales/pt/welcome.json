@@ -1,0 +1,29 @@
+{
+  "title": "Boas-vindas ao Emix",
+  "tagline": "Seu espaço para se conectar.",
+  "intro": "O Emix reúne suas conversas em um só lugar. Fique conectado com seus amigos por mensagens privadas, chamadas de voz, vídeo de alta qualidade e compartilhamento de tela.",
+  "intro2": "Seja jogando, conversando ou compartilhando sua tela, o Emix facilita ficar conectado.",
+  "features": {
+    "voice": {
+      "title": "Chat de voz",
+      "body": "Converse com amigos em tempo real."
+    },
+    "video": {
+      "title": "Chamadas de vídeo",
+      "body": "Converse cara a cara com vídeo de alta qualidade."
+    },
+    "screen": {
+      "title": "Compartilhamento de tela",
+      "body": "Compartilhe jogos, aplicativos ou a tela inteira."
+    },
+    "messages": {
+      "title": "Mensagens privadas",
+      "body": "Mantenha suas conversas organizadas e acessíveis."
+    },
+    "communities": {
+      "title": "Comunidades",
+      "body": "Crie espaços e canais para seus amigos."
+    }
+  },
+  "getStarted": "Começar"
+}

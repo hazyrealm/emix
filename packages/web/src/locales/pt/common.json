@@ -128,7 +128,9 @@
   "sourceCode": {
     "label": "Código-fonte (AGPL)",
     "labelWithBuild": "Código-fonte (AGPL) · {{build}}",
-    "title": "Ver o código-fonte da versão que esta instância está executando (AGPL-3.0)"
+    "title": "Ver o código-fonte da versão que esta instância está executando (AGPL-3.0)",
+    "attribution": "O Emix é baseado no Backspace, de Jannis Braun",
+    "licenses": "Licenças"
   },
   "devices": {
     "newAudioInput": "{{label}} detectado. Escolha-o nas configurações de voz para trocar.",

@@ -19,7 +19,7 @@ vi.mock('../../hooks/useHubUpdateState', () => ({
   useHubUpdateState: () => ({ state: hubState.state, version: '1.2.0' }),
 }));
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import { useChatStore } from '../../stores/chatStore';
 import { useSpaceStore } from '../../stores/spaceStore';
@@ -27,7 +27,7 @@ import { useUIStore } from '../../stores/uiStore';
 import { ChannelSidebar } from './ChannelSidebar';
 
 const SELECTED = 'bg-interactive-selected';
-const LABELS = { friends: 'Friends', explore: 'Explore', backspace: 'Backspace' } as const;
+const LABELS = { friends: 'Friends', explore: 'Explore' } as const;
 
 function LocationProbe() {
   return <div data-testid="location">{useLocation().pathname}</div>;
@@ -68,11 +68,6 @@ describe('ChannelSidebar home items', () => {
     expect(selectedItems()).toEqual(['explore']);
   });
 
-  it('selects only Backspace on /backspace', () => {
-    renderAt('/backspace');
-    expect(selectedItems()).toEqual(['backspace']);
-  });
-
   it('selects only Friends on the DM home', () => {
     renderAt('/channels/@me');
     expect(selectedItems()).toEqual(['friends']);
@@ -84,27 +79,8 @@ describe('ChannelSidebar home items', () => {
     expect(selectedItems()).toEqual([]);
   });
 
-  it('navigates to /backspace when the Backspace item is clicked', () => {
-    renderAt('/channels/@me');
-    fireEvent.click(homeItem(LABELS.backspace));
-    expect(screen.getByTestId('location')).toHaveTextContent('/backspace');
-  });
-
   it('no longer renders the Coming Soon placeholder', () => {
     renderAt('/channels/@me');
     expect(screen.queryByText('Coming Soon')).toBeNull();
-  });
-
-  it('shows the updated dot when the instance updated since the last visit', () => {
-    hubState.state = 'updated';
-    renderAt('/channels/@me');
-    const dot = screen.getByRole('img', { name: 'Backspace was updated' });
-    expect(homeItem(LABELS.backspace)).toContainElement(dot);
-  });
-
-  it.each<HubUpdateState>(['unknown', 'first-run', 'current'])('shows no dot when the state is %s', (state) => {
-    hubState.state = state;
-    renderAt('/channels/@me');
-    expect(screen.queryByRole('img', { name: 'Backspace was updated' })).toBeNull();
   });
 });

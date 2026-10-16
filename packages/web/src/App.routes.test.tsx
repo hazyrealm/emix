@@ -51,10 +51,6 @@ afterEach(() => {
 });
 
 describe('App routes', () => {
-  it('serves /backspace inside the app layout', () => {
-    renderAt('/backspace');
-    expect(screen.getByTestId('layout')).toHaveTextContent(/^\/backspace$/);
-  });
 
   it('still serves /explore inside the app layout', () => {
     renderAt('/explore');

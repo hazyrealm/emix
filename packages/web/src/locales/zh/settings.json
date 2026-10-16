@@ -82,6 +82,25 @@
         "unavailable": "所选摄像头不可用。",
         "notFound": "未检测到摄像头。",
         "generic": "无法启动摄像头预览。"
+      },
+      "quality": {
+        "title": "视频质量",
+        "resolution": "分辨率",
+        "frameRate": "帧率",
+        "fps": "{{fps}} 帧/秒",
+        "level": "质量",
+        "levels": {
+          "balanced": "均衡",
+          "high": "高",
+          "max": "最高"
+        },
+        "target": "最高发送 {{res}}、{{fps}} 帧/秒、{{mbps}} Mbps（H.264，GPU 支持时使用硬件编码）。",
+        "cameraMax": "此摄像头报告最高支持 {{value}}。",
+        "capturing": "当前采集 {{value}}。",
+        "belowPreset": "此摄像头不提供所选分辨率，Emix 将使用其可提供的最高分辨率，不会进行放大。",
+        "startPreview": "开启预览以查看此摄像头的实际能力。",
+        "adaptive": "如果观看者的网络或设备跟不上，会自动接收较低的画质层。",
+        "applyNow": "应用到当前通话"
       }
     },
     "title": "语音与视频",

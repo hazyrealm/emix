@@ -275,6 +275,8 @@ export const ERROR_CODES = [
   'sticker_not_found',
   'sticker_collection_full',
   'sticker_name_invalid',
+  // Emix: telemetry has no receiver, so it cannot be switched on.
+  'telemetry_unavailable',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

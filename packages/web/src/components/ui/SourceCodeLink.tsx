@@ -1,5 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
+/** Emix: license, NOTICE and upstream attribution, kept with the source offer. */
+const LICENSES_URL = 'https://github.com/hazyrealm/emix/blob/main/EMIX.md';
+
 interface SourceCodeLinkProps {
   /** URL to the Corresponding Source of the running version (AGPL § 13). */
   sourceCodeUrl: string;
@@ -28,31 +31,38 @@ export function SourceCodeLink({ sourceCodeUrl, version, commit, className }: So
   const label = build ? t('sourceCode.labelWithBuild', { build }) : t('sourceCode.label');
 
   return (
-    <a
-      href={sourceCodeUrl}
-      target="_blank"
-      rel="noreferrer noopener"
-      className={`inline-flex items-center gap-1.5 text-xs text-txt-tertiary hover:text-txt-secondary transition-colors${
-        className ? ` ${className}` : ''
-      }`}
-      title={t('sourceCode.title')}
-    >
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-        className="flex-shrink-0"
+    <span className={`inline-flex flex-col gap-0.5${className ? ` ${className}` : ''}`}>
+      <a
+        href={sourceCodeUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="inline-flex items-center gap-1.5 text-xs text-txt-tertiary hover:text-txt-secondary transition-colors"
+        title={t('sourceCode.title')}
       >
-        <polyline points="16 18 22 12 16 6" />
-        <polyline points="8 6 2 12 8 18" />
-      </svg>
-      <span>{label}</span>
-    </a>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          className="flex-shrink-0"
+        >
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+        </svg>
+        <span>{label}</span>
+      </a>
+      {/* Emix: upstream attribution and license notices (AGPL-3.0, NOTICE). */}
+      <span className="text-[11px] text-txt-tertiary/80">
+        {t('sourceCode.attribution')} ·{' '}
+        <a href={LICENSES_URL} target="_blank" rel="noreferrer noopener" className="underline hover:text-txt-secondary">
+          {t('sourceCode.licenses')}
+        </a>
+      </span>
+    </span>
   );
 }

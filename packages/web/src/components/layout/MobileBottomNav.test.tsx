@@ -58,13 +58,6 @@ afterEach(async () => {
 });
 
 describe('MobileBottomNav: You tab dot', () => {
-  it('lights on a hub update alone', () => {
-    sources.hub = 'updated';
-
-    renderNav();
-
-    expect(youDot()).not.toBeNull();
-  });
 
   it.each<HubUpdateState>(['unknown', 'first-run', 'current'])('stays dark when the hub state is %s and nothing else is pending', (state) => {
     sources.hub = state;

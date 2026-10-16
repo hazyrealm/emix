@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { CameraQualitySection } from './CameraQualitySection';
+import { buildCameraOptions, DEFAULT_CAMERA_CONFIG, isCameraConfig, type CameraConfig } from '../../../utils/cameraQuality';
 import { useTranslation } from 'react-i18next';
 import { Track } from 'livekit-client';
 import { useVoiceStore } from '../../../stores/voiceStore';
@@ -79,6 +81,7 @@ function buildDisplayLabels(
 export function VideoSection() {
   const { t } = useTranslation('settings');
   const cameraDeviceId = useVoiceStore((s) => s.cameraDeviceId);
+  const cameraConfig = useVoiceStore((s) => s.cameraConfig);
   const setCameraDeviceId = useVoiceStore((s) => s.setCameraDeviceId);
   const isCameraOn = useVoiceStore((s) => s.isCameraOn);
 
@@ -325,7 +328,7 @@ export function VideoSection() {
     const start = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: cameraDeviceId ? { deviceId: { exact: cameraDeviceId } } : true,
+          video: previewConstraints(cameraDeviceId, cameraConfig),
         });
         if (gen !== startGenRef.current || !mountedRef.current) {
           stream.getTracks().forEach((t) => t.stop());
@@ -358,7 +361,7 @@ export function VideoSection() {
       // Bumping gen invalidates the in-flight start; actual track stop happens
       // when the user clicks Stop preview or via the unmount cleanup below.
     };
-  }, [cameraDeviceId, previewActive, isCameraOn, permState]);
+  }, [cameraDeviceId, cameraConfig, previewActive, isCameraOn, permState]);
 
   // Component-unmount cleanup: stop any live preview stream so the LED goes off
   // when the modal closes / settings tab changes / route changes.
@@ -385,7 +388,7 @@ export function VideoSection() {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: cameraDeviceId ? { deviceId: { exact: cameraDeviceId } } : true,
+        video: previewConstraints(cameraDeviceId, cameraConfig),
       });
       if (gen !== startGenRef.current || !mountedRef.current) {
         stream.getTracks().forEach((t) => t.stop());
@@ -619,8 +622,21 @@ export function VideoSection() {
           <div className="text-xs text-txt-tertiary mt-1">{t('voice.video.camera.none')}</div>
         )}
       </div>
+      <CameraQualitySection videoRef={previewVideoRef} />
     </div>
   );
+}
+
+/** Emix: open the preview at the chosen preset (ideal, never exact) so it shows real quality. */
+function previewConstraints(deviceId: string | null, cfg: CameraConfig): MediaTrackConstraints {
+  const c = isCameraConfig(cfg) ? cfg : DEFAULT_CAMERA_CONFIG;
+  const { resolution } = buildCameraOptions(c).capture;
+  return {
+    ...(deviceId ? { deviceId: { exact: deviceId } } : {}),
+    width: { ideal: resolution?.width },
+    height: { ideal: resolution?.height },
+    frameRate: { ideal: c.fps },
+  };
 }
 
 interface DropdownItemProps {

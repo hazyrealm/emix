@@ -12,6 +12,9 @@
 #   emixctl edge                 (re)start Caddy
 #   emixctl snapshot <env>       take a manual database snapshot
 #   emixctl logs <env> [svc]     follow logs (svc: app | livekit)
+#   emixctl landing              publish deploy/landing to https://getemix.com
+#   emixctl set-desktop-release <version>
+#                                point /download/windows at that GitHub release's x64 installer
 set -euo pipefail
 REPO="$(cd "$(dirname "$(readlink -f "$0")")/../.." && pwd)"
 COMPOSE_APP="$REPO/deploy/app/docker-compose.yml"
@@ -107,10 +110,22 @@ case "$cmd" in
     env="${1:?}"; compose "$env" up -d --force-recreate app; wait_healthy "$env" ;;
   edge)
     ensure_network
-    mkdir -p /srv/emix/edge/{caddy-data,caddy-config,site,downloads}
+    mkdir -p /srv/emix/edge/{caddy-data,caddy-config,site,downloads,caddy-extra}
     docker compose -f "$COMPOSE_EDGE" up -d
     docker exec emix-caddy caddy reload --config /etc/caddy/Caddyfile 2>/dev/null || true ;;
   snapshot) snapshot "${1:?}" ;;
+  landing)
+    mkdir -p /srv/emix/edge/site
+    rsync -a --delete "$REPO/deploy/landing/" /srv/emix/edge/site/
+    curl -fsS -o /dev/null --resolve getemix.com:443:127.0.0.1 https://getemix.com/ && echo "landing page published" ;;
+  set-desktop-release)
+    v="${1:?usage: emixctl set-desktop-release <version>}"
+    url="https://github.com/hazyrealm/emix/releases/download/v$v/Emix-$v-win-x64.exe"
+    curl -fsSIL -o /dev/null "$url" || die "$url is not downloadable (is the release published?)"
+    mkdir -p /srv/emix/edge/caddy-extra
+    printf 'redir /download/windows %s 302\n' "$url" > /srv/emix/edge/caddy-extra/desktop.caddy
+    docker exec emix-caddy caddy reload --config /etc/caddy/Caddyfile >/dev/null 2>&1
+    curl -fsS -o /dev/null -w '%{redirect_url}\n' --resolve getemix.com:443:127.0.0.1 https://getemix.com/download/windows ;;
   logs) env="${1:?}"; compose "$env" logs -f --tail=200 "${2:-app}" ;;
   *) sed -n '2,17p' "$0"; exit 1 ;;
 esac

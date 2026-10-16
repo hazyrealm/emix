@@ -306,8 +306,12 @@ export const config = {
     installChannel: envOptional('BACKSPACE_INSTALL_CHANNEL'),
   },
   telemetry: {
-    /** Receiver base URL for the opt-in daily ping. Tests and a future move override it. */
-    endpoint: envOptional('TELEMETRY_ENDPOINT') ?? 'https://hello.backspacechat.com',
+    /**
+     * Receiver base URL for the opt-in daily ping. Emix: empty by default, which
+     * disables the reporter and refuses opt-in; Emix sends no usage statistics
+     * to the upstream Backspace project.
+     */
+    endpoint: envOptional('TELEMETRY_ENDPOINT') ?? '',
   },
   directory: {
     /**

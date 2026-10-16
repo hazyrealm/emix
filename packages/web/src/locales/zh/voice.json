@@ -61,7 +61,9 @@
       "encoderImplementation": "编码器实现",
       "qpDelta": "QP 总和差值",
       "nackDelta": "NACK 差值",
-      "pliDelta": "PLI 差值"
+      "pliDelta": "PLI 差值",
+      "hardware": "硬件",
+      "software": "软件"
     },
     "source": {
       "microphone": "麦克风",
@@ -149,7 +151,22 @@
       "maintainFramerate": "保持帧率",
       "balanced": "平衡"
     },
-    "summary": "{{bitrate}} · {{degradation}}"
+    "summary": "{{bitrate}} · {{degradation}}",
+    "presets": {
+      "title": "预设",
+      "text": {
+        "label": "文字与幻灯片",
+        "hint": "文字最清晰：原生分辨率，30 帧/秒"
+      },
+      "motion": {
+        "label": "游戏与动态",
+        "hint": "动作最流畅：1080p，60 帧/秒"
+      },
+      "quality": {
+        "label": "高画质",
+        "hint": "带宽允许时以完整分辨率 60 帧/秒共享"
+      }
+    }
   },
   "stream": {
     "quality": "推流画质",

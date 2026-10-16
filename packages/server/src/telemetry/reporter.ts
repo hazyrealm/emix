@@ -137,7 +137,8 @@ function productionDeps(): ReporterDeps {
  * slot still reports that day.
  */
 export function startTelemetryReporter(): void {
-  if (timer) return;
+  // Emix: no receiver configured means telemetry is off for good.
+  if (timer || !config.telemetry.endpoint) return;
   const run = () => {
     reporterTick(productionDeps()).catch((err) => {
       console.error('[telemetry] reporter tick failed:', err);

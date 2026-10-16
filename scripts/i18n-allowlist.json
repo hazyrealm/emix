@@ -20,6 +20,7 @@
   "{{value}} KB/s",
   "{{value}} MB/s",
   "{{value}} kbps",
+  "{{fps}} fps",
   "{{value}} Mbps",
   "kbps",
   "Alt",

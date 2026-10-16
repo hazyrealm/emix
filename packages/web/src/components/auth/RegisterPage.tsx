@@ -12,6 +12,7 @@ import { api, HttpError, RateLimitError } from '../../api/client';
 import { useTransferStore } from '../../stores/transferStore';
 import { waitForTransferAttachment } from '../../utils/waitForTransfer';
 import { SourceCodeLink } from '../ui/SourceCodeLink';
+import { AuthShell, PasswordInput } from './AuthShell';
 import { describeError } from '../../i18n/errors';
 
 // Single-source regex for extracting a bare invite token from a pasted full URL.
@@ -416,10 +417,9 @@ export function RegisterPage() {
     // the visible viewport once the iOS keyboard claims ~300 px). `h-full` (rather than
     // `min-h-full`) makes this element exactly viewport-height; the inner flex wrapper
     // uses `min-h-full` so short content still centers vertically.
-    <div className="h-full overflow-y-auto bg-surface-base relative">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(var(--accent-primary)/0.06)_0%,transparent_50%)] pointer-events-none" />
-      <div className="min-h-full flex items-center justify-center px-4 py-6 md:py-10 relative z-10">
-        <div className="w-full max-w-[480px] bg-surface-elevated rounded-md p-6 md:p-8 shadow-elevation-high overflow-hidden">
+    <>
+    <AuthShell>
+        <div className="overflow-hidden">
         {/* Progress dots */}
         <div className="flex justify-center gap-2 mb-5">
           <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${step === 1 ? 'bg-accent-primary' : 'bg-txt-tertiary/30'}`} />
@@ -557,8 +557,7 @@ export function RegisterPage() {
                 <label className="block text-xs font-bold text-txt-secondary uppercase mb-2">
                   {t('common:labels.password')} <span className="text-txt-danger">*</span>
                 </label>
-                <input
-                  type="password"
+                <PasswordInput
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="input-standard w-full py-2.5 text-base md:text-sm"
@@ -570,8 +569,7 @@ export function RegisterPage() {
                 <label className="block text-xs font-bold text-txt-secondary uppercase mb-2">
                   {t('auth:fields.confirmPassword')} <span className="text-txt-danger">*</span>
                 </label>
-                <input
-                  type="password"
+                <PasswordInput
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="input-standard w-full py-2.5 text-base md:text-sm"
@@ -584,7 +582,7 @@ export function RegisterPage() {
                 disabled={continueDisabled}
                 // py-3 on mobile yields ≥44 px tap target (Apple HIG); py-2.5 keeps the
                 // tighter desktop look from before.
-                className="w-full py-3 md:py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="emix-gradient-button w-full py-3 md:py-2.5 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {t('common:actions.continue')}
               </button>
@@ -714,7 +712,7 @@ export function RegisterPage() {
               type="button"
               onClick={() => handleRegister(false)}
               disabled={isDisabled}
-              className="w-full py-3 md:py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white font-medium rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="emix-gradient-button w-full py-3 md:py-2.5 text-white font-semibold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {retryAfter > 0
                 ? t('auth:register.rateLimited.retryIn', { seconds: retryAfter })
@@ -747,12 +745,12 @@ export function RegisterPage() {
 
         {/* AGPL § 13: source offer for anonymous visitors, shown on both steps. */}
         {instanceInfo && (
-          <div className="mt-6 pt-4 border-t border-white/[0.04] flex justify-center">
+          <div className="mt-6 pt-4 border-t border-white/[0.06] flex justify-center text-center">
             <SourceCodeLink sourceCodeUrl={instanceInfo.sourceCodeUrl} version={instanceInfo.version} commit={instanceInfo.commit} />
           </div>
         )}
         </div>
-      </div>
+    </AuthShell>
 
       {/* Image Crop Modal */}
       {avatarCropSrc && (
@@ -767,6 +765,6 @@ export function RegisterPage() {
           maxOutputDimension={256}
         />
       )}
-    </div>
+    </>
   );
 }

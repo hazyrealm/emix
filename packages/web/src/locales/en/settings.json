@@ -82,6 +82,25 @@
         "unavailable": "Selected camera is unavailable.",
         "notFound": "No camera detected.",
         "generic": "Could not start camera preview."
+      },
+      "quality": {
+        "title": "Video quality",
+        "resolution": "Resolution",
+        "frameRate": "Frame rate",
+        "fps": "{{fps}} fps",
+        "level": "Quality",
+        "levels": {
+          "balanced": "Balanced",
+          "high": "High",
+          "max": "Maximum"
+        },
+        "target": "Sending up to {{res}} at {{fps}} fps, up to {{mbps}} Mbps (H.264, hardware-encoded where your GPU supports it).",
+        "cameraMax": "This camera reports up to {{value}}.",
+        "capturing": "Currently capturing {{value}}.",
+        "belowPreset": "This camera does not offer the chosen resolution, so Emix uses the highest it offers. Nothing is upscaled.",
+        "startPreview": "Start the preview to see what this camera can deliver.",
+        "adaptive": "If a viewer's connection or device cannot keep up, they automatically receive a lower layer.",
+        "applyNow": "Apply to the running call"
       }
     },
     "title": "Voice & Video",

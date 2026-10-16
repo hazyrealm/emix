@@ -18,6 +18,7 @@ import { getApiForOrigin, getChannelOrigin, getMyUserIdForOrigin, useSpaceStore 
 import { homeIdentityOf } from '../utils/identity';
 import { refreshStreamHostLimits, useStreamHostLimits } from '../utils/streamHostLimits';
 import { wsSend } from './useWebSocket';
+import { buildCameraOptions, DEFAULT_CAMERA_CONFIG, isCameraConfig } from '../utils/cameraQuality';
 import { useVoiceStore, type VoiceConnectionQuality } from '../stores/voiceStore';
 import { myRowForOrigin } from '../stores/authStore';
 import { useUIStore } from '../stores/uiStore';
@@ -28,7 +29,6 @@ import { dmCallChannelId, dmCallOrigin, dmCallRoomKey, voiceSessionOrigin } from
 import { AudioManager } from '../audio/AudioManager';
 import { SpeakingDetector } from '../audio/SpeakingDetector';
 import {
-  CAMERA_OVERDRIVE,
   buildScreenShareOptions,
   applyOverdrive,
   scheduleScreenShareOverdrive,
@@ -812,7 +812,9 @@ export function useLiveKit() {
       useVoiceStore.setState({ livekitHostOrigin: hostOrigin });
       // Refreshed per join; home's document arrives with every home `ready`.
       if (hostOrigin) void refreshStreamHostLimits(hostOrigin);
-      const newRoom = new Room({ adaptiveStream: true, dynacast: true, publishDefaults: { videoCodec: 'h264', simulcast: true } });
+      // Emix: pixelDensity 'screen' requests layers for physical pixels, so HiDPI
+      // and 4K displays get the full-resolution layer when a tile is large.
+      const newRoom = new Room({ adaptiveStream: { pixelDensity: 'screen' }, dynacast: true, publishDefaults: { videoCodec: 'h264', simulcast: true } });
       roomRef.current = newRoom;
       // This room's own tracker. Its handlers use it directly, and act only
       // while the room is current: a replaced room's late events belong to
@@ -1230,7 +1232,10 @@ export function useLiveKit() {
           await applyOverdrive(room, Track.Source.ScreenShare, opts.overdrive);
         }
       }
-      if (isCameraOn) { await applyOverdrive(room, Track.Source.Camera, CAMERA_OVERDRIVE); }
+      if (isCameraOn) {
+        const cfg = useVoiceStore.getState().cameraConfig;
+        await applyOverdrive(room, Track.Source.Camera, buildCameraOptions(isCameraConfig(cfg) ? cfg : DEFAULT_CAMERA_CONFIG).overdrive);
+      }
     };
     _activeTrackUpdate = _activeTrackUpdate.then(updateActiveTracks).catch(() => {});
     return () => { superseded = true; };

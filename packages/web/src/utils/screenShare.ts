@@ -45,21 +45,7 @@ export interface ScreenShareBuildResult {
   contentHint: 'motion' | 'detail';
 }
 
-// ---------------------------------------------------------------------------
-// Camera preset (fixed 720p30 H264, decoupled from screen share)
-// ---------------------------------------------------------------------------
-
-export const CAMERA_PRESET = {
-  resolution: { width: 1280, height: 720 },
-  encoding: { maxBitrate: 2_000_000, maxFramerate: 30 },
-  codec: 'h264' as const,
-} as const;
-
-export const CAMERA_OVERDRIVE: OverdriveOptions = {
-  maxBitrate: 2_000_000,
-  maxFramerate: 30,
-  degradationPreference: 'maintain-framerate',
-};
+// Camera presets live in ./cameraQuality (Emix: user-selectable, up to 2160p).
 
 // ---------------------------------------------------------------------------
 // Screen share builder — three independent axes → computed result

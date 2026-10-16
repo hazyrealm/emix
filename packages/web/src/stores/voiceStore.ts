@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { DEFAULT_CAMERA_CONFIG, isCameraConfig, type CameraConfig } from '../utils/cameraQuality';
 import type { ParticipantInfo } from '../hooks/useLiveKit';
 import { AudioManager } from '../audio/AudioManager';
 import { useSpaceStore, getChannelOrigin, getMyUserIdForOrigin } from './spaceStore';
@@ -120,6 +121,8 @@ export interface VoiceState {
   inputDeviceId: string;
   outputDeviceId: string;
   cameraDeviceId: string | null; // null = auto-select on next camera enable
+  /** Emix webcam quality preset (resolution, frame rate, bitrate level). */
+  cameraConfig: CameraConfig;
   focusedParticipantId: string | null;
   screenShareConfig: ScreenShareConfig;
   /**
@@ -199,6 +202,7 @@ export interface VoiceState {
   toggleDeafen: () => void;
   setFocusedParticipant: (id: string | null) => void;
   setScreenShareConfig: (config: Partial<ScreenShareConfig>) => void;
+  setCameraConfig: (config: Partial<CameraConfig>) => void;
   setLastScreenShareSourceId: (sourceId: string | null) => void;
   noiseSuppression: boolean;
   echoCancellation: boolean;
@@ -307,6 +311,7 @@ export const useVoiceStore = create<VoiceState>()(
       inputDeviceId: 'default',
       outputDeviceId: 'default',
       cameraDeviceId: null,
+      cameraConfig: DEFAULT_CAMERA_CONFIG,
       focusedParticipantId: null,
       screenShareConfig: { height: 720, fps: 60, mode: 'gaming', customBitrateKbps: null, shareAudio: !isElectron(), codec: 'vp9' },
       lastScreenShareSourceId: null,
@@ -604,6 +609,10 @@ export const useVoiceStore = create<VoiceState>()(
 
       setFocusedParticipant: (id) => set({ focusedParticipantId: id }),
       setLastScreenShareSourceId: (sourceId) => set({ lastScreenShareSourceId: sourceId }),
+      setCameraConfig: (config) => set((state) => {
+        const next = { ...state.cameraConfig, ...config };
+        return { cameraConfig: isCameraConfig(next) ? next : DEFAULT_CAMERA_CONFIG };
+      }),
       setScreenShareConfig: (config) => set((state) => ({
         screenShareConfig: { ...state.screenShareConfig, ...config },
       })),
@@ -943,6 +952,7 @@ export const useVoiceStore = create<VoiceState>()(
         inputDeviceId: state.inputDeviceId,
         outputDeviceId: state.outputDeviceId,
         cameraDeviceId: state.cameraDeviceId,
+        cameraConfig: state.cameraConfig,
         screenShareConfig: state.screenShareConfig,
         lastScreenShareSourceId: state.lastScreenShareSourceId,
         echoCancellation: state.echoCancellation,

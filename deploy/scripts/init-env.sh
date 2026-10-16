@@ -39,6 +39,9 @@ BACKSPACE_SOURCE_URL=${EMIX_SOURCE_URL:-https://github.com/hazyrealm/emix}
 # Never contact the Backspace public space directory.
 DIRECTORY_ENDPOINT=
 
+# Emix tracks upstream Backspace through git, not the admin Updates panel.
+BACKSPACE_UPDATE_CHECK=false
+
 BACKUP_INTERVAL_HOURS=24
 BACKUP_KEEP_SCHEDULED=14
 EOF

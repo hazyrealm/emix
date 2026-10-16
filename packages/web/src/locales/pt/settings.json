@@ -82,6 +82,25 @@
         "unavailable": "A câmera selecionada não está disponível.",
         "notFound": "Nenhuma câmera detectada.",
         "generic": "Não foi possível iniciar a pré-visualização da câmera."
+      },
+      "quality": {
+        "title": "Qualidade de vídeo",
+        "resolution": "Resolução",
+        "frameRate": "Taxa de quadros",
+        "fps": "{{fps}} fps",
+        "level": "Qualidade",
+        "levels": {
+          "balanced": "Equilibrada",
+          "high": "Alta",
+          "max": "Máxima"
+        },
+        "target": "Enviando até {{res}} a {{fps}} fps, até {{mbps}} Mbps (H.264, codificado por hardware quando sua GPU suporta).",
+        "cameraMax": "Esta câmera informa suporte a até {{value}}.",
+        "capturing": "Capturando agora {{value}}.",
+        "belowPreset": "Esta câmera não oferece a resolução escolhida, então o Emix usa a mais alta disponível. Nada é ampliado artificialmente.",
+        "startPreview": "Inicie a pré-visualização para ver o que esta câmera oferece.",
+        "adaptive": "Se a conexão ou o dispositivo de quem assiste não acompanhar, uma camada menor é enviada automaticamente.",
+        "applyNow": "Aplicar à chamada em andamento"
       }
     },
     "title": "Voz e vídeo",

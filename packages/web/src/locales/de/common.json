@@ -128,7 +128,9 @@
   "sourceCode": {
     "label": "Quellcode (AGPL)",
     "labelWithBuild": "Quellcode (AGPL) · {{build}}",
-    "title": "Den Quellcode der Version ansehen, die auf dieser Instanz läuft (AGPL-3.0)"
+    "title": "Den Quellcode der Version ansehen, die auf dieser Instanz läuft (AGPL-3.0)",
+    "attribution": "Emix basiert auf Backspace von Jannis Braun",
+    "licenses": "Lizenzen"
   },
   "devices": {
     "newAudioInput": "{{label}} erkannt. Wähle es in den Sprach-Einstellungen aus, um zu wechseln.",

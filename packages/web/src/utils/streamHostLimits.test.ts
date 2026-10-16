@@ -70,7 +70,7 @@ describe('getStreamHostLimits', () => {
     useSettingsStore.setState({ streamingLimits: { ...HOME_LIMITS, maxBitrateKbps: 1000 } });
     useVoiceStore.setState({ livekitHostOrigin: REMOTE });
     // Home's 1 Mbps cap says nothing about the remote host.
-    expect(getStreamHostLimits().maxBitrateKbps).toBe(20000);
+    expect(getStreamHostLimits().maxBitrateKbps).toBe(50000);
   });
 
   it('uses the recorded host for a DM call on a remote origin', () => {
@@ -82,7 +82,7 @@ describe('getStreamHostLimits', () => {
   it('claims nothing for a call whose token was relayed from an unknown host', () => {
     useSettingsStore.setState({ streamingLimits: { ...HOME_LIMITS, maxBitrateKbps: 1000 } });
     useVoiceStore.setState({ livekitHostOrigin: null });
-    expect(getStreamHostLimits().maxBitrateKbps).toBe(20000);
+    expect(getStreamHostLimits().maxBitrateKbps).toBe(50000);
   });
 });
 

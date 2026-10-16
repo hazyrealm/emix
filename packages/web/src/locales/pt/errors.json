@@ -227,5 +227,6 @@
   "sticker_not_local": "Esta figurinha está guardada em outro servidor, por isso não foi adicionada à sua coleção.",
   "sticker_not_found": "Essa figurinha não existe mais.",
   "sticker_collection_full": "Sua coleção está cheia com {{max}} figurinhas. Remova uma para adicionar outra.",
-  "sticker_name_invalid": "O nome da figurinha pode ter de 1 a {{max}} caracteres em uma linha, com pelo menos um caractere visível e sem caracteres de controle."
+  "sticker_name_invalid": "O nome da figurinha pode ter de 1 a {{max}} caracteres em uma linha, com pelo menos um caractere visível e sem caracteres de controle.",
+  "telemetry_unavailable": "As estatísticas de uso não estão disponíveis no Emix."
 }

@@ -1,0 +1,29 @@
+{
+  "title": "Welcome to Emix",
+  "tagline": "Your space to connect.",
+  "intro": "Emix brings your conversations together in one place. Stay connected with friends through private messaging, voice calls, high-quality video, and screen sharing.",
+  "intro2": "Whether you're gaming, hanging out, or sharing your screen, Emix makes it easy to stay connected.",
+  "features": {
+    "voice": {
+      "title": "Voice Chat",
+      "body": "Talk with friends in real time."
+    },
+    "video": {
+      "title": "Video Calls",
+      "body": "Connect face-to-face with high-quality video."
+    },
+    "screen": {
+      "title": "Screen Sharing",
+      "body": "Share games, applications, or your entire screen."
+    },
+    "messages": {
+      "title": "Private Messaging",
+      "body": "Keep your conversations organized and accessible."
+    },
+    "communities": {
+      "title": "Communities",
+      "body": "Create spaces and channels for your friends."
+    }
+  },
+  "getStarted": "Get Started"
+}

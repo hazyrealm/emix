@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
+import { EmixWelcome } from './components/welcome/EmixWelcome';
 import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import { LoginPage } from './components/auth/LoginPage';
 import { RegisterPage } from './components/auth/RegisterPage';
 import { AppLayout } from './components/layout/AppLayout';
 import { JoinPage } from './components/JoinPage';
 import { SwAutoUpdate } from './components/ui/SwUpdatePrompt';
-import { TelemetryAsk } from './components/telemetry/TelemetryAsk';
 import { ScreenShareSetup } from './components/voice/ScreenShareSetup';
 import { useAuthStore } from './stores/authStore';
 import { isElectron } from './platform/platform';
@@ -57,8 +57,8 @@ export function App() {
       )}
       <div className={showTitleBar ? 'flex-1 min-h-0' : 'contents'}>
         <SwAutoUpdate />
-        <TelemetryAsk />
         <ScreenShareSetup />
+        <EmixWelcome />
         <Routes>
           <Route
             path="/login"
@@ -90,14 +90,6 @@ export function App() {
           />
           <Route
             path="/explore"
-            element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/backspace"
             element={
               <ProtectedRoute>
                 <AppLayout />

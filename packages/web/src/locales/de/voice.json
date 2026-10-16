@@ -61,7 +61,9 @@
       "encoderImplementation": "Encoder-Implementierung",
       "qpDelta": "QP-Summenänderung",
       "nackDelta": "NACK-Änderung",
-      "pliDelta": "PLI-Änderung"
+      "pliDelta": "PLI-Änderung",
+      "hardware": "Hardware",
+      "software": "Software"
     },
     "source": {
       "microphone": "Mikrofon",
@@ -149,7 +151,22 @@
       "maintainFramerate": "Framerate halten",
       "balanced": "ausgewogen"
     },
-    "summary": "{{bitrate}} · {{degradation}}"
+    "summary": "{{bitrate}} · {{degradation}}",
+    "presets": {
+      "title": "Voreinstellungen",
+      "text": {
+        "label": "Text & Folien",
+        "hint": "Schärfster Text: native Auflösung, 30 fps"
+      },
+      "motion": {
+        "label": "Gaming & Bewegung",
+        "hint": "Flüssigste Bewegung: 1080p, 60 fps"
+      },
+      "quality": {
+        "label": "Hohe Qualität",
+        "hint": "Volle Auflösung mit 60 fps, wenn die Bandbreite reicht"
+      }
+    }
   },
   "stream": {
     "quality": "Stream-Qualität",

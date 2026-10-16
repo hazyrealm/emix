@@ -82,6 +82,25 @@
         "unavailable": "Die ausgewählte Kamera ist nicht verfügbar.",
         "notFound": "Keine Kamera gefunden.",
         "generic": "Die Kameravorschau konnte nicht gestartet werden."
+      },
+      "quality": {
+        "title": "Videoqualität",
+        "resolution": "Auflösung",
+        "frameRate": "Bildrate",
+        "fps": "{{fps}} fps",
+        "level": "Qualität",
+        "levels": {
+          "balanced": "Ausgewogen",
+          "high": "Hoch",
+          "max": "Maximal"
+        },
+        "target": "Sendet bis zu {{res}} mit {{fps}} fps und bis zu {{mbps}} Mbit/s (H.264, per Hardware kodiert, sofern deine GPU es unterstützt).",
+        "cameraMax": "Diese Kamera meldet bis zu {{value}}.",
+        "capturing": "Aktuelle Aufnahme: {{value}}.",
+        "belowPreset": "Diese Kamera bietet die gewählte Auflösung nicht an. Emix nutzt die höchste verfügbare; es wird nichts hochskaliert.",
+        "startPreview": "Starte die Vorschau, um zu sehen, was diese Kamera liefern kann.",
+        "adaptive": "Wenn die Verbindung oder das Gerät eines Zuschauers nicht mithält, erhält er automatisch eine niedrigere Stufe.",
+        "applyNow": "Im laufenden Anruf übernehmen"
       }
     },
     "title": "Sprache & Video",

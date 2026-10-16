@@ -252,6 +252,7 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   directory_unreachable: 'The directory could not be reached',
   directory_private_space: 'A private space cannot be listed in the directory',
   directory_requires_discovery: 'Turn on space discovery before enabling the directory',
+  telemetry_unavailable: 'Usage statistics are not available in Emix.',
 };
 
 function fillPlaceholders(text: string, details: ErrorDetails | undefined): string {

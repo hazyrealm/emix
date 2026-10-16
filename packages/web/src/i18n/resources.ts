@@ -24,6 +24,7 @@ import spaces from '../locales/en/spaces.json';
 import telemetry from '../locales/en/telemetry.json';
 import uploads from '../locales/en/uploads.json';
 import voice from '../locales/en/voice.json';
+import welcome from '../locales/en/welcome.json';
 
 export const defaultNS = 'common';
 
@@ -46,6 +47,7 @@ export const resources = {
     telemetry,
     uploads,
     voice,
+    welcome,
   },
 } as const;
 

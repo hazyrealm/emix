@@ -38,6 +38,11 @@ export async function adminTelemetryRoutes(app: FastifyInstance): Promise<void> 
         sendError(reply, 400, 'validation_failed');
         return undefined;
       }
+      // Emix: without a receiver there is nothing to opt in to. Turning it off stays allowed.
+      if (enabled && !config.telemetry.endpoint) {
+        sendError(reply, 409, 'telemetry_unavailable');
+        return undefined;
+      }
       return setTelemetryEnabled(getRawDb(), enabled, config.version);
     },
   );
