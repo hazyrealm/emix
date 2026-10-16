@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useVoiceStore } from '../../stores/voiceStore';
 import { useSpaceStore } from '../../stores/spaceStore';
 import { parseFederatedUsername } from '../../utils/identity';
-import { sendDmCallReject } from '../../utils/dmCall';
+import { dmCallChannelId, sendDmCallReject } from '../../utils/dmCall';
 import { acceptIncomingDmCall } from '../../utils/voiceActions';
 import { useCanonicalUserView } from '../../utils/userViewLookup';
 import { Avatar } from '../ui/Avatar';
@@ -25,6 +26,7 @@ export function IncomingCallModal() {
   const { t } = useTranslation(['voice', 'common']);
   const incomingCall = useVoiceStore((s) => s.incomingCall);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navigate = useNavigate();
 
   // Auto-dismiss after 30 seconds
   useEffect(() => {
@@ -62,7 +64,10 @@ export function IncomingCallModal() {
   // the gesture), and the call becomes active at once (`acceptIncomingDmCall`).
   const handleAccept = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    acceptIncomingDmCall();
+    // Emix: answering opens the call view (as the picture-in-picture tile's
+    // click does), so the other person's camera shows full size, not as a thumbnail.
+    const channelId = dmCallChannelId(incomingCall);
+    if (acceptIncomingDmCall() && channelId) navigate(`/channels/@me/${channelId}`);
   };
 
   const handleDecline = () => {

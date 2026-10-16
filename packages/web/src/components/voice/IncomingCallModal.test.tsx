@@ -14,6 +14,16 @@ vi.mock('../../audio/AudioManager', () => ({
 }));
 
 import { IncomingCallModal } from './IncomingCallModal';
+import { MemoryRouter, useLocation } from 'react-router-dom';
+
+function LocationProbe() {
+  return <div data-testid="location">{useLocation().pathname}</div>;
+}
+
+/** In the app the modal lives inside AppLayout, under the router. */
+function renderModal() {
+  return render(<MemoryRouter initialEntries={['/channels/@me']}><IncomingCallModal /><LocationProbe /></MemoryRouter>);
+}
 import { wsSend } from '../../hooks/useWebSocket';
 import { useVoiceStore } from '../../stores/voiceStore';
 import { useSpaceStore } from '../../stores/spaceStore';
@@ -40,7 +50,7 @@ beforeEach(async () => {
 
 describe('IncomingCallModal decline', () => {
   it('declines through the ring\'s origin with the ring\'s ids', () => {
-    render(<IncomingCallModal />);
+    renderModal();
 
     fireEvent.click(screen.getByTitle(i18n.t('common:actions.decline')));
 
@@ -51,7 +61,7 @@ describe('IncomingCallModal decline', () => {
   it('leaves the call the client is in as it was', () => {
     const held = { dmChannelId: 'dm-other', federatedCallId: null, callOrigin: null, livekit: null };
     useVoiceStore.setState({ activeDmCall: held });
-    render(<IncomingCallModal />);
+    renderModal();
 
     fireEvent.click(screen.getByTitle(i18n.t('common:actions.decline')));
 
@@ -63,7 +73,7 @@ describe('IncomingCallModal accept', () => {
   it('joins under the ring\'s key, never storing it as the DM id, and connects in the tap', () => {
     const connectFn = vi.fn().mockResolvedValue(undefined);
     useVoiceStore.setState({ connectFn });
-    render(<IncomingCallModal />);
+    renderModal();
 
     fireEvent.click(screen.getByTitle(i18n.t('common:actions.accept')));
 
@@ -73,5 +83,19 @@ describe('IncomingCallModal accept', () => {
     expect(active?.callOrigin).toBe(HOST);
     expect(wsSend).toHaveBeenCalledWith({ type: 'dm_call_accept', dmChannelId: null, federatedCallId: 'fed-1' }, HOST);
     expect(connectFn).toHaveBeenCalledWith('fed-1', true);
+  });
+});
+
+describe('IncomingCallModal accept (Emix)', () => {
+  it('opens the DM call view when the ring belongs to a local DM', () => {
+    useVoiceStore.setState({
+      connectFn: vi.fn().mockResolvedValue(undefined),
+      incomingCall: { ...useVoiceStore.getState().incomingCall!, dmChannelId: 'dm-42', federatedCallId: null },
+    });
+    renderModal();
+
+    fireEvent.click(screen.getByTitle(i18n.t('common:actions.accept')));
+
+    expect(screen.getByTestId('location')).toHaveTextContent('/channels/@me/dm-42');
   });
 });
