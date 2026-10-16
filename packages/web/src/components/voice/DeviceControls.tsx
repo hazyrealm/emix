@@ -66,6 +66,9 @@ export function CameraPreview({ deviceId, className = '', withEffects = true, on
   const { t } = useTranslation(['voice']);
   const videoRef = useRef<HTMLVideoElement>(null);
   const isCameraOn = useVoiceStore((s) => s.isCameraOn);
+  // The local tile's track: the processed one while effects run, so this
+  // preview follows the effects as they start and stop.
+  const localVideo = useVoiceStore((s) => s.participants.find((p) => p.isLocal)?.videoTrack ?? null);
   const cameraConfig = useVoiceStore((s) => s.cameraConfig);
   const effects = useCameraEffectsStore((s) => s.effects);
   const mirror = useCameraEffectsStore((s) => s.mirrorPreview);
@@ -77,7 +80,7 @@ export function CameraPreview({ deviceId, className = '', withEffects = true, on
     const video = videoRef.current;
     if (!video) return;
     if (isCameraOn) {
-      const live = liveCameraTrack();
+      const live = localVideo ?? liveCameraTrack();
       video.srcObject = live ? new MediaStream([live]) : null;
       setState(live ? 'ready' : 'error');
       onTrackRef.current?.(live);
@@ -109,7 +112,9 @@ export function CameraPreview({ deviceId, className = '', withEffects = true, on
       video.srcObject = null;
       onTrackRef.current?.(null);
     };
-  }, [deviceId, isCameraOn, cameraConfig]);
+    // A live camera's preview follows its track: a hot-swap or a processor
+    // change brings a new one.
+  }, [deviceId, isCameraOn, cameraConfig, localVideo]);
 
   // A live camera already carries its processed effects; a pre-call preview draws them with CSS.
   const cssEffects = withEffects && !isCameraOn && effectsActive(effects);
