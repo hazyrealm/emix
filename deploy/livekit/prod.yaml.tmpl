@@ -1,0 +1,36 @@
+# LiveKit (production). Rendered to /srv/emix/prod/livekit.yaml by
+# deploy/scripts/init-env.sh; the API key/secret are filled in there.
+port: 7880
+
+rtc:
+  # ICE over TCP for clients whose networks block UDP.
+  tcp_port: 7881
+  port_range_start: 50000
+  port_range_end: 60000
+  # The VPS has its public IP on eth0: advertise only that, no STUN lookup,
+  # and never the Docker bridge addresses.
+  use_external_ip: false
+  interfaces:
+    includes:
+      - eth0
+
+turn:
+  enabled: true
+  domain: turn.getemix.com
+  udp_port: 3478
+  # TURN over TLS for networks that only allow TLS. Cert comes from Caddy
+  # via deploy/scripts/sync-turn-cert.sh.
+  tls_port: 5349
+  cert_file: /certs/turn.crt
+  key_file: /certs/turn.key
+
+keys:
+  __LIVEKIT_API_KEY__: __LIVEKIT_API_SECRET__
+
+room:
+  auto_create: true
+  empty_timeout: 300
+  departure_timeout: 20
+
+logging:
+  level: info

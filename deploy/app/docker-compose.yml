@@ -1,0 +1,43 @@
+# Emix application stack (app + LiveKit), one instance per environment.
+# Always driven by deploy/scripts/*.sh, which pass:
+#   EMIX_ENV     prod | staging       (container and project names)
+#   EMIX_IMAGE   image ref to run     (pinned to a commit, never :latest)
+#   EMIX_STATE   /srv/emix/<env>      (secrets, livekit.yaml, data)
+name: emix-${EMIX_ENV:?}
+
+services:
+  app:
+    image: ${EMIX_IMAGE:?}
+    container_name: emix-${EMIX_ENV}-app
+    restart: unless-stopped
+    env_file:
+      - ${EMIX_STATE:?}/app.env
+    environment:
+      - NODE_ENV=production
+      - DB_PATH=/app/data/backspace.db
+      - UPLOAD_DIR=/app/data/uploads
+    volumes:
+      - ${EMIX_STATE}/data:/app/data
+    networks:
+      - emix-edge
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:' + (process.env.PORT || 3000) + '/api/health').then(r => r.ok ? process.exit(0) : process.exit(1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  livekit:
+    image: livekit/livekit-server:v1.9.11
+    container_name: emix-${EMIX_ENV}-livekit
+    restart: unless-stopped
+    # WebRTC media needs the host's real interfaces and the UDP port range.
+    network_mode: host
+    volumes:
+      - ${EMIX_STATE}/livekit.yaml:/etc/livekit.yaml:ro
+      - ${EMIX_STATE}/certs:/certs:ro
+    command: --config /etc/livekit.yaml
+
+networks:
+  emix-edge:
+    external: true

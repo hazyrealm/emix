@@ -1,0 +1,56 @@
+# Emix edge configuration. Header ownership follows upstream (see the root
+# Caddyfile and docs/systems/web-security.md): Caddy owns HSTS, the app owns
+# the CSP, so no CSP is set here for app hosts.
+
+(hsts) {
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+}
+
+# Landing page + desktop downloads / auto-update feed
+getemix.com {
+	import hsts
+	encode zstd gzip
+
+	handle_path /downloads/* {
+		root * /srv/downloads
+		# The updater feed must never be cached stale.
+		@feed path *.yml
+		header @feed Cache-Control "no-cache"
+		file_server
+	}
+
+	handle {
+		root * /srv/site
+		header Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+		file_server
+	}
+}
+
+www.getemix.com {
+	redir https://getemix.com{uri} permanent
+}
+
+# Production app
+app.getemix.com {
+	import hsts
+	handle_path /livekit/* {
+		reverse_proxy host.docker.internal:7880
+	}
+	reverse_proxy emix-prod-app:3000
+}
+
+# Staging app (verification before promotion)
+staging.getemix.com {
+	import hsts
+	header X-Robots-Tag "noindex, nofollow"
+	handle_path /livekit/* {
+		reverse_proxy host.docker.internal:7890
+	}
+	reverse_proxy emix-staging-app:3000
+}
+
+# Exists only so Caddy obtains and renews the certificate LiveKit's
+# TURN/TLS listener (port 5349) uses. Synced by deploy/scripts/sync-turn-cert.sh.
+turn.getemix.com {
+	respond "Emix TURN" 200
+}

@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# Emix operations tool. Every deploy runs an image built from a specific git
+# commit (emix:<sha>), records what ran before it, and verifies health over
+# real HTTPS before reporting success.
+#
+#   emixctl build [ref]          build emix:<sha> from a commit (default HEAD; tree must be clean)
+#   emixctl deploy staging [sha] run a built image on staging (default: latest build)
+#   emixctl promote              run the image currently on staging in production
+#   emixctl rollback <env>       return <env> to the image it ran before the last deploy
+#   emixctl status               show what each environment is running
+#   emixctl restart-app <env>    recreate the app container (picks up app.env changes)
+#   emixctl edge                 (re)start Caddy
+#   emixctl snapshot <env>       take a manual database snapshot
+#   emixctl logs <env> [svc]     follow logs (svc: app | livekit)
+set -euo pipefail
+REPO="$(cd "$(dirname "$(readlink -f "$0")")/../.." && pwd)"
+COMPOSE_APP="$REPO/deploy/app/docker-compose.yml"
+COMPOSE_EDGE="$REPO/deploy/edge/docker-compose.yml"
+
+die() { echo "emixctl: $*" >&2; exit 1; }
+host_of() { case "$1" in prod) echo app.getemix.com ;; staging) echo staging.getemix.com ;; *) die "unknown env: $1" ;; esac; }
+
+compose() {
+  local env="$1"; shift
+  local tag; tag="$(cat "/srv/emix/$env/current-tag" 2>/dev/null || true)"
+  EMIX_ENV="$env" EMIX_STATE="/srv/emix/$env" EMIX_IMAGE="emix:${EMIX_TAG:-$tag}" \
+    docker compose -f "$COMPOSE_APP" "$@"
+}
+
+ensure_network() {
+  docker network inspect emix-edge >/dev/null 2>&1 || \
+    docker network create --subnet 172.30.0.0/24 emix-edge >/dev/null
+}
+
+wait_healthy() {
+  local env="$1" host; host="$(host_of "$env")"
+  for _ in $(seq 1 60); do
+    [[ "$(docker inspect -f '{{.State.Health.Status}}' "emix-$env-app" 2>/dev/null)" == healthy ]] && break
+    sleep 3
+  done
+  [[ "$(docker inspect -f '{{.State.Health.Status}}' "emix-$env-app")" == healthy ]] || die "$env app is not healthy"
+  # Through Caddy with full certificate verification (hairpin-safe), if the edge is up.
+  if docker ps --format '{{.Names}}' | grep -qx emix-caddy; then
+    curl -fsS --max-time 10 --resolve "$host:443:127.0.0.1" "https://$host/api/health" >/dev/null \
+      || die "$env healthy in Docker but https://$host/api/health failed"
+  fi
+}
+
+run_env() {
+  local env="$1" tag="$2"
+  docker image inspect "emix:$tag" >/dev/null 2>&1 || die "image emix:$tag not built (emixctl build)"
+  [[ -f "/srv/emix/$env/app.env" ]] || die "/srv/emix/$env not initialised (deploy/scripts/init-env.sh $env)"
+  ensure_network
+  local cur; cur="$(cat "/srv/emix/$env/current-tag" 2>/dev/null || true)"
+  if [[ -n "$cur" && "$cur" != "$tag" ]] && docker ps --format '{{.Names}}' | grep -qx "emix-$env-app"; then
+    echo "==> pre-deploy snapshot of $env"
+    snapshot "$env" || die "snapshot failed; not deploying"
+    echo "$cur" > "/srv/emix/$env/previous-tag"
+  fi
+  echo "$tag" > "/srv/emix/$env/current-tag"
+  echo "==> $env -> emix:$tag"
+  EMIX_TAG="$tag" compose "$env" up -d --remove-orphans
+  wait_healthy "$env"
+  echo "$(date -u +%FT%TZ) $env emix:$tag" >> /srv/emix/deploy-history.log
+  echo "==> $env is healthy on emix:$tag"
+}
+
+snapshot() {
+  docker exec -w /app/packages/server "emix-$1-app" node --import tsx/esm src/scripts/snapshot.ts
+}
+
+cmd="${1:-}"; shift || true
+case "$cmd" in
+  build)
+    ref="${1:-HEAD}"
+    cd "$REPO"
+    [[ -z "$(git status --porcelain)" ]] || die "working tree has uncommitted changes; commit first"
+    sha="$(git rev-parse --short=12 "$ref")"
+    tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
+    git archive "$sha" | tar -x -C "$tmp"
+    docker build --build-arg BACKSPACE_COMMIT="$sha" -t "emix:$sha" "$tmp"
+    echo "$sha" > /srv/emix/last-build
+    echo "built emix:$sha" ;;
+  deploy)
+    [[ "${1:-}" == staging ]] || die "deploy targets staging only; use 'emixctl promote' for production"
+    run_env staging "${2:-$(cat /srv/emix/last-build)}" ;;
+  promote)
+    tag="$(cat /srv/emix/staging/current-tag 2>/dev/null)" || die "nothing on staging"
+    wait_healthy staging
+    run_env prod "$tag" ;;
+  rollback)
+    env="${1:?usage: emixctl rollback <env>}"
+    prev="$(cat "/srv/emix/$env/previous-tag" 2>/dev/null)" || die "no previous image recorded for $env"
+    run_env "$env" "$prev"
+    echo "NOTE: if the bad release ran a database migration, restore the pre-migration snapshot (see deploy/README.md)." ;;
+  status)
+    for env in prod staging; do
+      printf '%-8s %-22s %s\n' "$env" "emix:$(cat /srv/emix/$env/current-tag 2>/dev/null || echo -)" \
+        "$(docker inspect -f '{{.State.Health.Status}}' "emix-$env-app" 2>/dev/null | grep . || echo 'not running')"
+    done
+    docker ps --filter name=emix- --format '  {{.Names}}\t{{.Status}}' ;;
+  restart-app)
+    env="${1:?}"; compose "$env" up -d --force-recreate app; wait_healthy "$env" ;;
+  edge)
+    ensure_network
+    mkdir -p /srv/emix/edge/{caddy-data,caddy-config,site,downloads}
+    docker compose -f "$COMPOSE_EDGE" up -d
+    docker exec emix-caddy caddy reload --config /etc/caddy/Caddyfile 2>/dev/null || true ;;
+  snapshot) snapshot "${1:?}" ;;
+  logs) env="${1:?}"; compose "$env" logs -f --tail=200 "${2:-app}" ;;
+  *) sed -n '2,17p' "$0"; exit 1 ;;
+esac

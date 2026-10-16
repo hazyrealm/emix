@@ -1,0 +1,28 @@
+# Emix edge: one Caddy for every hostname (TLS, redirects, static site).
+# Shared by the prod and staging app stacks through the external `emix-edge`
+# network. Bring up with deploy/scripts/edge.sh, not by hand.
+name: emix-edge
+
+services:
+  caddy:
+    image: caddy:2.11.1-alpine
+    container_name: emix-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    extra_hosts:
+      # LiveKit runs with host networking; Caddy reaches its signaling port here.
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - /srv/emix/edge/caddy-data:/data
+      - /srv/emix/edge/caddy-config:/config
+      - /srv/emix/edge/site:/srv/site:ro
+      - /srv/emix/edge/downloads:/srv/downloads:ro
+    networks:
+      - emix-edge
+
+networks:
+  emix-edge:
+    external: true
