@@ -2,6 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../stores/authStore';
 import { Modal } from '../ui/Modal';
+import { create } from 'zustand';
+
+/** Whether the welcome is on screen; What's New waits for it. */
+export const useWelcomeOpenStore = create<{ open: boolean }>(() => ({ open: false }));
 
 /**
  * Emix welcome, shown once per account on each device after sign-in. It
@@ -35,6 +39,10 @@ export function EmixWelcome() {
   useEffect(() => {
     if (userId && !readSeen(userId)) setOpen(true);
   }, [userId]);
+
+  useEffect(() => {
+    useWelcomeOpenStore.setState({ open });
+  }, [open]);
 
   const close = useCallback(() => {
     if (userId) {

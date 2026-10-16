@@ -235,8 +235,11 @@ background blur or skin smoothing (they need a person-segmentation model; the
   5. Pushing the `vX.Y.Z` tag puts the same notes into the GitHub release draft.
 - **What's New popup**: after sign-in it shows everything newer than the
   account's acknowledged version, merged into one summary.
-  - A new account (or one that never acknowledged anything) sees only the
-    latest major release.
+  - An account created more than a day after the latest release gets the
+    Emix welcome instead, and that release counts as read.
+  - An older account that never acknowledged anything (all accounts before
+    1.12.0) sees only the latest major release, not the whole history.
+  - It waits for the welcome screen to be closed.
   - Any way of closing it records the acknowledgment on the server (synced
     across devices; survives reinstalling).
   - It waits while you are in a call, while a call rings, or while another

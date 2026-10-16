@@ -13,6 +13,10 @@ import { useAuthStore } from '../../stores/authStore';
 import { useUIStore } from '../../stores/uiStore';
 import { useVoiceStore } from '../../stores/voiceStore';
 import { useCameraPreviewStore } from '../../stores/cameraPreviewStore';
+import { useWelcomeOpenStore } from '../welcome/EmixWelcome';
+
+/** An account this much newer than the latest release gets the welcome, not release notes. */
+const NEW_ACCOUNT_GRACE_MS = 24 * 60 * 60 * 1000;
 
 function Dialog({ label, onClose, children, wide = false }: { label: string; onClose: () => void; children: React.ReactNode; wide?: boolean }) {
   useEffect(() => {
@@ -41,6 +45,8 @@ function Dialog({ label, onClose, children, wide = false }: { label: string; onC
 export function WhatsNewController() {
   const { t } = useTranslation(['common']);
   const userId = useAuthStore((s) => s.user?.id ?? null);
+  const createdAt = useAuthStore((s) => s.user?.createdAt ?? 0);
+  const welcomeOpen = useWelcomeOpenStore((s) => s.open);
   const releases = useChangelogStore((s) => s.releases);
   const acknowledged = useChangelogStore((s) => s.acknowledged);
   const viewerOpen = useChangelogStore((s) => s.viewerOpen);
@@ -50,7 +56,7 @@ export function WhatsNewController() {
   const busy = useVoiceStore((s) => s.isLiveKitConnected || !!s.activeDmCall || !!s.incomingCall || !!s.outgoingCall);
   const modalOpen = useUIStore((s) => s.activeModal !== null);
   const previewOpen = useCameraPreviewStore((s) => s.onConfirm !== null);
-  const otherDialog = modalOpen || previewOpen;
+  const otherDialog = modalOpen || previewOpen || welcomeOpen;
   const [ready, setReady] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
@@ -60,6 +66,15 @@ export function WhatsNewController() {
     const timer = setTimeout(() => { void load(userId).then(() => setReady(true)); }, 1500);
     return () => clearTimeout(timer);
   }, [userId, load]);
+
+  // A brand-new account has the welcome as its introduction: the release it
+  // joined after counts as read, so it is not greeted by two dialogs.
+  const latestDate = releases[0]?.date;
+  const joinedAfterLatest = acknowledged === null && !!latestDate
+    && createdAt > Date.parse(`${latestDate}T00:00:00Z`) + NEW_ACCOUNT_GRACE_MS;
+  useEffect(() => {
+    if (ready && joinedAfterLatest) acknowledgeLatest();
+  }, [ready, joinedAfterLatest, acknowledgeLatest]);
 
   const unseen = useMemo(() => (acknowledged === undefined ? [] : unseenReleases(releases, acknowledged)), [releases, acknowledged]);
   const merged = useMemo(() => {
@@ -71,7 +86,7 @@ export function WhatsNewController() {
     return out;
   }, [unseen]);
 
-  const showPopup = ready && !dismissed && unseen.length > 0 && !busy && !otherDialog && !viewerOpen;
+  const showPopup = ready && !dismissed && !joinedAfterLatest && unseen.length > 0 && !busy && !otherDialog && !viewerOpen;
 
   const dismiss = () => { setDismissed(true); acknowledgeLatest(); };
   const viewAll = () => { dismiss(); setViewerOpen(true); };
