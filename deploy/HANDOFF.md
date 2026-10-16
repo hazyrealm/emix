@@ -157,6 +157,17 @@ real networks cannot show real quality.
    handled a test 4K layer at ~11–19% of one CPU core, but real load depends on
    participants and bitrates.
 
+## Windows release 1.11.1
+
+- Published on 2026-10-16: x64 and arm64 installers plus the `latest.yml`
+  auto-update feed. The feed checksum was verified against the x64 installer.
+- https://getemix.com/download/windows redirects to the x64 installer.
+- During that build, electron-builder's two parallel uploaders each created a
+  draft. The files were merged into the published release. **One leftover
+  empty draft (holding only a `.blockmap`) is still on GitHub**: delete it on
+  the Releases page (it is not public). The workflow now creates the draft
+  first, so this will not recur.
+
 ## Not done / open items
 
 | Item | Why it is open | Suggested next step |
