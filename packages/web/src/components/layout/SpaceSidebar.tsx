@@ -80,7 +80,7 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
   const backgroundStyle = useMemo((): React.CSSProperties | undefined => {
     if (type === 'action') {
       return {
-        background: isHovered ? 'rgba(134, 239, 172, 0.12)' : 'rgba(255, 255, 255, 0.04)',
+        background: isHovered ? 'rgba(64, 214, 255, 0.14)' : 'rgba(255, 255, 255, 0.04)',
       };
     }
 

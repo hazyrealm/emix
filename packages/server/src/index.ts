@@ -1,4 +1,5 @@
 import Fastify, { type FastifyRequest } from 'fastify';
+import { isStaticAssetRequest } from './utils/rateLimitScope.js';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
@@ -46,6 +47,7 @@ import { registerWebSocket } from './ws/handler.js';
 import path from 'path';
 import fs from 'fs';
 import { MESSAGE_PAGING_HEADER } from '@backspace/shared';
+
 
 async function main(): Promise<void> {
   const app = Fastify({
@@ -174,7 +176,15 @@ async function main(): Promise<void> {
     keyGenerator: (request: FastifyRequest) => request.ip,
     // Test harnesses set DISABLE_RATE_LIMITS=1 to bypass per-IP exhaustion when
     // many tests share the loopback IP. Default unset; production unchanged.
-    allowList: () => process.env.DISABLE_RATE_LIMITS === '1' || process.env.DISABLE_RATE_LIMITS === 'true',
+    //
+    // Emix: the static web bundle is exempt. A cold load fetches about a hundred
+    // immutable, content-hashed files, so two people loading the app at once
+    // from one address (a household, right after an update) spent the whole
+    // budget and got a half-loaded page. Every /api route, the WebSocket
+    // upgrade and the per-route auth limits are still counted.
+    allowList: (request: FastifyRequest) =>
+      process.env.DISABLE_RATE_LIMITS === '1' || process.env.DISABLE_RATE_LIMITS === 'true'
+      || isStaticAssetRequest(request.method, request.url),
     // The shared error shape (see localization.md) plus `retryAfter` in
     // seconds; the plugin sets the Retry-After header itself. One builder
     // covers every per-route override too, so a route that tightens its own
