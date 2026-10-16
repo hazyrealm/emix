@@ -67,7 +67,10 @@ jobs:
       - name: Create draft release
         if: startsWith(github.ref, 'refs/tags/')
         shell: bash
-        run: gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --draft --title "Emix ${GITHUB_REF_NAME#v}" --notes ""
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          sed "s/{{VERSION}}/$v/g" .github/release-notes.md > "$RUNNER_TEMP/notes.md"
+          gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --draft --title "Emix $v" --notes-file "$RUNNER_TEMP/notes.md"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

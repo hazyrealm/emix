@@ -53,7 +53,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: Backspace version
+      label: Emix version
       description: The version shown in the app, or the image tag / commit you deployed.
       placeholder: "1.0.0"
     validations:
@@ -73,7 +73,7 @@ body:
     id: logs
     attributes:
       label: Relevant logs
-      description: Server logs (docker compose logs backspace) or browser console output, if any. This is automatically formatted as code.
+      description: Server logs (emixctl logs prod) or browser console output, if any. This is automatically formatted as code.
       render: shell
   - type: input
     id: environment

@@ -13,7 +13,7 @@ body:
     id: problem
     attributes:
       label: The problem
-      description: What are you trying to do that Backspace does not support today?
+      description: What are you trying to do that Emix does not support today?
       placeholder: As a space admin, I want to ... so that ...
     validations:
       required: true
