@@ -86,12 +86,23 @@ to 1.11.1 for a CI check and does not change the server or web app.
   per user per device.
 - The Backspace "project hub" (donations, upstream community links) is removed
   from the sidebar, mobile navigation and settings.
-- The landing page at getemix.com was redesigned. It has a real screenshot of
-  the app, a features section, a quality section, a download section and an
-  attribution footer.
-- **Attribution kept (required by AGPL):** LICENSE, NOTICE, `EMIX.md` and a
-  "Based on Backspace by Jannis Braun · Licenses · Source code" line in the app
-  and on the website.
+- The landing page at getemix.com was redesigned around four messages:
+  privacy, quality, freedom and no paywalls.
+  - Its product images are real Emix UI captured on **staging** with demo
+    accounts (`deploy/tests/demo_seed.py`; Maya, Leo, Sofia, Jordan and Nina
+    in the "Studio Nights" space). Their passwords are root-only in
+    `/srv/emix/staging/demo-users.json`.
+  - The camera feeds are flat illustrations, not real people.
+  - On the screen-share image, a test-server "network unstable" banner and
+    fps badge were painted out.
+- **Attribution kept (required by AGPL):**
+  - LICENSE, NOTICE and `EMIX.md` in the repository
+  - https://getemix.com/legal/, which has the license, the Backspace
+    copyright notice, third-party notices, the source-code link and the
+    no-warranty statement
+  - In the app:
+    - the sign-in pages show a small "Open source & legal" link
+    - User Settings shows "Source code (AGPL) · version" plus the same link
 
 ### Video and screen sharing
 - Settings → Voice & Video → **Camera quality** has these choices:

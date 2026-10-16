@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
-/** Emix: license, NOTICE and upstream attribution, kept with the source offer. */
-const LICENSES_URL = 'https://github.com/hazyrealm/emix/blob/main/EMIX.md';
+/** Emix: copyright notices, licenses, upstream attribution and the source offer. */
+const LEGAL_URL = 'https://getemix.com/legal/';
 
 interface SourceCodeLinkProps {
   /** URL to the Corresponding Source of the running version (AGPL § 13). */
@@ -12,6 +12,8 @@ interface SourceCodeLinkProps {
   commit?: string | null;
   /** Extra classes for layout composition (alignment, spacing) at the call site. */
   className?: string;
+  /** Emix: 'compact' (sign-in pages) shows only the legal link, which carries the source offer. */
+  variant?: 'full' | 'compact';
 }
 
 /**
@@ -25,8 +27,14 @@ interface SourceCodeLinkProps {
  * Rendered on every network-facing surface (settings sidebars, pre-auth pages)
  * so any network user — authenticated or anonymous — can reach the source.
  */
-export function SourceCodeLink({ sourceCodeUrl, version, commit, className }: SourceCodeLinkProps) {
+export function SourceCodeLink({ sourceCodeUrl, version, commit, className, variant = 'full' }: SourceCodeLinkProps) {
   const { t } = useTranslation('common');
+  const legalLink = (
+    <a href={LEGAL_URL} target="_blank" rel="noreferrer noopener" className="text-[11px] text-txt-tertiary hover:text-txt-secondary transition-colors">
+      {t('sourceCode.legal')}
+    </a>
+  );
+  if (variant === 'compact') return <span className={className}>{legalLink}</span>;
   const build = version ? `v${version}${commit ? ` (${commit})` : ''}` : '';
   const label = build ? t('sourceCode.labelWithBuild', { build }) : t('sourceCode.label');
 
@@ -56,13 +64,7 @@ export function SourceCodeLink({ sourceCodeUrl, version, commit, className }: So
         </svg>
         <span>{label}</span>
       </a>
-      {/* Emix: upstream attribution and license notices (AGPL-3.0, NOTICE). */}
-      <span className="text-[11px] text-txt-tertiary/80">
-        {t('sourceCode.attribution')} ·{' '}
-        <a href={LICENSES_URL} target="_blank" rel="noreferrer noopener" className="underline hover:text-txt-secondary">
-          {t('sourceCode.licenses')}
-        </a>
-      </span>
+      {legalLink}
     </span>
   );
 }

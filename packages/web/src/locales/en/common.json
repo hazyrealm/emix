@@ -129,8 +129,7 @@
     "label": "Source code (AGPL)",
     "labelWithBuild": "Source code (AGPL) · {{build}}",
     "title": "View the source code of the version this instance is running (AGPL-3.0)",
-    "attribution": "Emix is based on Backspace by Jannis Braun",
-    "licenses": "Licenses"
+    "legal": "Open source & legal"
   },
   "devices": {
     "newAudioInput": "{{label}} detected. Choose it in Voice settings to switch.",

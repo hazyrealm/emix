@@ -746,7 +746,7 @@ export function RegisterPage() {
         {/* AGPL § 13: source offer for anonymous visitors, shown on both steps. */}
         {instanceInfo && (
           <div className="mt-6 pt-4 border-t border-white/[0.06] flex justify-center text-center">
-            <SourceCodeLink sourceCodeUrl={instanceInfo.sourceCodeUrl} version={instanceInfo.version} commit={instanceInfo.commit} />
+            <SourceCodeLink sourceCodeUrl={instanceInfo.sourceCodeUrl} version={instanceInfo.version} commit={instanceInfo.commit} variant="compact" />
           </div>
         )}
         </div>

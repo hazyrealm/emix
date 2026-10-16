@@ -156,7 +156,7 @@ export function LoginPage() {
 
       {instanceInfo && (
         <div className="mt-6 pt-4 border-t border-white/[0.06] flex justify-center text-center">
-          <SourceCodeLink sourceCodeUrl={instanceInfo.sourceCodeUrl} version={instanceInfo.version} commit={instanceInfo.commit} />
+          <SourceCodeLink sourceCodeUrl={instanceInfo.sourceCodeUrl} version={instanceInfo.version} commit={instanceInfo.commit} variant="compact" />
         </div>
       )}
     </AuthShell>
