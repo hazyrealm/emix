@@ -18,9 +18,8 @@ Day-to-day operations are in [README.md](README.md).
 | Backups | restic repository at `/var/backups/emix-restic` (local disk only, see "Not done") |
 | Ops tool | `deploy/scripts/emixctl` (build, deploy staging, promote, rollback, status, snapshot, landing, set-desktop-release) |
 
-Production and staging both run image `emix:3f865660b88c` (Emix 1.11.1).
-The only later commit, `29d5d6c1`, bumps four internal helper-script manifests
-to 1.11.1 for a CI check and does not change the server or web app.
+Production and staging both run image `emix:fa2de2b24b6c` (Emix 1.12.0). See
+"Emix 1.12.0" below for what changed.
 
 ## What was done
 
@@ -247,6 +246,38 @@ background blur or skin smoothing (they need a person-segmentation model; the
   - If the changelog can't be loaded, nothing is shown and sign-in is
     unaffected.
 
+### Deployment status (2026-10-16)
+
+- **Production and staging run `emix:fa2de2b24b6c` (Emix 1.12.0).**
+  - restic snapshot `d8efa88f` was taken first, plus the automatic
+    pre-migration database snapshot.
+  - Migration 0032 added two nullable columns.
+  - Users, messages and uploads are unchanged.
+- getemix.com/changelog is live.
+  - Caddy proxies `/changelog.json` to the production app.
+  - The landing nav and footer link to it.
+- **Windows:** the `v1.12.0` tag builds the installers into a **draft**
+  release whose notes come from the changelog.
+  - The installed 1.11.1 app already shows every new feature, because the
+    desktop app loads the web app from the server.
+  - Publishing the draft only updates the desktop shell. Test it on a Windows
+    PC first, then publish it on GitHub and run
+    `emixctl set-desktop-release 1.12.0`. Until then, /download/windows keeps
+    serving 1.11.1.
+- Staging checks: `deploy/tests/feature_check.py` (profile style and changelog
+  API) and `api_check.py` pass. A browser run on staging covered:
+  - What's New: shown once, then not again after acknowledgment
+  - styled names, nameplates and decorations in chat and the member list
+  - the profile card and the Profile editor
+  - camera preview → camera on
+  - the camera and mic menus
+  - a camera effect changing the outgoing video, and "Original camera"
+    restoring it
+- **Registration note:** production's admin setting has registration
+  **open** (changed in the admin UI at 19:42 UTC on 2026-10-16, before this
+  work; the environment default is invite-only). This was left as it is. To
+  return to invite-only, go to Settings → Instance → Registration.
+
 ### Manual tests that need real hardware or people
 
 1. **Camera preview and switching (your Sony).**
@@ -310,7 +341,8 @@ user preferences.
 
 ## Test status
 
-- Web test suite: 3,304 tests pass. Lint and i18n checks are clean. Server
+- Web test suite: 3,306 tests pass; server suite 3,038 (including the new
+  changelog and profile-style tests). Lint and i18n checks are clean. Server
   typecheck and build pass.
 - GitHub CI (lint, typecheck, build, all tests, container build) is the source
   of truth. See the Actions tab.
