@@ -66,7 +66,7 @@ run_env() {
 }
 
 snapshot() {
-  docker exec -w /app/packages/server "emix-$1-app" node --import tsx/esm src/scripts/snapshot.ts
+  docker exec -u node -w /app/packages/server "emix-$1-app" node --import tsx/esm src/scripts/snapshot.ts
 }
 
 cmd="${1:-}"; shift || true

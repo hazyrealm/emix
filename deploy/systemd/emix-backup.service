@@ -1,0 +1,9 @@
+[Unit]
+Description=Emix production backup (SQLite snapshot + uploads + config via restic)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+Environment=RESTIC_CACHE_DIR=/var/cache/emix-restic
+ExecStart=/opt/emix/deploy/scripts/backup.sh prod
