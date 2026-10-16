@@ -303,7 +303,8 @@ export function UserSettingsModal() {
         {/* Content area (desktop always, mobile only when viewing content) */}
         {(!isMobile || mobileView === 'content') && (
           <SettingsScrollContainer>
-            <div className="px-6 max-w-[640px] mx-auto">
+            {/* The profile editor sits beside its live preview, so it gets a wider column. */}
+            <div className={`px-6 mx-auto ${tab === 'profile' ? 'max-w-[1060px]' : 'max-w-[640px]'}`}>
               {/* Mobile back button */}
               {isMobile && (
                 <button
