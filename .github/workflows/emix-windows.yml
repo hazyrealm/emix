@@ -62,6 +62,15 @@ jobs:
         shell: bash
         run: cp LICENSE packages/desktop/build/license.txt
 
+      # Create the draft once, up front. Otherwise electron-builder's parallel
+      # x64/arm64 publishers race and can each create a draft (v1.11.1 did).
+      - name: Create draft release
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --draft --title "Emix ${GITHUB_REF_NAME#v}" --notes ""
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build installers
         working-directory: packages/desktop
         shell: bash
