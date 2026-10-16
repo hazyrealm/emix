@@ -23,7 +23,7 @@ export function ProfileCardPreview({ user, style, playKey }: { user: User; style
   const displayName = user.displayName || user.username;
   const glass = style?.glass || !!style?.background;
   return (
-    <div className="w-full max-w-[340px] rounded-[12px] overflow-hidden glass-modal emx-surface shadow-xl">
+    <div className="relative w-full max-w-[340px] rounded-[12px] overflow-hidden glass-modal emx-surface shadow-xl">
       <ProfileBackgroundLayers background={style?.background} />
       <ProfileEffect id={style?.effect} playKey={`${style?.effect ?? ''}-${playKey}`} />
       <ProfileBanner src={uploadSrc(user.banner)} frame={style?.banner} fallback={bannerFallbackFor(user, displayName)} height={132} />

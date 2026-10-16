@@ -226,7 +226,8 @@
 @keyframes emx-bob { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-50%, -64%) scale(1.08); } }
 
 /* ── Profile card surfaces ──────────────────────────────────────────────── */
-.emx-surface { position: relative; isolation: isolate; }
+/* Positioning comes from the element itself (the profile card is `fixed`, the modal `relative`). */
+.emx-surface { isolation: isolate; }
 .emx-surface-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; border-radius: inherit; pointer-events: none; }
 .emx-surface-bg > * { position: absolute; inset: 0; }
 .emx-surface-img { width: 100%; height: 100%; object-fit: cover; }
