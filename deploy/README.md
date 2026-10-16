@@ -153,7 +153,11 @@ A restore of the latest backup into a throwaway container was tested on
 - Admin: `hero` (password initially in `/root/emix-admin-prod.txt`; change it
   in Settings, then `shred -u /root/emix-admin-prod.txt`).
 - Registration is **closed**; invite people from the admin panel
-  (Instance settings → Invites). Roles, permissions, bans, voice moderation and
+  (Instance settings → Invites). Also set (2026-10-16, stored in the database,
+  not in `app.env`): instance name `Emix`, federated account creation **off**,
+  automatic federation peering **off** (an admin approves each new peer
+  server). Telemetry is off (default) and the global space directory is
+  disabled by `DIRECTORY_ENDPOINT=` in `app.env`. Roles, permissions, bans, voice moderation and
   instance-wide screen-share limits are all in the admin/space settings.
 - Staging has its own admin `hero` (`/root/emix-admin-staging.txt`) and two
   test accounts used by the checks (`/srv/emix/staging/test-users.json`).
