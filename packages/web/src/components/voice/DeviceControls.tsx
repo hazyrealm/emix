@@ -412,7 +412,11 @@ export function CameraDeviceMenu({ anchorRef, onClose }: { anchorRef: React.RefO
   const isCameraOn = useVoiceStore((s) => s.isCameraOn);
   const [showEffects, setShowEffects] = useState(false);
   const [track, setTrack] = useState<MediaStreamTrack | null>(null);
-  const activeId = cameraDeviceId ?? (isCameraOn ? track?.getSettings().deviceId ?? null : null);
+  // The device behind the live camera (a processed track carries no device id).
+  const sourceId = isCameraOn
+    ? getActiveRoom()?.localParticipant.getTrackPublication(Track.Source.Camera)?.track?.mediaStreamTrack?.getSettings().deviceId
+    : track?.getSettings().deviceId;
+  const activeId = cameraDeviceId ?? (sourceId || null);
 
   return (
     <AnchoredMenu anchorRef={anchorRef} onClose={onClose} label={t('voice:devices.cameraMenu')}>
