@@ -168,6 +168,18 @@ real networks cannot show real quality.
   the Releases page (it is not public). The workflow now creates the draft
   first, so this will not recur.
 
+## GitHub presentation
+
+- README, screenshots, social preview and logo live in `.github/assets/`.
+- The release notes template is `.github/release-notes.md`. The Windows
+  workflow fills in the version when it creates a draft; write the "What's
+  new" part before publishing.
+- **The social preview image has to be uploaded by hand.** GitHub has no API
+  for it. Go to https://github.com/hazyrealm/emix/settings → General → Social
+  preview → Edit → Upload an image, and upload
+  `.github/assets/social-preview.png` (1280×640).
+- Private vulnerability reporting is enabled (Security → Advisories).
+
 ## Not done / open items
 
 | Item | Why it is open | Suggested next step |
