@@ -11,13 +11,8 @@ getemix.com {
 	import hsts
 	encode zstd gzip
 
-	handle_path /downloads/* {
-		root * /srv/downloads
-		# The updater feed must never be cached stale.
-		@feed path *.yml
-		header @feed Cache-Control "no-cache"
-		file_server
-	}
+	# Installers and the auto-update feed are GitHub Releases on the public repo.
+	redir /downloads* https://github.com/hazyrealm/emix/releases/latest 302
 
 	handle {
 		root * /srv/site

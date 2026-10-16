@@ -7,15 +7,19 @@ Everything here runs on one VPS (Ubuntu 24.04, `140.235.125.77`). Code lives in
 |---|---|---|
 | `/opt/emix` | this repository (`origin` = hazyrealm/emix, `upstream` = TheZwiss/backspace, push disabled) | yes |
 | `/srv/emix/prod`, `/srv/emix/staging` | `app.env` (secrets), `livekit.yaml` (secrets), `data/` (SQLite DB, uploads, snapshots), `current-tag`, `previous-tag` | **never** |
-| `/srv/emix/edge` | Caddy certificates/state, landing site, downloads | never |
+| `/srv/emix/edge` | Caddy certificates/state, landing site | never |
 | `/etc/emix` | backup destination + restic password | never |
 | `/root/emix-admin-*.txt` | initial admin passwords; delete after first login | never |
+
+Host configuration outside Docker (packages, firewall, swap, kernel UDP
+buffers, Docker log limits, systemd timers) is recorded in
+`deploy/scripts/host-setup.sh`, which rebuilds it on a fresh server.
 
 ## Architecture
 
 ```
             ┌──────────── emix-caddy (80/443, Let's Encrypt, auto-renew) ────────────┐
- getemix.com│ landing page           www.getemix.com → 301 getemix.com               │
+ getemix.com│ landing page, /downloads → GitHub releases; www → 301 getemix.com       │
             │ app.getemix.com     → emix-prod-app:3000,    /livekit → 127.0.0.1:7880  │
             │ staging.getemix.com → emix-staging-app:3000, /livekit → 127.0.0.1:7890  │
             │ turn.getemix.com    → only to obtain the TURN/TLS certificate           │
