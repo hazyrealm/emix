@@ -124,8 +124,8 @@
     "processing": {
       "sectionTitle": "Sprachverarbeitung",
       "noiseSuppression": {
-        "label": "KI-Rauschunterdrückung",
-        "description": "Rauschentfernung per maschinellem Lernen (RNNoise). Filtert Tastatur, Lüfter und Hintergrundgeräusche."
+        "label": "Rauschunterdrückung",
+        "description": "Entfernt Hintergrundgeräusche aus deinem Mikrofon auf diesem Gerät. Es läuft immer nur eine Unterdrückung."
       },
       "echoCancellation": {
         "label": "Echounterdrückung",
@@ -151,7 +151,8 @@
       "desktop": "Desktop",
       "instance": "Instanz",
       "profile": "Profil",
-      "whatsNew": "Neuigkeiten"
+      "whatsNew": "Neuigkeiten",
+      "notifications": "Benachrichtigungen"
     },
     "logOut": "Abmelden",
     "backToMenu": "Zurück zum Einstellungsmenü"
@@ -279,6 +280,30 @@
         "spacesFailed": "Spaces konnten nicht verarbeitet werden",
         "deleteFailed": "Konto konnte nicht gelöscht werden"
       }
+    },
+    "username": {
+      "title": "Benutzername",
+      "canChange": "Du kannst deinen Benutzernamen jetzt ändern.",
+      "nextChange": "Nächste Änderung möglich: {{date}}",
+      "notHere": "Der Benutzername dieses Kontos wird von seiner Heimatinstanz verwaltet.",
+      "change": "Ändern",
+      "newLabel": "Neuer Benutzername",
+      "rules": "{{min}}–{{max}} Zeichen: Kleinbuchstaben, Zahlen und Unterstriche.",
+      "checking": "Wird geprüft…",
+      "available": "@{{username}} ist verfügbar.",
+      "reason": {
+        "tooShort": "Mindestens {{min}} Zeichen.",
+        "tooLong": "Höchstens {{max}} Zeichen.",
+        "characters": "Nur Kleinbuchstaben, Zahlen und Unterstriche.",
+        "reserved": "Dieser Name ist reserviert.",
+        "taken": "Dieser Benutzername ist vergeben.",
+        "current": "Das ist bereits dein Benutzername."
+      },
+      "password": "Aktuelles Passwort",
+      "cooldownNote": "Du kannst deinen Benutzernamen alle 30 Tage einmal ändern. Freunde, Nachrichten, Erwähnungen und Communitys bleiben mit deinem Konto verbunden.",
+      "save": "Benutzernamen ändern",
+      "saving": "Wird gespeichert…",
+      "changed": "Dein Benutzername ist jetzt @{{username}}."
     }
   },
   "privacy": {
@@ -814,6 +839,73 @@
       "category": "Kategorie",
       "description": "Beschreibung (optional)",
       "wholeApp": "Vorschau in der ganzen App"
+    }
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "callSounds": "Anruftöne",
+    "incoming": {
+      "label": "Klingelton für eingehende Anrufe",
+      "hint": "Wird auf diesem Gerät abgespielt, wenn dich jemand anruft. Bei „Nicht stören“ stumm.",
+      "volume": "Lautstärke des Klingeltons"
+    },
+    "outgoing": {
+      "label": "Ton bei ausgehenden Anrufen",
+      "volume": "Lautstärke bei ausgehenden Anrufen"
+    },
+    "callerPlays": {
+      "label": "Wenn ich jemanden anrufe, abspielen",
+      "mine": "Meinen Ton für ausgehende Anrufe",
+      "theirs": "Ihren geteilten Klingelton (falls vorhanden)",
+      "none": "Keinen Ton",
+      "hint": "Nur du hörst das. Teilt die Person keinen Klingelton, wird dein eigener Ton abgespielt."
+    },
+    "restoreDefaults": "Standardtöne wiederherstellen",
+    "defaultRingtone": "Emix-Standard",
+    "builtinGroup": "Mitgeliefert",
+    "uploadsGroup": "Meine Uploads",
+    "silent": "Lautlos",
+    "preview": "Anhören",
+    "builtin": {
+      "aurora": "Aurora",
+      "marimba": "Marimba",
+      "pulse": "Puls",
+      "retro": "Retro-Telefon",
+      "bells": "Glockenspiel"
+    },
+    "shared": {
+      "title": "Mein geteilter Klingelton",
+      "hint": "Ein Klingelton, den andere hören können, während sie dich anrufen. Er ist getrennt von deinem eingehenden Klingelton, der immer privat bleibt.",
+      "none": "Keiner",
+      "allow": "Anderen erlauben, meinen geteilten Klingelton zu hören, wenn sie mich anrufen",
+      "pickOne": "Wähle oben einen Klingelton zum Teilen."
+    },
+    "uploads": {
+      "title": "Meine Klingeltöne",
+      "hint": "MP3, WAV oder OGG, bis {{max}} MB. Längere Töne werden auf {{seconds}} Sekunden gekürzt. Du kannst {{limit}} behalten.",
+      "upload": "Klingelton hochladen",
+      "uploading": "Wird hochgeladen…",
+      "added": "Klingelton hinzugefügt.",
+      "tooLarge": "Diese Datei ist größer als {{max}} MB.",
+      "untitled": "Klingelton"
+    },
+    "friends": {
+      "title": "Töne pro Freund",
+      "hint": "Optional: ein besonderer Klingelton, wenn ein Freund dich anruft, oder eine andere Wahl dafür, was du hörst, wenn du ihn anrufst.",
+      "whenTheyCall": "Wenn sie mich anrufen",
+      "whenICall": "Wenn ich sie anrufe",
+      "useGeneral": "Allgemeine Einstellung verwenden",
+      "remove": "Entfernen",
+      "add": "Hinzufügen",
+      "pick": "Freund auswählen…"
+    },
+    "availability": {
+      "title": "Verfügbarkeit",
+      "autoAway": "Bei Inaktivität auf „Abwesend“ setzen",
+      "never": "Nie",
+      "minutes": "Nach {{n}} Min.",
+      "autoAwayHint": "Nur solange dein Status „Online“ ist und keines deiner angemeldeten Geräte benutzt wird. Ein selbst gewählter Status („Abwesend“ oder „Nicht stören“) wird nie geändert. „Offline“ wird nur angezeigt, wenn du wirklich getrennt bist.",
+      "dndHint": "„Nicht stören“ schaltet Klingeltöne, Nachrichtentöne und Benachrichtigungen stumm. Nachrichten, Anrufe, Ungelesen-Markierungen und verpasste Anrufe kommen weiterhin an."
     }
   }
 }

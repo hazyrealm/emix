@@ -1,5 +1,36 @@
 [
   {
+    "version": "1.14.0",
+    "date": "2026-10-17",
+    "status": "published",
+    "major": true,
+    "title": "Custom ringtones, sharper calls and quieter microphones",
+    "summary": "Choose and upload your own call sounds, share a ringtone with friends, pick how much background noise to remove, and set yourself Away or Do Not Disturb in one click. Free for everyone.",
+    "sections": {
+      "new": [
+        "Call sounds in Settings → Notifications: pick a built-in ringtone, upload your own (MP3, WAV or OGG), or go silent, separately for incoming and outgoing calls",
+        "Shared ringtones: choose a ringtone friends can hear while they call you, and choose whether you hear yours, theirs or nothing when you call",
+        "Per-friend sounds: a special ringtone when a particular friend calls",
+        "Change your username once every 30 days in Settings → Account; friends, messages and mentions stay connected",
+        "Status menu: click your name in the bottom-left corner to switch between Online, Away and Do Not Disturb",
+        "Automatic Away after a period of inactivity you choose, only when none of your devices is in use",
+        "Noise suppression levels (Off, Low, Medium, High) with a microphone test so you can hear the difference"
+      ],
+      "improved": [
+        "High noise suppression adds a rumble filter and a speech gate that turns down typing and clicks between words",
+        "Change noise suppression during a call from the microphone menu",
+        "Reset a participant's volume to default with one click; volume changes only affect what you hear"
+      ],
+      "fixed": [
+        "Camera video no longer goes soft, shifts or changes colour when you move the mouse over a call",
+        "The camera preview no longer turns transparent when you scroll through the camera effects"
+      ],
+      "security": [
+        "Uploaded ringtones are re-encoded on the server and stay private unless you choose to share one"
+      ]
+    }
+  },
+  {
     "version": "1.13.0",
     "date": "2026-10-17",
     "status": "published",

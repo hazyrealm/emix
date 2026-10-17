@@ -43,6 +43,9 @@ import { CameraPreviewDialog } from '../voice/DeviceControls';
 import { WhatsNewController } from '../changelog/WhatsNew';
 import { ThemeDialogs } from '../themes/ThemeShare';
 import { ThemeSync } from '../themes/ThemeSync';
+import { installAutoAway } from '../../utils/autoAway';
+import { useAuthStore } from '../../stores/authStore';
+import { useRingtoneStore } from '../../stores/ringtoneStore';
 import { installCameraEffectsSync } from '../../utils/cameraEffects';
 
 installCameraEffectsSync();
@@ -270,6 +273,12 @@ export function AppLayout() {
 
   // Initialize WebSocket
   useWebSocket();
+  useEffect(() => installAutoAway(), []);
+  // Call sounds follow the account: a ring on this device uses its settings.
+  const signedInId = useAuthStore((s) => s.user?.id);
+  useEffect(() => {
+    if (signedInId) useRingtoneStore.getState().load().catch(() => {});
+  }, [signedInId]);
 
   // Federation toast notifications for remote instance connection state changes
   useFederationToasts();

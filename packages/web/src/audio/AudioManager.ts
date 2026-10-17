@@ -2,6 +2,7 @@ import { RnnoiseWorkletNode, loadRnnoise } from '@sapphi-red/web-noise-suppresso
 import rnnoiseWorkletPath from '@sapphi-red/web-noise-suppressor/rnnoiseWorklet.js?url';
 import rnnoiseWasmPath from '@sapphi-red/web-noise-suppressor/rnnoise.wasm?url';
 import rnnoiseWasmSimdPath from '@sapphi-red/web-noise-suppressor/rnnoise_simd.wasm?url';
+import speechGateWorkletPath from './speechGateWorklet.js?url';
 
 export class AudioManager {
   private static instance: AudioManager | null = null;
@@ -32,6 +33,13 @@ export class AudioManager {
   private stereoMerger: ChannelMergerNode | null = null;
   private rnnoiseEnabled = false;
   private rnnoiseReady = false;
+  // Emix "High" suppression: rumble filter + speech gate after RNNoise.
+  private rumbleFilter: BiquadFilterNode | null = null;
+  private gateNode: AudioWorkletNode | null = null;
+  private gateEnabled = false;
+  private gateReady = false;
+  // Mic test: the processed microphone played back to the user's own output.
+  private monitorGain: GainNode | null = null;
   private keepAliveOscillator: OscillatorNode | null = null;
 
   // Cached `getUserMedia` denial. After a NotAllowedError, subsequent
@@ -181,6 +189,28 @@ export class AudioManager {
       console.error(`[AudioManager] Error loading sound ${name}:`, err);
       return null;
     }
+  }
+
+  /**
+   * Decode audio fetched elsewhere (an uploaded ringtone) into the sound cache
+   * under `key`, so `playSound(key)` plays it. Decoding once per key: a
+   * ringtone that loops or plays on every call is fetched and decoded once.
+   */
+  async cacheSound(key: string, fetchBytes: () => Promise<ArrayBuffer>): Promise<boolean> {
+    if (this.soundBuffers.has(key)) return true;
+    if (!this.ctx) this.initContext();
+    try {
+      const buffer = await this.ctx!.decodeAudioData(await fetchBytes());
+      this.soundBuffers.set(key, buffer);
+      return true;
+    } catch (err) {
+      console.warn(`[AudioManager] could not load ${key}`, err);
+      return false;
+    }
+  }
+
+  forgetSound(key: string): void {
+    this.soundBuffers.delete(key);
   }
 
   async playSound(name: string, options: { loop?: boolean; volume?: number } = {}): Promise<AudioBufferSourceNode | null> {
@@ -454,7 +484,7 @@ export class AudioManager {
         this.stereoMerger = this.ctx!.createChannelMerger(2);
         this.rnnoiseNode.connect(this.stereoMerger, 0, 0); // mono → left
         this.rnnoiseNode.connect(this.stereoMerger, 0, 1); // mono → right
-        this.stereoMerger.connect(this.inputGain!);
+        this.stereoMerger.connect(this.gateEnabled && this.rumbleFilter ? this.rumbleFilter : this.inputGain!);
 
         this.rnnoiseReady = true;
         console.log('[AudioManager] RNNoise worklet loaded and connected (mono→stereo via ChannelMerger)');
@@ -493,6 +523,55 @@ export class AudioManager {
 
   isRnnoiseEnabled(): boolean {
     return this.rnnoiseEnabled;
+  }
+
+  /**
+   * The second stage of "High": an 85 Hz high-pass (fans, desk rumble) and a
+   * speech gate (speechGateWorklet.js) between RNNoise and the input gain.
+   * Changes the graph only, so the published track stays as it is.
+   */
+  async setNoiseGate(enabled: boolean): Promise<void> {
+    if (!this.isInitialized) this.initContext();
+    if (enabled && !this.gateReady) {
+      try {
+        await this.ctx!.audioWorklet.addModule(speechGateWorkletPath);
+        this.rumbleFilter = this.ctx!.createBiquadFilter();
+        this.rumbleFilter.type = 'highpass';
+        this.rumbleFilter.frequency.value = 85;
+        this.rumbleFilter.Q.value = 0.707;
+        this.gateNode = new AudioWorkletNode(this.ctx!, 'emix-speech-gate', { outputChannelCount: [2] });
+        this.rumbleFilter.connect(this.gateNode);
+        this.gateNode.connect(this.inputGain!);
+        this.gateReady = true;
+      } catch (err) {
+        console.error('[AudioManager] Failed to load the speech gate:', err);
+        return;
+      }
+    }
+    if (enabled === this.gateEnabled) return;
+    this.gateEnabled = enabled;
+    if (!this.stereoMerger) return; // wired when RNNoise loads
+    this.stereoMerger.disconnect();
+    this.stereoMerger.connect(enabled && this.rumbleFilter ? this.rumbleFilter : this.inputGain!);
+  }
+
+  /**
+   * Mic test: plays the processed microphone (what a call would send) to this
+   * device's output, so suppression levels can be compared. Headphones avoid
+   * feedback; the caller says so.
+   */
+  setMonitor(enabled: boolean): void {
+    if (!this.isInitialized) this.initContext();
+    if (enabled && !this.monitorGain) {
+      this.monitorGain = this.ctx!.createGain();
+      this.monitorGain.gain.value = 1;
+      this.inputGain!.connect(this.monitorGain);
+      this.monitorGain.connect(this.masterBoost!);
+    } else if (!enabled && this.monitorGain) {
+      this.inputGain!.disconnect(this.monitorGain);
+      this.monitorGain.disconnect();
+      this.monitorGain = null;
+    }
   }
 
   setInputVolume(volume: number) {

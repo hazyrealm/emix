@@ -277,6 +277,13 @@ export const ERROR_CODES = [
   'sticker_name_invalid',
   // Emix: telemetry has no receiver, so it cannot be switched on.
   'telemetry_unavailable',
+  // Emix: username changes and ringtones
+  'username_reserved',
+  'username_change_cooldown',
+  'username_change_unavailable',
+  'ringtone_invalid_audio',
+  'ringtone_limit_reached',
+  'ringtone_not_found',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

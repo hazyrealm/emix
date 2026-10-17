@@ -1,4 +1,5 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { USERNAME_MIN, USERNAME_MAX, RESERVED_USERNAMES } from '@backspace/shared/src/username.js';
 import { eq, or, lt } from 'drizzle-orm';
 import { randomBytes } from 'node:crypto';
 import { getDb, schema } from '../db/index.js';
@@ -16,8 +17,6 @@ import { getInviteByToken, inviteStatus, redeemInvite, InviteUnavailableError } 
 import { sendError, errorText } from '../utils/httpErrors.js';
 import type { ErrorCode, ErrorDetails } from '@backspace/shared/src/errors';
 
-const USERNAME_MIN = 3;
-const USERNAME_MAX = 32;
 const FEDERATED_USERNAME_MAX = 100;
 
 /**
@@ -110,6 +109,9 @@ export async function authRoutes(app: FastifyInstance): Promise<void> {
       }
       if (!/^[a-z0-9_]+$/.test(trimmedUsername)) {
         return sendError(reply, 400, 'username_characters_invalid');
+      }
+      if (RESERVED_USERNAMES.has(trimmedUsername)) {
+        return sendError(reply, 409, 'username_reserved');
       }
     }
 

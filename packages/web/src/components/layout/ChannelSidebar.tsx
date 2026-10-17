@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { StatusMenu } from './StatusMenu';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { Channel } from '@backspace/shared';
@@ -862,6 +863,8 @@ function UserAreaPanel({
 }) {
   const { t } = useTranslation(['spaces', 'common', 'admin']);
   const [openPanel, setOpenPanel] = useState<'input' | 'output' | null>(null);
+  const [statusMenuOpen, setStatusMenuOpen] = useState(false);
+  const closeStatusMenu = useCallback(() => setStatusMenuOpen(false), []);
   const inputDeviceId = useVoiceStore((s) => s.inputDeviceId);
   const outputDeviceId = useVoiceStore((s) => s.outputDeviceId);
   const setInputDevice = useVoiceStore((s) => s.setInputDevice);
@@ -1154,14 +1157,23 @@ function UserAreaPanel({
 
       {/* User area bar */}
       <div className="h-[52px] px-2 flex items-center select-none">
-        {/* Avatar + name */}
-        <div className="p-1 hover:bg-interactive-hover rounded-[4px] flex items-center gap-2 flex-1 min-w-0 cursor-pointer transition-colors group">
+        {/* Avatar + name: opens the status menu */}
+        <button
+          type="button"
+          data-status-anchor
+          onClick={() => setStatusMenuOpen((v) => !v)}
+          aria-haspopup="menu"
+          aria-expanded={statusMenuOpen}
+          title={t('spaces:sidebar.userArea.statusMenu.title')}
+          className="p-1 hover:bg-interactive-hover rounded-[4px] flex items-center gap-2 flex-1 min-w-0 cursor-pointer transition-colors group text-left"
+        >
           <ProfileAvatar src={user.avatar} name={user.displayName ?? user.username} size={34} status={shownStatus} user={user} origin="" />
           <div className="flex-1 min-w-0">
             <div className="text-[13.5px] font-semibold text-txt-primary truncate leading-tight">{user.displayName ?? user.username}</div>
             <div className="text-[11px] text-txt-tertiary truncate leading-tight group-hover:text-txt-secondary">@{user.username}</div>
           </div>
-        </div>
+        </button>
+        {statusMenuOpen && <StatusMenu onClose={closeStatusMenu} />}
 
         {/* Controls */}
         <div className="flex items-center">

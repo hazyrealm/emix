@@ -32,6 +32,10 @@ export const users = sqliteTable('users', {
   changelogAck: text('changelog_ack'),
   /** The app theme this account uses (`AppThemeSelection` JSON); null = Emix default. */
   appTheme: text('app_theme'),
+  /** When the username last changed (epoch ms); null = never. One change per 30 days. */
+  usernameChangedAt: integer('username_changed_at'),
+  /** Call sound preferences (`RingtoneSettings` JSON); null = defaults. */
+  ringtoneSettings: text('ringtone_settings'),
   isDeleted: integer('is_deleted').default(0),
   discoverable: integer('discoverable').default(1),
   profileUpdatedAt: integer('profile_updated_at'),
@@ -819,6 +823,18 @@ export const personalStickers = sqliteTable('personal_stickers', {
  * others (with credit). `data` is a normalized `ThemeData` JSON document.
  * Public themes appear in the gallery; any theme opens by its share code.
  */
+/** Uploaded ringtones. Files live outside the public uploads folder and are served only through /api/ringtones. */
+export const ringtones = sqliteTable('ringtones', {
+  id: text('id').primaryKey(),
+  ownerId: text('owner_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  durationMs: integer('duration_ms').notNull(),
+  size: integer('size').notNull(),
+  createdAt: integer('created_at').notNull(),
+}, (table) => ({
+  ownerIdx: index('idx_ringtones_owner').on(table.ownerId),
+}));
+
 export const themes = sqliteTable('themes', {
   id: text('id').primaryKey(),
   ownerId: text('owner_id').notNull().references(() => users.id, { onDelete: 'cascade' }),

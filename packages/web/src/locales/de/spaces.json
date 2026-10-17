@@ -557,7 +557,13 @@
       "undeafen": "Ton einschalten",
       "spaceMuted": "Im Space stummgeschaltet",
       "spaceDeafened": "Ton im Space ausgeschaltet",
-      "permissionMuted": "Stummgeschaltet (keine Sprechberechtigung)"
+      "permissionMuted": "Stummgeschaltet (keine Sprechberechtigung)",
+      "statusMenu": {
+        "title": "Status festlegen",
+        "onlineHint": "Du wirst als verfügbar angezeigt.",
+        "idleHint": "Du wirst als abwesend angezeigt. Nachrichten und Anrufe erreichen dich weiterhin.",
+        "dndHint": "Schaltet Klingeltöne, Nachrichtentöne und Benachrichtigungen stumm. Nachrichten und Anrufe kommen weiterhin an."
+      }
     },
     "dmUnreadMessages_one": "{{count}} ungelesene Direktnachricht",
     "dmUnreadMessages_other": "{{count}} ungelesene Direktnachrichten",

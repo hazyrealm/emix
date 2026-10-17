@@ -427,7 +427,7 @@ export function PictureInPicture() {
           autoPlay
           playsInline
           muted
-          className="w-full h-full object-cover"
+          className="emx-video w-full h-full object-cover"
           style={{
             imageRendering: 'auto',
             // Only your own camera is mirrored, and only for you; never a screen share.

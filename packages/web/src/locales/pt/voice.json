@@ -24,7 +24,8 @@
     "watchCamera": "Assistir à câmera",
     "stopWatchingCamera": "Parar de assistir à câmera",
     "muteUser": "Silenciar usuário",
-    "userVolume": "Volume do usuário"
+    "userVolume": "Volume do usuário",
+    "resetVolume": "Redefinir"
   },
   "incomingCall": {
     "status": "Chamada de voz recebida...",
@@ -215,8 +216,8 @@
     "fullscreen": "Tela cheia",
     "disconnect": "Desconectar",
     "connectionInfo": "Informações da conexão",
-    "noiseSuppressionOff": "Desativar supressão de ruído com IA",
-    "noiseSuppressionOn": "Ativar supressão de ruído com IA"
+    "noiseSuppressionOff": "Desativar supressão de ruído",
+    "noiseSuppressionOn": "Ativar supressão de ruído"
   },
   "status": {
     "dmCall": "Chamada em DM",
@@ -340,5 +341,27 @@
     "always": "Pré-visualizar antes de ligar a câmera",
     "start": "Ligar câmera",
     "startCall": "Iniciar videochamada"
+  },
+  "noise": {
+    "title": "Supressão de ruído",
+    "levels": {
+      "off": "Desligado",
+      "low": "Baixa",
+      "medium": "Média",
+      "high": "Alta"
+    },
+    "hints": {
+      "off": "Sem supressão de ruído: seu microfone soa exatamente como é.",
+      "low": "A supressão nativa do navegador (WebRTC). Leve: remove chiado e zumbido constantes.",
+      "medium": "RNNoise, executado neste dispositivo. Remove ventiladores, zumbidos e a maior parte do ruído ambiente. Recomendado.",
+      "high": "RNNoise mais um filtro de graves e um gate de voz que abaixa digitação e cliques entre as palavras. O mais forte; fala muito baixa pode ficar atenuada."
+    },
+    "test": {
+      "start": "Testar microfone",
+      "stop": "Parar teste",
+      "hint": "Ouça a si mesmo como os outros ouviriam, com o nível escolhido. Troque de nível para comparar. Use fones de ouvido para evitar eco. Nada é gravado ou enviado.",
+      "inCall": "Você está em uma chamada: você ouve o que a chamada envia. Use fones de ouvido.",
+      "failed": "Não foi possível abrir o microfone."
+    }
   }
 }

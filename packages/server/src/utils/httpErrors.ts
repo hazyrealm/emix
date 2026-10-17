@@ -253,6 +253,12 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   directory_private_space: 'A private space cannot be listed in the directory',
   directory_requires_discovery: 'Turn on space discovery before enabling the directory',
   telemetry_unavailable: 'Usage statistics are not available in Emix.',
+  username_reserved: 'That username is reserved',
+  username_change_cooldown: 'Usernames can be changed once every 30 days',
+  username_change_unavailable: 'This account cannot change its username on this instance',
+  ringtone_invalid_audio: 'Upload an MP3, WAV or OGG audio file of at most {{max}} MB',
+  ringtone_limit_reached: 'Ringtone limit reached',
+  ringtone_not_found: 'Ringtone not found',
 };
 
 function fillPlaceholders(text: string, details: ErrorDetails | undefined): string {

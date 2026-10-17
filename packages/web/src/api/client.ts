@@ -1,6 +1,8 @@
 import type { PersonalSticker } from '@backspace/shared/src/stickers';
 import type { ChangelogResponse, ChangelogStateResponse } from '@backspace/shared/src/changelog';
 import type { AppThemeSelection, ThemeData, ThemeRecord } from '@backspace/shared/src/theme';
+import type { UsernameCheck, UsernameStatus } from '@backspace/shared/src/username';
+import type { RingtoneRecord, RingtoneSettings, SharedRingtoneInfo } from '@backspace/shared/src/ringtones';
 import { isErrorCode, type ErrorCode, type ErrorDetails } from '@backspace/shared/src/errors';
 import type {
   NotificationSetting,
@@ -369,6 +371,24 @@ export class BackspaceApiClient {
     byShareCode: (code: string) => Promise<{ theme: ThemeRecord }>;
     gallery: (params: { sort?: 'popular' | 'recent' | 'liked'; q?: string; category?: string; page?: number }) => Promise<{ themes: ThemeRecord[]; more: boolean }>;
     like: (id: string, liked: boolean) => Promise<{ theme: ThemeRecord }>;
+  };
+
+  readonly username: {
+    status: () => Promise<UsernameStatus>;
+    check: (username: string) => Promise<UsernameCheck>;
+    change: (username: string, password: string) => Promise<{ user: User; token: string; status: UsernameStatus }>;
+  };
+
+  readonly ringtones: {
+    list: () => Promise<{ ringtones: RingtoneRecord[] }>;
+    upload: (name: string, data: string) => Promise<{ ringtone: RingtoneRecord }>;
+    rename: (id: string, name: string) => Promise<{ ringtone: RingtoneRecord }>;
+    remove: (id: string) => Promise<{ success: boolean; settings: RingtoneSettings }>;
+    /** The audio bytes (yours, or one shared with you). */
+    audio: (id: string) => Promise<ArrayBuffer>;
+    settings: () => Promise<{ settings: RingtoneSettings }>;
+    saveSettings: (settings: RingtoneSettings) => Promise<{ settings: RingtoneSettings }>;
+    sharedBy: (userId: string) => Promise<SharedRingtoneInfo>;
   };
 
   readonly changelog: {
@@ -815,6 +835,23 @@ export class BackspaceApiClient {
         return request('GET', `/themes/gallery?${q.toString()}`);
       },
       like: (id, liked) => request(liked ? 'POST' : 'DELETE', `/themes/${encodeURIComponent(id)}/like`),
+    };
+
+    this.username = {
+      status: () => request('GET', '/users/@me/username'),
+      check: (username) => request('GET', `/users/@me/username/check?username=${encodeURIComponent(username)}`),
+      change: (username, password) => request('POST', '/users/@me/username', { username, password }),
+    };
+
+    this.ringtones = {
+      list: () => request('GET', '/ringtones'),
+      upload: (name, data) => request('POST', '/ringtones', { name, data }),
+      rename: (id, name) => request('PATCH', `/ringtones/${encodeURIComponent(id)}`, { name }),
+      remove: (id) => request('DELETE', `/ringtones/${encodeURIComponent(id)}`),
+      audio: async (id) => (await send('GET', `/ringtones/${encodeURIComponent(id)}/audio`)).arrayBuffer(),
+      settings: () => request('GET', '/users/@me/ringtone-settings'),
+      saveSettings: (settings) => request('PUT', '/users/@me/ringtone-settings', { settings }),
+      sharedBy: (userId) => request('GET', `/users/${encodeURIComponent(userId)}/shared-ringtone`),
     };
 
     this.changelog = {

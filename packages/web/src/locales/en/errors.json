@@ -228,5 +228,11 @@
   "sticker_not_found": "That sticker no longer exists.",
   "sticker_collection_full": "Your collection is full at {{max}} stickers. Remove one to add another.",
   "sticker_name_invalid": "Sticker names can be 1 to {{max}} characters on one line, with at least one visible character and no control characters.",
-  "telemetry_unavailable": "Usage statistics are not available in Emix."
+  "telemetry_unavailable": "Usage statistics are not available in Emix.",
+  "username_reserved": "That username is reserved. Pick another one.",
+  "username_change_cooldown": "You can change your username once every 30 days.",
+  "username_change_unavailable": "This account's username can't be changed here.",
+  "ringtone_invalid_audio": "Upload an MP3, WAV or OGG audio file of at most {{max}} MB.",
+  "ringtone_limit_reached": "You can keep up to {{max}} ringtones. Delete one to upload another.",
+  "ringtone_not_found": "That ringtone no longer exists."
 }

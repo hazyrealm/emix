@@ -340,6 +340,7 @@ export function useLiveKit() {
   const noiseSuppression = useVoiceStore((s) => s.noiseSuppression);
   const autoGainControl = useVoiceStore((s) => s.autoGainControl);
   const rnnoiseEnabled = useVoiceStore((s) => s.rnnoiseEnabled);
+  const noiseSuppressionLevel = useVoiceStore((s) => s.noiseSuppressionLevel);
 
   const lastMicGenRef = useRef(0);
 
@@ -549,8 +550,12 @@ export function useLiveKit() {
         const audioManager = AudioManager.getInstance();
 
         // Sync voice processing settings to AudioManager
-        audioManager.setVoiceProcessing({ echoCancellation, noiseSuppression, autoGainControl });
+        // One suppressor at a time (VoiceState.noiseSuppressionLevel): the
+        // browser's for Low, RNNoise for Medium and High (AudioManager turns
+        // the browser's off under RNNoise), plus the speech gate for High.
+        audioManager.setVoiceProcessing({ echoCancellation, noiseSuppression: noiseSuppression && noiseSuppressionLevel !== 'off', autoGainControl });
         await audioManager.setRnnoiseEnabled(rnnoiseEnabled);
+        await audioManager.setNoiseGate(noiseSuppressionLevel === 'high');
         if (!isCurrentRoom()) return;
 
         const micPub = r.localParticipant.getTrackPublications()
@@ -618,7 +623,7 @@ export function useLiveKit() {
       cancelled = true;
       unsubscribeResume();
     };
-  }, [isMuted, isDeafened, spaceMutedUserIds, spaceDeafenedUserIds, permissionMutedUserIds, inputDeviceId, inputVolume, isConnected, echoCancellation, noiseSuppression, autoGainControl, rnnoiseEnabled, micPermissionDenied]);
+  }, [isMuted, isDeafened, spaceMutedUserIds, spaceDeafenedUserIds, permissionMutedUserIds, inputDeviceId, inputVolume, isConnected, echoCancellation, noiseSuppression, autoGainControl, rnnoiseEnabled, noiseSuppressionLevel, micPermissionDenied]);
 
   // Subscribe to upstream-input-track-end events from AudioManager whenever a
   // room is connected. The published mic track is a clone of a WebAudio

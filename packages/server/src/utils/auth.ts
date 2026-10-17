@@ -72,6 +72,7 @@ export async function verifyJwtAndUser(token: string): Promise<{
   const db = getDb();
   const user = db.select({
     id: schema.users.id,
+    username: schema.users.username,
     isDeleted: schema.users.isDeleted,
     passwordChangedAt: schema.users.passwordChangedAt,
     homeInstance: schema.users.homeInstance,
@@ -91,7 +92,8 @@ export async function verifyJwtAndUser(token: string): Promise<{
 
   return {
     userId: payload.userId,
-    username: payload.username,
+    // The row, not the token: a username can change while a token is valid.
+    username: user.username,
     homeInstance: user.homeInstance ?? null,
   };
 }

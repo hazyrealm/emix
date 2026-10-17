@@ -15,7 +15,7 @@ import { mapCallReasonToEventReason } from '../utils/federationOutbox.js';
 import { callRelayActor, fanOutCallEvent, relayCallEvent, userRelayIdentity, type CallRelayEventType } from '../utils/callFanout.js';
 import { sanitizeUser } from '../utils/sanitize.js';
 import { collectProfileBroadcastTargetIds } from '../utils/userDeletion.js';
-import { applyChosenStatus } from './presence.js';
+import { applyChosenStatus, refreshAutoAway } from './presence.js';
 import { presenceUpdateFor, validateActivities } from './presenceEvent.js';
 import { deleteAttachmentFiles } from '../utils/fileCleanup.js';
 import { resolveEmbeds, reResolveEmbeds, embedRowToEmbed } from '../utils/embedResolver.js';
@@ -164,6 +164,10 @@ export function handleClientEvent(
       break;
     case 'presence_update':
       handlePresenceUpdate(event, userId);
+      break;
+    case 'activity_state':
+      connectionManager.setSocketIdle(ws, event.idle === true);
+      refreshAutoAway(userId);
       break;
     case 'voice_join':
       handleVoiceJoin(event, userId, ws);
@@ -2527,6 +2531,7 @@ export function registerCallRelayHooks(): void {
     }
   });
   connectionManager.setFederatedCallLeaveHook(leaveJoinedFederatedCall);
+  connectionManager.setSessionsChangedHook(refreshAutoAway);
 }
 
 // ─── Test-only exports ──────────────────────────────────────────────────────

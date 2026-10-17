@@ -228,5 +228,11 @@
   "sticker_not_found": "Diesen Sticker gibt es nicht mehr.",
   "sticker_collection_full": "Deine Sammlung ist mit {{max}} Stickern voll. Entferne einen, um einen neuen hinzuzufügen.",
   "sticker_name_invalid": "Stickernamen dürfen 1 bis {{max}} Zeichen in einer Zeile haben, mindestens ein sichtbares Zeichen und keine Steuerzeichen.",
-  "telemetry_unavailable": "Nutzungsstatistiken sind in Emix nicht verfügbar."
+  "telemetry_unavailable": "Nutzungsstatistiken sind in Emix nicht verfügbar.",
+  "username_reserved": "Dieser Benutzername ist reserviert. Wähle einen anderen.",
+  "username_change_cooldown": "Du kannst deinen Benutzernamen alle 30 Tage einmal ändern.",
+  "username_change_unavailable": "Der Benutzername dieses Kontos kann hier nicht geändert werden.",
+  "ringtone_invalid_audio": "Lade eine MP3-, WAV- oder OGG-Audiodatei mit höchstens {{max}} MB hoch.",
+  "ringtone_limit_reached": "Du kannst bis zu {{max}} Klingeltöne behalten. Lösche einen, um einen neuen hochzuladen.",
+  "ringtone_not_found": "Dieser Klingelton existiert nicht mehr."
 }

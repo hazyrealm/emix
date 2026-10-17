@@ -1,5 +1,7 @@
 import { normalizeProfileStyle } from '@backspace/shared/src/profileStyle.js';
 import crypto from 'crypto';
+import fs from 'node:fs';
+import { ringtoneFile } from './ringtoneStorage.js';
 import { eq, or, and, inArray, isNotNull } from 'drizzle-orm';
 import { getDb, schema } from '../db/index.js';
 import { forgetReplicaProjection } from '../ws/replicaPresence.js';
@@ -113,6 +115,8 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
   if (styleImage) filesToDelete.push(styleImage);
 
   const purge = options?.purgeContent !== false; // default true
+  const ringtoneIds = db.select({ id: schema.ringtones.id }).from(schema.ringtones)
+    .where(eq(schema.ringtones.ownerId, uid)).all().map((r) => r.id);
 
   // Find group DMs this user owns so we can transfer ownership
   const ownedGroupDms = db.select({ id: schema.dmChannels.id })
@@ -269,6 +273,8 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
     // others' themes are left as they are (a count, not a list of people).
     tx.delete(schema.themeLikes).where(eq(schema.themeLikes.userId, uid)).run();
     tx.delete(schema.themes).where(eq(schema.themes.ownerId, uid)).run();
+    // Uploaded ringtones too (their files are removed after the transaction).
+    tx.delete(schema.ringtones).where(eq(schema.ringtones.ownerId, uid)).run();
 
     // Tombstone user row — rename username to free it for reuse
     tx.update(schema.users).set({
@@ -283,6 +289,7 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
       avatarColor: null,
       profileStyle: null,
       appTheme: null,
+      ringtoneSettings: null,
       replicatedInstances: '[]',
       isDeleted: 1,
       status: 'offline',
@@ -292,6 +299,9 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
   });
   // The tombstone shows 'offline' for good; a replicated row's projection goes with it.
   forgetReplicaProjection(uid);
+  for (const id of ringtoneIds) {
+    try { fs.rmSync(ringtoneFile(id), { force: true }); } catch (e) { console.warn('[userDeletion] ringtone file removal failed', e); }
+  }
 
   return filesToDelete;
 }

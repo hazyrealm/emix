@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { UsernameSection } from './UsernameSection';
 import { useTranslation } from 'react-i18next';
 import { selectMyChosenStatus, useAuthStore } from '../../../stores/authStore';
 import { useUIStore } from '../../../stores/uiStore';
@@ -655,6 +656,8 @@ export function AccountPanel() {
           </div>
         </div>
       </div>
+
+      <UsernameSection />
 
       {/* ── Account ── */}
       <div>

@@ -279,6 +279,8 @@ function handleEvent(origin: string, event: ServerEvent, readyAlreadyDelivered =
 
       if (isHome) {
         setUser(event.user);
+        // A fresh socket counts as active on the server (automatic Away).
+        void import('../utils/autoAway').then((m) => m.reportActivityStateAfterReconnect());
         useSettingsStore.getState().setIsAdmin(event.user.isAdmin ?? false);
         useSettingsStore.getState().fetchStreamingLimits();
         useSettingsStore.getState().fetchGifEnabled();

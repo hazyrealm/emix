@@ -82,6 +82,7 @@ vi.mock('../../../api/client', () => ({
 // store imports don't participate in this isolated component render.
 vi.mock('../../ui/ImageCropModal', () => ({ ImageCropModal: () => null }));
 vi.mock('../DeleteAccountModal', () => ({ DeleteAccountModal: () => null }));
+vi.mock('./UsernameSection', () => ({ UsernameSection: () => null }));
 
 import { AccountPanel } from './AccountPanel';
 

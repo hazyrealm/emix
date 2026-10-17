@@ -23,6 +23,7 @@ import { extractDomain } from './federation.js';
 import path from 'path';
 import fs from 'node:fs';
 import { normalizeProfileStyle, PROFILE_STYLE_MAX_JSON } from '@backspace/shared/src/profileStyle.js';
+import { queueProfileRelay } from '../utils/profileRelay.js';
 
 /**
  * Canonicalize a caller-supplied remote instance origin to the single storage
@@ -588,41 +589,7 @@ export async function userRoutes(app: FastifyInstance): Promise<void> {
         f in updateData && (updateData[f] ?? null) !== (preUpdateUser[f] ?? null)
       );
 
-      if (durableActuallyChanged) {
-        const origin = getOurOrigin();
-        const profilePayload: FederationProfileUpdatePayload = {
-          homeUserId: updatedUser!.id,
-          homeInstance: origin,
-          profileUpdatedAt: updatedUser!.profileUpdatedAt ?? Date.now(),
-          username: updatedUser!.username,
-          displayName: updatedUser!.displayName,
-          avatar: updatedUser!.avatar && !updatedUser!.avatar.startsWith('http')
-            ? `${origin}/api/uploads/${updatedUser!.avatar}`
-            : updatedUser!.avatar,
-          banner: updatedUser!.banner && !updatedUser!.banner.startsWith('http')
-            ? `${origin}/api/uploads/${updatedUser!.banner}`
-            : updatedUser!.banner,
-          accentColor: updatedUser!.accentColor,
-          avatarColor: updatedUser!.avatarColor,
-          bio: updatedUser!.bio,
-        };
-
-        appendMutationLog(
-          updatedUser!.id,
-          updatedUser!.id,
-          'profile_update',
-          JSON.stringify({ profileUpdate: profilePayload }),
-          'profile',
-        );
-        queueOutboxEvent(
-          updatedUser!.id,    // entityId — user's ID (queue `profile:<id>`: a newer edit replaces a queued one)
-          updatedUser!.id,    // contextId — user-scoped
-          'profile_update',
-          JSON.stringify({ profileUpdate: profilePayload }),
-          undefined,          // targetPeerOrigins — broadcast to active and unreachable peers
-          'profile',          // contextType
-        );
-      }
+      if (durableActuallyChanged) queueProfileRelay(updatedUser!);
     }
 
     return reply.code(200).send(sanitized);

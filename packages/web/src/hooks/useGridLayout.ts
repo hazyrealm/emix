@@ -11,6 +11,9 @@ interface GridLayout {
   rows: number;
   tileWidth: number;
   tileHeight: number;
+  /** Whole-pixel offsets that centre the tiles, so no tile sits on a half pixel. */
+  offsetX: number;
+  offsetY: number;
   ref: (element: HTMLElement | null) => void;
 }
 
@@ -27,6 +30,8 @@ export function useGridLayout(
     rows: 1,
     tileWidth: 320,
     tileHeight: 180,
+    offsetX: 0,
+    offsetY: 0,
   });
 
   const prevRef = useRef(layout);
@@ -79,6 +84,10 @@ export function useGridLayout(
         rows: bestRows,
         tileWidth: bestW,
         tileHeight: bestH,
+        // CSS centring (justify/align-content) lands odd leftovers on half
+        // pixels, which makes the compositor resample and re-snap the videos.
+        offsetX: Math.max(0, Math.floor((element.clientWidth - (bestCols * bestW + gap * (bestCols - 1))) / 2)),
+        offsetY: Math.max(0, Math.floor((element.clientHeight - (bestRows * bestH + gap * (bestRows - 1))) / 2)),
       };
 
       const prev = prevRef.current;
@@ -86,7 +95,9 @@ export function useGridLayout(
         prev.cols !== next.cols ||
         prev.rows !== next.rows ||
         prev.tileWidth !== next.tileWidth ||
-        prev.tileHeight !== next.tileHeight
+        prev.tileHeight !== next.tileHeight ||
+        prev.offsetX !== next.offsetX ||
+        prev.offsetY !== next.offsetY
       ) {
         prevRef.current = next;
         setLayout(next);

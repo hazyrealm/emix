@@ -1,4 +1,5 @@
 import type { ProfileStyle } from '@backspace/shared/src/profileStyle';
+import type { UsernameStatus } from '@backspace/shared/src/username';
 import { useChannelPokeStore } from './channelPokeStore';
 import { useUnreadCountStore } from './unreadCountStore';
 import { useMemo } from 'react';
@@ -48,6 +49,8 @@ interface AuthState {
   loadUser: () => Promise<void>;
   updateProfile: (data: { displayName?: string; avatar?: string; banner?: string; accentColor?: string; avatarColor?: string; bio?: string; customStatus?: string; status?: ChosenUserStatus; profileStyle?: ProfileStyle | null }) => Promise<void>;
   changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
+  /** Rename (one change per 30 days, checked by the server); returns the new cooldown state. */
+  changeUsername: (username: string, password: string) => Promise<UsernameStatus>;
   deleteAccount: (password: string, username: string) => Promise<void>;
   setUser: (user: User) => void;
   /** A connected instance's `ready` named `userId` as the signed-in user's row there. */
@@ -304,6 +307,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     // Update token in state and localStorage
     localStorage.setItem('backspace_token', response.token);
     set({ token: response.token });
+  },
+
+  changeUsername: async (username: string, password: string) => {
+    const response = await api.username.change(username, password);
+    // The token names the user, so the server hands back a fresh one.
+    localStorage.setItem('backspace_token', response.token);
+    set({ token: response.token, user: response.user });
+    return response.status;
   },
 
   deleteAccount: async (password: string, username: string) => {

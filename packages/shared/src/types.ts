@@ -702,6 +702,8 @@ export type ClientEvent =
   | { type: 'channel_poke'; channelId: string; targetUserId: string }
   | { type: 'typing_start'; channelId: string }
   | { type: 'presence_update'; status: ChosenUserStatus }
+  /** This connection's input went idle (or came back). Drives automatic Away; never a chosen status. */
+  | { type: 'activity_state'; idle: boolean }
   | { type: 'voice_join'; channelId: string }
   | { type: 'voice_leave' }
   | { type: 'dm_message_create'; dmChannelId: string; content?: string; attachments?: string[]; replyToId?: string }

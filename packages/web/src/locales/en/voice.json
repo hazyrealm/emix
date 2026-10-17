@@ -24,7 +24,8 @@
     "watchCamera": "Watch Camera",
     "stopWatchingCamera": "Stop Watching Camera",
     "muteUser": "Mute User",
-    "userVolume": "User Volume"
+    "userVolume": "User Volume",
+    "resetVolume": "Reset"
   },
   "incomingCall": {
     "status": "Incoming Voice Call...",
@@ -215,8 +216,8 @@
     "fullscreen": "Fullscreen",
     "disconnect": "Disconnect",
     "connectionInfo": "Connection Info",
-    "noiseSuppressionOff": "Disable AI Noise Suppression",
-    "noiseSuppressionOn": "Enable AI Noise Suppression"
+    "noiseSuppressionOff": "Turn off noise suppression",
+    "noiseSuppressionOn": "Turn on noise suppression"
   },
   "status": {
     "dmCall": "DM Call",
@@ -338,5 +339,27 @@
     "always": "Preview before turning my camera on",
     "start": "Turn on camera",
     "startCall": "Start video call"
+  },
+  "noise": {
+    "title": "Noise suppression",
+    "levels": {
+      "off": "Off",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "hints": {
+      "off": "No noise suppression: your microphone sounds exactly as it is.",
+      "low": "Your browser's built-in suppression (WebRTC). Light: removes steady hiss and hum.",
+      "medium": "RNNoise, running on this device. Removes fans, hum and most room noise. Recommended.",
+      "high": "RNNoise plus a rumble filter and a speech gate that turns down typing and clicks between words. Strongest; very quiet speech may be softened."
+    },
+    "test": {
+      "start": "Test microphone",
+      "stop": "Stop test",
+      "hint": "Hear yourself the way others would, with the selected level. Switch levels to compare. Use headphones to avoid echo. Nothing is recorded or sent.",
+      "inCall": "You're in a call: you hear what the call sends. Use headphones.",
+      "failed": "The microphone could not be opened."
+    }
   }
 }

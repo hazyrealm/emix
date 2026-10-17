@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { NoiseSuppressionPicker } from './NoiseSuppressionPicker';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Track, type LocalVideoTrack } from 'livekit-client';
@@ -283,11 +284,13 @@ export function CameraEffectsControls({ track }: { track?: MediaStreamTrack | nu
  * A menu anchored above its trigger, rendered in a portal so no clipping
  * container cuts it off. Closes on outside click and Escape.
  */
-function AnchoredMenu({ anchorRef, onClose, children, label }: {
+function AnchoredMenu({ anchorRef, onClose, children, label, pinned }: {
   anchorRef: React.RefObject<HTMLElement | null>;
   onClose: () => void;
   children: React.ReactNode;
   label: string;
+  /** Stays in view above the scrolling content (the camera preview). */
+  pinned?: React.ReactNode;
 }) {
   const menuRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; bottom: number } | null>(null);
@@ -325,10 +328,14 @@ function AnchoredMenu({ anchorRef, onClose, children, label }: {
       ref={menuRef}
       role="dialog"
       aria-label={label}
-      className="fixed z-[300] w-[320px] max-h-[min(560px,calc(calc(100*var(--app-vh))-96px))] overflow-y-auto scrollbar-thin rounded-xl glass-modal border border-white/[0.08] p-3 shadow-2xl animate-fade-in"
+      className="fixed z-[300] w-[320px] max-h-[min(560px,calc(calc(100*var(--app-vh))-96px))] flex flex-col overflow-hidden rounded-xl glass-modal border border-white/[0.08] shadow-2xl animate-fade-in"
       style={pos ? { left: pos.left, bottom: pos.bottom } : { left: -9999, bottom: 0 }}
     >
-      {children}
+      {/* The menu itself never scrolls: its glass layer covers only its own
+          box, so a scrolling menu showed through once scrolled. Only the
+          inner list scrolls, under the pinned part. */}
+      {pinned && <div className="shrink-0 px-3 pt-3">{pinned}</div>}
+      <div className="min-h-0 flex-1 overflow-y-auto scrollbar-thin p-3">{children}</div>
     </div>,
     document.body,
   );
@@ -396,6 +403,10 @@ export function AudioDeviceMenu({ anchorRef, onClose }: { anchorRef: React.RefOb
             </div>
           </div>
           <div>
+            <MenuHeading>{t('voice:noise.title')}</MenuHeading>
+            <NoiseSuppressionPicker compact />
+          </div>
+          <div>
             <MenuHeading>{t('voice:devices.speakers')}</MenuHeading>
             {outputSupported ? (
               <div role="menu">
@@ -436,8 +447,12 @@ export function CameraDeviceMenu({ anchorRef, onClose }: { anchorRef: React.RefO
   const activeId = cameraDeviceId ?? (sourceId || null);
 
   return (
-    <AnchoredMenu anchorRef={anchorRef} onClose={onClose} label={t('voice:devices.cameraMenu')}>
-      <CameraPreview deviceId={cameraDeviceId} className="aspect-video w-full mb-3" onTrack={setTrack} />
+    <AnchoredMenu
+      anchorRef={anchorRef}
+      onClose={onClose}
+      label={t('voice:devices.cameraMenu')}
+      pinned={<CameraPreview deviceId={cameraDeviceId} className="aspect-video w-full" onTrack={setTrack} />}
+    >
       <MenuHeading>{t('voice:devices.camera')}</MenuHeading>
       <div role="menu">
         {cameras.length === 0 && <p className="text-[11px] text-txt-tertiary">{t('voice:devices.noCameras')}</p>}
@@ -549,11 +564,14 @@ export function CameraPreviewDialog() {
   return createPortal(
     <div className="fixed inset-0 z-[400] flex items-center justify-center p-4 animate-fade-in">
       <div className="absolute inset-0 bg-black/60" onClick={close} />
-      <div role="dialog" aria-modal="true" aria-label={t('voice:preview.title')} className="relative w-full max-w-[760px] max-h-[calc(calc(100*var(--app-vh))-2rem)] overflow-y-auto scrollbar-thin glass-modal rounded-2xl border border-white/[0.08] p-5 shadow-2xl">
-        <h2 className="text-lg font-semibold text-txt-primary">{mode === 'call' ? t('voice:preview.callTitle') : t('voice:preview.title')}</h2>
-        <p className="text-xs text-txt-tertiary mt-0.5">{t('voice:preview.privateNote')}</p>
-        <div className="mt-4 grid desktop:grid-cols-[1fr_260px] gap-4">
-          <div>
+      {/* Only the controls column scrolls; the preview stays in view (and the
+          dialog's glass layer, which covers only the dialog's own box, never
+          scrolls away behind it). */}
+      <div role="dialog" aria-modal="true" aria-label={t('voice:preview.title')} className="relative w-full max-w-[760px] max-h-[calc(calc(100*var(--app-vh))-2rem)] flex flex-col overflow-hidden glass-modal rounded-2xl border border-white/[0.08] p-5 shadow-2xl">
+        <h2 className="text-lg font-semibold text-txt-primary shrink-0">{mode === 'call' ? t('voice:preview.callTitle') : t('voice:preview.title')}</h2>
+        <p className="text-xs text-txt-tertiary mt-0.5 shrink-0">{t('voice:preview.privateNote')}</p>
+        <div className="mt-4 min-h-0 flex-1 flex flex-col desktop:grid desktop:grid-cols-[1fr_260px] gap-4">
+          <div className="shrink-0">
             {!starting && <CameraPreview deviceId={cameraDeviceId} className="aspect-video w-full" onTrack={setTrack} />}
             <label className="block mt-3">
               <span className="text-[11px] text-txt-secondary">{t('voice:devices.camera')}</span>
@@ -563,7 +581,7 @@ export function CameraPreviewDialog() {
               </select>
             </label>
           </div>
-          <div className="space-y-4">
+          <div className="min-h-0 overflow-y-auto scrollbar-thin space-y-4 desktop:pr-1">
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-wider text-txt-tertiary mb-2">{t('voice:effects.title')}</div>
               <CameraEffectsControls track={track} />
@@ -589,7 +607,7 @@ export function CameraPreviewDialog() {
             )}
           </div>
         </div>
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-5 shrink-0 flex flex-wrap items-center justify-between gap-3">
           <label className="flex items-center gap-2 text-xs text-txt-secondary">
             <Toggle enabled={alwaysPreview} onChange={setAlwaysPreview} ariaLabel={t('voice:preview.always')} />
             {t('voice:preview.always')}

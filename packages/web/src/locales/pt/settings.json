@@ -124,8 +124,8 @@
     "processing": {
       "sectionTitle": "Processamento de voz",
       "noiseSuppression": {
-        "label": "Supressão de ruído com IA",
-        "description": "Remoção de ruído baseada em aprendizado de máquina (RNNoise). Filtra teclado, ventiladores e ruído de fundo."
+        "label": "Supressão de ruído",
+        "description": "Remove o ruído de fundo do seu microfone neste dispositivo. Apenas um supressor é usado por vez."
       },
       "echoCancellation": {
         "label": "Cancelamento de eco",
@@ -151,7 +151,8 @@
       "desktop": "Desktop",
       "instance": "Instância",
       "profile": "Perfil",
-      "whatsNew": "Novidades"
+      "whatsNew": "Novidades",
+      "notifications": "Notificações"
     },
     "logOut": "Sair",
     "backToMenu": "Voltar ao menu de configurações"
@@ -280,6 +281,30 @@
         "spacesFailed": "Falha ao processar os espaços",
         "deleteFailed": "Falha ao excluir a conta"
       }
+    },
+    "username": {
+      "title": "Nome de usuário",
+      "canChange": "Você pode alterar seu nome de usuário agora.",
+      "nextChange": "Próxima alteração possível: {{date}}",
+      "notHere": "O nome de usuário desta conta é gerenciado pela instância de origem.",
+      "change": "Alterar",
+      "newLabel": "Novo nome de usuário",
+      "rules": "{{min}}–{{max}} caracteres: letras minúsculas, números e sublinhados.",
+      "checking": "Verificando…",
+      "available": "@{{username}} está disponível.",
+      "reason": {
+        "tooShort": "Pelo menos {{min}} caracteres.",
+        "tooLong": "No máximo {{max}} caracteres.",
+        "characters": "Apenas letras minúsculas, números e sublinhados.",
+        "reserved": "Este nome é reservado.",
+        "taken": "Esse nome de usuário já está em uso.",
+        "current": "Esse já é o seu nome de usuário."
+      },
+      "password": "Senha atual",
+      "cooldownNote": "Você pode alterar seu nome de usuário uma vez a cada 30 dias. Amigos, mensagens, menções e comunidades continuam vinculados à sua conta.",
+      "save": "Alterar nome de usuário",
+      "saving": "Salvando…",
+      "changed": "Seu nome de usuário agora é @{{username}}."
     }
   },
   "privacy": {
@@ -815,6 +840,73 @@
       "category": "Categoria",
       "description": "Descrição (opcional)",
       "wholeApp": "Pré-visualizar no app inteiro"
+    }
+  },
+  "notifications": {
+    "title": "Notificações",
+    "callSounds": "Sons de chamada",
+    "incoming": {
+      "label": "Toque de chamadas recebidas",
+      "hint": "Toca neste dispositivo quando alguém liga para você. Fica em silêncio no modo Não perturbe.",
+      "volume": "Volume do toque de chamada"
+    },
+    "outgoing": {
+      "label": "Som de chamadas efetuadas",
+      "volume": "Volume do som de chamada efetuada"
+    },
+    "callerPlays": {
+      "label": "Quando eu ligar para alguém, tocar",
+      "mine": "Meu som de chamada efetuada",
+      "theirs": "O toque compartilhado da pessoa (se houver)",
+      "none": "Nenhum toque",
+      "hint": "Só você ouve isso. Se a pessoa não compartilhar um toque, o seu som de chamada efetuada toca."
+    },
+    "restoreDefaults": "Restaurar sons padrão",
+    "defaultRingtone": "Padrão do Emix",
+    "builtinGroup": "Incluídos",
+    "uploadsGroup": "Meus envios",
+    "silent": "Silencioso",
+    "preview": "Ouvir",
+    "builtin": {
+      "aurora": "Aurora",
+      "marimba": "Marimba",
+      "pulse": "Pulso",
+      "retro": "Telefone retrô",
+      "bells": "Sinos"
+    },
+    "shared": {
+      "title": "Meu toque compartilhado",
+      "hint": "Um toque que outras pessoas podem escolher ouvir enquanto ligam para você. Ele é separado do seu toque de chamadas recebidas, que sempre continua privado.",
+      "none": "Nenhum",
+      "allow": "Permitir que outras pessoas ouçam meu toque compartilhado ao ligar para mim",
+      "pickOne": "Escolha acima um toque para compartilhar."
+    },
+    "uploads": {
+      "title": "Meus toques",
+      "hint": "MP3, WAV ou OGG, até {{max}} MB. Sons mais longos são cortados em {{seconds}} segundos. Você pode manter {{limit}}.",
+      "upload": "Enviar toque",
+      "uploading": "Enviando…",
+      "added": "Toque adicionado.",
+      "tooLarge": "Esse arquivo tem mais de {{max}} MB.",
+      "untitled": "Toque"
+    },
+    "friends": {
+      "title": "Sons por amigo",
+      "hint": "Opcional: um toque especial quando um amigo ligar para você, ou outra escolha do que você ouve quando liga para ele.",
+      "whenTheyCall": "Quando a pessoa ligar para mim",
+      "whenICall": "Quando eu ligar para a pessoa",
+      "useGeneral": "Usar minha configuração geral",
+      "remove": "Remover",
+      "add": "Adicionar",
+      "pick": "Escolha um amigo…"
+    },
+    "availability": {
+      "title": "Disponibilidade",
+      "autoAway": "Mudar para Ausente após inatividade",
+      "never": "Nunca",
+      "minutes": "Após {{n}} min",
+      "autoAwayHint": "Somente enquanto seu status for Online e nenhum dos seus dispositivos conectados estiver em uso. Um status escolhido por você (Ausente ou Não perturbe) nunca é alterado. Offline só aparece quando você está realmente desconectado.",
+      "dndHint": "Não perturbe silencia toques, sons de mensagem e notificações. Mensagens, chamadas, indicadores de não lidas e chamadas perdidas continuam chegando."
     }
   }
 }

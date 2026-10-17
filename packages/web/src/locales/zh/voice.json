@@ -24,7 +24,8 @@
     "watchCamera": "观看摄像头",
     "stopWatchingCamera": "停止观看摄像头",
     "muteUser": "静音用户",
-    "userVolume": "用户音量"
+    "userVolume": "用户音量",
+    "resetVolume": "重置"
   },
   "incomingCall": {
     "status": "收到语音通话来电…",
@@ -215,8 +216,8 @@
     "fullscreen": "全屏",
     "disconnect": "断开连接",
     "connectionInfo": "连接信息",
-    "noiseSuppressionOff": "停用 AI 噪声抑制",
-    "noiseSuppressionOn": "启用 AI 噪声抑制"
+    "noiseSuppressionOff": "关闭噪音抑制",
+    "noiseSuppressionOn": "开启噪音抑制"
   },
   "status": {
     "dmCall": "私信通话",
@@ -336,5 +337,27 @@
     "always": "开启摄像头前先预览",
     "start": "开启摄像头",
     "startCall": "开始视频通话"
+  },
+  "noise": {
+    "title": "噪音抑制",
+    "levels": {
+      "off": "关",
+      "low": "低",
+      "medium": "中",
+      "high": "高"
+    },
+    "hints": {
+      "off": "不进行噪音抑制：麦克风保持原样。",
+      "low": "浏览器内置的抑制（WebRTC）。轻度：去除稳定的嘶嘶声和嗡嗡声。",
+      "medium": "RNNoise，在本设备上运行。去除风扇声、嗡嗡声和大部分环境噪音。推荐。",
+      "high": "RNNoise，加上低频滤波器和语音门限，在说话间隙压低打字声和点击声。最强；非常轻的说话声可能会被减弱。"
+    },
+    "test": {
+      "start": "测试麦克风",
+      "stop": "停止测试",
+      "hint": "以所选级别听到别人听到的你的声音。切换级别进行比较。请使用耳机以避免回声。不会录音或发送任何内容。",
+      "inCall": "你正在通话中：你听到的是通话发送的声音。请使用耳机。",
+      "failed": "无法打开麦克风。"
+    }
   }
 }

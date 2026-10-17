@@ -174,6 +174,28 @@ class ConnectionManager implements ReplicaSessionHost {
   private userStatuses: Map<string, string> = new Map();
   // userId → timestamp of last activity_update (rate limiting)
   private lastActivityUpdate: Map<string, number> = new Map();
+  // Emix: sessions whose input went idle (automatic Away). Per socket, so a
+  // user active on one device is never shown Away because another is idle.
+  private idleSockets: WeakSet<WebSocket> = new WeakSet();
+  private sessionsChangedHook: ((userId: string) => void) | null = null;
+
+  setSocketIdle(ws: WebSocket, idle: boolean): void {
+    if (idle) this.idleSockets.add(ws);
+    else this.idleSockets.delete(ws);
+  }
+
+  /** The user has at least one session here and every one of them is idle. */
+  allSessionsIdle(userId: string): boolean {
+    const sockets = this.connections.get(userId);
+    if (!sockets || sockets.size === 0) return false;
+    for (const ws of sockets) if (!this.idleSockets.has(ws)) return false;
+    return true;
+  }
+
+  /** Called when a session closes while others stay open (automatic Away may change). */
+  setSessionsChangedHook(fn: (userId: string) => void): void {
+    this.sessionsChangedHook = fn;
+  }
 
   addConnection(userId: string, ws: WebSocket): void {
     if (!this.connections.has(userId)) {
@@ -206,6 +228,8 @@ class ConnectionManager implements ReplicaSessionHost {
         this.connections.delete(userId);
         // Presence and voice have independent grace periods.
         this.scheduleDisconnect(userId);
+      } else {
+        this.sessionsChangedHook?.(userId);
       }
     }
     return userId;
@@ -2075,6 +2099,8 @@ export async function registerWebSocket(app: FastifyInstance): Promise<void> {
 
           authenticated = true;
           isFederated = !!userRow.homeInstance;
+          // The row, not the token: a username can change while a token is valid.
+          username = userRow.username;
           clearTimeout(authTimeout);
 
           // Publish the user's live presence: for a native row its

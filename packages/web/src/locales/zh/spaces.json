@@ -549,7 +549,13 @@
       "undeafen": "取消拒听",
       "spaceMuted": "已被空间静音",
       "spaceDeafened": "已被空间拒听",
-      "permissionMuted": "已静音（无发言权限）"
+      "permissionMuted": "已静音（无发言权限）",
+      "statusMenu": {
+        "title": "设置状态",
+        "onlineHint": "显示为可用。",
+        "idleHint": "显示为离开。仍可收到消息和来电。",
+        "dndHint": "静音铃声、消息提示音和通知弹窗。消息和来电仍会送达。"
+      }
     },
     "dmUnreadMessages_other": "{{count}} 条未读私信",
     "dmUnreadMessagesOver99": "超过 99 条未读私信"

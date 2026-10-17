@@ -124,8 +124,8 @@
     "processing": {
       "sectionTitle": "Voice Processing",
       "noiseSuppression": {
-        "label": "AI Noise Suppression",
-        "description": "ML-based noise removal (RNNoise). Filters keyboard, fans and background noise."
+        "label": "Noise suppression",
+        "description": "Removes background noise from your microphone on this device. Only one suppressor runs at a time."
       },
       "echoCancellation": {
         "label": "Echo Cancellation",
@@ -151,7 +151,8 @@
       "desktop": "Desktop",
       "instance": "Instance",
       "profile": "Profile",
-      "whatsNew": "What's New"
+      "whatsNew": "What's New",
+      "notifications": "Notifications"
     },
     "logOut": "Log Out",
     "backToMenu": "Back to settings menu"
@@ -279,6 +280,30 @@
         "spacesFailed": "Failed to process spaces",
         "deleteFailed": "Failed to delete account"
       }
+    },
+    "username": {
+      "title": "Username",
+      "canChange": "You can change your username now.",
+      "nextChange": "Next change possible: {{date}}",
+      "notHere": "This account's username is managed by its home instance.",
+      "change": "Change",
+      "newLabel": "New username",
+      "rules": "{{min}}–{{max}} characters: lowercase letters, numbers and underscores.",
+      "checking": "Checking…",
+      "available": "@{{username}} is available.",
+      "reason": {
+        "tooShort": "At least {{min}} characters.",
+        "tooLong": "At most {{max}} characters.",
+        "characters": "Only lowercase letters, numbers and underscores.",
+        "reserved": "This name is reserved.",
+        "taken": "That username is taken.",
+        "current": "That's already your username."
+      },
+      "password": "Current password",
+      "cooldownNote": "You can change your username once every 30 days. Friends, messages, mentions and communities stay connected to your account.",
+      "save": "Change username",
+      "saving": "Saving…",
+      "changed": "Your username is now @{{username}}."
     }
   },
   "privacy": {
@@ -814,6 +839,73 @@
       "category": "Category",
       "description": "Description (optional)",
       "wholeApp": "Preview on the whole app"
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "callSounds": "Call sounds",
+    "incoming": {
+      "label": "Incoming call ringtone",
+      "hint": "Plays on this device when someone calls you. Silent while you're on Do Not Disturb.",
+      "volume": "Incoming ringtone volume"
+    },
+    "outgoing": {
+      "label": "Outgoing call sound",
+      "volume": "Outgoing sound volume"
+    },
+    "callerPlays": {
+      "label": "When I call someone, play",
+      "mine": "My outgoing ringtone",
+      "theirs": "Their shared ringtone (if they share one)",
+      "none": "No ringtone",
+      "hint": "Only you hear this. If they don't share a ringtone, your own outgoing ringtone plays."
+    },
+    "restoreDefaults": "Restore default sounds",
+    "defaultRingtone": "Emix default",
+    "builtinGroup": "Built-in",
+    "uploadsGroup": "My uploads",
+    "silent": "Silent",
+    "preview": "Preview",
+    "builtin": {
+      "aurora": "Aurora",
+      "marimba": "Marimba",
+      "pulse": "Pulse",
+      "retro": "Retro phone",
+      "bells": "Chimes"
+    },
+    "shared": {
+      "title": "My shared ringtone",
+      "hint": "A ringtone other people can choose to hear while they call you. It is separate from your incoming ringtone, which always stays private.",
+      "none": "None",
+      "allow": "Allow other users to hear my shared ringtone when calling me",
+      "pickOne": "Choose a ringtone above to share."
+    },
+    "uploads": {
+      "title": "My ringtones",
+      "hint": "MP3, WAV or OGG, up to {{max}} MB. Longer sounds are cut to {{seconds}} seconds. You can keep {{limit}}.",
+      "upload": "Upload ringtone",
+      "uploading": "Uploading…",
+      "added": "Ringtone added.",
+      "tooLarge": "That file is larger than {{max}} MB.",
+      "untitled": "Ringtone"
+    },
+    "friends": {
+      "title": "Per-friend sounds",
+      "hint": "Optional: a special ringtone when a friend calls you, or a different choice of what you hear when you call them.",
+      "whenTheyCall": "When they call me",
+      "whenICall": "When I call them",
+      "useGeneral": "Use my general setting",
+      "remove": "Remove",
+      "add": "Add",
+      "pick": "Choose a friend…"
+    },
+    "availability": {
+      "title": "Availability",
+      "autoAway": "Set me to Away after inactivity",
+      "never": "Never",
+      "minutes": "After {{n}} min",
+      "autoAwayHint": "Only while your status is Online and none of your signed-in devices is in use. A status you pick yourself (Away or Do Not Disturb) is never changed. Offline is shown only when you're really disconnected.",
+      "dndHint": "Do Not Disturb silences ringtones, message sounds and notification pop-ups. Messages, calls, unread badges and missed calls still arrive."
     }
   }
 }

@@ -565,7 +565,13 @@
       "undeafen": "Desfazer ensurdecimento",
       "spaceMuted": "Silenciado no espaço",
       "spaceDeafened": "Ensurdecido no espaço",
-      "permissionMuted": "Silenciado (sem permissão para falar)"
+      "permissionMuted": "Silenciado (sem permissão para falar)",
+      "statusMenu": {
+        "title": "Definir seu status",
+        "onlineHint": "Você aparece como disponível.",
+        "idleHint": "Você aparece como ausente. Mensagens e chamadas continuam chegando.",
+        "dndHint": "Silencia toques, sons de mensagem e notificações. Mensagens e chamadas continuam chegando."
+      }
     },
     "dmUnreadMessages_one": "{{count}} mensagem direta não lida",
     "dmUnreadMessages_many": "{{count}} mensagens diretas não lidas",

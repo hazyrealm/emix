@@ -17,7 +17,8 @@ export function VoiceControls() {
   const currentVoiceChannelId = useVoiceStore((s) => s.currentVoiceChannelId);
   const isCameraOn = useVoiceStore((s) => s.isCameraOn);
   const isScreenSharing = useVoiceStore((s) => s.isScreenSharing);
-  const rnnoiseEnabled = useVoiceStore((s) => s.rnnoiseEnabled);
+  // Any level but Off counts as on; the switch returns to the last strong level.
+  const rnnoiseEnabled = useVoiceStore((s) => s.noiseSuppressionLevel !== 'off');
   const setRnnoiseEnabled = useVoiceStore((s) => s.setRnnoiseEnabled);
   const connectionError = useVoiceStore((s) => s.connectionError);
   const isLiveKitConnected = useVoiceStore((s) => s.isLiveKitConnected);
@@ -222,7 +223,7 @@ export function VoiceControls() {
           </button>
         )}
 
-        {/* AI Noise Suppression (RNNoise) */}
+        {/* Noise suppression on/off (the level is chosen in Voice settings) */}
         <button
           onClick={() => setRnnoiseEnabled(!rnnoiseEnabled)}
           className={`${btnBase} ${

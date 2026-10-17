@@ -124,8 +124,8 @@
     "processing": {
       "sectionTitle": "语音处理",
       "noiseSuppression": {
-        "label": "AI 噪声抑制",
-        "description": "基于机器学习的噪声消除 (RNNoise)。可滤除键盘敲击、风扇和环境噪音。"
+        "label": "噪音抑制",
+        "description": "在本设备上去除麦克风的背景噪音。同一时间只运行一种抑制。"
       },
       "echoCancellation": {
         "label": "回声消除",
@@ -151,7 +151,8 @@
       "desktop": "桌面端",
       "instance": "实例",
       "profile": "个人资料",
-      "whatsNew": "新功能"
+      "whatsNew": "新功能",
+      "notifications": "通知"
     },
     "logOut": "退出登录",
     "backToMenu": "返回设置菜单"
@@ -278,6 +279,30 @@
         "spacesFailed": "处理空间失败",
         "deleteFailed": "注销账号失败"
       }
+    },
+    "username": {
+      "title": "用户名",
+      "canChange": "你现在可以更改用户名。",
+      "nextChange": "下次可更改时间：{{date}}",
+      "notHere": "此账户的用户名由其所属实例管理。",
+      "change": "更改",
+      "newLabel": "新用户名",
+      "rules": "{{min}}–{{max}} 个字符：小写字母、数字和下划线。",
+      "checking": "正在检查…",
+      "available": "@{{username}} 可用。",
+      "reason": {
+        "tooShort": "至少 {{min}} 个字符。",
+        "tooLong": "最多 {{max}} 个字符。",
+        "characters": "只能使用小写字母、数字和下划线。",
+        "reserved": "该名称已被保留。",
+        "taken": "该用户名已被占用。",
+        "current": "这已经是你的用户名。"
+      },
+      "password": "当前密码",
+      "cooldownNote": "用户名每 30 天只能更改一次。好友、消息、提及和社区仍与你的账户关联。",
+      "save": "更改用户名",
+      "saving": "正在保存…",
+      "changed": "你的用户名现在是 @{{username}}。"
     }
   },
   "privacy": {
@@ -813,6 +838,73 @@
       "category": "分类",
       "description": "描述（可选）",
       "wholeApp": "在整个应用中预览"
+    }
+  },
+  "notifications": {
+    "title": "通知",
+    "callSounds": "通话声音",
+    "incoming": {
+      "label": "来电铃声",
+      "hint": "有人呼叫你时在本设备上播放。勿扰模式下静音。",
+      "volume": "来电铃声音量"
+    },
+    "outgoing": {
+      "label": "呼出提示音",
+      "volume": "呼出提示音音量"
+    },
+    "callerPlays": {
+      "label": "当我呼叫别人时，播放",
+      "mine": "我的呼出铃声",
+      "theirs": "对方共享的铃声（如有）",
+      "none": "不播放铃声",
+      "hint": "只有你能听到。如果对方没有共享铃声，将播放你自己的呼出铃声。"
+    },
+    "restoreDefaults": "恢复默认声音",
+    "defaultRingtone": "Emix 默认",
+    "builtinGroup": "内置",
+    "uploadsGroup": "我的上传",
+    "silent": "静音",
+    "preview": "试听",
+    "builtin": {
+      "aurora": "极光",
+      "marimba": "马林巴",
+      "pulse": "脉冲",
+      "retro": "复古电话",
+      "bells": "风铃"
+    },
+    "shared": {
+      "title": "我的共享铃声",
+      "hint": "别人呼叫你时可以选择听到的铃声。它与你的来电铃声分开，来电铃声始终保持私密。",
+      "none": "无",
+      "allow": "允许其他用户在呼叫我时听到我的共享铃声",
+      "pickOne": "请在上方选择要共享的铃声。"
+    },
+    "uploads": {
+      "title": "我的铃声",
+      "hint": "MP3、WAV 或 OGG，最大 {{max}} MB。较长的声音会被截取为 {{seconds}} 秒。最多可保存 {{limit}} 个。",
+      "upload": "上传铃声",
+      "uploading": "正在上传…",
+      "added": "铃声已添加。",
+      "tooLarge": "该文件超过 {{max}} MB。",
+      "untitled": "铃声"
+    },
+    "friends": {
+      "title": "好友专属声音",
+      "hint": "可选：好友呼叫你时的专属铃声，或你呼叫对方时听到的不同声音。",
+      "whenTheyCall": "对方呼叫我时",
+      "whenICall": "我呼叫对方时",
+      "useGeneral": "使用我的通用设置",
+      "remove": "移除",
+      "add": "添加",
+      "pick": "选择好友…"
+    },
+    "availability": {
+      "title": "在线状态",
+      "autoAway": "闲置后设为离开",
+      "never": "从不",
+      "minutes": "{{n}} 分钟后",
+      "autoAwayHint": "仅在你的状态为在线且所有已登录设备都未在使用时生效。你自己选择的状态（离开或请勿打扰）不会被更改。只有在你真正断开连接时才显示离线。",
+      "dndHint": "请勿打扰会静音铃声、消息提示音和通知弹窗。消息、来电、未读标记和未接来电仍会送达。"
     }
   }
 }

@@ -147,20 +147,26 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
   return (
     <div
       data-context-menu
-      className={`${hasVideo ? 'emx-media ' : ''}relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ${
-        isSpeaking
-          ? 'ring-[3px] ring-status-online shadow-[0_0_12px_rgba(134,239,172,0.25)]'
-          : 'ring-1 ring-white/[0.06] hover:ring-white/10'
-      } h-full w-full`}
+      className={`${hasVideo ? 'emx-media ' : ''}relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group h-full w-full`}
       onContextMenu={handleContextMenu}
     >
+      {/* The speaking and hover rings live on their own layer above the
+          video: changing them never repaints, re-snaps or recolours it. */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-0 z-[1] rounded-xl transition-[box-shadow] duration-150 ${
+          isSpeaking
+            ? 'ring-[3px] ring-inset ring-status-online'
+            : 'ring-1 ring-inset ring-white/[0.06] group-hover:ring-white/10'
+        }`}
+      />
       {hasVideo ? (
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted={isLocal}
-          className={`w-full h-full ${large ? 'object-contain bg-black' : 'object-cover'}`}
+          className={`emx-video w-full h-full ${large ? 'object-contain bg-black' : 'object-cover'}`}
           style={mirrorSelf ? { transform: 'scaleX(-1)' } : undefined}
         />
       ) : (

@@ -9,6 +9,8 @@ import { AudioManager } from '../../audio/AudioManager';
 import { selectVoiceStateSound } from '../../utils/voiceSoundTransitions';
 import { getSfxVolume } from '../../utils/sfx';
 import { alertsAllowed, messageAlertsUser, playAlertSound } from '../../utils/alerts';
+import { incomingRingtoneFor, outgoingRingtoneFor, playRingtone } from '../../utils/ringtonePlayback';
+import { useRingtoneStore } from '../../stores/ringtoneStore';
 import type { ParticipantInfo } from '../../hooks/useLiveKit';
 
 /**
@@ -87,6 +89,8 @@ export function SoundController() {
   const incomingCallAttempt = useRef(0);
   const outgoingCallLoop = useRef<AudioBufferSourceNode | null>(null);
   const outgoingCallLoading = useRef(false);
+  /** The conversation whose outgoing ring was started (or found silent). */
+  const outgoingCallFor = useRef<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -102,9 +106,13 @@ export function SoundController() {
     const syncIncomingRing = () => {
       if (shouldRing()) {
         if (incomingCallLoop.current || incomingCallLoading.current) return;
+        // The listener's own choice: a per-friend sound, their incoming
+        // ringtone, the default, or silence (Call sounds settings).
+        const ringtone = incomingRingtoneFor(useVoiceStore.getState().incomingCall?.callerId);
+        if (ringtone.kind === 'silent') return;
         const attempt = ++incomingCallAttempt.current;
         incomingCallLoading.current = true;
-        playAlertSound('incoming_call', { loop: true })
+        playRingtone(ringtone, 'incoming', useRingtoneStore.getState().settings.incomingVolume)
           .then((source) => {
             if (attempt !== incomingCallAttempt.current) {
               // Abandoned by the stop branch: another load may own the loop now.
@@ -274,23 +282,30 @@ export function SoundController() {
       syncIncomingRing();
 
       // -------- Outgoing Call (Calling) --------
-      if (state.outgoingCall && !outgoingCallLoop.current && !outgoingCallLoading.current) {
+      // Once per call: what the caller chose to hear (their own outgoing
+      // ringtone, the callee's shared one, or nothing). Silence is a result
+      // too, so it is not looked up again on every store tick.
+      const calling = state.outgoingCall?.dmChannelId ?? null;
+      if (calling && outgoingCallFor.current !== calling && !outgoingCallLoading.current) {
+        outgoingCallFor.current = calling;
         outgoingCallLoading.current = true;
-        audioManager
-          .playSound('call_calling', { loop: true, volume: getSfxVolume() })
+        outgoingRingtoneFor(calling)
+          .then((ref) => playRingtone(ref, 'outgoing', useRingtoneStore.getState().settings.outgoingVolume))
+          .catch(() => null)
           .then((source) => {
-            if (!useVoiceStore.getState().outgoingCall) {
+            if (useVoiceStore.getState().outgoingCall?.dmChannelId !== calling) {
               source?.stop();
             } else {
               outgoingCallLoop.current = source;
             }
             outgoingCallLoading.current = false;
           });
-      } else if (!state.outgoingCall) {
+      } else if (!calling) {
         if (outgoingCallLoop.current) {
           outgoingCallLoop.current.stop();
           outgoingCallLoop.current = null;
         }
+        outgoingCallFor.current = null;
         outgoingCallLoading.current = false;
       }
     });

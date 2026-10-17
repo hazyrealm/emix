@@ -557,7 +557,13 @@
       "undeafen": "Undeafen",
       "spaceMuted": "Space Muted",
       "spaceDeafened": "Space Deafened",
-      "permissionMuted": "Muted (No Speak Permission)"
+      "permissionMuted": "Muted (No Speak Permission)",
+      "statusMenu": {
+        "title": "Set your status",
+        "onlineHint": "Shown as available.",
+        "idleHint": "Shown as away. Messages and calls still reach you.",
+        "dndHint": "Silences ringtones, message sounds and notification pop-ups. Messages and calls still arrive."
+      }
     },
     "dmUnreadMessages_one": "{{count}} unread direct message",
     "dmUnreadMessages_other": "{{count}} unread direct messages",

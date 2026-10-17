@@ -239,6 +239,16 @@
       inset 0 1px 0 var(--glass-highlight);
   }
 
+  /* The call control bar floats over live video. A backdrop-filter there makes
+     the browser re-filter the video under it every frame and changes how the
+     whole video is composited while the bar is shown, so this tier keeps the
+     bubble look with a denser fill and no backdrop filter. */
+  .glass-bubble.glass-over-video {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgb(var(--bg-elevated) / 0.9);
+  }
+
   /* Modal glass — center-screen dialogs with backdrop.
      The blur and the tint sit on a layer behind the dialog's content
      (::before), not on the dialog itself. An element with backdrop-filter
@@ -714,6 +724,12 @@
    Video, screen shares and image viewers sit on dark media whatever the
    theme, so their overlays and labels stay light. */
 .emx-media { --overlay: 255 255 255; --on-accent: 255 255 255; }
+/* Call video always takes the same compositing path. An opaque, untouched
+   video gets promoted to a hardware overlay after a while, which scales and
+   converts colour differently; anything drawn over it on hover (controls,
+   rings) then demotes it again, so the picture went soft or changed tint with
+   the cursor. A fixed, invisible opacity keeps it GPU-composited throughout. */
+.emx-video { opacity: 0.999; }
 html[data-theme-mode="light"] { color-scheme: light; }
 html[data-theme-mode="dark"] { color-scheme: dark; }
 /* The theme's background (gradient and/or image) behind every panel. Only

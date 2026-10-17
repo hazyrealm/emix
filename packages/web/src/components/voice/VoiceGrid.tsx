@@ -28,7 +28,7 @@ export function VoiceGrid({ participants }: VoiceGridProps) {
   // each tile multiplied full PeerConnection scans by the number of streams.
   const streamStats = useTrackStats(shouldCollectStreamStats);
 
-  const { cols, tileWidth, tileHeight, ref: gridRef } = useGridLayout(tiles.length);
+  const { cols, tileWidth, tileHeight, offsetX, offsetY, ref: gridRef } = useGridLayout(tiles.length);
 
   // Reset strip visibility when focus target changes
   useEffect(() => {
@@ -153,7 +153,7 @@ export function VoiceGrid({ participants }: VoiceGridProps) {
               <div
                 key={t.key}
                 onClick={() => setFocusedParticipant(t.key)}
-                className="h-full aspect-video flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+                className="h-full aspect-video flex-shrink-0 cursor-pointer"
               >
                 {renderTile(t)}
               </div>
@@ -173,15 +173,16 @@ export function VoiceGrid({ participants }: VoiceGridProps) {
           gridTemplateColumns: `repeat(${cols}, ${tileWidth}px)`,
           gridAutoRows: `${tileHeight}px`,
           gap: '8px',
-          justifyContent: 'center',
-          alignContent: 'center',
+          justifyContent: 'start',
+          alignContent: 'start',
+          padding: `${offsetY}px 0 0 ${offsetX}px`,
         }}
       >
         {tiles.map((t) => (
           <div
             key={t.key}
             onClick={() => setFocusedParticipant(t.key)}
-            className="cursor-pointer hover:opacity-90 transition-opacity"
+            className="cursor-pointer"
           >
             {renderTile(t)}
           </div>

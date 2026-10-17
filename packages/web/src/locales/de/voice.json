@@ -24,7 +24,8 @@
     "watchCamera": "Kamera ansehen",
     "stopWatchingCamera": "Kamera nicht mehr ansehen",
     "muteUser": "Nutzer stummschalten",
-    "userVolume": "Nutzerlautstärke"
+    "userVolume": "Nutzerlautstärke",
+    "resetVolume": "Zurücksetzen"
   },
   "incomingCall": {
     "status": "Eingehender Sprachanruf…",
@@ -215,8 +216,8 @@
     "fullscreen": "Vollbild",
     "disconnect": "Trennen",
     "connectionInfo": "Verbindungsinfo",
-    "noiseSuppressionOff": "KI-Rauschunterdrückung ausschalten",
-    "noiseSuppressionOn": "KI-Rauschunterdrückung einschalten"
+    "noiseSuppressionOff": "Rauschunterdrückung ausschalten",
+    "noiseSuppressionOn": "Rauschunterdrückung einschalten"
   },
   "status": {
     "dmCall": "Direktanruf",
@@ -338,5 +339,27 @@
     "always": "Vor dem Einschalten der Kamera eine Vorschau zeigen",
     "start": "Kamera einschalten",
     "startCall": "Videoanruf starten"
+  },
+  "noise": {
+    "title": "Rauschunterdrückung",
+    "levels": {
+      "off": "Aus",
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch"
+    },
+    "hints": {
+      "off": "Keine Rauschunterdrückung: Dein Mikrofon klingt genau so, wie es ist.",
+      "low": "Die eingebaute Unterdrückung deines Browsers (WebRTC). Leicht: entfernt gleichmäßiges Rauschen und Brummen.",
+      "medium": "RNNoise, läuft auf diesem Gerät. Entfernt Lüfter, Brummen und die meisten Raumgeräusche. Empfohlen.",
+      "high": "RNNoise plus Rumpelfilter und ein Sprach-Gate, das Tippen und Klicks zwischen Wörtern absenkt. Am stärksten; sehr leise Sprache kann gedämpft werden."
+    },
+    "test": {
+      "start": "Mikrofon testen",
+      "stop": "Test beenden",
+      "hint": "Höre dich so, wie andere dich hören, mit der gewählten Stufe. Wechsle die Stufe zum Vergleichen. Nutze Kopfhörer, um Echo zu vermeiden. Nichts wird aufgenommen oder gesendet.",
+      "inCall": "Du bist in einem Anruf: Du hörst, was der Anruf sendet. Nutze Kopfhörer.",
+      "failed": "Das Mikrofon konnte nicht geöffnet werden."
+    }
   }
 }

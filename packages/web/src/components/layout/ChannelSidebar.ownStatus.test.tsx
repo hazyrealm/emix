@@ -34,7 +34,7 @@ function user(fields: Partial<User> & Pick<User, 'id' | 'username'>): User {
 /** The status dot on the avatar in the user area at the bottom of the sidebar. */
 function ownDotClass(username: string): string {
   const handle = screen.getByText(`@${username}`);
-  const area = handle.closest('div.group');
+  const area = handle.closest('.group');
   const dot = area?.querySelector('[data-avatar] > div.absolute');
   if (!dot) throw new Error('no status dot in the user area');
   return dot.className;

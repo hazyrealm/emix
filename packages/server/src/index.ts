@@ -25,6 +25,8 @@ import { utilRoutes } from './routes/utils.js';
 import { instanceRoutes } from './routes/instance.js';
 import { changelogRoutes } from './routes/changelog.js';
 import { themeRoutes } from './routes/themes.js';
+import { usernameRoutes } from './routes/username.js';
+import { ringtoneRoutes } from './routes/ringtones.js';
 import { invitesRoutes } from './routes/invites.js';
 import { exploreRoutes } from './routes/explore.js';
 import { directoryRoutes } from './routes/directory.js';
@@ -238,6 +240,8 @@ async function main(): Promise<void> {
   await app.register(instanceRoutes);
   await app.register(changelogRoutes);
   await app.register(themeRoutes);
+  await app.register(usernameRoutes);
+  await app.register(ringtoneRoutes);
   await app.register(invitesRoutes);
   await app.register(exploreRoutes);
   await app.register(directoryRoutes);

@@ -119,6 +119,9 @@ export function buildVoiceModMenuItems(targetUserId: string, channelId: string):
 /**
  * Volume slider for a voice participant, used as a `custom` context menu item.
  * Must be a component (not a plain function) because it subscribes to store state.
+ * Local only: it sets this listener's playback gain for that person (0–200 %,
+ * remembered per person), never their microphone, and the output limiter in
+ * AudioManager keeps a boost from clipping.
  */
 export function VolumeSliderItem({ userId }: { userId: string }) {
   const { t } = useTranslation(['voice', 'common']);
@@ -128,8 +131,13 @@ export function VolumeSliderItem({ userId }: { userId: string }) {
 
   return (
     <div className="p-3">
-      <div className="text-xs text-txt-tertiary mb-2 font-medium uppercase tracking-wider">
-        {t('voice:participantMenu.userVolume')}
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs text-txt-tertiary font-medium uppercase tracking-wider">{t('voice:participantMenu.userVolume')}</span>
+        {volume !== 100 && (
+          <button type="button" onClick={() => setParticipantVolume(userId, 100)} className="text-[11px] text-accent-primary hover:underline">
+            {t('voice:participantMenu.resetVolume')}
+          </button>
+        )}
       </div>
       <div className="flex items-center gap-2">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-txt-tertiary flex-shrink-0">
@@ -141,6 +149,8 @@ export function VolumeSliderItem({ userId }: { userId: string }) {
           max="200"
           value={volume}
           onChange={(e) => setParticipantVolume(userId, parseInt(e.target.value))}
+          onDoubleClick={() => setParticipantVolume(userId, 100)}
+          aria-label={t('voice:participantMenu.userVolume')}
           className="flex-1 min-w-0 accent-accent-primary h-1"
         />
         <span className="text-xs text-txt-secondary min-w-[32px] flex-shrink-0 text-right">

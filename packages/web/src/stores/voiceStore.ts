@@ -32,6 +32,9 @@ export interface ScreenShareConfig {
  */
 export type ScreenShareAudioState = 'published' | 'held' | 'acquiring' | 'acquirable' | 'unavailable';
 
+export type NoiseSuppressionLevel = 'off' | 'low' | 'medium' | 'high';
+export const NOISE_SUPPRESSION_LEVELS: readonly NoiseSuppressionLevel[] = ['off', 'low', 'medium', 'high'];
+
 export type VoiceConnectionStatus = 'disconnected' | 'connecting' | 'connected' | 'reconnecting';
 
 /**
@@ -208,6 +211,16 @@ export interface VoiceState {
   echoCancellation: boolean;
   autoGainControl: boolean;
   rnnoiseEnabled: boolean;
+  /**
+   * Emix: how hard background noise is removed. 'off' none, 'low' the
+   * browser's WebRTC suppressor, 'medium' RNNoise (on this device), 'high'
+   * RNNoise plus a rumble filter and a speech gate. Never two suppressors at
+   * once. `rnnoiseEnabled` follows it.
+   */
+  noiseSuppressionLevel: NoiseSuppressionLevel;
+  /** Where the in-call switch returns to. */
+  lastStrongSuppression: 'medium' | 'high';
+  setNoiseSuppressionLevel: (level: NoiseSuppressionLevel) => void;
   setEchoCancellation: (enabled: boolean) => void;
   setAutoGainControl: (enabled: boolean) => void;
   setRnnoiseEnabled: (enabled: boolean) => void;
@@ -620,9 +633,24 @@ export const useVoiceStore = create<VoiceState>()(
       echoCancellation: true,
       autoGainControl: true,
       rnnoiseEnabled: true,
+      noiseSuppressionLevel: 'medium',
+      setNoiseSuppressionLevel: (level) => set((state) => ({
+        noiseSuppressionLevel: level,
+        rnnoiseEnabled: level === 'medium' || level === 'high',
+        lastStrongSuppression: level === 'medium' || level === 'high' ? level : state.lastStrongSuppression,
+      })),
       setEchoCancellation: (enabled) => set({ echoCancellation: enabled }),
       setAutoGainControl: (enabled) => set({ autoGainControl: enabled }),
-      setRnnoiseEnabled: (enabled) => set({ rnnoiseEnabled: enabled }),
+      // The in-call switch: on returns to the last strong level, off is 'off'.
+      setRnnoiseEnabled: (enabled) => set((state) => {
+        const level: NoiseSuppressionLevel = enabled ? (state.lastStrongSuppression ?? 'medium') : 'off';
+        return {
+          noiseSuppressionLevel: level,
+          rnnoiseEnabled: enabled,
+          lastStrongSuppression: state.noiseSuppressionLevel === 'high' || state.noiseSuppressionLevel === 'medium' ? state.noiseSuppressionLevel : state.lastStrongSuppression,
+        };
+      }),
+      lastStrongSuppression: 'medium' as const,
       deafenedUserIds: new Set(),
       setUserDeafened: (userId, deafened) => {
         set((state) => {
@@ -869,7 +897,7 @@ export const useVoiceStore = create<VoiceState>()(
     }),
     {
       name: 'backspace-voice-settings',
-      version: 14,
+      version: 15,
       migrate: (persistedState: any, version: number) => {
         if (version === 0) {
           persistedState.streamAttenuationEnabled = false;
@@ -938,6 +966,11 @@ export const useVoiceStore = create<VoiceState>()(
             persistedState.screenShareConfig.codec = 'vp9';
           }
         }
+        if (version < 15) {
+          // Emix: the on/off switch becomes a level. On was RNNoise (medium);
+          // off fell back to the browser's suppressor (low).
+          persistedState.noiseSuppressionLevel = persistedState.rnnoiseEnabled === false ? 'low' : 'medium';
+        }
         return persistedState;
       },
       storage: createJSONStorage(() => localStorage),
@@ -958,6 +991,8 @@ export const useVoiceStore = create<VoiceState>()(
         echoCancellation: state.echoCancellation,
         autoGainControl: state.autoGainControl,
         rnnoiseEnabled: state.rnnoiseEnabled,
+        noiseSuppressionLevel: state.noiseSuppressionLevel,
+        lastStrongSuppression: state.lastStrongSuppression,
         soundEffectVolume: state.soundEffectVolume,
         messageSoundAllChannels: state.messageSoundAllChannels,
         pipEnabled: state.pipEnabled,

@@ -420,7 +420,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
   return (
     <div
       data-context-menu
-      className={`emx-media relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ring-1 ring-white/[0.06] hover:ring-white/10 ${
+      className={`emx-media relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group ring-1 ring-white/[0.06] hover:ring-white/10 ${
         'h-full w-full'
       }`}
       onContextMenu={handleContextMenu}
@@ -431,7 +431,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
           autoPlay
           playsInline
           muted
-          className="w-full h-full object-contain bg-black"
+          className="emx-video w-full h-full object-contain bg-black"
         />
       ) : (
         <div data-testid="stream-tile-placeholder" className={`w-full h-full min-h-0 flex items-center justify-center bg-surface-channel ${large ? 'px-4 py-6' : 'px-4 pt-9 pb-3'}`}>

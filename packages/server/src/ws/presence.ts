@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { ownsChosenStatus, type Activity, type ChosenUserStatus } from '@backspace/shared';
+import { isChosenUserStatus, ownsChosenStatus, type Activity, type ChosenUserStatus } from '@backspace/shared';
 import { getDb, schema } from '../db/index.js';
 import { connectionManager } from './handler.js';
 import { collectProfileBroadcastTargetIds } from '../utils/userDeletion.js';
@@ -35,9 +35,11 @@ export function applyChosenStatus(userId: string, status: ChosenUserStatus): voi
 
   const ownsChoice = ownsChosenStatus(row);
   const connected = connectionManager.isUserOnline(userId);
+  // Online with every session idle shows as Away; the choice itself stays 'online'.
+  const live = ownsChoice ? liveStatusFor(userId, status) : status;
 
   if (ownsChoice && connected) {
-    db.update(schema.users).set({ chosenStatus: status, status }).where(eq(schema.users.id, userId)).run();
+    db.update(schema.users).set({ chosenStatus: status, status: live }).where(eq(schema.users.id, userId)).run();
   } else if (ownsChoice) {
     db.update(schema.users).set({ chosenStatus: status }).where(eq(schema.users.id, userId)).run();
   } else if (connected) {
@@ -45,7 +47,36 @@ export function applyChosenStatus(userId: string, status: ChosenUserStatus): voi
   }
 
   if (!connected) return;
+  publishLiveStatus(userId, live);
+}
 
+/**
+ * Automatic Away: a user who chose Online shows as Away while every one of
+ * their sessions reports idle input. A chosen Away or Do Not Disturb is never
+ * changed, and Offline still means "no connection".
+ */
+export function liveStatusFor(userId: string, chosen: ChosenUserStatus): ChosenUserStatus {
+  return chosen === 'online' && connectionManager.allSessionsIdle(userId) ? 'idle' : chosen;
+}
+
+/** Re-evaluate automatic Away after a session went idle, came back, or closed. Native rows only. */
+export function refreshAutoAway(userId: string): void {
+  if (!connectionManager.isUserOnline(userId)) return;
+  const db = getDb();
+  const row = db
+    .select({ chosenStatus: schema.users.chosenStatus, homeInstance: schema.users.homeInstance, federationHomeOrphaned: schema.users.federationHomeOrphaned })
+    .from(schema.users)
+    .where(eq(schema.users.id, userId))
+    .get();
+  if (!row || !ownsChosenStatus(row) || !isChosenUserStatus(row.chosenStatus)) return;
+  const live = liveStatusFor(userId, row.chosenStatus);
+  if (live === connectionManager.getUserStatus(userId)) return;
+  db.update(schema.users).set({ status: live }).where(eq(schema.users.id, userId)).run();
+  publishLiveStatus(userId, live);
+}
+
+/** Tell everyone who sees this user (and the user's own sessions and peers) the live status. */
+function publishLiveStatus(userId: string, status: ChosenUserStatus): void {
   connectionManager.setUserStatus(userId, status);
   const activities: Activity[] = connectionManager.getUserActivities(userId);
   const payload = presenceUpdateFor(userId, status, activities.length > 0 ? activities : undefined);
