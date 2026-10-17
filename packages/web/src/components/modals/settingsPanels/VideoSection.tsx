@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Track } from 'livekit-client';
 import { useVoiceStore } from '../../../stores/voiceStore';
 import { useCameraEffectsStore } from '../../../stores/cameraEffectsStore';
+import { cameraSourceTrack } from '../../../utils/cameraEffects';
 import { getActiveRoom } from '../../../hooks/useLiveKit';
 import { isElectron, getElectronAPI } from '../../../platform/platform';
 
@@ -302,7 +303,8 @@ export function VideoSection() {
     // not duplicate or take ownership of the track.
     videoEl.srcObject = new MediaStream([mst]);
     videoEl.play().catch(() => {});
-    setActiveDeviceId(mst.getSettings().deviceId ?? null);
+    // The device behind the track (a processed track carries no device id).
+    setActiveDeviceId(cameraSourceTrack(camPub?.track)?.getSettings().deviceId ?? null);
     setPreviewError(null);
 
     return () => {

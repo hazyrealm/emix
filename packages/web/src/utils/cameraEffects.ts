@@ -38,6 +38,8 @@ function frameStreams(): FrameStreamsApi | null {
 export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, VideoProcessorOptions> {
   name = 'emix-camera-effects';
   processedTrack?: MediaStreamTrack;
+  /** The camera track being processed (device id, capabilities, constraints). */
+  sourceTrack: MediaStreamTrack | null = null;
   private effects: CameraEffects;
   private canvas: HTMLCanvasElement | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
@@ -58,6 +60,7 @@ export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, 
   }
 
   async init(opts: VideoProcessorOptions): Promise<void> {
+    this.sourceTrack = opts.track;
     const settings = opts.track.getSettings();
     const canvas = document.createElement('canvas');
     canvas.width = settings.width ?? 1280;
@@ -105,6 +108,9 @@ export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, 
   async restart(opts: VideoProcessorOptions): Promise<void> {
     await this.destroy();
     await this.init(opts);
+    // A camera switch brings a new processed track: point your own tile at it
+    // once LiveKit has swapped it in.
+    setTimeout(() => refreshVoiceParticipants(), 0);
   }
 
   async destroy(): Promise<void> {
@@ -183,6 +189,14 @@ export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, 
   }
 }
 
+/** The camera device track behind a LiveKit camera track, whether or not effects run. */
+export function cameraSourceTrack(track: { mediaStreamTrack?: MediaStreamTrack; getProcessor?: () => unknown } | null | undefined): MediaStreamTrack | null {
+  if (!track) return null;
+  const proc = track.getProcessor?.();
+  if (proc instanceof CameraEffectsProcessor && proc.sourceTrack) return proc.sourceTrack;
+  return track.mediaStreamTrack ?? null;
+}
+
 function cameraTrack(): LocalVideoTrack | null {
   const room = getActiveRoom();
   const pub = room?.localParticipant.getTrackPublication(Track.Source.Camera);
@@ -253,7 +267,7 @@ export function syncCameraEffects(): Promise<void> {
     const track = cameraTrack();
     if (!track || !useVoiceStore.getState().isCameraOn) return;
     const { effects } = useCameraEffectsStore.getState();
-    await applySystemBlur(track.mediaStreamTrack, effects.systemBlur);
+    await applySystemBlur(cameraSourceTrack(track), effects.systemBlur);
     const current = track.getProcessor() as CameraEffectsProcessor | undefined;
     try {
       if (!effectsActive(effects)) {

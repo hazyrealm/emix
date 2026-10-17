@@ -693,7 +693,11 @@ export function useLiveKit() {
       .find(p => p.source === Track.Source.Camera);
     if (!camPub?.track) return;
 
-    const currentDeviceId = camPub.track.mediaStreamTrack?.getSettings().deviceId;
+    // The camera device itself: with effects on, `mediaStreamTrack` is the
+    // processed track, which has no device id and would look like a different
+    // camera, forcing a pointless restart that left the self-view on a dead track.
+    const currentDeviceId = (camPub.track as LocalVideoTrack).getSourceTrackSettings?.().deviceId
+      ?? camPub.track.mediaStreamTrack?.getSettings().deviceId;
     const target = cameraDeviceId;
 
     if (target === null) return;            // "Auto" never force-switches a live publication

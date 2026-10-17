@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { Track } from 'livekit-client';
+import { Track, type LocalVideoTrack } from 'livekit-client';
 import { useVoiceStore } from '../../stores/voiceStore';
 import { useUIStore } from '../../stores/uiStore';
 import { useAudioDevices } from '../../hooks/useAudioDevices';
@@ -9,7 +9,7 @@ import { getActiveRoom } from '../../hooks/useLiveKit';
 import { AudioManager } from '../../audio/AudioManager';
 import { buildCameraOptions, DEFAULT_CAMERA_CONFIG, isCameraConfig } from '../../utils/cameraQuality';
 import { handleCameraAction } from '../../utils/voiceActions';
-import { applySystemBlur, systemBlurSupported, useEffectsPreview } from '../../utils/cameraEffects';
+import { applySystemBlur, cameraSourceTrack, systemBlurSupported, useEffectsPreview } from '../../utils/cameraEffects';
 import {
   CAMERA_FILTERS,
   effectsActive,
@@ -46,7 +46,7 @@ function liveCameraTrack(): MediaStreamTrack | null {
 
 /** The device track behind the live camera (a processed track carries no device id or capabilities). */
 function liveSourceTrack(): MediaStreamTrack | null {
-  return getActiveRoom()?.localParticipant.getTrackPublication(Track.Source.Camera)?.track?.mediaStreamTrack ?? null;
+  return cameraSourceTrack(getActiveRoom()?.localParticipant.getTrackPublication(Track.Source.Camera)?.track as LocalVideoTrack | undefined);
 }
 
 function liveMicTrack(): MediaStreamTrack | null {
@@ -431,7 +431,7 @@ export function CameraDeviceMenu({ anchorRef, onClose }: { anchorRef: React.RefO
   const [track, setTrack] = useState<MediaStreamTrack | null>(null);
   // The device behind the live camera (a processed track carries no device id).
   const sourceId = isCameraOn
-    ? getActiveRoom()?.localParticipant.getTrackPublication(Track.Source.Camera)?.track?.mediaStreamTrack?.getSettings().deviceId
+    ? liveSourceTrack()?.getSettings().deviceId
     : track?.getSettings().deviceId;
   const activeId = cameraDeviceId ?? (sourceId || null);
 
