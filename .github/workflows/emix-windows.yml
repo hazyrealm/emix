@@ -81,6 +81,9 @@ jobs:
           gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1 || gh release create "$GITHUB_REF_NAME" --draft --title "Emix $v" --notes-file "$RUNNER_TEMP/notes.md"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Release notes contain non-ASCII text; Windows Python defaults to cp1252.
+          PYTHONIOENCODING: utf-8
+          PYTHONUTF8: "1"
 
       - name: Build installers
         working-directory: packages/desktop
