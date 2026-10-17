@@ -20,7 +20,7 @@ export default defineConfig({
       manifest: {
         name: 'Emix',
         short_name: 'Emix',
-        description: 'The self-hosted Discord and TeamSpeak alternative. HD voice, video, and screen share — open source and free (AGPL-3.0).',
+        description: 'Emix: private messaging, high-quality voice and video calls, and screen sharing. No subscriptions or paywalls.',
         display: 'standalone',
         start_url: '/',
         theme_color: '#0a0912',

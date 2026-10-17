@@ -81,6 +81,9 @@ export function extractUrls(content: string | null): string[] {
   const seen = new Set<string>();
   const unique: string[] = [];
   for (const url of matches) {
+    // An Emix theme link gets its own card in the app; a link preview of the
+    // app page beneath it would only repeat it.
+    if (/\/theme\/[A-Za-z0-9_-]{8,32}\/?$/.test(url)) continue;
     if (!seen.has(url)) {
       seen.add(url);
       unique.push(url);

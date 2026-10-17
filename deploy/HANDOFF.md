@@ -179,6 +179,87 @@ real networks cannot show real quality.
   `.github/assets/social-preview.png` (1280×640).
 - Private vulnerability reporting is enabled (Security → Advisories).
 
+## Emix 1.13.0: app themes
+
+### Audit (before building)
+- **Already there:**
+  - a full colour-token system: about 40 CSS variables for surfaces, text,
+    accents, borders, interaction states and glass, used through Tailwind
+  - interface scale and language (Appearance, per device)
+  - reduced-motion handling
+- **Missing:**
+  - any theme switching (one hardcoded palette)
+  - light-theme support: about 670 `white/x` overlays and 194 solid `text-white`
+    assumed a dark background
+  - editor, sharing, gallery and account sync
+
+### How it works
+- **Theme data:**
+  - `packages/shared/src/theme.ts`: 15 hex colours, plus optional background
+    (gradient and/or uploaded image, show-through, blur, dim, animate), glass,
+    corners, font (bundled or system fonts only) and accent glow.
+  - `normalizeTheme` validates it on the server and on every client.
+  - No CSS, markup or script; images must be uploads on this instance.
+  - Danger, warning, success and presence colours are not themeable, so a theme
+    can't hide a warning.
+- **Readability:** text is pushed to readable contrast automatically (7:1
+  primary, 4.5:1 message and muted).
+- **Drawing (`utils/appTheme.ts`):** the theme sets the existing CSS variables
+  on `<html>`, so switching is instant with no reload.
+  - Tailwind `white` now follows the theme's overlay colour, so hairlines and
+    hover washes work on light themes.
+  - White text on accent fills is the `on-accent` token.
+  - Video, screen-share and image-viewer overlays stay light (`.emx-media`).
+  - Emix Default clears every override and uses the stylesheet exactly.
+- **12 built-ins** (`builtinThemes.ts`): Emix Default, Midnight, AMOLED Black,
+  Neon Nights, Cyberpunk, Ocean, Emerald, Crimson, Sunset, Lavender, Arctic
+  (light) and Pastel (light).
+- **Storage (migration 0033):**
+  - `users.app_theme` holds the selected theme, as a built-in id or a custom
+    snapshot, so a deleted theme never leaves someone unthemed.
+  - The `themes` and `theme_likes` tables hold saved themes and likes, at most
+    50 saved themes per account.
+  - The selection is also cached on the device for an instant first paint, and
+    the account copy wins at sign-in.
+- **Sharing:**
+  - Every theme has a random share code, and `/theme/<code>` opens a preview
+    (sign-in required). A share only reveals the theme and its creator's public
+    names.
+  - Links in messages render as a card with Preview and Apply; nothing changes
+    until the recipient chooses.
+  - "Save to my themes" keeps the creator's credit and counts an install.
+  - Export/import uses `.emixtheme` (JSON, 64 KB max, read as data only).
+- **Gallery:** themes marked Public, with search (name, description, creator),
+  category, Most popular (likes × 2 + installs), Recently added, Liked by me,
+  and one like per person.
+- **Emergency reset:**
+  - Settings → Appearance → "Reset to Emix Default".
+  - Ctrl+Shift+Alt+T anywhere.
+  - Opening the app with `?resetTheme` also resets the account at the next sign-in.
+- **Profile customization stays separate:** themes never touch name styles,
+  nameplates or profile backgrounds. On light themes, name styles are deepened
+  and nameplates softened so names stay readable.
+- **Storage janitor:** now keeps profile and theme background images. Before
+  this, an admin storage cleanup would have deleted 1.12 profile backgrounds.
+
+### Not done
+- **Compact/comfortable layout density:** interface scale already covers size,
+  and real density needs per-component spacing work.
+- **Separate chat-only wallpapers:** the background sits behind the whole app
+  and shows through panels per theme.
+- **Animation-intensity slider:** animations are on/off: Profile → Animations,
+  plus reduced motion.
+
+### Manual checks
+1. Switch a few built-ins in the Windows app and a browser. Check:
+   - menus, the emoji picker, call controls and settings
+   - a video call: the video labels should stay light on light themes
+2. Make a theme with an image background and share it to a friend by DM.
+   - The friend previews it ("Try it", then Cancel restores theirs), applies
+     it, and saves it.
+3. Sign in on a second device: the same theme appears.
+4. Press Ctrl+Shift+Alt+T: the app returns to Emix Default.
+
 ## Emix 1.12.0: profiles, call controls, What's New
 
 ### Audit before building (what already existed)
