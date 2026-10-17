@@ -215,6 +215,20 @@ background blur or skin smoothing (they need a person-segmentation model; the
   as the camera). With every effect at neutral, no processing runs and the
   camera's own track is sent untouched, so the DSLR feed keeps full quality.
   "Original camera" resets them.
+  - The preview, your call tile and what others receive all come from one
+    processor, so they match.
+  - The processor is attached when the camera is created: the first frame
+    sent already has the effects, and they stay through camera switches and
+    off/on.
+  - In Chromium (Chrome, Edge, the Windows app) frames are processed as they
+    arrive, so video keeps flowing in a background tab or a minimised window.
+  - Soft focus is a glow scaled to the frame width.
+- **Mirroring:**
+  - "Mirror my self-view" flips only your own previews, call tile and
+    picture-in-picture.
+  - "Mirror my video for others" (off by default, with a warning) flips the
+    outgoing camera.
+  - Screen shares are never mirrored.
 - **Changelog**: `scripts/changelog.py` (`emixctl changelog …`).
   1. Before a release: `emixctl changelog draft 1.13.0` writes a draft entry
      from the commits since the last tag. CI, test, docs, chore and `[skip ci]`
