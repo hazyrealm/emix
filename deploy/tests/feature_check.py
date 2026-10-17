@@ -1,6 +1,7 @@
-"""Staging checks for Emix 1.12: profile styles and the changelog. Uses the
-demo accounts from demo_seed.py. Never run against production."""
-import json, sys, urllib.request, urllib.error
+"""Staging checks for Emix 1.12-1.14: profile styles, the changelog, themes,
+usernames and ringtones. Uses the demo accounts from demo_seed.py. Never run
+against production."""
+import base64, io, json, math, sqlite3, struct, sys, urllib.request, urllib.error, wave
 
 BASE = "https://staging.getemix.com"
 creds = json.load(open("/srv/emix/staging/demo-users.json"))
@@ -76,5 +77,52 @@ check("others cannot edit a theme", s == 404, f"{s}")
 s, _ = call("GET", "/api/themes/share/abc", None, None)
 check("share links need sign-in", s == 401, f"{s}")
 call("DELETE", f"/api/themes/{tid}", None, tok["maya"])
+# Usernames (1.14). Leo is renamed and put back; the cooldown is cleared
+# directly in the staging database so the demo login keeps working.
+s, r = call("GET", "/api/users/@me/username/check?username=Maya", None, tok["leo"])
+check("username check is case-insensitive", s == 200 and r["reason"] == "taken", f"{s} {r}")
+s, r = call("GET", "/api/users/@me/username/check?username=admin", None, tok["leo"])
+check("reserved names are refused", r.get("reason") == "reserved", f"{r}")
+s, r = call("POST", "/api/users/@me/username", {"username": "leo_check", "password": "wrong"}, tok["leo"])
+check("rename needs the password", s == 403, f"{s} {r}")
+s, r = call("POST", "/api/users/@me/username", {"username": "Leo_Check", "password": creds["leo"]}, tok["leo"])
+check("rename works and returns a new token", s == 200 and r["user"]["username"] == "leo_check" and r["token"], f"{s} {r}")
+new_tok = (r or {}).get("token") or tok["leo"]
+s, r2 = call("POST", "/api/users/@me/username", {"username": "leo_again", "password": creds["leo"]}, new_tok)
+check("second rename within 30 days is refused", s == 429 and r2.get("code") == "username_change_cooldown", f"{s} {r2}")
+s, fr = call("GET", "/api/social/friends", None, tok["maya"])
+lst = fr if isinstance(fr, list) else (fr or {}).get("friends", [])
+check("friends see the new name on the same account", any(f.get("username") == "leo_check" for f in lst))
+db = sqlite3.connect("/srv/emix/staging/data/backspace.db")
+db.execute("UPDATE users SET username='leo', username_changed_at=NULL WHERE username='leo_check'")
+db.commit(); db.close()
+
+# Ringtones (1.14): a real upload goes through ffmpeg on the server.
+buf = io.BytesIO()
+with wave.open(buf, "wb") as w:
+    w.setnchannels(1); w.setsampwidth(2); w.setframerate(22050)
+    w.writeframes(b"".join(struct.pack("<h", int(8000 * math.sin(2 * math.pi * 660 * i / 22050))) for i in range(22050 * 2)))
+s, up = call("POST", "/api/ringtones", {"name": "Check tone", "data": base64.b64encode(buf.getvalue()).decode()}, tok["maya"])
+check("WAV upload is re-encoded", s == 201 and 1500 < up["ringtone"]["durationMs"] < 2500, f"{s} {up}")
+rid = (up or {}).get("ringtone", {}).get("id")
+s, bad = call("POST", "/api/ringtones", {"name": "x", "data": base64.b64encode(b"<html>" * 20).decode()}, tok["maya"])
+check("non-audio upload is refused", s == 400 and bad.get("code") == "ringtone_invalid_audio", f"{s} {bad}")
+def audio_status(t):
+    req = urllib.request.Request(f"{BASE}/api/ringtones/{rid}/audio", headers={"Authorization": f"Bearer {t}"})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as r: return r.status, r.headers.get("Content-Type")
+    except urllib.error.HTTPError as e: return e.code, None
+check("owner can play the upload", audio_status(tok["maya"]) == (200, "audio/ogg"))
+check("private upload is hidden from others", audio_status(tok["leo"])[0] == 404)
+s, _ = call("PUT", "/api/users/@me/ringtone-settings", {"settings": {"incoming": {"kind": "custom", "id": rid}, "shareEnabled": True}}, tok["maya"])
+s, sh = call("GET", f"/api/users/{maya['id']}/shared-ringtone", None, tok["leo"])
+check("the private incoming ringtone is never shared", s == 200 and sh["ringtone"] is None, f"{s} {sh}")
+call("PUT", "/api/users/@me/ringtone-settings", {"settings": {"shared": {"kind": "custom", "id": rid}, "shareEnabled": True}}, tok["maya"])
+s, sh = call("GET", f"/api/users/{maya['id']}/shared-ringtone", None, tok["leo"])
+check("a shared ringtone reaches a friend", s == 200 and (sh["ringtone"] or {}).get("id") == rid, f"{s} {sh}")
+check("and its audio plays for them", audio_status(tok["leo"])[0] == 200)
+s, d = call("DELETE", f"/api/ringtones/{rid}", None, tok["maya"])
+check("deleting clears the setting", s == 200 and d["settings"]["shared"] is None, f"{s} {d}")
+call("PUT", "/api/users/@me/ringtone-settings", {"settings": {}}, tok["maya"])
 print("failures:", fails)
 sys.exit(1 if fails else 0)

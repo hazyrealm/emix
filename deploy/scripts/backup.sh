@@ -21,12 +21,16 @@ snap_line="$(/opt/emix/deploy/scripts/emixctl snapshot "$ENV_NAME" | grep 'snaps
 snap="$STATE/data/backups/$(basename "${snap_line##* }")"
 [[ -f "$snap" ]] || { echo "backup: snapshot file not found ($snap_line)" >&2; exit 1; }
 
+# Uploaded ringtones (1.14) live beside uploads, outside the public folder.
+extra=()
+[[ -d "$STATE/data/ringtones" ]] && extra+=("$STATE/data/ringtones")
+
 restic backup --tag "emix-$ENV_NAME" --host emix \
-  "$snap" "$STATE/data/uploads" "$STATE/app.env" "$STATE/livekit.yaml" \
+  "$snap" "$STATE/data/uploads" "${extra[@]}" "$STATE/app.env" "$STATE/livekit.yaml" \
   /srv/emix/deploy-history.log \
   --exclude "$STATE/data/uploads/.tus"
 
 restic forget --tag "emix-$ENV_NAME" --host emix \
   --keep-daily 14 --keep-weekly 8 --keep-monthly 12 --prune --quiet
 restic check --quiet
-echo "backup of $ENV_NAME complete: $(basename "$snap") + uploads + config"
+echo "backup of $ENV_NAME complete: $(basename "$snap") + uploads${extra:+ + ringtones} + config"
