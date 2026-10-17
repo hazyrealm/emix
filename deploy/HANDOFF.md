@@ -250,6 +250,16 @@ real networks cannot show real quality.
 - **Animation-intensity slider:** animations are on/off: Profile → Animations,
   plus reduced motion.
 
+### Deployment status (2026-10-17)
+- Production and staging run 1.13.0. A restic backup and a pre-migration
+  snapshot were taken; migration 0033 adds the theme tables and
+  `users.app_theme`.
+- Windows: the `v1.13.0` draft release has both installers, `latest.yml` and
+  notes generated from the changelog. Test it, publish it, then run
+  `emixctl set-desktop-release 1.13.0`.
+  - The first build failed: Windows Python could not print "→" in the notes.
+    The workflow now forces UTF-8.
+
 ### Manual checks
 1. Switch a few built-ins in the Windows app and a browser. Check:
    - menus, the emoji picker, call controls and settings
