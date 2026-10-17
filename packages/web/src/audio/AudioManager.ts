@@ -2,7 +2,6 @@ import { RnnoiseWorkletNode, loadRnnoise } from '@sapphi-red/web-noise-suppresso
 import rnnoiseWorkletPath from '@sapphi-red/web-noise-suppressor/rnnoiseWorklet.js?url';
 import rnnoiseWasmPath from '@sapphi-red/web-noise-suppressor/rnnoise.wasm?url';
 import rnnoiseWasmSimdPath from '@sapphi-red/web-noise-suppressor/rnnoise_simd.wasm?url';
-import speechGateWorkletPath from './speechGateWorklet.js?url';
 
 export class AudioManager {
   private static instance: AudioManager | null = null;
@@ -34,6 +33,8 @@ export class AudioManager {
   private rnnoiseEnabled = false;
   private rnnoiseReady = false;
   // Emix "High" suppression: rumble filter + speech gate after RNNoise.
+  // A static file (public/worklets): an AudioWorklet module must be plain JS.
+  private static readonly SPEECH_GATE_WORKLET = '/worklets/speech-gate.js';
   private rumbleFilter: BiquadFilterNode | null = null;
   private gateNode: AudioWorkletNode | null = null;
   private gateEnabled = false;
@@ -527,14 +528,14 @@ export class AudioManager {
 
   /**
    * The second stage of "High": an 85 Hz high-pass (fans, desk rumble) and a
-   * speech gate (speechGateWorklet.js) between RNNoise and the input gain.
+   * speech gate (public/worklets/speech-gate.js) between RNNoise and the input gain.
    * Changes the graph only, so the published track stays as it is.
    */
   async setNoiseGate(enabled: boolean): Promise<void> {
     if (!this.isInitialized) this.initContext();
     if (enabled && !this.gateReady) {
       try {
-        await this.ctx!.audioWorklet.addModule(speechGateWorkletPath);
+        await this.ctx!.audioWorklet.addModule(AudioManager.SPEECH_GATE_WORKLET);
         this.rumbleFilter = this.ctx!.createBiquadFilter();
         this.rumbleFilter.type = 'highpass';
         this.rumbleFilter.frequency.value = 85;
