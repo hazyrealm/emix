@@ -6,6 +6,8 @@
   },
   "you": {
     "editProfile": "Editar perfil",
+    "viewProfile": "Ver perfil",
+    "customizeProfile": "Personalizar perfil",
     "homeInstance": "Instância de origem: {{domain}}",
     "logOutConfirm": "Tem certeza de que deseja sair?"
   },

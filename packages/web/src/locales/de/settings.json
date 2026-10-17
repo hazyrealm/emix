@@ -609,6 +609,8 @@
       "uploadFailed": "Das Bild konnte nicht hochgeladen werden. Versuch es noch einmal.",
       "opacity": "Bilddeckkraft",
       "blur": "Bildunschärfe",
+      "darkness": "Hintergrund abdunkeln",
+      "darknessHint": "Bei 0 % erscheint dein Hintergrund genau wie hochgeladen. Erhöhe den Wert, wenn Text schwer lesbar ist.",
       "glass": "Glaskarte"
     },
     "effect": {

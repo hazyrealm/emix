@@ -1,5 +1,26 @@
 [
   {
+    "version": "1.14.1",
+    "date": "2026-10-18",
+    "status": "published",
+    "major": false,
+    "title": "Profiles look the way their owners made them",
+    "summary": "Your profile background, name colours and decorations now look the same to everyone, whatever app theme they use, and uploaded backgrounds show clearly. Profile customization works on phones too.",
+    "sections": {
+      "new": [
+        "Background darkness slider in Settings → Profile: from 0% (your picture exactly as uploaded) to 100%"
+      ],
+      "improved": [
+        "The glass panel behind profile text can now be switched off when you use a background"
+      ],
+      "fixed": [
+        "App themes no longer tint or cover other people's profile backgrounds, name colours, nameplates or decorations",
+        "Uploaded profile backgrounds were barely visible behind a dark layer; they now show clearly",
+        "On phones, Profile and Customize Profile open again, including from Settings and the You tab"
+      ]
+    }
+  },
+  {
     "version": "1.14.0",
     "date": "2026-10-17",
     "status": "published",

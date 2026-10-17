@@ -26,7 +26,8 @@ import { getProfileMember, useProfileMemberRoles } from '../../hooks/useProfileM
 import { useShownStatus } from '../../hooks/useShownStatus';
 import { ProfileRoles } from '../ui/ProfileRoles';
 import { profileStyleOf } from '../../utils/profileStyle';
-import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName } from '../ui/profile/ProfileVisuals';
+import { profileGlassOn } from '@backspace/shared/src/profileStyle';
+import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName, profileSurfaceClass } from '../ui/profile/ProfileVisuals';
 
 type Tab = 'about' | 'friends' | 'spaces';
 
@@ -236,11 +237,12 @@ export function UserProfileModal() {
   ];
 
   const profileStyle = profileStyleOf(user);
+  const glass = profileGlassOn(profileStyle);
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center animate-fade-in">
       <div className="absolute inset-0 bg-black/50" onClick={closeModal} />
-      <div className="relative max-w-lg w-full mx-4 max-h-[calc(calc(100*var(--app-vh))-2rem)] flex flex-col glass-modal rounded-lg animate-slide-up overflow-hidden emx-surface">
+      <div className={`relative max-w-lg w-full mx-4 max-h-[calc(calc(100*var(--app-vh))-2rem)] flex flex-col rounded-lg animate-slide-up overflow-hidden ${profileSurfaceClass(profileStyle)}`}>
         <ProfileBackgroundLayers background={profileStyle?.background} />
         <ProfileEffect id={profileStyle?.effect} playKey={user.id} />
         {/* Banner */}
@@ -275,7 +277,7 @@ export function UserProfileModal() {
             className="mt-[-52px] mb-2"
           />
 
-          <div className="mb-3">
+          <div className={glass ? 'mb-3 emx-glass rounded-[10px] p-3 -mx-1' : 'mb-3'}>
             <ProfileSpaceNickname member={memberContext} />
             <StyledName name={displayName} user={user} className="text-[22px] font-bold leading-tight" />
             <div className="text-[14px] text-txt-tertiary mt-0.5">
@@ -317,7 +319,7 @@ export function UserProfileModal() {
         </div>
 
         {/* Tab content */}
-        <div className="flex-1 overflow-y-auto scrollbar-thin p-5 min-h-[200px]">
+        <div className={`flex-1 overflow-y-auto scrollbar-thin min-h-[200px] ${glass ? 'emx-glass rounded-[10px] m-3 p-4' : 'p-5'}`}>
           {activeTab === 'about' && (
             <div className="space-y-4">
               {/* Bio */}

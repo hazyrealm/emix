@@ -14,7 +14,7 @@ import { MobileSpacesScreen } from './MobileSpacesScreen';
 import { MobileDmsScreen } from './MobileDmsScreen';
 import { MobileYouScreen } from './MobileYouScreen';
 import { MobileChatScreen } from './MobileChatScreen';
-import { MobileSettingsScreen } from './MobileSettingsScreen';
+import { MobileSettingsScreen, MOBILE_SETTINGS_PANELS } from './MobileSettingsScreen';
 import { MobileInstancePanel } from './MobileInstancePanel';
 import { MobileScreenHeader } from './MobileScreenHeader';
 import { TransferIndicator } from './TransferIndicator';
@@ -80,13 +80,9 @@ export const mobileScreenMap: Readonly<Record<string, (params?: Record<string, s
   'channel-chat': (params) => <MobileChatScreen params={params} />,
   'friends': () => <FriendsPage mobile />,
   'settings': () => <MobileSettingsScreen />,
-  'settings-account': () => <MobileSettingsScreen initialPanel="account" />,
-  'settings-appearance': () => <MobileSettingsScreen initialPanel="appearance" />,
-  'settings-voice': () => <MobileSettingsScreen initialPanel="voice" />,
-  'settings-privacy': () => <MobileSettingsScreen initialPanel="privacy" />,
-  'settings-connections': () => <MobileSettingsScreen initialPanel="connections" />,
-  'settings-keybinds': () => <MobileSettingsScreen initialPanel="keybinds" />,
-  'settings-desktop': () => <MobileSettingsScreen initialPanel="desktop" />,
+  // One screen per settings panel, from the panel table itself, so a section
+  // listed on the settings screen can never lead nowhere.
+  ...Object.fromEntries(MOBILE_SETTINGS_PANELS.map((id) => [`settings-${id}`, () => <MobileSettingsScreen initialPanel={id} />])),
   'settings-instance': () => <MobileInstancePanel />,
   'settings-instance-general': () => (
     <div className="flex flex-col h-full bg-surface-base">

@@ -608,6 +608,8 @@
       "uploadFailed": "图片上传失败，请重试。",
       "opacity": "图片不透明度",
       "blur": "图片模糊",
+      "darkness": "背景变暗",
+      "darknessHint": "0% 时背景与上传的完全一致。如果文字难以阅读，请调高。",
       "glass": "玻璃卡片"
     },
     "effect": {

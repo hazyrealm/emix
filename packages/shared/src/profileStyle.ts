@@ -64,7 +64,16 @@ export interface ProfileBackground {
   opacity?: number;
   /** Image blur, 0 to 20 (px). */
   blur?: number;
+  /**
+   * How much the whole background is darkened, 0 (none) to 100 (black), so
+   * the owner chooses between a vivid picture and calmer text contrast.
+   * Unset means {@link PROFILE_BACKGROUND_DARKNESS_DEFAULT}.
+   */
+  darkness?: number;
 }
+
+/** Darkening for a background that has never set its own. Low, so images stay vivid. */
+export const PROFILE_BACKGROUND_DARKNESS_DEFAULT = 15;
 
 export interface ProfileBannerFrame {
   /** Focus point, 0 to 100 (percent). */
@@ -86,7 +95,10 @@ export interface ProfileStyle {
   effect?: ProfileEffectId;
   background?: ProfileBackground;
   banner?: ProfileBannerFrame;
-  /** Frosted-glass card over the background. */
+  /**
+   * Frosted-glass panel behind the profile text. Unset means on when there is
+   * a background and off otherwise; see {@link profileGlassOn}.
+   */
   glass?: boolean;
   pronouns?: string;
   links?: ProfileLink[];
@@ -184,6 +196,7 @@ export function normalizeProfileStyle(input: unknown): ProfileStyle | null {
       zoom: image ? pct(b.zoom, 100, 300) : undefined,
       opacity: image ? pct(b.opacity, 10, 100) : undefined,
       blur: image ? pct(b.blur, 0, 20) : undefined,
+      darkness: pct(b.darkness, 0, 100),
     });
     // Framing alone, with nothing to frame, is not a background.
     if (background && !background.preset && !background.colors && !background.image) background = undefined;
@@ -217,9 +230,14 @@ export function normalizeProfileStyle(input: unknown): ProfileStyle | null {
     effect: oneOf(PROFILE_EFFECTS, v.effect),
     background,
     banner,
-    glass: v.glass === true ? true : undefined,
+    glass: typeof v.glass === 'boolean' ? v.glass : undefined,
     pronouns: text(v.pronouns, PROFILE_PRONOUNS_MAX),
     links,
   });
   return style ?? null;
+}
+
+/** Whether a profile's text sits on the frosted-glass panel. */
+export function profileGlassOn(style: ProfileStyle | null | undefined): boolean {
+  return style?.glass ?? !!style?.background;
 }

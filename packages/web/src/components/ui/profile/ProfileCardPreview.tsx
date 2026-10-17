@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import type { User } from '@backspace/shared';
-import type { ProfileStyle } from '@backspace/shared/src/profileStyle';
+import { profileGlassOn, type ProfileStyle } from '@backspace/shared/src/profileStyle';
 import { Avatar } from '../Avatar';
 import { getAvatarGradient, adjustColor, mutedGradient } from '../../../utils/gradients';
 import { uploadSrc } from '../../../utils/profileStyle';
 import { replaceEmojiShortcodes } from '../../../utils/emojiShortcodes';
-import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName, Nameplate } from './ProfileVisuals';
+import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName, Nameplate, profileSurfaceClass } from './ProfileVisuals';
 
 /** The banner colour when a profile has no banner image, as the profile card draws it. */
 export function bannerFallbackFor(user: Pick<User, 'id' | 'homeUserId' | 'accentColor' | 'avatarColor'>, displayName: string): string {
@@ -21,9 +21,9 @@ export function bannerFallbackFor(user: Pick<User, 'id' | 'homeUserId' | 'accent
 export function ProfileCardPreview({ user, style, playKey }: { user: User; style: ProfileStyle | null; playKey: number }) {
   const { t } = useTranslation(['settings', 'social']);
   const displayName = user.displayName || user.username;
-  const glass = style?.glass || !!style?.background;
+  const glass = profileGlassOn(style);
   return (
-    <div className="relative w-full max-w-[340px] rounded-[12px] overflow-hidden glass-modal emx-surface shadow-xl">
+    <div className={`relative w-full max-w-[340px] rounded-[12px] overflow-hidden shadow-xl ${profileSurfaceClass(style)}`}>
       <ProfileBackgroundLayers background={style?.background} />
       <ProfileEffect id={style?.effect} playKey={`${style?.effect ?? ''}-${playKey}`} />
       <ProfileBanner src={uploadSrc(user.banner)} frame={style?.banner} fallback={bannerFallbackFor(user, displayName)} height={132} />

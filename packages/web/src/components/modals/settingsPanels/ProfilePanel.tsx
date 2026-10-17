@@ -6,12 +6,14 @@ import {
   NAMEPLATES,
   NAME_EFFECTS,
   PROFILE_EFFECTS,
+  PROFILE_BACKGROUND_DARKNESS_DEFAULT,
   PROFILE_LINKS_MAX,
   PROFILE_LINK_LABEL_MAX,
   PROFILE_LINK_URL_MAX,
   PROFILE_PRONOUNS_MAX,
   normalizeProfileStyle,
   normalizeProfileLinkUrl,
+  profileGlassOn,
   type NameEffect,
   type ProfileStyle,
 } from '@backspace/shared/src/profileStyle';
@@ -83,7 +85,7 @@ function sameStyle(a: ProfileStyle | null, b: ProfileStyle | null): boolean {
 function applyLook(current: ProfileStyle | null, look: ProfileStyle): ProfileStyle {
   const image = current?.background?.image;
   const background = look.background || image
-    ? { ...look.background, ...(image ? { image, x: current?.background?.x, y: current?.background?.y, zoom: current?.background?.zoom, opacity: current?.background?.opacity, blur: current?.background?.blur } : {}) }
+    ? { ...look.background, ...(image ? { image, x: current?.background?.x, y: current?.background?.y, zoom: current?.background?.zoom, opacity: current?.background?.opacity, blur: current?.background?.blur, darkness: current?.background?.darkness } : {}) }
     : undefined;
   return { ...look, background, banner: current?.banner, pronouns: current?.pronouns, links: current?.links };
 }
@@ -201,7 +203,7 @@ export function ProfilePanel() {
     try {
       const tid = await useTransferStore.getState().startUpload(file, { tray: false });
       const { filename } = await waitForTransferAttachment(tid);
-      setBg({ image: filename, x: 50, y: 50, zoom: 100, opacity: 80, blur: 0 });
+      setBg({ image: filename, x: 50, y: 50, zoom: 100, opacity: 100, blur: 0 });
     } catch {
       setError(t('settings:profileStudio.background.uploadFailed'));
     } finally {
@@ -426,9 +428,15 @@ export function ProfilePanel() {
                 <Slider label={t('settings:profileStudio.background.blur')} value={bg.blur ?? 0} min={0} max={20} unit="px" onChange={(blur) => setBg({ blur })} />
               </div>
             )}
+            {bg && (
+              <div className="mt-4">
+                <Slider label={t('settings:profileStudio.background.darkness')} value={bg.darkness ?? PROFILE_BACKGROUND_DARKNESS_DEFAULT} min={0} max={100} onChange={(darkness) => setBg({ darkness })} />
+                <p className="text-[11px] text-txt-tertiary mt-1">{t('settings:profileStudio.background.darknessHint')}</p>
+              </div>
+            )}
             <div className="mt-4 flex items-center justify-between">
               <span className="text-xs text-txt-secondary">{t('settings:profileStudio.background.glass')}</span>
-              <Toggle enabled={!!draft?.glass} onChange={(v: boolean) => update({ glass: v || undefined })} />
+              <Toggle enabled={profileGlassOn(draft)} onChange={(v: boolean) => update({ glass: v === !!bg ? undefined : v })} />
             </div>
           </Section>
 

@@ -24,7 +24,8 @@ import { viewerCanEditMemberRoles } from '../../utils/roleHierarchy';
 import { ProfileRoles } from './ProfileRoles';
 import { ProfileSpaceNickname } from './ProfileSpaceNickname';
 import { profileStyleOf } from '../../utils/profileStyle';
-import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName } from './profile/ProfileVisuals';
+import { profileGlassOn } from '@backspace/shared/src/profileStyle';
+import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName, profileSurfaceClass } from './profile/ProfileVisuals';
 
 /** Gap between the card and the element it was opened from. */
 const ANCHOR_OFFSET = 8;
@@ -152,7 +153,7 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
       })();
 
   const profileStyle = profileStyleOf(user);
-  const glass = profileStyle?.glass || !!profileStyle?.background;
+  const glass = profileGlassOn(profileStyle);
 
   // Parked off-screen for the one layout pass before the card knows how tall it
   // is; `useLayoutEffect` places it before the browser paints, so it never
@@ -163,7 +164,7 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
     <div
       ref={cardRef}
       data-user-profile-popout
-      className="fixed z-[200] w-[340px] rounded-[12px] overflow-hidden animate-fade-in select-none glass-modal emx-surface"
+      className={`fixed z-[200] w-[340px] rounded-[12px] overflow-hidden animate-fade-in select-none ${profileSurfaceClass(profileStyle)}`}
       style={cardStyle}
     >
       <ProfileBackgroundLayers background={profileStyle?.background} />

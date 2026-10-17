@@ -8,6 +8,10 @@
    prefers-reduced-motion or the "Profile animations" setting
    (html[data-emx-motion="off"]). */
 
+/* Profile visuals are the owner's design, so nothing here reads the viewer's
+   theme. Decorations that glow in "the accent" use Emix's own violet. */
+.emx-deco, .emx-plate, .emx-fx { --emx-own-accent: 147 51 234; }
+
 /* ── Names ─────────────────────────────────────────────────────────────── */
 .emx-name { --n1: #ff3ea5; --n2: #9333ea; --n3: #22a0ff; --n4: var(--n3); --glow: var(--n1); }
 .emx-name-fill {
@@ -115,7 +119,7 @@
   animation: emx-bg-sway 14s ease-in-out infinite alternate;
 }
 
-.emx-plate-glow-border::after { box-shadow: inset 0 0 0 1px rgb(var(--accent-primary) / 0.7), inset 0 0 16px rgb(var(--accent-primary) / 0.35); animation: emx-pulse 2.6s ease-in-out infinite; }
+.emx-plate-glow-border::after { box-shadow: inset 0 0 0 1px rgb(var(--emx-own-accent) / 0.7), inset 0 0 16px rgb(var(--emx-own-accent) / 0.35); animation: emx-pulse 2.6s ease-in-out infinite; }
 .emx-plate-glow-border { -webkit-mask-image: none; mask-image: none; }
 
 .emx-plate-glass {
@@ -189,7 +193,7 @@
   mask: radial-gradient(farthest-side, transparent calc(100% - var(--deco-w, 3px)), #000 calc(100% - var(--deco-w, 3px) + 1px));
 }
 .emx-deco-neon-ring .emx-deco-ring { background: conic-gradient(#ff3ea5, #9333ea, #22a0ff, #ff3ea5); filter: drop-shadow(0 0 4px #ff3ea5); animation: emx-spin 6s linear infinite; }
-.emx-deco-glow-pulse .emx-deco-ring { background: rgb(var(--accent-primary)); box-shadow: 0 0 12px 2px rgb(var(--accent-primary) / 0.8); -webkit-mask: none; mask: none; inset: 9%; opacity: 0.55; animation: emx-glow 2.4s ease-in-out infinite; }
+.emx-deco-glow-pulse .emx-deco-ring { background: rgb(var(--emx-own-accent)); box-shadow: 0 0 12px 2px rgb(var(--emx-own-accent) / 0.8); -webkit-mask: none; mask: none; inset: 9%; opacity: 0.55; animation: emx-glow 2.4s ease-in-out infinite; }
 .emx-deco-flames .emx-deco-ring { --deco-w: 4px; background: conic-gradient(from 90deg, #ff5e3a, #ffb020, #ff3a1f, #ffd36b, #ff5e3a); filter: blur(0.6px) drop-shadow(0 0 5px #ff7a1a); animation: emx-spin 3s linear infinite, emx-flame 0.9s ease-in-out infinite alternate; }
 .emx-deco-cyber .emx-deco-ring { --deco-w: 3px; background: repeating-conic-gradient(#22d3ee 0 18deg, transparent 18deg 30deg); filter: drop-shadow(0 0 3px #22d3ee); animation: emx-spin 10s linear infinite; }
 .emx-deco-cyber .emx-deco-ring + .emx-deco-ring { inset: 0; --deco-w: 2px; background: repeating-conic-gradient(#ff2fbf 0 40deg, transparent 40deg 90deg); filter: drop-shadow(0 0 3px #ff2fbf); animation-direction: reverse; animation-duration: 14s; }
@@ -228,11 +232,29 @@
 /* ── Profile card surfaces ──────────────────────────────────────────────── */
 /* Positioning comes from the element itself (the profile card is `fixed`, the modal `relative`). */
 .emx-surface { isolation: isolate; }
-.emx-surface-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; border-radius: inherit; pointer-events: none; }
+/* A neutral ground (not the theme's) under an image that is not fully opaque. */
+.emx-surface-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; border-radius: inherit; pointer-events: none; background: #0d0b16; }
 .emx-surface-bg > * { position: absolute; inset: 0; }
 .emx-surface-img { width: 100%; height: 100%; object-fit: cover; }
-/* Keeps text readable over any background or image. */
-.emx-surface-scrim { background: linear-gradient(180deg, rgb(10 9 18 / 0.35), rgb(10 9 18 / 0.72)); }
+/* A card with its owner's background: the theme's glass panel would sit over
+   the background layers (::before is z-index -1, they are -2) and tint them in
+   the viewer's colours, so it is left out. Text inside uses fixed light-on-dark
+   tokens, because the ground is the owner's picture, not the theme. */
+.glass-modal.emx-surface-own::before { content: none; }
+.emx-surface-own {
+  color-scheme: dark;
+  --overlay: 255 255 255;
+  --on-accent: 255 255 255;
+  --bg-elevated: 24 21 38;
+  --text-primary: 244 244 246;
+  --text-secondary: 212 212 220;
+  --text-tertiary: 176 176 188;
+  --text-message: 232 232 238;
+  --text-link: 96 210 255;
+  --text-danger: 252 165 165;
+  --glass-border: rgb(255 255 255 / 0.10);
+  --glass-highlight: rgb(255 255 255 / 0.06);
+}
 .emx-surface-animated { background-size: 240% 240% !important; animation: emx-bg-flow 16s ease-in-out infinite alternate; }
 @keyframes emx-bg-flow { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
 .emx-glass {
@@ -254,7 +276,7 @@
 .emx-fx-neon-particles > i:nth-child(even) { background: #22a0ff; box-shadow: 0 0 8px 2px #22a0ff; }
 .emx-fx-galaxy::before { content: ''; position: absolute; inset: -30%; background: conic-gradient(from 0deg, rgb(147 51 234 / 0.18), rgb(34 160 255 / 0.12), rgb(255 62 165 / 0.18), rgb(147 51 234 / 0.18)); filter: blur(30px); animation: emx-spin 24s linear infinite; }
 .emx-fx-light-streaks > i { left: -40%; width: 40%; height: 2px; background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.9), transparent); animation-name: emx-fx-sweep; animation-timing-function: ease-in-out; }
-.emx-fx-glow::before { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 60px rgb(var(--accent-primary) / 0.45); animation: emx-pulse 3s ease-in-out 3 both; }
+.emx-fx-glow::before { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 60px rgb(var(--emx-own-accent) / 0.45); animation: emx-pulse 3s ease-in-out 3 both; }
 .emx-fx-confetti > i { top: -6%; width: 6px; height: 10px; border-radius: 1px; animation-name: emx-fx-confetti; animation-timing-function: linear; }
 .emx-fx-confetti > i:nth-child(4n+1) { background: #ff3ea5; }
 .emx-fx-confetti > i:nth-child(4n+2) { background: #22a0ff; }
@@ -287,15 +309,18 @@ html[data-emx-motion="off"] .emx-name-shimmer { background-position: 200% 0, 0 0
 @media (prefers-reduced-motion: reduce) { .emx-name-shimmer { background-position: 200% 0, 0 0; } }
 
 /* ── Light app themes ──────────────────────────────────────────────────
-   Name colours are chosen against Emix's dark surfaces; on a light theme
-   they are deepened so they stay readable, neon loses its white core, and
-   nameplates step back behind the text. */
-html[data-theme-mode="light"] .emx-name { filter: brightness(0.68) saturate(1.3); }
-html[data-theme-mode="light"] .emx-name-glow { filter: brightness(0.68) saturate(1.3) drop-shadow(0 0 2px var(--glow)); }
-html[data-theme-mode="light"] .emx-name-neon { color: var(--n1); text-shadow: 0 0 5px var(--glow); }
-html[data-theme-mode="light"] .emx-name-shimmer {
-  background-image:
-    linear-gradient(100deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%),
-    linear-gradient(90deg, var(--n1), var(--n2), var(--n3), var(--n4));
-}
-html[data-theme-mode="light"] .emx-plate { opacity: 0.45; }
+   A name keeps its owner's exact colours on every theme. On light themes it
+   gets a hairline dark edge instead, so a pale colour still reads on white
+   without being recoloured. Nameplates are drawn as designed. */
+html[data-theme-mode="light"] .emx-name { filter: drop-shadow(0 0 0.6px rgb(0 0 0 / 0.7)); }
+html[data-theme-mode="light"] .emx-name-glow { filter: drop-shadow(0 0 0.6px rgb(0 0 0 / 0.7)) drop-shadow(0 0 4px var(--glow)); }
+html[data-theme-mode="light"] .emx-name-neon { filter: drop-shadow(0 0 0.6px rgb(0 0 0 / 0.8)); }
+/* Inside a card with its own (dark) background the edge is not needed. */
+html[data-theme-mode="light"] .emx-surface-own .emx-name:not(.emx-name-glow) { filter: none; }
+html[data-theme-mode="light"] .emx-surface-own .emx-name-glow { filter: drop-shadow(0 0 4px var(--glow)) drop-shadow(0 0 1px var(--glow)); }
+/* A glass info panel on a card that follows the theme takes the theme's tones. */
+.emx-surface:not(.emx-surface-own) .emx-glass { background: rgb(var(--overlay) / 0.05); border-color: rgb(var(--overlay) / 0.08); }
+/* Text drawn straight on an owner's picture (outside the glass panel) gets a soft shadow. */
+.emx-surface-own { text-shadow: 0 1px 2px rgb(0 0 0 / 0.55); }
+.emx-surface-own .emx-glass { text-shadow: none; }
+.emx-surface-own .emx-name-fill { text-shadow: none; }

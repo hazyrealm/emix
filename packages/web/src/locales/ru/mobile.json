@@ -6,6 +6,8 @@
   },
   "you": {
     "editProfile": "Редактировать профиль",
+    "viewProfile": "Открыть профиль",
+    "customizeProfile": "Оформление профиля",
     "homeInstance": "Домашний сервер: {{domain}}",
     "logOutConfirm": "Вы уверены, что хотите выйти?"
   },

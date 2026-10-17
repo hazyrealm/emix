@@ -605,6 +605,8 @@
       "uploadFailed": "The image could not be uploaded. Try again.",
       "opacity": "Image opacity",
       "blur": "Image blur",
+      "darkness": "Background darkness",
+      "darknessHint": "0% shows your background exactly as uploaded. Raise it if text is hard to read.",
       "glass": "Glass card"
     },
     "effect": {

@@ -6,6 +6,8 @@
   },
   "you": {
     "editProfile": "编辑个人资料",
+    "viewProfile": "查看个人资料",
+    "customizeProfile": "自定义个人资料",
     "homeInstance": "主实例：{{domain}}",
     "logOutConfirm": "确定要退出登录吗？"
   },

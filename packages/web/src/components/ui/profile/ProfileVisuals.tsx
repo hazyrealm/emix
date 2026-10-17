@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import type {
-  AvatarDecorationId,
-  NameplateId,
-  ProfileBackground,
-  ProfileBannerFrame,
-  ProfileEffectId,
-  ProfileStyle,
+import {
+  PROFILE_BACKGROUND_DARKNESS_DEFAULT,
+  type AvatarDecorationId,
+  type NameplateId,
+  type ProfileBackground,
+  type ProfileBannerFrame,
+  type ProfileEffectId,
+  type ProfileStyle,
 } from '@backspace/shared/src/profileStyle';
 import { backgroundFill, nameRender, profileStyleOf, uploadSrc } from '../../../utils/profileStyle';
 
@@ -127,8 +128,19 @@ export function ProfileEffect({ id, playKey }: { id: ProfileEffectId | undefined
 }
 
 /**
+ * Classes for a profile card's root. A card with its owner's own background
+ * is drawn in the owner's design whatever app theme the viewer uses: the
+ * theme's glass panel stays out of it and the card keeps its own light-on-dark
+ * text tokens (`emx-surface-own`). A card without one follows the theme.
+ */
+export function profileSurfaceClass(style: ProfileStyle | null | undefined): string {
+  return style?.background ? 'glass-modal emx-surface emx-surface-own' : 'glass-modal emx-surface';
+}
+
+/**
  * The background layers of a profile card: colour, optional image (framed,
- * faded, blurred) and a scrim that keeps text readable on any of them.
+ * faded, blurred) and the owner's chosen darkening, nothing else, so the
+ * picture shows as uploaded. Text sits on the card's info panel.
  */
 export function ProfileBackgroundLayers({ background }: { background: ProfileBackground | undefined }) {
   const fill = backgroundFill(background);
@@ -136,6 +148,7 @@ export function ProfileBackgroundLayers({ background }: { background: ProfileBac
   if (!fill && !image) return null;
   const x = background?.x ?? 50;
   const y = background?.y ?? 50;
+  const darkness = background?.darkness ?? PROFILE_BACKGROUND_DARKNESS_DEFAULT;
   return (
     <div aria-hidden className="emx-surface-bg">
       {fill && <div className={fill.animated ? 'emx-surface-animated' : undefined} style={{ background: fill.background }} />}
@@ -153,7 +166,7 @@ export function ProfileBackgroundLayers({ background }: { background: ProfileBac
           }}
         />
       )}
-      <div className="emx-surface-scrim" />
+      {darkness > 0 && <div style={{ background: `rgb(0 0 0 / ${darkness / 100})` }} />}
     </div>
   );
 }

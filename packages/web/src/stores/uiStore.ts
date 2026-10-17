@@ -134,7 +134,17 @@ export const useUIStore = create<UIState>()(
       toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
       toggleMemberList: () => set((state) => ({ memberListOpen: !state.memberListOpen })),
 
-      openModal: (modal, data = {}) => set({ activeModal: modal, modalData: data }),
+      openModal: (modal, data = {}) => {
+        // On mobile, settings are pushed screens (MobileSettingsScreen), not the
+        // modal, which is not mounted there; every "open settings at tab X"
+        // link lands on that tab's screen instead of doing nothing.
+        if (modal === 'userSettings' && get().isMobile) {
+          const tab = typeof data.tab === 'string' ? data.tab : null;
+          get().pushMobileScreen(tab ? `settings-${tab}` : 'settings');
+          return;
+        }
+        set({ activeModal: modal, modalData: data });
+      },
       closeModal: () => set({ activeModal: null, modalData: {} }),
 
       setIsMobile: (isMobile) => {

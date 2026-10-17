@@ -66,6 +66,9 @@ const panelConfig: Record<
   },
 };
 
+/** Every panel id, each reachable as the pushed screen `settings-<id>`. */
+export const MOBILE_SETTINGS_PANELS: readonly string[] = Object.keys(panelConfig);
+
 const sectionIcons: Record<string, React.ReactNode> = {
   account: (
     <svg className="w-5 h-5 text-txt-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

@@ -6,6 +6,8 @@
   },
   "you": {
     "editProfile": "Profil bearbeiten",
+    "viewProfile": "Profil ansehen",
+    "customizeProfile": "Profil gestalten",
     "homeInstance": "Heimatinstanz: {{domain}}",
     "logOutConfirm": "Möchtest du dich wirklich abmelden?"
   },

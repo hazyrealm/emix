@@ -610,6 +610,8 @@
       "uploadFailed": "Não foi possível enviar a imagem. Tente novamente.",
       "opacity": "Opacidade da imagem",
       "blur": "Desfoque da imagem",
+      "darkness": "Escurecer o fundo",
+      "darknessHint": "Em 0% o fundo aparece exatamente como foi enviado. Aumente se o texto ficar difícil de ler.",
       "glass": "Cartão de vidro"
     },
     "effect": {
