@@ -1,6 +1,6 @@
 # Emix deployment (getemix.com)
 
-See [HANDOFF.md](HANDOFF.md) for the current state, open items and what still
+See [../docs/DEVELOPMENT_HANDOFF.md](../docs/DEVELOPMENT_HANDOFF.md) for the current state and next steps, and [HANDOFF.md](HANDOFF.md) for release history, open items and what still
 needs real-world testing.
 
 Everything here runs on one VPS (Ubuntu 24.04, `140.235.125.77`). Code lives in

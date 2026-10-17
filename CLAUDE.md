@@ -1,4 +1,113 @@
-# CLAUDE.md — Backspace
+# CLAUDE.md — Emix
+
+## Resuming work: read this first
+
+**Before making any change, read [`docs/DEVELOPMENT_HANDOFF.md`](docs/DEVELOPMENT_HANDOFF.md).** It covers:
+- the current state, the deployed version and what is verified
+- open items and the exact next steps
+- the decisions to keep following
+
+Release-by-release history is in [`deploy/HANDOFF.md`](deploy/HANDOFF.md), and operations are in [`deploy/README.md`](deploy/README.md). When you finish a piece of work, update both handoff files.
+
+## What Emix is
+
+- Emix is a self-hosted Discord-style chat, voice, video and screen-sharing service at https://getemix.com.
+- It is a fork of Backspace 1.11.0 (AGPL-3.0). See `EMIX.md`.
+- Repository: https://github.com/hazyrealm/emix (`main`). Code: `/opt/emix` on the VPS.
+- Sites: production https://app.getemix.com and staging https://staging.getemix.com, each with its own database and LiveKit.
+- Runtime state and secrets live **outside git** in `/srv/emix/{prod,staging,edge}` and `/etc/emix`.
+
+The upstream Backspace instructions further down still describe the shared code base: architecture, subsystem docs in `docs/systems/`, the design system and coding rules. **Where they conflict, this Emix section wins.** In particular:
+- Deploy only with `deploy/scripts/emixctl`. Upstream's `deploy.sh`, `install.sh` and the Pi/VM hosts do not apply.
+- The host has no Node or pnpm. Run lint, typecheck and tests in a `node:24-slim` container (see "Build and test" below), not with `pnpm dev` on the host.
+- Telemetry, the space directory and the project hub are removed or disabled in Emix. Do not re-enable them.
+
+## Build and test
+
+```
+docker run -d --name emix-dev -v /opt/emix:/src -w /src -e CI=1 node:24-slim sleep infinity
+docker exec emix-dev sh -c 'corepack enable >/dev/null 2>&1; cd /src && npx eslint . --max-warnings 0 && node scripts/check-i18n.mjs'
+docker exec emix-dev sh -c 'cd /src/packages/web && npx tsc --noEmit -p . && npx vitest run'
+docker exec emix-dev sh -c 'cd /src/packages/server && npx tsc --noEmit -p . && npx vitest run src'
+docker rm -f emix-dev
+```
+
+- GitHub CI (lint, typecheck, build, every test including the `*-e2e` suites, container build) is the source of truth. The e2e suites need pnpm, so they fail in the plain container.
+- Staging checks: `python3 deploy/tests/feature_check.py` and `deploy/tests/run-staging-checks.sh`.
+- Keep browser automation short and focused. **Do not run long simulated multi-browser webcam calls.** Give the owner a short manual checklist instead.
+
+## Deploy (staging first, always)
+
+Run from `/opt/emix`, with a clean tree and the commit pushed:
+
+```
+deploy/scripts/emixctl build              # image emix:<sha>
+deploy/scripts/emixctl deploy staging     # then verify (checks + manual look)
+systemctl start emix-backup.service       # restic backup before production
+deploy/scripts/emixctl promote            # the staging image goes to prod: snapshot, health check over HTTPS
+deploy/scripts/emixctl status
+deploy/scripts/emixctl rollback prod      # if needed (see deploy/README.md for DB restores)
+```
+
+- Migrations (`packages/server/drizzle/`) run on boot after an automatic premigration snapshot. Keep them **additive**.
+- **Releases:**
+  - User-visible releases need a `packages/shared/changelog.json` entry with `"status": "published"`.
+  - Bump versions with `node scripts/bump-version.mjs x.y.z`.
+- **Windows app:**
+  - The Electron shell loads app.getemix.com remotely, so it needs a new installer only when `packages/desktop` changes.
+  - Push a `vX.Y.Z` tag. The workflow builds a draft release.
+  - The owner tests and publishes it, then run `emixctl set-desktop-release X.Y.Z`.
+
+## Safety rules (from the owner)
+
+- **Ask for approval first** before:
+  - destructive operations
+  - significant production risk
+  - replacing existing services
+  - exposing services publicly
+  - substantial security or availability changes
+  - anything that costs money
+- **Production:**
+  - Never deploy untested changes to production. Always go through staging, with a backup before production.
+  - Never reset or overwrite production data.
+  - Never make destructive database changes without a backup and verification.
+- **Infrastructure:**
+  - Don't change the server's networking or firewall without need, and preserve SSH access.
+  - Don't modify unrelated VPS services.
+  - Never touch other VPSs, Virtualizor nodes or customer infrastructure.
+- **Secrets:**
+  - Never commit, log or echo secrets (GitHub tokens, `app.env`, `livekit.yaml`, `/etc/emix/*`, demo or test user password files).
+  - Never ask the owner to paste passwords, keys or tokens into chat.
+- **Privacy and claims:**
+  - No new telemetry, analytics or user tracking without approval.
+  - No invasive monitoring of private messages or calls.
+  - Never advertise unverified capabilities, such as guaranteed 4K, zero compression, end-to-end encryption or Krisp-level noise suppression.
+- **Product:**
+  - Everything is free: no paywalls or premium tiers.
+  - No nonfunctional buttons or placeholder features.
+  - Don't rebuild the app from scratch or replace the deployment architecture.
+  - Don't change existing download URLs.
+- **License:** keep the AGPL license, NOTICE, `EMIX.md`, getemix.com/legal and the in-app source-code links.
+
+## Standing implementation decisions
+
+- **Audit what exists before building.** Extend existing code; never duplicate a feature.
+- **Camera:** preserve resolution, fps, bitrate, simulcast, WebRTC adaptation and the effects pipeline unless asked.
+- **Presence:**
+  - The chosen statuses are exactly Online, Away and DND. **Never add Invisible or "appear offline".**
+  - Offline means really disconnected.
+  - Automatic Away never overrides a manual choice.
+- **Audio:**
+  - Participant volume and ringtones are local only, and ringtones never enter the mic path.
+  - Only one noise suppressor runs at a time.
+- **Internal names:** keep the `backspace` identifiers (`@backspace/*`, `backspace.db`, `backspace-*` storage keys, `BACKSPACE_*` env vars) for upstream merges and settings continuity.
+- **Code rules:**
+  - Every user-facing string goes in all 5 locales (`packages/web/src/locales/{en,de,pt,ru,zh}`).
+  - `packages/web/src/**/*.js` is gitignored, so worklets go in `packages/web/public/worklets/`.
+
+---
+
+# Upstream Backspace instructions (shared code base)
 
 ## Identity
 
