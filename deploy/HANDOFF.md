@@ -179,6 +179,163 @@ real networks cannot show real quality.
   `.github/assets/social-preview.png` (1280×640).
 - Private vulnerability reporting is enabled (Security → Advisories).
 
+## Emix 1.14.0: calls, ringtones, usernames, presence
+
+### Audit (before building)
+- **Already there (kept, not rebuilt):**
+  - Presence: Online / Away (`idle`) / Do Not Disturb as the only chosen
+    statuses, Offline only for "no connection", server-side connection
+    tracking, a 30 s heartbeat, a 5 s disconnect grace and multi-device
+    handling. DND already silenced message sounds, the incoming ring and OS
+    and Windows notifications (`utils/alerts.ts`).
+  - Per-participant volume (0–200 %, saved per person, local Web Audio gain
+    only) and an output limiter in `AudioManager`.
+  - Noise suppression: an RNNoise on/off switch (off fell back to the
+    browser's WebRTC suppressor; never both at once), echo cancellation and
+    AGC switches.
+  - Camera effects pipeline (1.12/1.13): left alone.
+- **Missing or broken:** status selector in the user panel, automatic Away,
+  username changes, ringtones of any kind, suppression levels and a mic test,
+  volume reset, the hover blur/bounce/tint, and the effects panel scroll bug.
+
+### Fixes
+- **Hover blur, bounce and tint (calls).** Causes:
+  1. The grid wrapper of each tile had `hover:opacity-90`. Opacity puts the
+     tile on its own compositing layer, and centred tiles sat on half pixels,
+     so hovering re-snapped and resampled it (and neighbours): shift, slight
+     resize, softness, dimming.
+  2. `transition-all` on the speaking ring and glow.
+  3. The control bar's `backdrop-filter` blur fading in over the video.
+  4. The bar's slide-in transform.
+
+  "Soft after a while unless hovered" is Chrome promoting a stable opaque video
+  to a hardware overlay (different scaler and colour conversion). Anything drawn
+  over it on hover demotes it again.
+
+  Fixes:
+  - no opacity on tiles
+  - whole-pixel tile offsets (`useGridLayout` `offsetX/offsetY`)
+  - rings on a separate overlay layer
+  - `.emx-video { opacity: 0.999 }` keeps call videos on one compositing path
+  - a filter-free `glass-over-video` tier for the call bar, which fades only
+
+  Resolution, FPS, bitrate, simulcast and WebRTC adaptation are unchanged.
+- **Camera effects panel turning transparent.** The camera menu and the
+  preview dialog were themselves the scroll containers, and `.glass-modal`'s
+  background is an absolute `::before` that covers only the first screen of a
+  scroller. Now the preview is pinned and only the controls scroll
+  (`AnchoredMenu` `pinned`, the dialog's controls column). Effects themselves
+  were not changed.
+
+### How the new features work
+- **Usernames** (`routes/username.ts`, `shared/src/username.ts`):
+  - Settings → Account → Username: live availability check, password re-check,
+    once per 30 days.
+  - Enforcement is server-side in the same `UPDATE … WHERE username_changed_at
+    <= now-30d`. The unique index on `users.username` (names are stored
+    lowercased) decides races. Reserved names apply to new names and to
+    registration.
+  - Everything refers to the user id, so friends, `<@id>` mentions, roles and
+    so on are untouched. The JWT and the LiveKit identity now read the name
+    from the row, and a fresh token is returned.
+  - Federated or detached accounts cannot rename.
+- **Status menu and automatic Away:**
+  - Click your name in the bottom-left. No Invisible.
+  - Each device reports `activity_state {idle}` after the chosen time
+    (Settings → Notifications → Availability, per device, default 10 min;
+    never during a call).
+  - The server shows Away only while every session is idle and the chosen
+    status is Online. `chosen_status` is never touched (`ws/presence.ts`
+    `liveStatusFor`/`refreshAutoAway`).
+  - "Idle" is labelled "Away" in English.
+- **Noise suppression:**
+  - Off / Low (browser WebRTC) / Medium (RNNoise, the old default) / High
+    (RNNoise + 85 Hz high-pass + a speech gate, `public/worklets/speech-gate.js`).
+  - Only one suppressor runs at a time.
+  - Pick the level in Voice & Video or in the call's microphone menu.
+  - The mic test plays the processed mic back (headphones).
+  - The old switch migrates as on → Medium, off → Low.
+- **Ringtones** (`routes/ringtones.ts`, `shared/src/ringtones.ts`,
+  `utils/ringtonePlayback.ts`, Settings → Notifications):
+  - Incoming and outgoing sounds are independent, each with its own volume:
+    default, 5 built-ins (synthesized for Emix, in
+    `public/sounds/ringtones`), uploads, or silent.
+  - Caller chooses "mine / theirs / none". A shared ringtone needs a selection
+    plus the "Allow…" switch, and is served only to friends or people in a
+    conversation with the owner. The incoming ringtone is never exposed.
+  - Per-friend overrides.
+  - Uploads: MP3/WAV/OGG only (sniffed), ≤4 MB, ≤10 per user. Re-encoded by
+    ffmpeg to Ogg Vorbis (cut to 30 s, metadata stripped, loudness levelled).
+    Stored in `data/ringtones` (not the public uploads folder) and served by
+    an authenticated route with `Cache-Control: private`.
+  - Playback goes through the speaker graph only, never the mic pipeline. DND
+    still silences the incoming ring.
+  - Backups now include `data/ringtones`.
+- **Volume:** "Reset" in the participant menu (and double-click the slider).
+
+### Not done
+- Discord/Krisp-level suppression is not claimed. High helps most with clicks
+  and typing between words, not with someone talking in the background.
+- Automatic Away uses activity inside Emix, not system-wide idle time.
+- Group calls use your own outgoing ringtone (no single "their" ringtone).
+- The Settings → Voice & Video camera preview shows the raw camera (unchanged
+  from before). The effects preview is in the camera menu and preview dialog.
+
+### Tests
+- New server tests: `routes/username.test.ts` (rules, cooldown, parallel
+  renames, unique conflict, re-auth), `routes/ringtones.test.ts` (privacy,
+  sharing rules, deletion, sniffing) and `ws/autoAway.test.ts`.
+- New web test: `utils/ringtonePlayback.test.ts`.
+- Results:
+  - Web suite: 3320 tests pass.
+  - Server unit suites pass. The `test/*-e2e` suites need pnpm and run in CI.
+- Staging: `deploy/tests/feature_check.py` passes all 28 checks, including a
+  real ffmpeg upload. A Playwright run passed 13 UI checks:
+  - status menu, notifications, username and noise levels
+  - mic test with High
+  - the preview dialog and camera menu stay pinned while scrolling
+  - hovering a tile changes neither its box nor any opacity or filter
+
+### Deployment status (2026-10-17)
+- Production and staging run `emix:1c3ab67c0ad7` (1.14.0); migration
+  `0034_emix_username_ringtones` (additive: one table, two nullable columns).
+- Backup taken before the promote. All 3 production accounts intact.
+- Windows: the desktop app loads the web app from the server, so every 1.14
+  feature already works in the installed app. No Electron code changed, so no
+  v1.14.0 tag or installer was built. The v1.13.0 draft is still the one to
+  test and publish (then `emixctl set-desktop-release 1.13.0`). Tag v1.14.0
+  later only if you want the installer's version number to match.
+
+### Manual checks (two real devices)
+1. **Video:** in a two-person video call, hover each tile and the controls for
+   a minute. There should be no blur, no movement and no colour change. Leave
+   it for 5+ minutes without touching the mouse and compare.
+2. **Effects panel:** camera menu → Camera effects, scroll to the bottom. The
+   preview stays visible and opaque. Same in the pre-call preview on a small
+   window.
+3. **Effects regression:** soft focus, mirror outgoing, a filter and zoom
+   reach the other person, and the self-view mirror is local only.
+4. **Noise:** run the mic test with headphones, then type and click while
+   switching Medium ↔ High. In a call, ask the other person to compare.
+5. **Volume:** lower one person to 30 %. Only you hear the change; Reset
+   restores 100 %.
+6. **Ringtones:**
+   - set different incoming and outgoing sounds and check each side
+   - upload an MP3
+   - Bob picks "Their shared ringtone": he hears Hero's only once Hero has
+     enabled sharing, otherwise his own
+   - the ring stops on answer, decline, cancel and timeout
+   - the other person never hears a ringtone through the call
+7. **Presence:**
+   - DND silences the ring and message sounds, but the call card and unread
+     badges still appear
+   - set Away by hand and wait past the idle time: it stays Away
+   - with Online and the idle time at 5 min, leave both devices idle: you
+     become Away, and touching either device returns you to Online
+   - close all devices: Offline after about 5 s
+8. **Username:** rename, then check friends, old messages, mentions and DMs.
+   A second rename is refused, with the date shown.
+
 ## Emix 1.13.0: app themes
 
 ### Audit (before building)
