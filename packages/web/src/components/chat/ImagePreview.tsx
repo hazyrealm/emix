@@ -18,7 +18,7 @@ export function ImagePreview() {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-[200] flex items-center justify-center bg-surface-overlay animate-fade-in cursor-pointer ${topInsetClass}`}
+      className={`emx-media fixed inset-x-0 bottom-0 z-[200] flex items-center justify-center bg-surface-overlay animate-fade-in cursor-pointer ${topInsetClass}`}
       onClick={closeImagePreview}
     >
       {/* Toolbar: download, copy, close */}

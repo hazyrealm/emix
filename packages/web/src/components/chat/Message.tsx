@@ -19,6 +19,7 @@ import { useUIStore } from '../../stores/uiStore';
 import { AttachmentRenderer, attUrlOf } from './AttachmentRenderer';
 import { AttachmentProgress } from './AttachmentProgress';
 import { EmbedRenderer } from './EmbedRenderer';
+import { ThemeLinkCards } from '../themes/ThemeShare';
 import { FederationGlobeIcon } from '../ui/Username';
 import { nameRender, profileStyleOf } from '../../utils/profileStyle';
 import { Tooltip } from '../ui/Tooltip';
@@ -431,9 +432,9 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
   const displayName = spaceMemberName(spaceMemberOf(message.userId), displayIdentity);
 
   const getMemberDisplayColor = (userId: string) => {
-    if (isDmMessage) return { color: '#d8d8de' };
+    if (isDmMessage) return { color: 'rgb(var(--text-message))' };
     const member = spaceMemberOf(userId);
-    return { color: memberNameColor(member ?? { userId, roles: [] }, ownerId) ?? '#d8d8de' };
+    return { color: memberNameColor(member ?? { userId, roles: [] }, ownerId) ?? 'rgb(var(--text-message))' };
   };
 
   const roleColor = getMemberDisplayColor(message.userId);
@@ -670,6 +671,9 @@ export function Message({ message, isCompact, isFirstInGroup, previousMessageId 
                     )}
                   </div>
                 )}
+
+                {/* Shared Emix themes: a card with Preview and Apply (nothing changes until chosen) */}
+                {!isEditing && !isSticker && <ThemeLinkCards content={message.content} />}
 
                 {/* Embeds */}
                 {!isEditing && !isSticker && message.embeds && message.embeds.length > 0 && (

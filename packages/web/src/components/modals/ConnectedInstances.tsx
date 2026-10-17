@@ -171,7 +171,7 @@ function AddInstanceFlow({ onDone }: { onDone: () => void }) {
             <button
               onClick={handleProbe}
               disabled={isLoading || !url.trim()}
-              className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded transition-colors disabled:opacity-50"
             >
               {isLoading ? t('federation:connections.add.probing') : t('federation:connections.add.connect')}
             </button>
@@ -555,7 +555,7 @@ function DeleteIdentityDialog({
           <button
             onClick={handleConfirm}
             disabled={loading || (scope === 'select' && selectedOrigins.size === 0)}
-            className="flex-1 py-2.5 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 py-2.5 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading
               ? t('federation:connections.deleteIdentity.deleting')

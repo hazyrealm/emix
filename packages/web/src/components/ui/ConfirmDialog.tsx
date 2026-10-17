@@ -71,7 +71,7 @@ export function ConfirmDialog({
             <button
               onClick={onConfirm}
               disabled={loading}
-              className={`flex-1 py-2.5 ${confirmBg} text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50`}
+              className={`flex-1 py-2.5 ${confirmBg} text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50`}
             >
               {loading ? t('common:states.pleaseWait') : (confirmLabel ?? t('common:actions.confirm'))}
             </button>

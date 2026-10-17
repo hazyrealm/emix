@@ -232,6 +232,13 @@
       "when": 1792189673798,
       "tag": "0032_emix_profile_changelog",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "6",
+      "when": 1792199386040,
+      "tag": "0033_emix_themes",
+      "breakpoints": true
     }
   ]
 }

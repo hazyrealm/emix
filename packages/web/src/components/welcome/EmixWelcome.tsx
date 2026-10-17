@@ -87,7 +87,7 @@ export function EmixWelcome() {
             type="button"
             onClick={close}
             autoFocus
-            className="emix-gradient-button mt-7 w-full desktop:w-auto desktop:min-w-[220px] px-8 py-3 text-white font-semibold rounded-xl"
+            className="emix-gradient-button mt-7 w-full desktop:w-auto desktop:min-w-[220px] px-8 py-3 text-on-accent font-semibold rounded-xl"
           >
             {t('welcome:getStarted')}
           </button>

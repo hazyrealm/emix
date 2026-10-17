@@ -11,11 +11,18 @@ export default {
       colors: {
         // ── AETHER DRIFT TOKENS ──
         // RGB-channel variables enable Tailwind opacity modifiers (e.g. bg-accent-rose/10)
+        // Emix themes: `white` is the theme's overlay colour (white on dark
+        // themes, ink on light ones), so the many `white/[x]` hairlines and
+        // hover washes follow the theme. Solid white text on accent fills is
+        // `on-accent`. The main panels take --surface-alpha so a theme
+        // background can show through.
+        white: 'rgb(var(--overlay) / <alpha-value>)',
+        'on-accent': 'rgb(var(--on-accent) / <alpha-value>)',
         surface: {
-          base:     'rgb(var(--bg-base) / <alpha-value>)',
-          channel:  'rgb(var(--bg-channel) / <alpha-value>)',
-          chat:     'rgb(var(--bg-chat) / <alpha-value>)',
-          members:  'rgb(var(--bg-members) / <alpha-value>)',
+          base:     'rgb(var(--bg-base) / calc(<alpha-value> * var(--surface-alpha)))',
+          channel:  'rgb(var(--bg-channel) / calc(<alpha-value> * var(--surface-alpha)))',
+          chat:     'rgb(var(--bg-chat) / calc(<alpha-value> * var(--surface-alpha)))',
+          members:  'rgb(var(--bg-members) / calc(<alpha-value> * var(--surface-alpha)))',
           elevated: 'rgb(var(--bg-elevated) / <alpha-value>)',
           input:    'rgb(var(--bg-input) / <alpha-value>)',
           overlay:  'var(--bg-overlay)',
@@ -65,6 +72,16 @@ export default {
         },
         notification: 'rgb(var(--notification) / <alpha-value>)',
       },
+      // Rounded-corner preference: the named radii scale with the theme.
+      borderRadius: {
+        sm: 'calc(0.125rem * var(--radius-scale))',
+        DEFAULT: 'calc(0.25rem * var(--radius-scale))',
+        md: 'calc(0.375rem * var(--radius-scale))',
+        lg: 'calc(0.5rem * var(--radius-scale))',
+        xl: 'calc(0.75rem * var(--radius-scale))',
+        '2xl': 'calc(1rem * var(--radius-scale))',
+        '3xl': 'calc(1.5rem * var(--radius-scale))',
+      },
       boxShadow: {
         'header': '0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05)',
         'elevation-low': '0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05)',
@@ -73,7 +90,7 @@ export default {
         'input': 'inset 0 1px 2px rgba(0, 0, 0, 0.25)',
       },
       fontFamily: {
-        sans: ['DM Sans', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        sans: ['var(--app-font)', 'DM Sans', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
       },
       animation: {
         'slide-up-sheet': 'slide-up-sheet 200ms ease-out',

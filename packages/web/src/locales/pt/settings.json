@@ -620,5 +620,201 @@
       "label": "Reproduzir animações de perfil",
       "hint": "Aplica-se a este dispositivo. As animações também param quando o sistema pede movimento reduzido."
     }
+  },
+  "themes": {
+    "title": "Temas",
+    "subtitle": "Mude a aparência de todo o Emix. Seu tema fica salvo na sua conta e acompanha você em todos os dispositivos. Grátis para todos.",
+    "loading": "Carregando…",
+    "active": "Em uso",
+    "by": "por {{name}}",
+    "basedOn": "baseado em {{name}} de {{creator}}",
+    "applied": "Tema “{{name}}” aplicado",
+    "saved": "Tema “{{name}}” salvo",
+    "copyName": "{{name}} (cópia)",
+    "confirmDelete": "Excluir o tema “{{name}}”? Isso não pode ser desfeito.",
+    "mineEmpty": "Você ainda não criou nem salvou nenhum tema.",
+    "resetHint": "Difícil de ler? Redefina quando quiser ou pressione Ctrl+Shift+Alt+T em qualquer lugar do Emix.",
+    "tabs": {
+      "emix": "Temas do Emix",
+      "mine": "Meus temas",
+      "community": "Comunidade"
+    },
+    "builtin": {
+      "emix": "Emix Padrão",
+      "midnight": "Meia-noite",
+      "amoled": "Preto AMOLED",
+      "neon-nights": "Noites Neon",
+      "cyberpunk": "Cyberpunk",
+      "ocean": "Oceano",
+      "emerald": "Esmeralda",
+      "crimson": "Carmesim",
+      "sunset": "Pôr do sol",
+      "lavender": "Lavanda",
+      "arctic": "Ártico",
+      "pastel": "Pastel"
+    },
+    "categories": {
+      "dark": "Escuro",
+      "light": "Claro",
+      "colorful": "Colorido",
+      "minimal": "Minimalista",
+      "neon": "Neon",
+      "nature": "Natureza",
+      "seasonal": "Sazonal",
+      "other": "Outros"
+    },
+    "actions": {
+      "apply": "Aplicar",
+      "create": "Criar tema",
+      "customize": "Personalizar",
+      "duplicate": "Duplicar",
+      "edit": "Editar",
+      "export": "Exportar",
+      "importFile": "Importar arquivo",
+      "importLink": "Importar link",
+      "preview": "Pré-visualizar",
+      "reset": "Redefinir para Emix Padrão",
+      "save": "Salvar",
+      "saveApply": "Salvar e aplicar",
+      "saveCopy": "Salvar como cópia",
+      "saveToMine": "Salvar em meus temas",
+      "share": "Compartilhar"
+    },
+    "card": {
+      "label": "Tema do Emix"
+    },
+    "import": {
+      "invalid": "Este arquivo não é um tema válido do Emix.",
+      "invalidLink": "Isso não é um link de tema.",
+      "linkPrompt": "Cole um link de tema"
+    },
+    "gallery": {
+      "search": "Buscar temas ou criadores",
+      "popular": "Mais populares",
+      "recent": "Adicionados recentemente",
+      "liked": "Curtidos por mim",
+      "allCategories": "Todas as categorias",
+      "empty": "Ainda não há temas aqui. Publique um pelo editor de temas!",
+      "unavailable": "Não é possível carregar a galeria agora."
+    },
+    "share": {
+      "title": "Compartilhar tema",
+      "hint": "Qualquer pessoa conectada ao Emix pode abrir o link, ver o tema e escolher se quer aplicá-lo. Ele nunca muda a aparência de ninguém sozinho.",
+      "copy": "Copiar link",
+      "copied": "Link copiado",
+      "sendTo": "Enviar para",
+      "search": "Buscar conversas e canais",
+      "message": "Experimente meu tema do Emix “{{name}}”: {{link}}",
+      "sent": "Tema enviado"
+    },
+    "shared": {
+      "title": "Tema compartilhado",
+      "notFound": "Este tema foi excluído ou o link está errado.",
+      "safe": "Temas só mudam cores e aparência. Aplicar um nunca altera suas configurações ou permissões.",
+      "try": "Experimentar",
+      "stopTrying": "Parar de experimentar"
+    },
+    "preview": {
+      "space": "Studio Nights",
+      "channels": {
+        "0": "avisos",
+        "1": "geral",
+        "2": "noite-de-jogos",
+        "3": "arte"
+      },
+      "you": "Você",
+      "names": {
+        "0": "Leo",
+        "1": "Maya",
+        "2": "Nina"
+      },
+      "time": "Hoje 20:14",
+      "messages": {
+        "0": "A noite de jogos é na sexta!",
+        "1": "@você pode trazer a playlist?",
+        "2": "As notas da atualização saíram:"
+      },
+      "link": "getemix.com",
+      "composer": "Mensagem em #geral",
+      "button": "Mensagem"
+    },
+    "editor": {
+      "createTitle": "Criar um tema",
+      "editTitle": "Editar tema",
+      "defaultName": "Meu tema",
+      "needName": "Dê um nome ao seu tema primeiro.",
+      "basics": "Básico",
+      "name": "Nome do tema",
+      "mode": {
+        "dark": "Escuro",
+        "light": "Claro"
+      },
+      "quick": "Início rápido",
+      "quickHint": "Escolha três cores e o Emix cria uma paleta completa e legível. Você pode ajustar cada cor abaixo.",
+      "quickBackground": "Fundo",
+      "quickAccent": "Destaque",
+      "quickText": "Texto",
+      "build": "Criar paleta",
+      "colors": "Todas as cores",
+      "showColors": "Mostrar todas as cores",
+      "hideColors": "Ocultar cores",
+      "groups": {
+        "surfaces": "Fundos e bordas",
+        "text": "Texto",
+        "accents": "Destaques"
+      },
+      "keys": {
+        "bg": "Fundo do app",
+        "sidebar": "Barras laterais",
+        "chat": "Fundo do chat",
+        "elevated": "Menus e pop-ups",
+        "input": "Campos de entrada",
+        "border": "Bordas",
+        "text": "Texto",
+        "textMuted": "Texto suave",
+        "textFaint": "Texto fraco",
+        "message": "Texto das mensagens",
+        "link": "Links",
+        "accent": "Destaque e botões",
+        "accent2": "Segundo destaque",
+        "hover": "Hover e seleção",
+        "notification": "Notificações"
+      },
+      "contrast": "Parte do texto está próxima da cor do fundo. O Emix ajusta automaticamente para continuar legível.",
+      "background": "Fundo",
+      "gradient": "Gradiente",
+      "removeGradient": "Remover gradiente",
+      "angle": "Ângulo",
+      "animate": "Animar lentamente",
+      "dim": "Escurecer imagem",
+      "showThrough": "Transparência dos painéis",
+      "style": "Estilo",
+      "glass": "Transparência do vidro",
+      "corners": "Cantos",
+      "radius": {
+        "sharp": "Retos",
+        "default": "Padrão",
+        "rounded": "Arredondados"
+      },
+      "font": "Fonte",
+      "fonts": {
+        "dm-sans": "DM Sans",
+        "inter": "Inter",
+        "system": "Sistema",
+        "serif": "Serifada",
+        "mono": "Monoespaçada"
+      },
+      "glow": "Brilho do destaque",
+      "publishing": "Compartilhamento",
+      "visibility": {
+        "private": "Privado",
+        "public": "Público"
+      },
+      "privateHint": "Só você e as pessoas para quem enviar o link podem ver.",
+      "publicHint": "Aparece na galeria da comunidade para todos no Emix.",
+      "category": "Categoria",
+      "description": "Descrição (opcional)",
+      "wholeApp": "Pré-visualizar no app inteiro"
+    }
   }
 }

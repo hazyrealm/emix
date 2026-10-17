@@ -262,7 +262,7 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
         {/* Disconnect */}
         <button
           onClick={handleDisconnect}
-          className={`${btnBase} bg-accent-rose hover:bg-accent-rose/80 text-white`}
+          className={`${btnBase} bg-accent-rose hover:bg-accent-rose/80 text-on-accent`}
           title={t('voice:controls.disconnect')}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

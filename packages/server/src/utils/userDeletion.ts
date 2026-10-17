@@ -265,6 +265,11 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
       }
     }
 
+    // Emix: the account's saved themes and likes go with it. Like counts on
+    // others' themes are left as they are (a count, not a list of people).
+    tx.delete(schema.themeLikes).where(eq(schema.themeLikes.userId, uid)).run();
+    tx.delete(schema.themes).where(eq(schema.themes.ownerId, uid)).run();
+
     // Tombstone user row — rename username to free it for reuse
     tx.update(schema.users).set({
       username: `!deleted:${uid}`,
@@ -277,6 +282,7 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
       accentColor: null,
       avatarColor: null,
       profileStyle: null,
+      appTheme: null,
       replicatedInstances: '[]',
       isDeleted: 1,
       status: 'offline',

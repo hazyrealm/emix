@@ -618,5 +618,201 @@
       "label": "播放个人资料动画",
       "hint": "仅适用于此设备。当系统要求减少动态效果时，动画也会停止。"
     }
+  },
+  "themes": {
+    "title": "主题",
+    "subtitle": "更改整个 Emix 的外观。主题保存在你的账号中，在所有设备上保持一致。对所有人免费。",
+    "loading": "加载中…",
+    "active": "使用中",
+    "by": "作者：{{name}}",
+    "basedOn": "基于 {{creator}} 的“{{name}}”",
+    "applied": "已应用主题“{{name}}”",
+    "saved": "已保存主题“{{name}}”",
+    "copyName": "{{name}}（副本）",
+    "confirmDelete": "删除主题“{{name}}”？此操作无法撤销。",
+    "mineEmpty": "你还没有创建或保存任何主题。",
+    "resetHint": "看不清？随时可以重置，或在 Emix 中任意位置按 Ctrl+Shift+Alt+T。",
+    "tabs": {
+      "emix": "Emix 主题",
+      "mine": "我的主题",
+      "community": "社区"
+    },
+    "builtin": {
+      "emix": "Emix 默认",
+      "midnight": "午夜",
+      "amoled": "AMOLED 纯黑",
+      "neon-nights": "霓虹之夜",
+      "cyberpunk": "赛博朋克",
+      "ocean": "海洋",
+      "emerald": "翡翠",
+      "crimson": "绯红",
+      "sunset": "日落",
+      "lavender": "薰衣草",
+      "arctic": "极地",
+      "pastel": "粉彩"
+    },
+    "categories": {
+      "dark": "深色",
+      "light": "浅色",
+      "colorful": "多彩",
+      "minimal": "极简",
+      "neon": "霓虹",
+      "nature": "自然",
+      "seasonal": "节日",
+      "other": "其他"
+    },
+    "actions": {
+      "apply": "应用",
+      "create": "创建主题",
+      "customize": "自定义",
+      "duplicate": "复制",
+      "edit": "编辑",
+      "export": "导出",
+      "importFile": "导入文件",
+      "importLink": "导入链接",
+      "preview": "预览",
+      "reset": "恢复为 Emix 默认",
+      "save": "保存",
+      "saveApply": "保存并应用",
+      "saveCopy": "另存为副本",
+      "saveToMine": "保存到我的主题",
+      "share": "分享"
+    },
+    "card": {
+      "label": "Emix 主题"
+    },
+    "import": {
+      "invalid": "该文件不是有效的 Emix 主题。",
+      "invalidLink": "这不是主题链接。",
+      "linkPrompt": "粘贴主题链接"
+    },
+    "gallery": {
+      "search": "搜索主题或作者",
+      "popular": "最受欢迎",
+      "recent": "最新添加",
+      "liked": "我喜欢的",
+      "allCategories": "所有分类",
+      "empty": "这里还没有主题。在主题编辑器中发布一个吧！",
+      "unavailable": "暂时无法加载主题库。"
+    },
+    "share": {
+      "title": "分享主题",
+      "hint": "任何登录 Emix 的人都可以打开链接、预览主题并自行决定是否应用。它绝不会自动改变任何人的外观。",
+      "copy": "复制链接",
+      "copied": "链接已复制",
+      "sendTo": "发送给",
+      "search": "搜索会话和频道",
+      "message": "试试我的 Emix 主题“{{name}}”：{{link}}",
+      "sent": "主题已发送"
+    },
+    "shared": {
+      "title": "分享的主题",
+      "notFound": "此主题已被删除或链接有误。",
+      "safe": "主题只改变颜色和外观，应用主题不会更改你的设置或权限。",
+      "try": "试用",
+      "stopTrying": "停止试用"
+    },
+    "preview": {
+      "space": "Studio Nights",
+      "channels": {
+        "0": "公告",
+        "1": "综合",
+        "2": "游戏之夜",
+        "3": "艺术分享"
+      },
+      "you": "你",
+      "names": {
+        "0": "Leo",
+        "1": "Maya",
+        "2": "Nina"
+      },
+      "time": "今天 20:14",
+      "messages": {
+        "0": "周五游戏之夜！",
+        "1": "@你 能带上歌单吗？",
+        "2": "更新说明已发布："
+      },
+      "link": "getemix.com",
+      "composer": "发送消息到 #综合",
+      "button": "发消息"
+    },
+    "editor": {
+      "createTitle": "创建主题",
+      "editTitle": "编辑主题",
+      "defaultName": "我的主题",
+      "needName": "请先为主题命名。",
+      "basics": "基本",
+      "name": "主题名称",
+      "mode": {
+        "dark": "深色",
+        "light": "浅色"
+      },
+      "quick": "快速开始",
+      "quickHint": "选三种颜色，Emix 会生成完整且易读的配色。下方可以微调每种颜色。",
+      "quickBackground": "背景",
+      "quickAccent": "强调色",
+      "quickText": "文字",
+      "build": "生成配色",
+      "colors": "全部颜色",
+      "showColors": "显示全部颜色",
+      "hideColors": "隐藏颜色",
+      "groups": {
+        "surfaces": "背景和边框",
+        "text": "文字",
+        "accents": "强调与高亮"
+      },
+      "keys": {
+        "bg": "应用背景",
+        "sidebar": "侧栏",
+        "chat": "聊天背景",
+        "elevated": "菜单和弹窗",
+        "input": "输入框",
+        "border": "边框",
+        "text": "文字",
+        "textMuted": "次要文字",
+        "textFaint": "弱化文字",
+        "message": "消息文字",
+        "link": "链接",
+        "accent": "强调色和按钮",
+        "accent2": "第二强调色",
+        "hover": "悬停与选中",
+        "notification": "通知"
+      },
+      "contrast": "部分文字与背景太接近，Emix 会自动调整以保持可读。",
+      "background": "背景",
+      "gradient": "渐变",
+      "removeGradient": "移除渐变",
+      "angle": "角度",
+      "animate": "缓慢动画",
+      "dim": "调暗图片",
+      "showThrough": "面板透出程度",
+      "style": "样式",
+      "glass": "玻璃透明度",
+      "corners": "圆角",
+      "radius": {
+        "sharp": "直角",
+        "default": "标准",
+        "rounded": "圆润"
+      },
+      "font": "字体",
+      "fonts": {
+        "dm-sans": "DM Sans",
+        "inter": "Inter",
+        "system": "系统",
+        "serif": "衬线",
+        "mono": "等宽"
+      },
+      "glow": "强调色光晕",
+      "publishing": "分享",
+      "visibility": {
+        "private": "私密",
+        "public": "公开"
+      },
+      "privateHint": "只有你和收到链接的人可以看到。",
+      "publicHint": "会出现在社区主题库中，所有 Emix 用户可见。",
+      "category": "分类",
+      "description": "描述（可选）",
+      "wholeApp": "在整个应用中预览"
+    }
   }
 }

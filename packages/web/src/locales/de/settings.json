@@ -619,5 +619,201 @@
       "label": "Profilanimationen abspielen",
       "hint": "Gilt auf diesem Gerät. Animationen stoppen auch, wenn dein System reduzierte Bewegung anfordert."
     }
+  },
+  "themes": {
+    "title": "Designs",
+    "subtitle": "Ändere das Aussehen von ganz Emix. Dein Design wird in deinem Konto gespeichert und begleitet dich auf jedes Gerät. Kostenlos für alle.",
+    "loading": "Wird geladen…",
+    "active": "Aktiv",
+    "by": "von {{name}}",
+    "basedOn": "basiert auf {{name}} von {{creator}}",
+    "applied": "Design „{{name}}“ angewendet",
+    "saved": "Design „{{name}}“ gespeichert",
+    "copyName": "{{name}} (Kopie)",
+    "confirmDelete": "Design „{{name}}“ löschen? Das kann nicht rückgängig gemacht werden.",
+    "mineEmpty": "Du hast noch kein Design erstellt oder gespeichert.",
+    "resetHint": "Schlecht lesbar? Jederzeit zurücksetzen oder in Emix Strg+Umschalt+Alt+T drücken.",
+    "tabs": {
+      "emix": "Emix-Designs",
+      "mine": "Meine Designs",
+      "community": "Community"
+    },
+    "builtin": {
+      "emix": "Emix Standard",
+      "midnight": "Mitternacht",
+      "amoled": "AMOLED-Schwarz",
+      "neon-nights": "Neonnächte",
+      "cyberpunk": "Cyberpunk",
+      "ocean": "Ozean",
+      "emerald": "Smaragd",
+      "crimson": "Karmesin",
+      "sunset": "Sonnenuntergang",
+      "lavender": "Lavendel",
+      "arctic": "Arktis",
+      "pastel": "Pastell"
+    },
+    "categories": {
+      "dark": "Dunkel",
+      "light": "Hell",
+      "colorful": "Farbenfroh",
+      "minimal": "Minimalistisch",
+      "neon": "Neon",
+      "nature": "Natur",
+      "seasonal": "Saisonal",
+      "other": "Sonstige"
+    },
+    "actions": {
+      "apply": "Anwenden",
+      "create": "Design erstellen",
+      "customize": "Anpassen",
+      "duplicate": "Duplizieren",
+      "edit": "Bearbeiten",
+      "export": "Exportieren",
+      "importFile": "Datei importieren",
+      "importLink": "Link importieren",
+      "preview": "Vorschau",
+      "reset": "Auf Emix Standard zurücksetzen",
+      "save": "Speichern",
+      "saveApply": "Speichern und anwenden",
+      "saveCopy": "Als Kopie speichern",
+      "saveToMine": "In meine Designs speichern",
+      "share": "Teilen"
+    },
+    "card": {
+      "label": "Emix-Design"
+    },
+    "import": {
+      "invalid": "Diese Datei ist kein gültiges Emix-Design.",
+      "invalidLink": "Das ist kein Design-Link.",
+      "linkPrompt": "Design-Link einfügen"
+    },
+    "gallery": {
+      "search": "Designs oder Ersteller suchen",
+      "popular": "Am beliebtesten",
+      "recent": "Neu hinzugefügt",
+      "liked": "Von mir geliked",
+      "allCategories": "Alle Kategorien",
+      "empty": "Hier gibt es noch keine Designs. Veröffentliche eines im Design-Editor!",
+      "unavailable": "Die Galerie kann gerade nicht geladen werden."
+    },
+    "share": {
+      "title": "Design teilen",
+      "hint": "Jeder, der bei Emix angemeldet ist, kann den Link öffnen, sich das Design ansehen und selbst entscheiden, ob er es anwendet. Es ändert nie von allein das Aussehen bei jemandem.",
+      "copy": "Link kopieren",
+      "copied": "Link kopiert",
+      "sendTo": "Senden an",
+      "search": "Unterhaltungen und Kanäle suchen",
+      "message": "Probier mein Emix-Design „{{name}}“ aus: {{link}}",
+      "sent": "Design gesendet"
+    },
+    "shared": {
+      "title": "Geteiltes Design",
+      "notFound": "Dieses Design wurde gelöscht oder der Link ist falsch.",
+      "safe": "Designs ändern nur Farben und Aussehen. Das Anwenden ändert nie deine Einstellungen oder Berechtigungen.",
+      "try": "Ausprobieren",
+      "stopTrying": "Ausprobieren beenden"
+    },
+    "preview": {
+      "space": "Studio Nights",
+      "channels": {
+        "0": "ankündigungen",
+        "1": "allgemein",
+        "2": "spieleabend",
+        "3": "kunst"
+      },
+      "you": "Du",
+      "names": {
+        "0": "Leo",
+        "1": "Maya",
+        "2": "Nina"
+      },
+      "time": "Heute 20:14",
+      "messages": {
+        "0": "Spieleabend ist am Freitag!",
+        "1": "@du, bringst du die Playlist mit?",
+        "2": "Die Patchnotes sind online:"
+      },
+      "link": "getemix.com",
+      "composer": "Nachricht an #allgemein",
+      "button": "Nachricht"
+    },
+    "editor": {
+      "createTitle": "Design erstellen",
+      "editTitle": "Design bearbeiten",
+      "defaultName": "Mein Design",
+      "needName": "Gib deinem Design zuerst einen Namen.",
+      "basics": "Grundlagen",
+      "name": "Name des Designs",
+      "mode": {
+        "dark": "Dunkel",
+        "light": "Hell"
+      },
+      "quick": "Schnellstart",
+      "quickHint": "Wähle drei Farben und Emix erstellt eine vollständige, gut lesbare Palette. Jede Farbe lässt sich unten anpassen.",
+      "quickBackground": "Hintergrund",
+      "quickAccent": "Akzent",
+      "quickText": "Text",
+      "build": "Palette erstellen",
+      "colors": "Alle Farben",
+      "showColors": "Alle Farben anzeigen",
+      "hideColors": "Farben ausblenden",
+      "groups": {
+        "surfaces": "Hintergründe und Rahmen",
+        "text": "Text",
+        "accents": "Akzente und Hervorhebungen"
+      },
+      "keys": {
+        "bg": "App-Hintergrund",
+        "sidebar": "Seitenleisten",
+        "chat": "Chat-Hintergrund",
+        "elevated": "Menüs und Pop-ups",
+        "input": "Eingabefelder",
+        "border": "Rahmen",
+        "text": "Text",
+        "textMuted": "Gedämpfter Text",
+        "textFaint": "Blasser Text",
+        "message": "Nachrichtentext",
+        "link": "Links",
+        "accent": "Akzent und Schaltflächen",
+        "accent2": "Zweiter Akzent",
+        "hover": "Hover und Auswahl",
+        "notification": "Benachrichtigungen"
+      },
+      "contrast": "Mancher Text liegt nah an seinem Hintergrund. Emix passt ihn automatisch an, damit er lesbar bleibt.",
+      "background": "Hintergrund",
+      "gradient": "Verlauf",
+      "removeGradient": "Verlauf entfernen",
+      "angle": "Winkel",
+      "animate": "Langsam animieren",
+      "dim": "Bild abdunkeln",
+      "showThrough": "Durch Bereiche scheinen lassen",
+      "style": "Stil",
+      "glass": "Glas-Transparenz",
+      "corners": "Ecken",
+      "radius": {
+        "sharp": "Eckig",
+        "default": "Standard",
+        "rounded": "Abgerundet"
+      },
+      "font": "Schriftart",
+      "fonts": {
+        "dm-sans": "DM Sans",
+        "inter": "Inter",
+        "system": "System",
+        "serif": "Serifen",
+        "mono": "Monospace"
+      },
+      "glow": "Akzentleuchten",
+      "publishing": "Teilen",
+      "visibility": {
+        "private": "Privat",
+        "public": "Öffentlich"
+      },
+      "privateHint": "Nur du und Personen, denen du den Link schickst, können es sehen.",
+      "publicHint": "Wird für alle bei Emix in der Community-Galerie angezeigt.",
+      "category": "Kategorie",
+      "description": "Beschreibung (optional)",
+      "wholeApp": "Vorschau in der ganzen App"
+    }
   }
 }

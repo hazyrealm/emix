@@ -605,7 +605,7 @@ export function MobileGroupDmInfo({ params }: MobileGroupDmInfoProps) {
             type="button"
             onClick={handleSave}
             disabled={!isDirty || saving || !isOwner}
-            className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             data-mobile-group-save
           >
             {saving ? t('common:states.saving') : t('common:actions.save')}

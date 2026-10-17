@@ -518,7 +518,7 @@ export function ProfilePanel() {
           <button type="button" onClick={() => setDraft(saved)} disabled={!dirty} className="px-3 py-1.5 text-sm text-txt-secondary hover:text-txt-primary disabled:opacity-40">
             {t('common:actions.cancel')}
           </button>
-          <button type="button" onClick={handleSave} disabled={!dirty || saving || uploading || isReplica} className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full disabled:opacity-50">
+          <button type="button" onClick={handleSave} disabled={!dirty || saving || uploading || isReplica} className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full disabled:opacity-50">
             {saving ? t('common:states.saving') : t('common:actions.save')}
           </button>
         </div>

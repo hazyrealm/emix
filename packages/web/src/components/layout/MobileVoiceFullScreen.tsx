@@ -543,7 +543,7 @@ export function MobileVoiceFullScreen() {
         {/* Disconnect */}
         <button
           onClick={handleDisconnect}
-          className="w-12 h-12 rounded-full bg-accent-rose flex items-center justify-center text-white hover:bg-accent-rose/80 transition-colors"
+          className="w-12 h-12 rounded-full bg-accent-rose flex items-center justify-center text-on-accent hover:bg-accent-rose/80 transition-colors"
           aria-label={t('voice:mobileCall.disconnect')}
         >
           <svg

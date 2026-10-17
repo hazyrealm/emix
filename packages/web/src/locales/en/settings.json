@@ -619,5 +619,201 @@
   "whatsNew": {
     "title": "What's New",
     "subtitle": "Every Emix update, newest first."
+  },
+  "themes": {
+    "title": "Themes",
+    "subtitle": "Change how all of Emix looks. Your theme is saved to your account, so it follows you to every device. Free for everyone.",
+    "loading": "Loading…",
+    "active": "In use",
+    "by": "by {{name}}",
+    "basedOn": "based on {{name}} by {{creator}}",
+    "applied": "Theme “{{name}}” applied",
+    "saved": "Theme “{{name}}” saved",
+    "copyName": "{{name}} (copy)",
+    "confirmDelete": "Delete the theme “{{name}}”? This can't be undone.",
+    "mineEmpty": "You haven't made or saved a theme yet.",
+    "resetHint": "Theme hard to read? Reset any time, or press Ctrl+Shift+Alt+T anywhere in Emix.",
+    "tabs": {
+      "emix": "Emix themes",
+      "mine": "My themes",
+      "community": "Community"
+    },
+    "builtin": {
+      "emix": "Emix Default",
+      "midnight": "Midnight",
+      "amoled": "AMOLED Black",
+      "neon-nights": "Neon Nights",
+      "cyberpunk": "Cyberpunk",
+      "ocean": "Ocean",
+      "emerald": "Emerald",
+      "crimson": "Crimson",
+      "sunset": "Sunset",
+      "lavender": "Lavender",
+      "arctic": "Arctic",
+      "pastel": "Pastel"
+    },
+    "categories": {
+      "dark": "Dark",
+      "light": "Light",
+      "colorful": "Colourful",
+      "minimal": "Minimal",
+      "neon": "Neon",
+      "nature": "Nature",
+      "seasonal": "Seasonal",
+      "other": "Other"
+    },
+    "actions": {
+      "apply": "Apply",
+      "create": "Create theme",
+      "customize": "Customize",
+      "duplicate": "Duplicate",
+      "edit": "Edit",
+      "export": "Export",
+      "importFile": "Import file",
+      "importLink": "Import link",
+      "preview": "Preview",
+      "reset": "Reset to Emix Default",
+      "save": "Save",
+      "saveApply": "Save and apply",
+      "saveCopy": "Save as copy",
+      "saveToMine": "Save to my themes",
+      "share": "Share"
+    },
+    "card": {
+      "label": "Emix theme"
+    },
+    "import": {
+      "invalid": "That file isn't a valid Emix theme.",
+      "invalidLink": "That isn't a theme link.",
+      "linkPrompt": "Paste a theme link"
+    },
+    "gallery": {
+      "search": "Search themes or creators",
+      "popular": "Most popular",
+      "recent": "Recently added",
+      "liked": "Liked by me",
+      "allCategories": "All categories",
+      "empty": "No themes here yet. Publish one from the theme editor!",
+      "unavailable": "The gallery can't be loaded right now."
+    },
+    "share": {
+      "title": "Share theme",
+      "hint": "Anyone signed in to Emix can open the link, preview the theme and choose whether to apply it. It never changes anyone's appearance on its own.",
+      "copy": "Copy link",
+      "copied": "Link copied",
+      "sendTo": "Send to",
+      "search": "Search conversations and channels",
+      "message": "Try my Emix theme “{{name}}”: {{link}}",
+      "sent": "Theme sent"
+    },
+    "shared": {
+      "title": "Shared theme",
+      "notFound": "This theme was deleted or the link is wrong.",
+      "safe": "Themes only change colours and appearance. Applying one never changes your settings or permissions.",
+      "try": "Try it",
+      "stopTrying": "Stop trying"
+    },
+    "preview": {
+      "space": "Studio Nights",
+      "channels": {
+        "0": "announcements",
+        "1": "general",
+        "2": "game-night",
+        "3": "art-share"
+      },
+      "you": "You",
+      "names": {
+        "0": "Leo",
+        "1": "Maya",
+        "2": "Nina"
+      },
+      "time": "Today 20:14",
+      "messages": {
+        "0": "Game night is on for Friday!",
+        "1": "@you can you bring the playlist?",
+        "2": "Patch notes are up:"
+      },
+      "link": "getemix.com",
+      "composer": "Message #general",
+      "button": "Message"
+    },
+    "editor": {
+      "createTitle": "Create a theme",
+      "editTitle": "Edit theme",
+      "defaultName": "My theme",
+      "needName": "Give your theme a name first.",
+      "basics": "Basics",
+      "name": "Theme name",
+      "mode": {
+        "dark": "Dark",
+        "light": "Light"
+      },
+      "quick": "Quick start",
+      "quickHint": "Pick three colours and Emix builds a complete, readable palette. You can fine-tune every colour below.",
+      "quickBackground": "Background",
+      "quickAccent": "Accent",
+      "quickText": "Text",
+      "build": "Build palette",
+      "colors": "All colours",
+      "showColors": "Show every colour",
+      "hideColors": "Hide colours",
+      "groups": {
+        "surfaces": "Backgrounds and borders",
+        "text": "Text",
+        "accents": "Accents and highlights"
+      },
+      "keys": {
+        "bg": "App background",
+        "sidebar": "Sidebars",
+        "chat": "Chat background",
+        "elevated": "Menus and popups",
+        "input": "Inputs",
+        "border": "Borders",
+        "text": "Text",
+        "textMuted": "Muted text",
+        "textFaint": "Faint text",
+        "message": "Message text",
+        "link": "Links",
+        "accent": "Accent and buttons",
+        "accent2": "Second accent",
+        "hover": "Hover and selection",
+        "notification": "Notifications"
+      },
+      "contrast": "Some text is close to its background. Emix automatically adjusts it so it stays readable.",
+      "background": "Background",
+      "gradient": "Gradient",
+      "removeGradient": "Remove gradient",
+      "angle": "Angle",
+      "animate": "Slowly animate",
+      "dim": "Darken image",
+      "showThrough": "Show through panels",
+      "style": "Style",
+      "glass": "Glass transparency",
+      "corners": "Corners",
+      "radius": {
+        "sharp": "Sharp",
+        "default": "Standard",
+        "rounded": "Rounded"
+      },
+      "font": "Font",
+      "fonts": {
+        "dm-sans": "DM Sans",
+        "inter": "Inter",
+        "system": "System",
+        "serif": "Serif",
+        "mono": "Monospace"
+      },
+      "glow": "Accent glow",
+      "publishing": "Sharing",
+      "visibility": {
+        "private": "Private",
+        "public": "Public"
+      },
+      "privateHint": "Only you, and people you send the link to, can see it.",
+      "publicHint": "Listed in the Community gallery for everyone on Emix.",
+      "category": "Category",
+      "description": "Description (optional)",
+      "wholeApp": "Preview on the whole app"
+    }
   }
 }

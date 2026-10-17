@@ -277,7 +277,7 @@ export function StoragePanel() {
                     onClick={() => handleUploadUnitChange(u)}
                     className={`px-2.5 py-1 rounded text-[12px] font-medium transition-colors ${
                       uploadUnit === u
-                        ? 'bg-accent-primary text-white'
+                        ? 'bg-accent-primary text-on-accent'
                         : 'text-txt-tertiary hover:text-txt-primary'
                     }`}
                   >
@@ -289,7 +289,7 @@ export function StoragePanel() {
             <button
               onClick={handleUploadLimitSave}
               disabled={!uploadLimitDirty || uploadLimitSaving || parsedUploadMb === null}
-              className="px-3 py-1 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 ml-auto"
+              className="px-3 py-1 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50 ml-auto"
             >
               {uploadLimitSaving ? t('common:states.saving') : t('common:actions.save')}
             </button>
@@ -317,7 +317,7 @@ export function StoragePanel() {
               <button
                 onClick={() => handleCleanup(false)}
                 disabled={cleaning || !previewDone}
-                className="px-3 py-1.5 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
               >
                 {cleaning ? t('admin:storage.cleanup.running') : t('admin:storage.cleanup.run')}
               </button>
@@ -388,7 +388,7 @@ export function StoragePanel() {
             <button
               onClick={() => handleTusCleanup(false)}
               disabled={tusCleaning || !tusPreviewDone}
-              className="px-3 py-1.5 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+              className="px-3 py-1.5 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
             >
               {tusCleaning ? t('admin:storage.cleanup.running') : t('admin:storage.cleanup.run')}
             </button>
@@ -445,7 +445,7 @@ export function StoragePanel() {
             <button
               onClick={() => handleMediaCleanup(false)}
               disabled={mediaCleaning || !mediaPreviewDone}
-              className="px-3 py-1.5 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+              className="px-3 py-1.5 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
             >
               {mediaCleaning ? t('admin:storage.media.running') : t('admin:storage.media.run')}
             </button>

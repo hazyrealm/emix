@@ -122,7 +122,7 @@ export function WhatsNewController() {
             <button type="button" onClick={viewAll} className="px-4 py-2 rounded-full text-sm text-txt-secondary hover:text-txt-primary hover:bg-white/[0.06]">
               {t('common:changelog.viewFull')}
             </button>
-            <button type="button" onClick={dismiss} autoFocus className="px-5 py-2 rounded-full text-sm font-medium text-white emix-gradient-button">
+            <button type="button" onClick={dismiss} autoFocus className="px-5 py-2 rounded-full text-sm font-medium text-on-accent emix-gradient-button">
               {t('common:changelog.gotIt')}
             </button>
           </div>

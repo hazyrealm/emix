@@ -1258,7 +1258,7 @@ function LoadFailedNotice({ title, detail, retryLabel, onRetry }: {
         <button
           type="button"
           onClick={onRetry}
-          className="mt-3 rounded-full bg-accent-primary px-4 py-1.5 text-[14px] font-medium text-white transition-colors hover:bg-accent-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-chat"
+          className="mt-3 rounded-full bg-accent-primary px-4 py-1.5 text-[14px] font-medium text-on-accent transition-colors hover:bg-accent-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-chat"
         >
           {retryLabel}
         </button>
@@ -1370,7 +1370,7 @@ function WelcomeHeader({ channelId }: { channelId: string }) {
           <div className="mt-4 flex items-center gap-2">
             <button
               onClick={handleOpenSettings}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-[14px] font-medium rounded-[3px] transition-colors"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-[14px] font-medium rounded-[3px] transition-colors"
             >
               {t('chat:list.welcome.group.openSettings')}
             </button>

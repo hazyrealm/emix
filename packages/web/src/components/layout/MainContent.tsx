@@ -308,7 +308,7 @@ export function MainContent() {
             </div>
             <button
               onClick={handleCancelCall}
-              className="px-3 py-1 bg-accent-rose hover:bg-accent-rose/80 text-white text-xs font-medium rounded transition-colors"
+              className="px-3 py-1 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-xs font-medium rounded transition-colors"
             >
               {t('common:actions.cancel')}
             </button>
@@ -486,7 +486,7 @@ export function MainContent() {
             </div>
             <button
               onClick={() => joinVoiceChannel(currentChannelId, useVoiceStore.getState().connectFn ?? undefined)}
-              className="relative z-10 px-8 py-3 bg-accent-primary hover:bg-accent-primary-hover text-white font-semibold rounded-full transition-all text-[15px] shadow-[0_4px_20px_rgb(var(--accent-primary)/0.3)]"
+              className="relative z-10 px-8 py-3 bg-accent-primary hover:bg-accent-primary-hover text-on-accent font-semibold rounded-full transition-all text-[15px] shadow-[0_4px_20px_rgb(var(--accent-primary)/0.3)]"
             >
               {t('spaces:main.voice.join')}
             </button>

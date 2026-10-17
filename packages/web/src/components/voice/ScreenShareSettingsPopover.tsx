@@ -71,7 +71,7 @@ export function ScreenShareSettingsPopover({ open, onClose, anchorRef, onStopSha
         <div className="px-3 pb-3 pt-1">
           <button
             onClick={onStopSharing}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-accent-rose hover:bg-accent-rose/80 text-white text-[13px] font-semibold transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-[13px] font-semibold transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0">
               <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z" />

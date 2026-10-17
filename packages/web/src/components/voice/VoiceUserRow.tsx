@@ -135,7 +135,7 @@ export function VoiceUserRow({
         )}
         {/* Screen sharing LIVE badge */}
         {isScreenSharing && (
-          <span className="bg-accent-rose text-white text-[9px] font-bold px-1 rounded leading-[14px]">{t('voice:badges.live')}</span>
+          <span className="bg-accent-rose text-on-accent text-[9px] font-bold px-1 rounded leading-[14px]">{t('voice:badges.live')}</span>
         )}
         {/* Locally muted — volume X icon */}
         {isLocallyMuted && (

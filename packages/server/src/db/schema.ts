@@ -30,6 +30,8 @@ export const users = sqliteTable('users', {
   profileStyle: text('profile_style'),
   /** The newest changelog version this user acknowledged in the What's New dialog; null = never. */
   changelogAck: text('changelog_ack'),
+  /** The app theme this account uses (`AppThemeSelection` JSON); null = Emix default. */
+  appTheme: text('app_theme'),
   isDeleted: integer('is_deleted').default(0),
   discoverable: integer('discoverable').default(1),
   profileUpdatedAt: integer('profile_updated_at'),
@@ -811,3 +813,36 @@ export const personalStickers = sqliteTable('personal_stickers', {
   name: text('name').notNull(),
   createdAt: integer('created_at').notNull(),
 }, (table) => ({ pk: primaryKey({ columns: [table.userId, table.stickerId] }) }));
+
+/**
+ * Emix app themes saved by users: their own designs and themes saved from
+ * others (with credit). `data` is a normalized `ThemeData` JSON document.
+ * Public themes appear in the gallery; any theme opens by its share code.
+ */
+export const themes = sqliteTable('themes', {
+  id: text('id').primaryKey(),
+  ownerId: text('owner_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  description: text('description'),
+  category: text('category').notNull().default('other'),
+  visibility: text('visibility').notNull().default('private'),
+  shareCode: text('share_code').notNull().unique(),
+  data: text('data').notNull(),
+  basedOnName: text('based_on_name'),
+  basedOnCreator: text('based_on_creator'),
+  likes: integer('likes').notNull().default(0),
+  installs: integer('installs').notNull().default(0),
+  createdAt: integer('created_at').notNull(),
+  updatedAt: integer('updated_at').notNull(),
+}, (table) => ({
+  ownerIdx: index('idx_themes_owner').on(table.ownerId),
+  galleryIdx: index('idx_themes_visibility_updated').on(table.visibility, table.updatedAt),
+}));
+
+export const themeLikes = sqliteTable('theme_likes', {
+  themeId: text('theme_id').notNull().references(() => themes.id, { onDelete: 'cascade' }),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  createdAt: integer('created_at').notNull(),
+}, (table) => ({
+  pk: primaryKey({ columns: [table.themeId, table.userId] }),
+}));

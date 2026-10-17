@@ -112,7 +112,7 @@ function VideoAttachment({ attachment, attUrl, thumbUrl, federationInlineBadge }
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center gap-1.5 text-white">
+              <div className="absolute inset-0 bg-black/45 flex flex-col items-center justify-center gap-1.5 text-on-accent">
                 <svg className="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                 </svg>

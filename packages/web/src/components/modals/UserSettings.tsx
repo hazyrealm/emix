@@ -196,7 +196,7 @@ export function UserSettingsModal() {
             >
               <span className="flex-1 min-w-0 truncate text-left">{t(entry.label)}</span>
               {entry.id === 'whatsNew' && whatsNewUnread && (
-                <span className="shrink-0 rounded-full bg-[#ff3ea5] px-1.5 py-px text-[9px] font-bold uppercase tracking-wide text-white">{t('common:changelog.newBadge')}</span>
+                <span className="shrink-0 rounded-full bg-[#ff3ea5] px-1.5 py-px text-[9px] font-bold uppercase tracking-wide text-on-accent">{t('common:changelog.newBadge')}</span>
               )}
             </button>
           )
@@ -304,7 +304,7 @@ export function UserSettingsModal() {
         {(!isMobile || mobileView === 'content') && (
           <SettingsScrollContainer>
             {/* The profile editor sits beside its live preview, so it gets a wider column. */}
-            <div className={`px-6 mx-auto ${tab === 'profile' ? 'max-w-[1060px]' : 'max-w-[640px]'}`}>
+            <div className={`px-6 mx-auto ${tab === 'profile' || tab === 'appearance' ? 'max-w-[1060px]' : 'max-w-[640px]'}`}>
               {/* Mobile back button */}
               {isMobile && (
                 <button

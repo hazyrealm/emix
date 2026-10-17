@@ -361,7 +361,7 @@ export function FriendsPage({ mobile }: FriendsPageProps) {
             <TabButton active={activeTab === 'pending'} onClick={() => setActiveTab('pending')}>
               {t('social:tabs.pending')}
               {(pendingIncoming.length > 0) && (
-                <span className="ml-2 px-1.5 py-0.5 bg-accent-rose text-white text-[10px] rounded-full leading-none">
+                <span className="ml-2 px-1.5 py-0.5 bg-accent-rose text-on-accent text-[10px] rounded-full leading-none">
                   {pendingIncoming.length}
                 </span>
               )}
@@ -396,7 +396,7 @@ export function FriendsPage({ mobile }: FriendsPageProps) {
             >
               {tabLabel(t, tab)}
               {tab === 'pending' && pendingIncoming.length > 0 && (
-                <span className="ml-1.5 px-1.5 py-0.5 text-xs bg-notification text-white rounded-full">
+                <span className="ml-1.5 px-1.5 py-0.5 text-xs bg-notification text-on-accent rounded-full">
                   {pendingIncoming.length}
                 </span>
               )}
@@ -614,7 +614,7 @@ function AddFriendTab({
             <button
               onClick={handleDirectAdd}
               disabled={directAddLoading}
-              className="px-3 py-1.5 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-medium transition-colors disabled:opacity-50 flex-shrink-0"
+              className="px-3 py-1.5 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-on-accent text-sm font-medium transition-colors disabled:opacity-50 flex-shrink-0"
             >
               {directAddLoading ? t('social:request.sending') : t('social:add.sendRequest')}
             </button>
@@ -779,7 +779,7 @@ function UserDiscoverCard({
         )}
         <div
           className="absolute bottom-0 inset-x-0 h-12"
-          style={{ background: 'linear-gradient(to top, rgba(20,20,26,0.9), transparent)' }}
+          style={{ background: 'linear-gradient(to top, rgb(var(--bg-elevated) / 0.9), transparent)' }}
         />
         {originLabel && (
           <div className="absolute top-2 right-2 z-[2]">
@@ -851,7 +851,7 @@ function UserDiscoverCard({
           <button
             onClick={handleSendRequest}
             disabled={actionLoading}
-            className="w-full py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-white text-[13px] font-medium rounded transition-colors disabled:opacity-50"
+            className="w-full py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-on-accent text-[13px] font-medium rounded transition-colors disabled:opacity-50"
           >
             {actionLoading ? t('social:request.sending') : t('social:request.send')}
           </button>
@@ -995,7 +995,7 @@ function RequestItem({ request, type, onAccept, onDecline, onCancel }: {
           <>
             <button
               onClick={() => onAccept?.()}
-              className="p-2 bg-surface-base rounded-full text-status-online hover:bg-status-online hover:text-white transition-all"
+              className="p-2 bg-surface-base rounded-full text-status-online hover:bg-status-online hover:text-on-accent transition-all"
               title={t('common:actions.accept')}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -1004,7 +1004,7 @@ function RequestItem({ request, type, onAccept, onDecline, onCancel }: {
             </button>
             <button
               onClick={() => onDecline?.()}
-              className="p-2 bg-surface-base rounded-full text-txt-danger hover:bg-accent-rose hover:text-white transition-all"
+              className="p-2 bg-surface-base rounded-full text-txt-danger hover:bg-accent-rose hover:text-on-accent transition-all"
               title={t('common:actions.decline')}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

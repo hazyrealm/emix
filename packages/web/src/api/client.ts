@@ -1,5 +1,6 @@
 import type { PersonalSticker } from '@backspace/shared/src/stickers';
 import type { ChangelogResponse, ChangelogStateResponse } from '@backspace/shared/src/changelog';
+import type { AppThemeSelection, ThemeData, ThemeRecord } from '@backspace/shared/src/theme';
 import { isErrorCode, type ErrorCode, type ErrorDetails } from '@backspace/shared/src/errors';
 import type {
   NotificationSetting,
@@ -356,6 +357,18 @@ export class BackspaceApiClient {
 
   readonly instance: {
     info: () => Promise<InstanceInfoResponse>;
+  };
+
+  readonly themes: {
+    selection: () => Promise<{ selection: AppThemeSelection | null }>;
+    setSelection: (selection: AppThemeSelection | null) => Promise<{ selection: AppThemeSelection | null }>;
+    mine: () => Promise<{ themes: ThemeRecord[] }>;
+    create: (body: { name: string; description?: string; category?: string; visibility?: 'private' | 'public'; data: ThemeData; basedOnCode?: string }) => Promise<{ theme: ThemeRecord }>;
+    update: (id: string, body: { name?: string; description?: string; category?: string; visibility?: 'private' | 'public'; data?: ThemeData }) => Promise<{ theme: ThemeRecord }>;
+    remove: (id: string) => Promise<{ success: boolean }>;
+    byShareCode: (code: string) => Promise<{ theme: ThemeRecord }>;
+    gallery: (params: { sort?: 'popular' | 'recent' | 'liked'; q?: string; category?: string; page?: number }) => Promise<{ themes: ThemeRecord[]; more: boolean }>;
+    like: (id: string, liked: boolean) => Promise<{ theme: ThemeRecord }>;
   };
 
   readonly changelog: {
@@ -783,6 +796,25 @@ export class BackspaceApiClient {
 
     this.instance = {
       info: () => request<InstanceInfoResponse>('GET', '/instance/info', undefined, false),
+    };
+
+    this.themes = {
+      selection: () => request('GET', '/users/@me/app-theme'),
+      setSelection: (selection) => request('PUT', '/users/@me/app-theme', { selection }),
+      mine: () => request('GET', '/themes/mine'),
+      create: (body) => request('POST', '/themes', body),
+      update: (id, body) => request('PATCH', `/themes/${encodeURIComponent(id)}`, body),
+      remove: (id) => request('DELETE', `/themes/${encodeURIComponent(id)}`),
+      byShareCode: (code) => request('GET', `/themes/share/${encodeURIComponent(code)}`),
+      gallery: (params) => {
+        const q = new URLSearchParams();
+        if (params.sort) q.set('sort', params.sort);
+        if (params.q) q.set('q', params.q);
+        if (params.category) q.set('category', params.category);
+        if (params.page) q.set('page', String(params.page));
+        return request('GET', `/themes/gallery?${q.toString()}`);
+      },
+      like: (id, liked) => request(liked ? 'POST' : 'DELETE', `/themes/${encodeURIComponent(id)}/like`),
     };
 
     this.changelog = {

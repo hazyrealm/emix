@@ -1,6 +1,6 @@
 {
   "name": "@backspace/shared",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "private": true,
   "license": "AGPL-3.0-only",
   "author": "Jannis Braun",
@@ -28,7 +28,11 @@
     "./src/profileStyle": "./src/profileStyle.ts",
     "./src/profileStyle.js": "./src/profileStyle.ts",
     "./src/changelog": "./src/changelog.ts",
-    "./src/changelog.js": "./src/changelog.ts"
+    "./src/changelog.js": "./src/changelog.ts",
+    "./src/theme": "./src/theme.ts",
+    "./src/theme.js": "./src/theme.ts",
+    "./src/builtinThemes": "./src/builtinThemes.ts",
+    "./src/builtinThemes.js": "./src/builtinThemes.ts"
   },
   "scripts": {
     "build": "tsc",

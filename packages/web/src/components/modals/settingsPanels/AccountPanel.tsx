@@ -446,14 +446,14 @@ export function AccountPanel() {
                   )}
                 </div>
                 <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-5 h-5 text-on-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
                 {uploadingAvatar && (
                   <div className="absolute inset-0 rounded-full bg-black/60 flex items-center justify-center">
-                    <svg className="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
+                    <svg className="animate-spin w-5 h-5 text-on-accent" viewBox="0 0 24 24" fill="none">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
@@ -510,14 +510,14 @@ export function AccountPanel() {
                 }
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-5 h-5 text-on-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
               {uploadingBanner && (
                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                  <svg className="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
+                  <svg className="animate-spin w-5 h-5 text-on-accent" viewBox="0 0 24 24" fill="none">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
@@ -779,7 +779,7 @@ export function AccountPanel() {
           <button
             type="submit"
             disabled={passwordLoading || !currentPassword || !newPassword || !confirmNewPassword}
-            className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {passwordLoading ? t('settings:account.password.submitting') : t('settings:account.password.submit')}
           </button>
@@ -795,7 +795,7 @@ export function AccountPanel() {
           </p>
           <button
             onClick={() => setShowDeleteModal(true)}
-            className="px-4 py-2 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors"
+            className="px-4 py-2 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors"
           >
             {t('settings:account.danger.deleteButton')}
           </button>
@@ -819,7 +819,7 @@ export function AccountPanel() {
               <button
                 onClick={handleSave}
                 disabled={isLoading || uploadingAvatar || uploadingBanner}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {isLoading ? t('common:states.saving') : t('common:actions.save')}
               </button>

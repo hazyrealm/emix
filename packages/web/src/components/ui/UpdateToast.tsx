@@ -107,14 +107,14 @@ export function UpdateToast() {
           {canRestart ? (
             <button
               onClick={install}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-white transition-colors"
+              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-on-accent transition-colors"
             >
               {t('desktop:update.restartNow')}
             </button>
           ) : (
             <button
               onClick={openDownloadPage}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-white transition-colors"
+              className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent-primary hover:bg-accent-primary/80 text-on-accent transition-colors"
             >
               {t('desktop:update.download')}
             </button>

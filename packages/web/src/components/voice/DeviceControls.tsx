@@ -347,7 +347,7 @@ function DeviceOption({ selected, label, onClick }: { selected: boolean; label: 
       onClick={onClick}
       className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left text-[13px] ${selected ? 'bg-accent-primary/15 text-txt-primary' : 'text-txt-secondary hover:bg-white/[0.06] hover:text-txt-primary'}`}
     >
-      <span className={`w-3.5 h-3.5 rounded-full border flex-shrink-0 ${selected ? 'border-accent-primary bg-accent-primary shadow-[inset_0_0_0_2px_rgba(20,20,26,0.9)]' : 'border-white/30'}`} />
+      <span className={`w-3.5 h-3.5 rounded-full border flex-shrink-0 ${selected ? 'border-accent-primary bg-accent-primary shadow-[inset_0_0_0_2px_rgb(var(--bg-elevated) / 0.9)]' : 'border-white/30'}`} />
       <span className="truncate">{label}</span>
     </button>
   );
@@ -376,7 +376,7 @@ export function AudioDeviceMenu({ anchorRef, onClose }: { anchorRef: React.RefOb
         <div className="text-xs text-txt-secondary space-y-2">
           <p>{permState === 'denied' ? t('voice:devices.micDenied') : t('voice:devices.micPrompt')}</p>
           {permState !== 'denied' && (
-            <button type="button" onClick={() => void requestPermission()} className="px-3 py-1.5 rounded-md bg-accent-primary text-white text-xs font-medium">
+            <button type="button" onClick={() => void requestPermission()} className="px-3 py-1.5 rounded-md bg-accent-primary text-on-accent text-xs font-medium">
               {t('voice:devices.allow')}
             </button>
           )}
@@ -596,7 +596,7 @@ export function CameraPreviewDialog() {
           </label>
           <div className="flex gap-2">
             <button type="button" onClick={close} className="px-4 py-2 rounded-full text-sm text-txt-secondary hover:text-txt-primary">{t('common:actions.cancel')}</button>
-            <button type="button" onClick={handleStart} className="px-5 py-2 rounded-full text-sm font-medium text-white emix-gradient-button">
+            <button type="button" onClick={handleStart} className="px-5 py-2 rounded-full text-sm font-medium text-on-accent emix-gradient-button">
               {mode === 'call' ? t('voice:preview.startCall') : t('voice:preview.start')}
             </button>
           </div>

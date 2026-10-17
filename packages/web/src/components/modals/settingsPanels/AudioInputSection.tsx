@@ -127,7 +127,7 @@ export function AudioInputSection() {
           </div>
           <button
             onClick={() => { requestPermission().catch(() => {}); }}
-            className="text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-white font-medium transition-colors"
+            className="text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover text-on-accent font-medium transition-colors"
           >
             {t('voice.input.permissionPrompt.enable')}
           </button>

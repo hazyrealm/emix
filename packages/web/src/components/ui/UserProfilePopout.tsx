@@ -191,7 +191,7 @@ export function UserProfilePopout({ user: propUser, origin, onClose, anchor, pla
           userId={user.homeUserId ?? user.id}
           user={user}
           onClick={handleAvatarClick}
-          ring={{ width: 4, color: 'rgba(20,20,26,0.85)' }}
+          ring={{ width: 4, color: 'rgb(var(--bg-elevated) / 0.9)' }}
           className="mt-[-44px] mb-3"
         />
 

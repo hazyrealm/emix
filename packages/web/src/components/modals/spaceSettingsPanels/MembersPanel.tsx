@@ -209,7 +209,7 @@ function MembersPanelRow({
             <div className="flex items-center gap-2 mt-1.5">
               <button
                 onClick={() => onSaveRoles(member.userId)}
-                className="px-2 py-0.5 text-xs bg-accent-primary hover:bg-accent-primary/80 text-white rounded transition-colors"
+                className="px-2 py-0.5 text-xs bg-accent-primary hover:bg-accent-primary/80 text-on-accent rounded transition-colors"
               >
                 {t('common:actions.save')}
               </button>

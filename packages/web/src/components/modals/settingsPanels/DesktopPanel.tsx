@@ -182,7 +182,7 @@ function UpdateSettings() {
           {action && (
             <button
               onClick={action.onClick}
-              className="px-3 py-1.5 text-sm font-medium text-white bg-accent-primary hover:bg-accent-primary/80 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-sm font-medium text-on-accent bg-accent-primary hover:bg-accent-primary/80 rounded-lg transition-colors"
             >
               {action.label}
             </button>

@@ -147,7 +147,7 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
   return (
     <div
       data-context-menu
-      className={`relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ${
+      className={`${hasVideo ? 'emx-media ' : ''}relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ${
         isSpeaking
           ? 'ring-[3px] ring-status-online shadow-[0_0_12px_rgba(134,239,172,0.25)]'
           : 'ring-1 ring-white/[0.06] hover:ring-white/10'
@@ -185,7 +185,7 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 min-w-0">
             <span
-              className={`font-semibold text-white truncate ${large ? 'text-base' : 'text-[13px]'}`}
+              className={`font-semibold text-on-accent truncate ${large ? 'text-base' : 'text-[13px]'}`}
             >
               {displayName}
             </span>

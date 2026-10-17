@@ -109,7 +109,7 @@ export function SpaceCard({
         {/* Frosted bottom fade, Aether Drift glass */}
         <div
           className="absolute bottom-0 inset-x-0 h-16"
-          style={{ background: 'linear-gradient(to top, rgba(20,20,26,0.9), transparent)' }}
+          style={{ background: 'linear-gradient(to top, rgb(var(--bg-elevated) / 0.9), transparent)' }}
         />
 
         {/* Joined badge (top-left) */}
@@ -205,7 +205,7 @@ export function SpaceCard({
           isPublic ? (
             <button
               onClick={() => outer.onConnect(outer.entry)}
-              className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-medium rounded transition-colors"
+              className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-on-accent text-sm font-medium rounded transition-colors"
             >
               {t('spaces:explore.outer.connectAndJoin')}
             </button>
@@ -228,7 +228,7 @@ export function SpaceCard({
           <button
             onClick={handlePublicJoin}
             disabled={joining}
-            className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-medium rounded transition-colors disabled:opacity-50"
+            className="w-full py-2 bg-accent-primary hover:bg-accent-primary-hover text-on-accent text-sm font-medium rounded transition-colors disabled:opacity-50"
           >
             {joining ? (
               <span className="flex items-center justify-center gap-2">

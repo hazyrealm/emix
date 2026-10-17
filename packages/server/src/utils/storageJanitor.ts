@@ -12,6 +12,8 @@ import { expireOutboxQueues } from './federationOutboxQueue.js';
 import { sweepAppliedEvents } from './federationAppliedEvents.js';
 import { sweepSubjectClocks } from './federationSubjectClock.js';
 import { cleanupUnusedStickerAssets } from './stickerAssets.js';
+import { normalizeProfileStyle } from '@backspace/shared/src/profileStyle.js';
+import { normalizeTheme, normalizeThemeSelection, themeImage } from '@backspace/shared/src/theme.js';
 import type { StorageStats, StorageBreakdown, OrphanedFile, CleanupResult } from '@backspace/shared';
 
 const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.ico', '.bmp', '.avif']);
@@ -117,6 +119,24 @@ function getProfileReferencedFilenames(): Set<string> {
     if (row.icon && !row.icon.startsWith('http')) {
       referenced.add(path.basename(row.icon));
     }
+  }
+
+  // Emix: profile background images, and the background images of saved app
+  // themes and of each account's selected theme. One image can be used by
+  // several themes (a shared theme saved by others keeps pointing at it).
+  const styleRows = db.select({ style: schema.users.profileStyle, theme: schema.users.appTheme })
+    .from(schema.users)
+    .all();
+  for (const row of styleRows) {
+    const bg = normalizeProfileStyle(row.style)?.background?.image;
+    if (bg) referenced.add(path.basename(bg));
+    const selection = normalizeThemeSelection(row.theme);
+    const img = selection?.kind === 'custom' ? themeImage(selection.data) : null;
+    if (img) referenced.add(path.basename(img));
+  }
+  for (const row of db.select({ data: schema.themes.data }).from(schema.themes).all()) {
+    const img = themeImage(normalizeTheme(row.data));
+    if (img) referenced.add(path.basename(img));
   }
 
   return referenced;

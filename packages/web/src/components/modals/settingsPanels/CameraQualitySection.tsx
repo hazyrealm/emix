@@ -73,7 +73,7 @@ export function CameraQualitySection({ videoRef }: { videoRef: RefObject<HTMLVid
 
   const pill = (active: boolean) =>
     `px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
-      active ? 'bg-accent-primary text-white' : 'bg-white/[0.04] text-txt-secondary hover:bg-white/[0.08] hover:text-txt-primary'
+      active ? 'bg-accent-primary text-on-accent' : 'bg-white/[0.04] text-txt-secondary hover:bg-white/[0.08] hover:text-txt-primary'
     }`;
 
   const cameraMax = info?.capW && info?.capH ? `${info.capW}×${info.capH}${info.capFps ? ` @ ${Math.round(info.capFps)} fps` : ''}` : null;
@@ -124,7 +124,7 @@ export function CameraQualitySection({ videoRef }: { videoRef: RefObject<HTMLVid
           type="button"
           onClick={() => void applyNow()}
           disabled={applying}
-          className="px-3 py-1.5 rounded-md text-xs font-semibold bg-accent-primary text-white hover:bg-accent-primary-hover disabled:opacity-50"
+          className="px-3 py-1.5 rounded-md text-xs font-semibold bg-accent-primary text-on-accent hover:bg-accent-primary-hover disabled:opacity-50"
         >
           {t('voice.video.quality.applyNow')}
         </button>

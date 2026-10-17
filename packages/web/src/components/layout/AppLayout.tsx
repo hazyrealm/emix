@@ -41,6 +41,8 @@ import { useFederationToasts } from '../../hooks/useFederationToasts';
 import { useLiveKit } from '../../hooks/useLiveKit';
 import { CameraPreviewDialog } from '../voice/DeviceControls';
 import { WhatsNewController } from '../changelog/WhatsNew';
+import { ThemeDialogs } from '../themes/ThemeShare';
+import { ThemeSync } from '../themes/ThemeSync';
 import { installCameraEffectsSync } from '../../utils/cameraEffects';
 
 installCameraEffectsSync();
@@ -435,6 +437,8 @@ export function AppLayout() {
         <IncomingCallModal />
         <CameraPreviewDialog />
         <WhatsNewController />
+        <ThemeDialogs />
+        <ThemeSync />
         <ImagePreview />
         {/* PictureInPicture is desktop-only. Mobile has its own purpose-built
             voice chrome (MobileVoiceMiniBar + MobileVoiceFullScreen) mounted
@@ -488,6 +492,8 @@ export function AppLayout() {
       <IncomingCallModal />
       <CameraPreviewDialog />
       <WhatsNewController />
+      <ThemeDialogs />
+      <ThemeSync />
       <ImagePreview />
       <PictureInPicture />
       <SoundController />

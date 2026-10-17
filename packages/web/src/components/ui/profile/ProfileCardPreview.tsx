@@ -36,7 +36,7 @@ export function ProfileCardPreview({ user, style, playKey }: { user: User; style
           userId={user.homeUserId ?? user.id}
           user={user}
           decoration={style?.decoration ?? null}
-          ring={{ width: 4, color: 'rgba(20,20,26,0.85)' }}
+          ring={{ width: 4, color: 'rgb(var(--bg-elevated) / 0.9)' }}
           className="mt-[-44px] mb-3"
         />
         <div className={glass ? 'emx-glass rounded-[10px] p-3 -mx-1' : undefined}>

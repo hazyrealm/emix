@@ -912,7 +912,7 @@ export function MessageInput({ channelId, channelName, placeholder }: MessageInp
             <button
               onClick={() => void handleSubmit()}
               disabled={anyUnshippable}
-              className="w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[6px] bg-accent-primary hover:bg-accent-primary-hover text-white transition-all duration-150 flex-shrink-0 disabled:opacity-50"
+              className="w-10 h-10 desktop:w-[34px] desktop:h-[34px] flex items-center justify-center rounded-[6px] bg-accent-primary hover:bg-accent-primary-hover text-on-accent transition-all duration-150 flex-shrink-0 disabled:opacity-50"
               aria-label={t('chat:composer.sendMessage')}
               title={t('chat:composer.send')}
             >

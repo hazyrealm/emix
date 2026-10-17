@@ -128,7 +128,7 @@ const SCREEN_PRESETS: { id: 'text' | 'motion' | 'quality'; config: Partial<Scree
 ];
 
 const pillBase = 'px-2.5 py-1.5 rounded-full text-[13px] font-medium transition-colors cursor-pointer select-none text-center';
-const pillSelected = 'bg-accent-primary text-white';
+const pillSelected = 'bg-accent-primary text-on-accent';
 const pillUnselected = 'bg-surface-elevated text-txt-secondary hover:bg-interactive-hover';
 
 export function StreamQualityControls() {

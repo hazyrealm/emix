@@ -494,7 +494,7 @@ export function VideoSection() {
           </div>
           <button
             onClick={startPreviewFromUser}
-            className="w-full text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover active:bg-accent-primary-active text-white font-medium transition-colors"
+            className="w-full text-[13px] px-3 py-2 rounded-md bg-accent-primary hover:bg-accent-primary-hover active:bg-accent-primary-active text-on-accent font-medium transition-colors"
           >
             {t('voice.video.permissionPrompt.enable')}
           </button>

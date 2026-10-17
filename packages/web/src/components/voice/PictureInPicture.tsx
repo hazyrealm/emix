@@ -405,7 +405,7 @@ export function PictureInPicture() {
   return (
     <div
       ref={containerRef}
-      className={`fixed z-[40] overflow-hidden rounded-lg shadow-2xl ring-1 ring-white/10 bg-surface-base select-none ${
+      className={`emx-media fixed z-[40] overflow-hidden rounded-lg shadow-2xl ring-1 ring-white/10 bg-surface-base select-none ${
         isDragging ? 'cursor-grabbing' : 'cursor-grab'
       }`}
       style={{
@@ -462,7 +462,7 @@ export function PictureInPicture() {
 
       {/* LIVE badge */}
       {isScreen && (
-        <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-white uppercase tracking-wide">
+        <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-on-accent uppercase tracking-wide">
           {t('badges.live')}
         </div>
       )}
@@ -471,7 +471,7 @@ export function PictureInPicture() {
       <button
         data-pip-action="close"
         onClick={handleClose}
-        className="absolute top-2 right-2 w-6 h-6 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-colors"
+        className="absolute top-2 right-2 w-6 h-6 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white/80 hover:text-on-accent transition-colors"
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z" />
@@ -481,7 +481,7 @@ export function PictureInPicture() {
       {/* Bottom overlay with name */}
       <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-gradient-to-t from-black/70 to-transparent">
         <div className="flex items-center gap-1.5">
-          <span className="text-white text-xs font-semibold truncate">{displayName}</span>
+          <span className="text-on-accent text-xs font-semibold truncate">{displayName}</span>
           {displayParticipant && speakingParticipantIds.has(displayParticipant.identity) && (
             <div className="w-2 h-2 rounded-full bg-status-online flex-shrink-0 animate-pulse" />
           )}

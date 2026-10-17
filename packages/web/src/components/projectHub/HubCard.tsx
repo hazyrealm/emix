@@ -36,7 +36,7 @@ const ACTION_SHAPE =
  * - `waiting`: a disabled state the user is waiting on ("Request sent").
  */
 export const HUB_ACTION = {
-  primary: `${ACTION_SHAPE} bg-accent-primary hover:bg-accent-primary-hover text-white disabled:opacity-50 disabled:cursor-default`,
+  primary: `${ACTION_SHAPE} bg-accent-primary hover:bg-accent-primary-hover text-on-accent disabled:opacity-50 disabled:cursor-default`,
   quiet: `${ACTION_SHAPE} bg-interactive-hover hover:bg-interactive-active text-txt-primary`,
   waiting: `${ACTION_SHAPE} bg-interactive-muted text-txt-tertiary cursor-default`,
 } as const;

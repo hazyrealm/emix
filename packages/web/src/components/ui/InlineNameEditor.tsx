@@ -148,7 +148,7 @@ export function InlineNameEditor({
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-shrink-0 px-2.5 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded transition-colors disabled:opacity-50"
+            className="flex-shrink-0 px-2.5 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded transition-colors disabled:opacity-50"
           >
             {isSaving ? t('states.saving') : t('actions.save')}
           </button>

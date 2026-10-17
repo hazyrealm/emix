@@ -213,7 +213,7 @@ export function StreamingPanel() {
   };
 
   const pillBase = 'px-3 py-1.5 rounded text-[13px] font-medium transition-colors cursor-pointer select-none';
-  const pillOn = 'bg-accent-primary text-white';
+  const pillOn = 'bg-accent-primary text-on-accent';
   const pillOff = 'bg-surface-elevated text-txt-secondary hover:bg-interactive-hover';
 
   return (
@@ -333,7 +333,7 @@ export function StreamingPanel() {
                   onClick={() => setDraft({ ...draft, bitrateStepKbps: step })}
                   className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer select-none ${
                     draft.bitrateStepKbps === step
-                      ? 'bg-accent-primary text-white'
+                      ? 'bg-accent-primary text-on-accent'
                       : 'bg-surface-elevated text-txt-secondary hover:bg-interactive-hover'
                   }`}
                 >
@@ -562,7 +562,7 @@ export function StreamingPanel() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {saving ? t('common:states.saving') : t('common:actions.save')}
               </button>

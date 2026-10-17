@@ -599,7 +599,7 @@ export function ScreenShareSetup() {
                       <div className="min-w-0">
                         <div className="text-[11px] font-semibold uppercase tracking-wider text-accent-mint truncate">{readyLabel}</div>
                         {stagedName && (
-                          <div className="text-[13px] font-semibold text-white truncate mt-0.5">{stagedName}</div>
+                          <div className="text-[13px] font-semibold text-on-accent truncate mt-0.5">{stagedName}</div>
                         )}
                         {audioNeedsRepick && (
                           <div className="text-[11px] text-accent-amber/90 mt-0.5">{t('voice:screenPicker.audioNeedsRepick')}</div>
@@ -640,7 +640,7 @@ export function ScreenShareSetup() {
                     <button
                       onClick={stageNow}
                       disabled={staging || !supported || (electron && pickerMode === null)}
-                      className="px-5 py-2.5 rounded-full bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-semibold transition-colors shadow-lg shadow-accent-primary/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+                      className="px-5 py-2.5 rounded-full bg-accent-primary hover:bg-accent-primary-hover text-on-accent text-sm font-semibold transition-colors shadow-lg shadow-accent-primary/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
                     >
                       {t('voice:screenPicker.choose')}
                     </button>
@@ -734,7 +734,7 @@ export function ScreenShareSetup() {
             <button
               onClick={() => void handleStart()}
               disabled={!canStart}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-white text-sm font-semibold rounded-full transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary-hover text-on-accent text-sm font-semibold rounded-full transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               {t('voice:screenPicker.start')}
             </button>
@@ -762,7 +762,7 @@ function TabButton({ active, onClick, label, count }: {
       onClick={onClick}
       className={`px-3.5 py-1.5 text-sm font-medium rounded-full transition-colors ${
         active
-          ? 'bg-accent-primary text-white shadow-sm'
+          ? 'bg-accent-primary text-on-accent shadow-sm'
           : 'text-txt-secondary hover:text-txt-primary hover:bg-white/[0.06]'
       }`}
     >

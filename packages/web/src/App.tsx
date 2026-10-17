@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { EmixWelcome } from './components/welcome/EmixWelcome';
+import { ThemeLinkRoute } from './components/themes/ThemeLinkRoute';
 import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import { LoginPage } from './components/auth/LoginPage';
 import { RegisterPage } from './components/auth/RegisterPage';
@@ -96,6 +97,7 @@ export function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/theme/:code" element={<ThemeLinkRoute />} />
           <Route path="/" element={<Navigate to="/channels/@me" replace />} />
           <Route path="*" element={<Navigate to="/channels/@me" replace />} />
         </Routes>

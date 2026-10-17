@@ -1,5 +1,35 @@
 [
   {
+    "version": "1.13.0",
+    "date": "2026-10-17",
+    "status": "published",
+    "major": true,
+    "title": "Themes: make Emix look completely yours",
+    "summary": "Twelve built-in themes, a theme editor anyone can use, and sharing with friends and the community. Free for everyone.",
+    "sections": {
+      "new": [
+        "12 built-in themes, from Emix Default, Midnight and AMOLED Black to Neon Nights, Cyberpunk, Ocean, Emerald, Crimson, Sunset, Lavender, Arctic and Pastel",
+        "Theme editor in Settings → Appearance: build a full palette from three colours, then fine-tune every colour with a live preview",
+        "Gradient and image backgrounds, frosted-glass transparency, corner style, font choice and accent glow",
+        "Share themes in direct messages and channels: friends get a preview card and choose whether to apply it",
+        "Community gallery with search, categories, likes and most popular or recent themes",
+        "Import and export themes as files, save shared themes to your collection with the creator credited",
+        "Your theme is saved to your account and follows you to every device"
+      ],
+      "improved": [
+        "Camera effects look the same in the preview and in calls, and keep working when you switch tabs",
+        "Separate options for mirroring your self-view and mirroring what others see"
+      ],
+      "fixed": [
+        "Your own camera tile no longer goes blank when you turn the camera on with an effect enabled",
+        "The camera preview works after you leave a call"
+      ],
+      "security": [
+        "Themes are validated data only: they can't run code, inject styles or hide warnings, and text is kept readable"
+      ]
+    }
+  },
+  {
     "version": "1.12.0",
     "date": "2026-10-16",
     "status": "published",

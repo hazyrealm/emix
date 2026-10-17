@@ -755,7 +755,7 @@ export function MobileSpacesScreen() {
                 {iconUrl ? (
                   <img src={iconUrl} alt={space.name} className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-[15px] font-bold text-white">
+                  <span className="text-[15px] font-bold text-on-accent">
                     {space.name.charAt(0).toUpperCase()}
                   </span>
                 )}

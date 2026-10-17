@@ -154,7 +154,7 @@ export function MobileFolderSheet({ folder, onClose, onSelectSpace, onUpdateFold
                   {iconUrl ? (
                     <img src={iconUrl} alt={space.name} className="w-full h-full object-cover" />
                   ) : (
-                    <span className="text-xs font-bold text-white">{space.name.charAt(0).toUpperCase()}</span>
+                    <span className="text-xs font-bold text-on-accent">{space.name.charAt(0).toUpperCase()}</span>
                   )}
                 </div>
                 <span className="text-sm text-txt-primary truncate">{space.name}</span>

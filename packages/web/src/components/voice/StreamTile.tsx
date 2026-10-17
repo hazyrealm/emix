@@ -131,7 +131,7 @@ function StreamAttenuationItem() {
       <div className="py-1.5">
         <button
           onClick={() => setAttenuationEnabled(!streamAttenuationEnabled)}
-          className="w-full text-left px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary hover:bg-accent-primary hover:text-white"
+          className="w-full text-left px-2 py-1.5 mx-1.5 text-sm rounded-sm flex items-center gap-2 text-txt-secondary hover:bg-accent-primary hover:text-on-accent"
           style={{ width: 'calc(100% - 12px)' }}
         >
           <span className="flex-1">{t('voice:stream.attenuation')}</span>
@@ -420,7 +420,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
   return (
     <div
       data-context-menu
-      className={`relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ring-1 ring-white/[0.06] hover:ring-white/10 ${
+      className={`emx-media relative bg-surface-base rounded-xl overflow-hidden flex items-center justify-center group transition-all duration-200 ring-1 ring-white/[0.06] hover:ring-white/10 ${
         'h-full w-full'
       }`}
       onContextMenu={handleContextMenu}
@@ -447,7 +447,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
                 <button
                   onClick={handleWatch}
                   aria-label={t('voice:stream.watch')}
-                  className={`${large ? 'mt-2 px-4 py-1.5' : 'mt-2 w-full min-h-7 px-3 py-1 text-[11px]'} whitespace-nowrap bg-accent-primary hover:bg-accent-primary/80 rounded text-white font-semibold transition-colors`}
+                  className={`${large ? 'mt-2 px-4 py-1.5' : 'mt-2 w-full min-h-7 px-3 py-1 text-[11px]'} whitespace-nowrap bg-accent-primary hover:bg-accent-primary/80 rounded text-on-accent font-semibold transition-colors`}
                 >
                   {t(large ? 'voice:stream.watch' : 'voice:stream.watchShort')}
                 </button>
@@ -458,7 +458,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
       )}
 
       {/* LIVE badge — top left */}
-      <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-white uppercase tracking-wide">
+      <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-accent-rose rounded text-[11px] font-bold text-on-accent uppercase tracking-wide">
         {t('voice:badges.live')}
       </div>
 
@@ -496,7 +496,7 @@ export function StreamTile({ tile, large, stats }: StreamTileProps) {
             <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z" />
           </svg>
           <span
-            className={`font-semibold text-white truncate ${large ? 'text-base' : 'text-[13px]'}`}
+            className={`font-semibold text-on-accent truncate ${large ? 'text-base' : 'text-[13px]'}`}
           >
             {displayName}
           </span>

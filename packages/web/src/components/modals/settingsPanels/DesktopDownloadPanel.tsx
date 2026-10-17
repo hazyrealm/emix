@@ -269,7 +269,7 @@ function HeroTile({
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-4 py-2 text-sm font-medium text-white bg-accent-primary hover:bg-accent-primary-hover rounded-lg transition-colors"
+          className="px-4 py-2 text-sm font-medium text-on-accent bg-accent-primary hover:bg-accent-primary-hover rounded-lg transition-colors"
         >
           {t(DOWNLOAD_KEYS[platform])}
         </a>

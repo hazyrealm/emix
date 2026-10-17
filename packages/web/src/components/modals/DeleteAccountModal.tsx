@@ -229,7 +229,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
                             onClick={() => handleSpaceAction(space.id, 'transfer')}
                             className={`px-2.5 py-1 text-xs rounded transition-colors ${
                               space.action === 'transfer'
-                                ? 'bg-accent-primary text-white'
+                                ? 'bg-accent-primary text-on-accent'
                                 : 'bg-white/[0.06] text-txt-secondary hover:text-txt-primary'
                             }`}
                           >
@@ -239,7 +239,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
                             onClick={() => handleSpaceAction(space.id, 'delete')}
                             className={`px-2.5 py-1 text-xs rounded transition-colors ${
                               space.action === 'delete'
-                                ? 'bg-accent-rose text-white'
+                                ? 'bg-accent-rose text-on-accent'
                                 : 'bg-white/[0.06] text-txt-secondary hover:text-txt-primary'
                             }`}
                           >
@@ -276,7 +276,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
                   isLoading ||
                   (ownedSpaces.length > 0 && (!allOwnedHandled || ownedSpaces.some(s => s.action === 'transfer' && !s.transferTo)))
                 }
-                className="w-full py-2 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-2 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? t('settings:account.deletion.processing') : t('common:actions.continue')}
               </button>
@@ -334,7 +334,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
                 <button
                   type="submit"
                   disabled={isLoading || confirmUsername !== user.username || !confirmPassword}
-                  className="flex-1 py-2 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 py-2 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? t('settings:account.deletion.confirm.deleting') : t('settings:account.deletion.confirm.submit')}
                 </button>
@@ -382,7 +382,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
                 <button
                   onClick={handleDeleteAnyway}
                   disabled={isLoading}
-                  className="w-full py-2 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+                  className="w-full py-2 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
                 >
                   {isLoading ? t('settings:account.deletion.confirm.deleting') : t('settings:account.deletion.federation.deleteAnyway')}
                 </button>

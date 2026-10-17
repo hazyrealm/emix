@@ -133,7 +133,7 @@ export function LoginPage() {
           type="submit"
           disabled={isDisabled}
           aria-busy={isLoading}
-          className="emix-gradient-button w-full py-2.5 text-white font-semibold rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="emix-gradient-button w-full py-2.5 text-on-accent font-semibold rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading && <ButtonSpinner />}
           {retryAfter > 0

@@ -98,7 +98,7 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
     const base = 'w-10 h-10 flex items-center justify-center duration-200 overflow-hidden [transition:border-radius_0.2s,background_0.2s,color_0.2s]';
 
     if (type === 'dm') {
-      return `${base} text-white ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
+      return `${base} text-on-accent ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
     }
 
     if (type === 'action') {
@@ -109,7 +109,7 @@ function SidebarItem({ id, name, icon, avatarColor, active, onClick, onContextMe
       return `${base} ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
     }
 
-    return `${base} text-white ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
+    return `${base} text-on-accent ${active ? 'rounded-[13px]' : 'rounded-[20px] hover:rounded-[13px]'}`;
   };
 
   const buttonContent = (
@@ -217,7 +217,7 @@ function MiniSpaceIcon({ space }: { space: TaggedSpace }) {
   const grad = getSpaceGradient(space.id, space.name, space.avatarColor);
   return (
     <div
-      className="w-full h-full rounded-[3px] flex items-center justify-center text-white"
+      className="w-full h-full rounded-[3px] flex items-center justify-center text-on-accent"
       style={{ background: grad.gradient }}
     >
       <span className="text-[7px] font-bold leading-none">{space.name.charAt(0).toUpperCase()}</span>
@@ -470,7 +470,7 @@ function FolderFlyout({
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <span className="text-[13px] font-bold text-white">{space.name.charAt(0).toUpperCase()}</span>
+                    <span className="text-[13px] font-bold text-on-accent">{space.name.charAt(0).toUpperCase()}</span>
                   )}
                 </div>
               </div>

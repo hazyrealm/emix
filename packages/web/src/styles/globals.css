@@ -46,6 +46,18 @@
     --app-vh: calc(1vh / var(--interface-scale));
     --app-dvh: calc(1dvh / var(--interface-scale));
     --app-vw: calc(1vw / var(--interface-scale));
+    /* ── Emix themes (utils/appTheme.ts sets these per theme) ──
+       --overlay: the colour of hover washes, hairlines and "white/x" utilities
+       (white on dark themes, ink on light ones). --on-accent: text on accent
+       fills. --surface-alpha: how opaque the main panels are (below 1 when a
+       theme background shows through). */
+    --overlay: 255 255 255;
+    --on-accent: 255 255 255;
+    --surface-alpha: 1;
+    --app-font: 'DM Sans';
+    --radius-scale: 1;
+    --theme-glow: 0;
+    --accent-secondary: 255 62 165;
     /* Emix palette: violet-tinted dark surfaces; purple primary, pink and
        electric-blue accents. Upstream Backspace values are in git history. */
     /* ── Matte Surfaces (RGB channels for Tailwind opacity support) ── */
@@ -87,9 +99,9 @@
     --text-danger: 252 165 165;
 
     /* ── Interactive ── */
-    --interactive-hover: rgba(255, 255, 255, 0.06);
-    --interactive-active: rgba(255, 255, 255, 0.12);
-    --interactive-selected: rgba(255, 255, 255, 0.16);
+    --interactive-hover: rgb(var(--overlay) / 0.06);
+    --interactive-active: rgb(var(--overlay) / 0.12);
+    --interactive-selected: rgb(var(--overlay) / 0.16);
     --interactive-muted: 58 58 68;
 
     /* ── Status ── */
@@ -101,8 +113,8 @@
     /* ── Glass Material ── */
     --glass-bg: rgba(20, 20, 26, 0.52);
     --glass-modal-bg: rgba(20, 20, 26, 0.82);
-    --glass-border: rgba(255, 255, 255, 0.07);
-    --glass-highlight: rgba(255, 255, 255, 0.05);
+    --glass-border: rgb(var(--overlay) / 0.07);
+    --glass-highlight: rgb(var(--overlay) / 0.05);
 
     /* ── Notification ── */
     --notification: 253 164 175;
@@ -114,13 +126,13 @@
   }
 
   ::selection {
-    background: rgba(168, 85, 247, 0.35);
+    background: rgb(var(--accent-primary) / 0.35);
     color: rgb(var(--text-primary));
   }
 
   html, body, #root {
     @apply h-full w-full overflow-hidden bg-surface-base text-txt-message;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: var(--app-font), 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -262,13 +274,13 @@
   .glass-pill {
     -webkit-backdrop-filter: blur(12px) saturate(110%);
     backdrop-filter: blur(12px) saturate(110%);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    background: rgb(var(--overlay) / 0.06);
+    border: 1px solid rgb(var(--overlay) / 0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgb(var(--overlay) / 0.03);
   }
   .glass-pill:hover {
-    background: rgba(255, 255, 255, 0.10);
-    border-color: rgba(255, 255, 255, 0.14);
+    background: rgb(var(--overlay) / 0.10);
+    border-color: rgb(var(--overlay) / 0.14);
   }
   .glass-pill-mine {
     background: rgba(64, 214, 255, 0.10);
@@ -394,9 +406,9 @@
     -webkit-backdrop-filter: blur(20px) saturate(120%);
     backdrop-filter: blur(20px) saturate(120%);
     background: var(--glass-bg);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgb(var(--overlay) / 0.05);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      inset 0 1px 0 rgb(var(--overlay) / 0.03),
       2px 0 12px rgba(0, 0, 0, 0.20);
   }
 
@@ -413,7 +425,7 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgb(var(--overlay) / 0.15);
     border-radius: 100px;
   }
 }
@@ -423,8 +435,8 @@
   --em-rgb-background: 20, 20, 26;
   --em-rgb-input: 17, 17, 24;
   --em-rgb-color: 216, 216, 222;
-  --em-color-border: rgba(255, 255, 255, 0.07);
-  --em-color-border-over: rgba(255, 255, 255, 0.12);
+  --em-color-border: rgb(var(--overlay) / 0.07);
+  --em-color-border-over: rgb(var(--overlay) / 0.12);
   --rgb-accent: var(--accent-primary);
   --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   border: none !important;
@@ -507,9 +519,9 @@
 
 .skeleton {
   background: linear-gradient(90deg,
-    rgba(255,255,255,0.04) 0%,
-    rgba(255,255,255,0.08) 40%,
-    rgba(255,255,255,0.04) 80%
+    rgb(var(--overlay) / 0.04) 0%,
+    rgb(var(--overlay) / 0.08) 40%,
+    rgb(var(--overlay) / 0.04) 80%
   );
   background-size: 400px 100%;
   animation: shimmer 1.8s ease-in-out infinite;
@@ -697,3 +709,20 @@
 }
 .emix-gradient-button:hover:not(:disabled) { background-position: 100% 0; }
 .emix-gradient-button:active:not(:disabled) { transform: translateY(1px); }
+
+/* ── Emix themes ─────────────────────────────────────────────────────────
+   Video, screen shares and image viewers sit on dark media whatever the
+   theme, so their overlays and labels stay light. */
+.emx-media { --overlay: 255 255 255; --on-accent: 255 255 255; }
+html[data-theme-mode="light"] { color-scheme: light; }
+html[data-theme-mode="dark"] { color-scheme: dark; }
+/* The theme's background (gradient and/or image) behind every panel. Only
+   painted when a theme has one; panels let it through via --surface-alpha. */
+#emx-theme-bg { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+#emx-theme-bg > div { position: absolute; inset: -40px; background-size: cover; background-position: center; }
+#emx-theme-bg .emx-bg-animated { background-size: 220% 220%; animation: emx-theme-drift 40s ease-in-out infinite alternate; }
+@keyframes emx-theme-drift { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
+@media (prefers-reduced-motion: reduce) { #emx-theme-bg .emx-bg-animated { animation: none; } }
+html[data-emx-motion="off"] #emx-theme-bg .emx-bg-animated { animation: none; }
+/* Accent glow (0 = none): selected rows and primary buttons pick up a soft halo. */
+html[data-theme-glow] .bg-accent-primary { box-shadow: 0 0 calc(var(--theme-glow) * 18px) rgb(var(--accent-primary) / calc(var(--theme-glow) * 0.55)); }

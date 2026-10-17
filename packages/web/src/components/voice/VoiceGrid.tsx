@@ -106,7 +106,7 @@ export function VoiceGrid({ participants }: VoiceGridProps) {
               e.stopPropagation();
               setFocusedParticipant(null);
             }}
-            className="absolute top-4 right-4 z-10 h-7 px-3 bg-black/60 hover:bg-black/80 rounded-lg flex items-center gap-2 text-white/70 hover:text-white transition-colors"
+            className="absolute top-4 right-4 z-10 h-7 px-3 bg-black/60 hover:bg-black/80 rounded-lg flex items-center gap-2 text-white/70 hover:text-on-accent transition-colors"
             title={t('voice:grid.backToGrid')}
           >
             <svg
@@ -129,7 +129,7 @@ export function VoiceGrid({ participants }: VoiceGridProps) {
                 e.stopPropagation();
                 setStripHidden(!stripHidden);
               }}
-              className="px-4 py-1 bg-black/50 hover:bg-black/70 rounded-full flex items-center gap-2 text-white/60 hover:text-white transition-colors text-xs"
+              className="px-4 py-1 bg-black/50 hover:bg-black/70 rounded-full flex items-center gap-2 text-white/60 hover:text-on-accent transition-colors text-xs"
               title={stripHidden ? t('voice:grid.showMembers') : t('voice:grid.hideMembers')}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">

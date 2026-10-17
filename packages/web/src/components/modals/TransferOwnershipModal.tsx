@@ -182,7 +182,7 @@ export function TransferOwnershipModal({ spaceId, onClose }: { spaceId: string; 
               <button
                 onClick={handleTransfer}
                 disabled={transferring}
-                className="flex-1 py-2.5 bg-accent-amber hover:bg-accent-amber/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+                className="flex-1 py-2.5 bg-accent-amber hover:bg-accent-amber/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
               >
                 {transferring ? t('spaces:ownership.transferring') : t('spaces:ownership.confirm')}
               </button>

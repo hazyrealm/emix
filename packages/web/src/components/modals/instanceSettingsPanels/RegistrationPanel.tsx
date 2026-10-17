@@ -308,7 +308,7 @@ function ExpirySelector({ value, customDateTime, onChange, showKeep, disabled }:
             disabled={disabled}
             className={`px-2.5 py-1 text-xs rounded transition-colors disabled:opacity-50 ${
               value === 'keep'
-                ? 'bg-accent-primary text-white'
+                ? 'bg-accent-primary text-on-accent'
                 : 'bg-surface-input text-txt-tertiary hover:text-txt-secondary'
             }`}
           >
@@ -323,7 +323,7 @@ function ExpirySelector({ value, customDateTime, onChange, showKeep, disabled }:
             disabled={disabled}
             className={`px-2.5 py-1 text-xs rounded transition-colors disabled:opacity-50 ${
               value === p.id
-                ? 'bg-accent-primary text-white'
+                ? 'bg-accent-primary text-on-accent'
                 : 'bg-surface-input text-txt-tertiary hover:text-txt-secondary'
             }`}
           >
@@ -574,7 +574,7 @@ function CreateInviteModal({ onClose, onCreated }: CreateInviteModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50"
             >
               {submitting ? t('admin:invites.createModal.submitting') : t('admin:invites.createModal.submit')}
             </button>
@@ -794,7 +794,7 @@ function EditInviteModal({ invite, onClose, onUpdated }: EditInviteModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50"
             >
               {submitting ? t('admin:invites.editModal.submitting') : t('admin:invites.editModal.submit')}
             </button>
@@ -1010,7 +1010,7 @@ function ReinstateInviteModal({ invite, onClose, onReinstated }: ReinstateInvite
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50"
             >
               {submitting
                 ? t('admin:invites.reinstateModal.submitting')
@@ -1675,7 +1675,7 @@ export function RegistrationPanel() {
           <button
             type="button"
             onClick={() => setShowCreate(true)}
-            className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-lg transition-colors"
+            className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-lg transition-colors"
           >
             {t('admin:invites.create')}
           </button>
@@ -1759,7 +1759,7 @@ export function RegistrationPanel() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50"
               >
                 {saving ? t('common:states.saving') : t('common:actions.save')}
               </button>

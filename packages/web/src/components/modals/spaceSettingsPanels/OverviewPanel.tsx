@@ -323,7 +323,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                   <img src={displayIconSrc} alt={t('spaces:settings.overview.iconAlt')} className="w-full h-full object-cover" />
                   {canManageSpace && (
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="w-5 h-5 text-on-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
@@ -332,7 +332,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                 </>
               ) : (
                 <div
-                  className="w-full h-full rounded-full flex items-center justify-center text-white text-xl font-bold"
+                  className="w-full h-full rounded-full flex items-center justify-center text-on-accent text-xl font-bold"
                   style={{ background: getSpaceGradient(space.id, space.name, avatarColorState).gradient }}
                 >
                   {space.name.charAt(0).toUpperCase()}
@@ -340,7 +340,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
               )}
               {uploadingIcon && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-on-accent animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
@@ -412,7 +412,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                   <img src={displayBannerSrc} alt={t('spaces:settings.overview.bannerAlt')} className="w-full h-full object-cover" />
                   {canManageSpace && (
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <svg className="w-5 h-5 text-on-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
@@ -429,7 +429,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
               )}
               {uploadingBanner && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-on-accent animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
@@ -508,7 +508,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                         <button
                           onClick={handleTransfer}
                           disabled={transferring}
-                          className="px-3 py-1.5 bg-accent-amber hover:bg-accent-amber/80 text-white text-sm font-medium rounded transition-colors disabled:opacity-50"
+                          className="px-3 py-1.5 bg-accent-amber hover:bg-accent-amber/80 text-on-accent text-sm font-medium rounded transition-colors disabled:opacity-50"
                         >
                           {transferring ? t('spaces:settings.overview.transfer.transferring') : t('spaces:settings.overview.transfer.confirm')}
                         </button>
@@ -574,7 +574,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                 ) : (
                   <button
                     onClick={() => setShowTransfer(true)}
-                    className="px-4 py-2 bg-accent-amber hover:bg-accent-amber/80 text-white text-sm font-medium rounded transition-colors"
+                    className="px-4 py-2 bg-accent-amber hover:bg-accent-amber/80 text-on-accent text-sm font-medium rounded transition-colors"
                   >
                     {t('spaces:settings.overview.transfer.button')}
                   </button>
@@ -589,7 +589,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                 <p className="text-xs text-txt-tertiary mb-3">{t('spaces:settings.overview.delete.description')}</p>
                 <button
                   onClick={handleDelete}
-                  className="px-4 py-2 bg-accent-rose hover:bg-accent-rose/80 text-white text-sm font-medium rounded transition-colors"
+                  className="px-4 py-2 bg-accent-rose hover:bg-accent-rose/80 text-on-accent text-sm font-medium rounded transition-colors"
                 >
                   {confirmDelete ? t('spaces:settings.overview.delete.confirmAgain') : t('spaces:settings.overview.delete.button')}
                 </button>
@@ -611,7 +611,7 @@ export function OverviewPanel({ spaceId }: OverviewPanelProps) {
                 <button
                   onClick={handleSave}
                   disabled={saving || uploadingIcon || uploadingBanner || !spaceName.trim()}
-                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-full transition-colors disabled:opacity-50"
+                  className="px-3 py-1.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-full transition-colors disabled:opacity-50"
                 >
                   {saving ? t('common:states.saving') : t('common:actions.save')}
                 </button>

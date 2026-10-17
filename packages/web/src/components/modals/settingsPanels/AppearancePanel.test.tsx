@@ -1,5 +1,8 @@
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
+
+// The themes section talks to the account and the gallery; it has its own tests.
+vi.mock('../../themes/ThemesSection', () => ({ ThemesSection: () => <p>ThemesSection stub</p> }));
 import { AppearancePanel } from './AppearancePanel';
 
 afterEach(cleanup);

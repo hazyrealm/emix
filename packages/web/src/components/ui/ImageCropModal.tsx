@@ -142,7 +142,7 @@ export function ImageCropModal({
             type="button"
             onClick={handleApply}
             disabled={isProcessing || !croppedAreaPixels}
-            className="flex-1 py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+            className="flex-1 py-2.5 bg-accent-primary hover:bg-accent-primary/80 text-on-accent text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
           >
             {isProcessing ? t('uploads:crop.applying') : t('common:actions.apply')}
           </button>
