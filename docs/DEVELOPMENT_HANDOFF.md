@@ -1,6 +1,6 @@
 # Emix development handoff
 
-**Last updated: 2026-10-17. State: Emix 1.14.0 is in production. No work is in progress.**
+**Last updated: 2026-10-18. State: Emix 1.14.1 (Phase 0 bug fixes) is in production. The Games Hub (request of 2026-10-18, §5b) is in progress.**
 
 This is the starting point for a new session. It describes what Emix is, how it is built and shipped, what is done, what is open, and what to do next. It was checked against the repository, git history and the running servers on the date above.
 
@@ -149,6 +149,28 @@ The 1.14.0 files are listed below. Paths are relative to `packages/`.
 - GitHub CI passes, including the end-to-end suites.
 
 The manual two-device checklist is in `deploy/HANDOFF.md` → "Emix 1.14.0" → "Manual checks". **The owner has not yet reported results.**
+
+## 5b. Request of 2026-10-18: bug fixes first, then the Games Hub
+
+### Phase 0: bug fixes (Emix 1.14.1, in production since 2026-10-18)
+
+| # | Bug | Status | Root cause, fix and evidence |
+|---|---|---|---|
+| 1 | Themes override profile customizations | **Completed and verified on staging** | **Cause:** `.glass-modal::before` (z-index −1, the theme's panel colour, at least 82 % opaque) was painted over the profile background layers (z-index −2), and the card's text and overlay tokens came from the viewer's theme. Light themes also recoloured names (`brightness(0.68)`) and faded nameplates. **Fix:** a card with its own background gets `emx-surface-own` (`profileSurfaceClass` in `ProfileVisuals.tsx`), which drops the theme layer and sets fixed light-on-dark tokens. Names keep exact colours on light themes (a hairline dark edge only), and decorations use Emix violet, not the viewer's accent. **Evidence:** Playwright, Leo viewing Maya's card on the Default, Arctic (light) and Emerald themes; the background pixel is identical and at full colour. |
+| 2 | Mobile Profile and Customize Profile do nothing | **Completed and verified on staging** | **Cause:** (a) the mobile screen registry had no `settings-profile`, `settings-notifications` or `settings-whatsNew` entries, so those rows pushed nothing; (b) `openModal('userSettings', {tab})` (Customize profile →, Edit bio, and others) targets a modal that is not mounted on mobile. **Fix:** the screens are generated from `MobileSettingsScreen`'s panel table (`MOBILE_SETTINGS_PANELS`), and `uiStore.openModal` pushes `settings-<tab>` on mobile. The You tab gained View Profile and Customize Profile rows. **Evidence:** a Playwright mobile viewport check of all four entry points, no horizontal overflow, and Save tappable. |
+| 3 | Uploaded profile background barely visible | **Completed and verified on staging** | **Cause:** the theme layer above (bug 1), a fixed `0.35→0.72` dark scrim, and an upload default opacity of 80 %. **Fix:** the scrim is now the owner's darkness only, uploads default to 100 % opacity, and the base under the image is neutral, not the theme. **Evidence:** a solid-colour upload renders at its exact colour with darkness 0. |
+| 3b | Background darkness slider | **Completed and verified on staging** | `ProfileBackground.darkness` (0–100, default 15, `PROFILE_BACKGROUND_DARKNESS_DEFAULT`) is set in Settings → Profile → Background. It previews live, is saved with the profile style JSON (no migration), and persists after a reload. The glass text panel is now a real on/off choice (default on when there is a background). |
+| 4 | Webcam blur, bouncing, tint | **Previously fixed (1.14.0); regression-checked** | No new change. On the new build, hovering moves no tile and leaves no opacity or filter on video ancestors. Real two-device sharpness still needs the manual check. |
+| 5 | Camera Effects preview disappears when scrolling | **Previously fixed (1.14.0); regression-checked** | The preview stays inside the menu after scrolling on the new build. The effects code was untouched. |
+
+**Tests:**
+- Web suite 3,328 pass, including the new `utils/profileSurface.test.ts` and `stores/uiStore.mobileSettings.test.ts`.
+- Lint, typecheck and i18n are clean.
+- Staging: `feature_check.py` 28/28, the Phase 0 Playwright script 15/15, and the 1.14 call/UI regression script 13/13.
+
+**Manual checks:**
+1. On a real phone: You → Customize Profile, upload a photo, move the darkness slider, Save, then reopen it.
+2. Switch your app theme while a friend with a custom background is open: their card must not change.
 
 ## 6. Outstanding bugs
 
