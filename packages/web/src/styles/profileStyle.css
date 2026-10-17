@@ -285,3 +285,17 @@ html[data-emx-motion="off"] .emx-fx { display: none; }
 /* A static shimmer would leave its highlight parked mid-name. */
 html[data-emx-motion="off"] .emx-name-shimmer { background-position: 200% 0, 0 0; }
 @media (prefers-reduced-motion: reduce) { .emx-name-shimmer { background-position: 200% 0, 0 0; } }
+
+/* ── Light app themes ──────────────────────────────────────────────────
+   Name colours are chosen against Emix's dark surfaces; on a light theme
+   they are deepened so they stay readable, neon loses its white core, and
+   nameplates step back behind the text. */
+html[data-theme-mode="light"] .emx-name { filter: brightness(0.68) saturate(1.3); }
+html[data-theme-mode="light"] .emx-name-glow { filter: brightness(0.68) saturate(1.3) drop-shadow(0 0 2px var(--glow)); }
+html[data-theme-mode="light"] .emx-name-neon { color: var(--n1); text-shadow: 0 0 5px var(--glow); }
+html[data-theme-mode="light"] .emx-name-shimmer {
+  background-image:
+    linear-gradient(100deg, transparent 35%, rgb(255 255 255 / 0.55) 50%, transparent 65%),
+    linear-gradient(90deg, var(--n1), var(--n2), var(--n3), var(--n4));
+}
+html[data-theme-mode="light"] .emx-plate { opacity: 0.45; }
