@@ -22,13 +22,30 @@ import {
  * neutral (or Reset) removes the processor again. The output canvas keeps
  * the source's resolution and frame rate, so a 4K DSLR feed stays 4K.
  */
+/** Chromium's insertable streams (Chrome, Edge, the Windows app). */
+interface FrameStreamsApi {
+  MediaStreamTrackProcessor: new (init: { track: MediaStreamTrack }) => { readable: ReadableStream<VideoFrame> };
+  MediaStreamTrackGenerator: new (init: { kind: 'video' }) => MediaStreamTrack & { writable: WritableStream<VideoFrame> };
+}
+
+function frameStreams(): FrameStreamsApi | null {
+  const w = window as unknown as Partial<FrameStreamsApi>;
+  return w.MediaStreamTrackProcessor && w.MediaStreamTrackGenerator && typeof VideoFrame !== 'undefined'
+    ? (w as FrameStreamsApi)
+    : null;
+}
+
 export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, VideoProcessorOptions> {
   name = 'emix-camera-effects';
   processedTrack?: MediaStreamTrack;
   private effects: CameraEffects;
-  private video: HTMLVideoElement | null = null;
   private canvas: HTMLCanvasElement | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
+  private soft: { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } | null = null;
+  // Frame-stream mode: stopped by aborting the pipe.
+  private abort: AbortController | null = null;
+  // Fallback mode: a hidden <video> drawn once per frame.
+  private video: HTMLVideoElement | null = null;
   private running = false;
   private frameHandle = 0;
 
@@ -42,21 +59,46 @@ export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, 
 
   async init(opts: VideoProcessorOptions): Promise<void> {
     const settings = opts.track.getSettings();
+    const canvas = document.createElement('canvas');
+    canvas.width = settings.width ?? 1280;
+    canvas.height = settings.height ?? 720;
+    const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+    if (!ctx) throw new Error('2D canvas unavailable');
+    this.canvas = canvas;
+    this.ctx = ctx;
+    this.running = true;
+
+    const streams = frameStreams();
+    if (streams) {
+      // Every camera frame is transformed as it arrives. Unlike a draw loop
+      // this is not paused when the tab is in the background or the window
+      // is minimised, so the video keeps flowing.
+      const source = new streams.MediaStreamTrackProcessor({ track: opts.track });
+      const generator = new streams.MediaStreamTrackGenerator({ kind: 'video' });
+      const abort = new AbortController();
+      const transform = new TransformStream<VideoFrame, VideoFrame>({
+        transform: (frame, controller) => {
+          try {
+            this.drawFrame(frame, frame.displayWidth, frame.displayHeight);
+            controller.enqueue(new VideoFrame(canvas, { timestamp: frame.timestamp }));
+          } finally {
+            frame.close();
+          }
+        },
+      });
+      source.readable.pipeThrough(transform, { signal: abort.signal }).pipeTo(generator.writable, { signal: abort.signal }).catch(() => {});
+      this.abort = abort;
+      this.processedTrack = generator;
+      return;
+    }
+
     const video = document.createElement('video');
     video.muted = true;
     video.playsInline = true;
     video.srcObject = new MediaStream([opts.track]);
     await video.play().catch(() => {});
-    const canvas = document.createElement('canvas');
-    canvas.width = settings.width ?? (video.videoWidth || 1280);
-    canvas.height = settings.height ?? (video.videoHeight || 720);
-    const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
-    if (!ctx) throw new Error('2D canvas unavailable');
     this.video = video;
-    this.canvas = canvas;
-    this.ctx = ctx;
     this.processedTrack = canvas.captureStream(settings.frameRate ?? 30).getVideoTracks()[0];
-    this.running = true;
     this.schedule();
   }
 
@@ -67,6 +109,8 @@ export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, 
 
   async destroy(): Promise<void> {
     this.running = false;
+    this.abort?.abort();
+    this.abort = null;
     if (this.video && 'cancelVideoFrameCallback' in this.video) this.video.cancelVideoFrameCallback(this.frameHandle);
     else cancelAnimationFrame(this.frameHandle);
     this.processedTrack?.stop();
@@ -74,45 +118,68 @@ export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, 
     this.video = null;
     this.canvas = null;
     this.ctx = null;
+    this.soft = null;
+  }
+
+  private softCanvas(w: number, h: number): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } | null {
+    if (!this.soft) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      if (!ctx) return null;
+      this.soft = { canvas, ctx };
+    }
+    if (this.soft.canvas.width !== w || this.soft.canvas.height !== h) { this.soft.canvas.width = w; this.soft.canvas.height = h; }
+    return this.soft;
   }
 
   private schedule(): void {
     const video = this.video;
     if (!this.running || !video) return;
     // Draw once per camera frame where the browser can say when one arrives.
-    if ('requestVideoFrameCallback' in video) this.frameHandle = video.requestVideoFrameCallback(() => this.draw());
-    else this.frameHandle = requestAnimationFrame(() => this.draw());
+    if ('requestVideoFrameCallback' in video) this.frameHandle = video.requestVideoFrameCallback(() => this.tick());
+    else this.frameHandle = requestAnimationFrame(() => this.tick());
   }
 
-  private draw(): void {
-    const { video, canvas, ctx } = this;
-    if (!this.running || !video || !canvas || !ctx) return;
-    const vw = video.videoWidth;
-    const vh = video.videoHeight;
-    if (vw && vh) {
-      if (canvas.width !== vw || canvas.height !== vh) { canvas.width = vw; canvas.height = vh; }
-      const e = this.effects;
-      const scale = e.zoom / 100;
-      const sw = vw / scale;
-      const sh = vh / scale;
-      const sx = (vw - sw) / 2;
-      const sy = (vh - sh) / 2;
-      const colour = effectsColorFilter(e);
-      // What others receive is mirrored only when asked for explicitly.
-      ctx.setTransform(e.mirrorOutgoing ? -1 : 1, 0, 0, 1, e.mirrorOutgoing ? vw : 0, 0);
-      ctx.globalAlpha = 1;
-      ctx.filter = colour;
-      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, vw, vh);
-      const soft = softFocusLayer(e.softFocus, vw);
-      if (soft) {
+  private tick(): void {
+    const video = this.video;
+    if (!this.running || !video) return;
+    if (video.videoWidth && video.videoHeight) this.drawFrame(video, video.videoWidth, video.videoHeight);
+    this.schedule();
+  }
+
+  /** Draw one camera frame with the current effects onto the output canvas. */
+  private drawFrame(source: CanvasImageSource, vw: number, vh: number): void {
+    const { canvas, ctx } = this;
+    if (!this.running || !canvas || !ctx || !vw || !vh) return;
+    if (canvas.width !== vw || canvas.height !== vh) { canvas.width = vw; canvas.height = vh; }
+    const e = this.effects;
+    const scale = e.zoom / 100;
+    const sw = vw / scale;
+    const sh = vh / scale;
+    const sx = (vw - sw) / 2;
+    const sy = (vh - sh) / 2;
+    const colour = effectsColorFilter(e);
+    // What others receive is mirrored only when asked for explicitly.
+    ctx.setTransform(e.mirrorOutgoing ? -1 : 1, 0, 0, 1, e.mirrorOutgoing ? vw : 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.filter = colour;
+    ctx.drawImage(source, sx, sy, sw, sh, 0, 0, vw, vh);
+    const soft = softFocusLayer(e.softFocus, vw);
+    if (soft) {
+      // The glow is blurred at a quarter of the frame size and scaled back
+      // up: it looks the same and costs a fraction of a full-size blur, so
+      // soft focus does not eat the frame rate of a 1080p or 4K camera.
+      const small = this.softCanvas(Math.max(1, Math.round(vw / 4)), Math.max(1, Math.round(vh / 4)));
+      if (small) {
+        small.ctx.filter = `${colour === 'none' ? '' : `${colour} `}blur(${(soft.radius / 4).toFixed(2)}px)`;
+        small.ctx.drawImage(source, sx, sy, sw, sh, 0, 0, small.canvas.width, small.canvas.height);
+        ctx.filter = 'none';
         ctx.globalAlpha = soft.alpha;
-        ctx.filter = `${colour === 'none' ? '' : `${colour} `}blur(${soft.radius.toFixed(1)}px)`;
-        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, vw, vh);
+        ctx.drawImage(small.canvas, 0, 0, vw, vh);
         ctx.globalAlpha = 1;
       }
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
-    this.schedule();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 }
 
