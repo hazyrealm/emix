@@ -315,7 +315,7 @@
     "saturation": "Saturation",
     "softFocus": "Soft focus",
     "zoom": "Zoom",
-    "mirror": "Mirror my preview",
+    "mirror": "Mirror my self-view (only you)",
     "systemBlur": "Background blur (system)",
     "localNote": "Processed on this device.",
     "reset": "Original camera",
@@ -327,7 +327,9 @@
       "vivid": "Vivid",
       "soft": "Soft light",
       "noir": "Noir"
-    }
+    },
+    "mirrorOutgoing": "Mirror my video for others",
+    "mirrorOutgoingNote": "Others will see text on your camera reversed."
   },
   "preview": {
     "title": "Check your camera",

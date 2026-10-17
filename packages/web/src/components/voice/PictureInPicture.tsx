@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useVoiceStore } from '../../stores/voiceStore';
+import { useCameraEffectsStore } from '../../stores/cameraEffectsStore';
 import { useChatStore } from '../../stores/chatStore';
 import { useUIStore } from '../../stores/uiStore';
 import { useSpaceStore } from '../../stores/spaceStore';
@@ -382,6 +383,8 @@ export function PictureInPicture() {
     setPipCollapsed(true);
   }, [setPipCollapsed]);
 
+  const mirrorPreview = useCameraEffectsStore((s) => s.mirrorPreview);
+
   // Compute displayParticipant before early return so hook is called unconditionally
   const displayParticipant = useMemo(
     () => selectedStream?.participant ?? fallbackParticipant,
@@ -425,7 +428,11 @@ export function PictureInPicture() {
           playsInline
           muted
           className="w-full h-full object-cover"
-          style={{ imageRendering: 'auto' }}
+          style={{
+            imageRendering: 'auto',
+            // Only your own camera is mirrored, and only for you; never a screen share.
+            transform: mirrorPreview && selectedStream?.type === 'camera' && displayParticipant?.isLocal ? 'scaleX(-1)' : undefined,
+          }}
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center bg-surface-channel">

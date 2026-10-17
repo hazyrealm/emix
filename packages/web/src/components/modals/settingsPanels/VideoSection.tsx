@@ -4,6 +4,7 @@ import { buildCameraOptions, DEFAULT_CAMERA_CONFIG, isCameraConfig, type CameraC
 import { useTranslation } from 'react-i18next';
 import { Track } from 'livekit-client';
 import { useVoiceStore } from '../../../stores/voiceStore';
+import { useCameraEffectsStore } from '../../../stores/cameraEffectsStore';
 import { getActiveRoom } from '../../../hooks/useLiveKit';
 import { isElectron, getElectronAPI } from '../../../platform/platform';
 
@@ -82,6 +83,7 @@ export function VideoSection() {
   const { t } = useTranslation('settings');
   const cameraDeviceId = useVoiceStore((s) => s.cameraDeviceId);
   const cameraConfig = useVoiceStore((s) => s.cameraConfig);
+  const mirrorPreview = useCameraEffectsStore((s) => s.mirrorPreview);
   const setCameraDeviceId = useVoiceStore((s) => s.setCameraDeviceId);
   const isCameraOn = useVoiceStore((s) => s.isCameraOn);
 
@@ -530,7 +532,7 @@ export function VideoSection() {
             playsInline
             autoPlay
             className={`w-full h-full object-cover ${isDormant ? 'invisible' : ''}`}
-            style={{ transform: 'scaleX(-1)' }}
+            style={{ transform: mirrorPreview ? 'scaleX(-1)' : undefined }}
           />
           {isDormant && (
             <button

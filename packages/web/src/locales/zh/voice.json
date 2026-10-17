@@ -313,7 +313,7 @@
     "saturation": "饱和度",
     "softFocus": "柔焦",
     "zoom": "缩放",
-    "mirror": "镜像我的预览",
+    "mirror": "镜像我的自视画面（仅自己可见）",
     "systemBlur": "背景虚化（系统）",
     "localNote": "在此设备上处理。",
     "reset": "原始画面",
@@ -325,7 +325,9 @@
       "vivid": "鲜艳",
       "soft": "柔光",
       "noir": "黑色电影"
-    }
+    },
+    "mirrorOutgoing": "为他人镜像我的视频",
+    "mirrorOutgoingNote": "其他人看到你画面中的文字会是反的。"
   },
   "preview": {
     "title": "检查你的摄像头",

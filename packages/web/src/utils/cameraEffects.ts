@@ -1,16 +1,19 @@
 import { Track, type LocalVideoTrack, type TrackProcessor, type VideoProcessorOptions } from 'livekit-client';
 import { getActiveRoom, refreshVoiceParticipants } from '../hooks/useLiveKit';
 import { useVoiceStore } from '../stores/voiceStore';
+import { useEffect, useState } from 'react';
 import {
   effectsActive,
-  effectsFilter,
+  effectsColorFilter,
+  softFocusLayer,
   useCameraEffectsStore,
   type CameraEffects,
 } from '../stores/cameraEffectsStore';
 
 /**
  * Camera effects, processed locally in the browser: brightness, contrast,
- * saturation, colour filters, soft focus and a centred digital zoom, drawn
+ * saturation, colour filters, soft focus, a centred digital zoom and the
+ * optional outgoing mirror, drawn
  * frame by frame onto a canvas whose stream replaces the outgoing camera.
  * Nothing leaves the device except the resulting video.
  *
@@ -19,7 +22,7 @@ import {
  * neutral (or Reset) removes the processor again. The output canvas keeps
  * the source's resolution and frame rate, so a 4K DSLR feed stays 4K.
  */
-class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, VideoProcessorOptions> {
+export class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, VideoProcessorOptions> {
   name = 'emix-camera-effects';
   processedTrack?: MediaStreamTrack;
   private effects: CameraEffects;
@@ -88,11 +91,26 @@ class CameraEffectsProcessor implements TrackProcessor<Track.Kind.Video, VideoPr
     const vh = video.videoHeight;
     if (vw && vh) {
       if (canvas.width !== vw || canvas.height !== vh) { canvas.width = vw; canvas.height = vh; }
-      const scale = this.effects.zoom / 100;
+      const e = this.effects;
+      const scale = e.zoom / 100;
       const sw = vw / scale;
       const sh = vh / scale;
-      ctx.filter = effectsFilter(this.effects);
-      ctx.drawImage(video, (vw - sw) / 2, (vh - sh) / 2, sw, sh, 0, 0, vw, vh);
+      const sx = (vw - sw) / 2;
+      const sy = (vh - sh) / 2;
+      const colour = effectsColorFilter(e);
+      // What others receive is mirrored only when asked for explicitly.
+      ctx.setTransform(e.mirrorOutgoing ? -1 : 1, 0, 0, 1, e.mirrorOutgoing ? vw : 0, 0);
+      ctx.globalAlpha = 1;
+      ctx.filter = colour;
+      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, vw, vh);
+      const soft = softFocusLayer(e.softFocus, vw);
+      if (soft) {
+        ctx.globalAlpha = soft.alpha;
+        ctx.filter = `${colour === 'none' ? '' : `${colour} `}blur(${soft.radius.toFixed(1)}px)`;
+        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, vw, vh);
+        ctx.globalAlpha = 1;
+      }
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
     this.schedule();
   }
@@ -118,6 +136,42 @@ export async function applySystemBlur(track: MediaStreamTrack | null | undefined
   } catch (err) {
     console.warn('[cameraEffects] background blur not applied:', err);
   }
+}
+
+/**
+ * A processor for a camera that is about to be created, or undefined when
+ * every effect is neutral. Passed as the capture `processor`, so the very
+ * first frame others receive already carries the effects; LiveKit keeps it
+ * across camera switches (`restartTrack` restarts the processor).
+ */
+export function cameraProcessorForCapture(): CameraEffectsProcessor | undefined {
+  const { effects } = useCameraEffectsStore.getState();
+  return effectsActive(effects) ? new CameraEffectsProcessor(effects) : undefined;
+}
+
+/**
+ * `track` as it will look with the current effects, drawn by the same
+ * processor the call uses, so a preview shows exactly what will be sent.
+ * Returns `track` itself while every effect is neutral.
+ */
+export function useEffectsPreview(track: MediaStreamTrack | null): MediaStreamTrack | null {
+  const effects = useCameraEffectsStore((s) => s.effects);
+  const active = effectsActive(effects);
+  const [processor, setProcessor] = useState<CameraEffectsProcessor | null>(null);
+
+  useEffect(() => {
+    if (!track || !active) { setProcessor(null); return; }
+    const proc = new CameraEffectsProcessor(useCameraEffectsStore.getState().effects);
+    let cancelled = false;
+    proc.init({ kind: Track.Kind.Video, track })
+      .then(() => { if (cancelled) void proc.destroy(); else setProcessor(proc); })
+      .catch(() => { void proc.destroy(); });
+    return () => { cancelled = true; setProcessor(null); void proc.destroy(); };
+  }, [track, active]);
+
+  useEffect(() => { processor?.setEffects(effects); }, [processor, effects]);
+
+  return active ? processor?.processedTrack ?? null : track;
 }
 
 let syncing: Promise<void> = Promise.resolve();
@@ -161,9 +215,11 @@ export function installCameraEffectsSync(): void {
   installed = true;
   useCameraEffectsStore.subscribe((s, prev) => { if (s.effects !== prev.effects) void syncCameraEffects(); });
   useVoiceStore.subscribe((s, prev) => {
-    if (s.isCameraOn && !prev.isCameraOn) {
-      // The publication lands just after the flag flips.
-      setTimeout(() => void syncCameraEffects(), 300);
-    }
+    // A camera turned on (its processor came with it; this covers the system
+    // blur) or switched to another device (the blur constraint belongs to the
+    // old device's track).
+    const turnedOn = s.isCameraOn && !prev.isCameraOn;
+    const switched = s.isCameraOn && s.cameraDeviceId !== prev.cameraDeviceId;
+    if (turnedOn || switched) setTimeout(() => void syncCameraEffects(), turnedOn ? 300 : 1200);
   });
 }

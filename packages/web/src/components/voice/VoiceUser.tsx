@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ProfileAvatar } from '../ui/ProfileAvatar';
 import { useVoiceStore } from '../../stores/voiceStore';
+import { useCameraEffectsStore } from '../../stores/cameraEffectsStore';
 import { useContextMenuStore, type ContextMenuItem } from '../../stores/contextMenuStore';
 import { buildVoiceModMenuItems, VolumeSliderItem } from './voiceMenuItems';
 import { useSpaceStore } from '../../stores/spaceStore';
@@ -34,6 +35,8 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
   const [, forceUpdate] = useState(0);
 
   const isLocal = participant.isLocal;
+  // Your own camera tile follows "Mirror my self-view"; others' tiles never flip.
+  const mirrorSelf = useCameraEffectsStore((s) => s.mirrorPreview) && isLocal;
   const avatarUserId = participant.homeUserId ?? participant.userId;
   const { displayName, avatar, user, origin: userOrigin } = useVoiceParticipantMeta(participant);
 
@@ -158,6 +161,7 @@ export function VoiceUser({ tile, large }: VoiceUserProps) {
           playsInline
           muted={isLocal}
           className={`w-full h-full ${large ? 'object-contain bg-black' : 'object-cover'}`}
+          style={mirrorSelf ? { transform: 'scaleX(-1)' } : undefined}
         />
       ) : (
         <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-surface-channel">

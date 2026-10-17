@@ -2,6 +2,7 @@ import type { VideoCaptureOptions } from 'livekit-client';
 import { useVoiceStore, type ActiveDmCall } from '../stores/voiceStore';
 import { useUIStore } from '../stores/uiStore';
 import { getActiveRoom } from '../hooks/useLiveKit';
+import { cameraProcessorForCapture } from './cameraEffects';
 import { wsSend } from '../hooks/useWebSocket';
 import { getChannelOrigin, getMyUserIdForOrigin, useSpaceStore } from '../stores/spaceStore';
 import { broadcastVoiceStatus, broadcastDeafenViaLiveKit, preArmMicrophone } from './voice';
@@ -99,6 +100,9 @@ export async function handleCameraAction(): Promise<void> {
       const camera = buildCameraOptions(isCameraConfig(cameraConfig) ? cameraConfig : DEFAULT_CAMERA_CONFIG);
       const captureOpts: VideoCaptureOptions = { ...camera.capture };
       if (cameraDeviceId) captureOpts.deviceId = cameraDeviceId;
+      // Camera effects are part of the capture, so the first frame sent has them.
+      const processor = cameraProcessorForCapture();
+      if (processor) captureOpts.processor = processor;
       await room.localParticipant.setCameraEnabled(true, captureOpts, camera.publish);
     } else {
       // Mark this disable as intentional so the track-`ended` handler skips

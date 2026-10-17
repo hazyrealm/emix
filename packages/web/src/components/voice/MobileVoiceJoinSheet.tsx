@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { useVoiceStore } from '../../stores/voiceStore';
+import { useCameraEffectsStore } from '../../stores/cameraEffectsStore';
 import { useSpaceStore } from '../../stores/spaceStore';
 import { useDragToClose } from '../../hooks/useDragToClose';
 import { VoiceUserRow } from './VoiceUserRow';
@@ -34,6 +35,7 @@ export function MobileVoiceJoinSheet({
   onClose,
   onJoin,
 }: MobileVoiceJoinSheetProps) {
+  const mirrorPreview = useCameraEffectsStore((s) => s.mirrorPreview);
   const { t } = useTranslation(['voice', 'common']);
   const [preMuted, setPreMuted] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -455,7 +457,7 @@ export function MobileVoiceJoinSheet({
               playsInline
               autoPlay
               className={`w-full h-full object-cover ${previewActive && !previewError ? '' : 'invisible'}`}
-              style={{ transform: 'scaleX(-1)' }}
+              style={{ transform: mirrorPreview ? 'scaleX(-1)' : undefined }}
             />
 
             {/* Dormant / prompt state — tap to enable */}

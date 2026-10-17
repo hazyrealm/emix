@@ -315,7 +315,7 @@
     "saturation": "Sättigung",
     "softFocus": "Weichzeichner",
     "zoom": "Zoom",
-    "mirror": "Meine Vorschau spiegeln",
+    "mirror": "Eigenes Bild spiegeln (nur für dich)",
     "systemBlur": "Hintergrundunschärfe (System)",
     "localNote": "Wird auf diesem Gerät verarbeitet.",
     "reset": "Originalkamera",
@@ -327,7 +327,9 @@
       "vivid": "Lebendig",
       "soft": "Weiches Licht",
       "noir": "Noir"
-    }
+    },
+    "mirrorOutgoing": "Mein Video für andere spiegeln",
+    "mirrorOutgoingNote": "Andere sehen Text in deinem Kamerabild spiegelverkehrt."
   },
   "preview": {
     "title": "Kamera prüfen",

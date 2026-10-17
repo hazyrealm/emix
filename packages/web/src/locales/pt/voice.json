@@ -317,7 +317,7 @@
     "saturation": "Saturação",
     "softFocus": "Foco suave",
     "zoom": "Zoom",
-    "mirror": "Espelhar a minha pré-visualização",
+    "mirror": "Espelhar minha visualização (só para você)",
     "systemBlur": "Desfoque de fundo (sistema)",
     "localNote": "Processado neste dispositivo.",
     "reset": "Câmera original",
@@ -329,7 +329,9 @@
       "vivid": "Vívido",
       "soft": "Luz suave",
       "noir": "Noir"
-    }
+    },
+    "mirrorOutgoing": "Espelhar meu vídeo para os outros",
+    "mirrorOutgoingNote": "Os outros verão o texto da sua câmera invertido."
   },
   "preview": {
     "title": "Verifique a sua câmera",

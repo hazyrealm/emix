@@ -9,11 +9,10 @@ import { getActiveRoom } from '../../hooks/useLiveKit';
 import { AudioManager } from '../../audio/AudioManager';
 import { buildCameraOptions, DEFAULT_CAMERA_CONFIG, isCameraConfig } from '../../utils/cameraQuality';
 import { handleCameraAction } from '../../utils/voiceActions';
-import { applySystemBlur, systemBlurSupported } from '../../utils/cameraEffects';
+import { applySystemBlur, systemBlurSupported, useEffectsPreview } from '../../utils/cameraEffects';
 import {
   CAMERA_FILTERS,
   effectsActive,
-  effectsFilter,
   useCameraEffectsStore,
 } from '../../stores/cameraEffectsStore';
 import { Toggle } from '../ui/Toggle';
@@ -45,6 +44,11 @@ function liveCameraTrack(): MediaStreamTrack | null {
   return processed?.readyState === 'live' ? processed : track.mediaStreamTrack ?? null;
 }
 
+/** The device track behind the live camera (a processed track carries no device id or capabilities). */
+function liveSourceTrack(): MediaStreamTrack | null {
+  return getActiveRoom()?.localParticipant.getTrackPublication(Track.Source.Camera)?.track?.mediaStreamTrack ?? null;
+}
+
 function liveMicTrack(): MediaStreamTrack | null {
   const track = getActiveRoom()?.localParticipant.getTrackPublication(Track.Source.Microphone)?.track;
   const mt = track?.mediaStreamTrack;
@@ -54,43 +58,41 @@ function liveMicTrack(): MediaStreamTrack | null {
 /**
  * A local camera preview. Shows the live outgoing camera when it is on (no
  * second capture); otherwise opens the chosen device for this preview only
- * and releases it on unmount. Nothing here is sent anywhere.
+ * and releases it on unmount. Effects are drawn by the same processor the
+ * call uses (`useEffectsPreview`), so the preview is what others will see.
+ * "Mirror my self-view" flips only this element. Nothing here is sent anywhere.
  */
-export function CameraPreview({ deviceId, className = '', withEffects = true, onTrack }: {
+export function CameraPreview({ deviceId, className = '', onTrack }: {
   deviceId: string | null;
   className?: string;
-  /** Draw the effects with CSS (only needed when no processor runs, i.e. before broadcasting). */
-  withEffects?: boolean;
+  /** The camera's own (unprocessed) track, for its device id and capabilities. */
   onTrack?: (track: MediaStreamTrack | null) => void;
 }) {
   const { t } = useTranslation(['voice']);
   const videoRef = useRef<HTMLVideoElement>(null);
   const isCameraOn = useVoiceStore((s) => s.isCameraOn);
-  // The local tile's track: the processed one while effects run, so this
-  // preview follows the effects as they start and stop.
+  // The local tile's track: the processed one while effects run.
   const localVideo = useVoiceStore((s) => s.participants.find((p) => p.isLocal)?.videoTrack ?? null);
   const cameraConfig = useVoiceStore((s) => s.cameraConfig);
-  const effects = useCameraEffectsStore((s) => s.effects);
   const mirror = useCameraEffectsStore((s) => s.mirrorPreview);
-  const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [ownTrack, setOwnTrack] = useState<MediaStreamTrack | null>(null);
+  const [failed, setFailed] = useState(false);
   const onTrackRef = useRef(onTrack);
   onTrackRef.current = onTrack;
 
+  // The call's own camera, when one is really live. A flag alone is not
+  // enough: without a live track the device is opened for the preview.
+  const liveCandidate = isCameraOn ? (localVideo ?? liveCameraTrack()) : null;
+  const live = liveCandidate?.readyState === 'live' ? liveCandidate : null;
+
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    // The call's own camera, when one is really live. A flag alone is not
-    // enough: without a live track the device is opened for the preview.
-    const live = isCameraOn ? (localVideo ?? liveCameraTrack()) : null;
-    if (live && live.readyState === 'live') {
-      video.srcObject = new MediaStream([live]);
-      setState('ready');
-      onTrackRef.current?.(live);
-      return () => { video.srcObject = null; };
+    if (live) {
+      onTrackRef.current?.(liveSourceTrack());
+      return;
     }
     let stream: MediaStream | null = null;
     let cancelled = false;
-    setState('loading');
+    setFailed(false);
     const camera = buildCameraOptions(isCameraConfig(cameraConfig) ? cameraConfig : DEFAULT_CAMERA_CONFIG);
     const { width, height, frameRate } = camera.capture.resolution ?? {};
     navigator.mediaDevices.getUserMedia({
@@ -104,24 +106,29 @@ export function CameraPreview({ deviceId, className = '', withEffects = true, on
     }).then((s) => {
       if (cancelled) { s.getTracks().forEach((tr) => tr.stop()); return; }
       stream = s;
-      video.srcObject = s;
-      setState('ready');
-      onTrackRef.current?.(s.getVideoTracks()[0] ?? null);
-    }).catch(() => { if (!cancelled) { setState('error'); onTrackRef.current?.(null); } });
+      const track = s.getVideoTracks()[0] ?? null;
+      setOwnTrack(track);
+      onTrackRef.current?.(track);
+    }).catch(() => { if (!cancelled) { setFailed(true); onTrackRef.current?.(null); } });
     return () => {
       cancelled = true;
       stream?.getTracks().forEach((tr) => tr.stop());
-      video.srcObject = null;
+      setOwnTrack(null);
       onTrackRef.current?.(null);
     };
-    // A live camera's preview follows its track: a hot-swap or a processor
-    // change brings a new one.
-  }, [deviceId, isCameraOn, cameraConfig, localVideo]);
+  }, [deviceId, live, cameraConfig]);
 
-  // A live camera already carries its processed effects; a pre-call preview draws them with CSS.
-  const showingLive = isCameraOn && !!(localVideo ?? liveCameraTrack());
-  const cssEffects = withEffects && !showingLive && effectsActive(effects);
-  const transforms = [mirror ? 'scaleX(-1)' : '', cssEffects && effects.zoom !== 100 ? `scale(${effects.zoom / 100})` : ''].filter(Boolean).join(' ');
+  const processed = useEffectsPreview(live ? null : ownTrack);
+  const shown = live ?? processed;
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.srcObject = shown ? new MediaStream([shown]) : null;
+    return () => { video.srcObject = null; };
+  }, [shown]);
+
+  const state: 'loading' | 'ready' | 'error' = shown ? 'ready' : failed ? 'error' : 'loading';
 
   return (
     <div className={`relative overflow-hidden rounded-lg bg-black ${className}`}>
@@ -131,7 +138,7 @@ export function CameraPreview({ deviceId, className = '', withEffects = true, on
         playsInline
         muted
         className="w-full h-full object-cover"
-        style={{ transform: transforms || undefined, filter: cssEffects ? effectsFilter(effects) : undefined }}
+        style={{ transform: mirror ? 'scaleX(-1)' : undefined }}
       />
       {state !== 'ready' && (
         <div className="absolute inset-0 flex items-center justify-center text-xs text-txt-tertiary text-center px-4">
@@ -242,6 +249,13 @@ export function CameraEffectsControls({ track }: { track?: MediaStreamTrack | nu
       <div className="flex items-center justify-between text-[11px] text-txt-secondary">
         <span>{t('voice:effects.mirror')}</span>
         <Toggle enabled={mirror} onChange={setMirror} ariaLabel={t('voice:effects.mirror')} />
+      </div>
+      <div>
+        <div className="flex items-center justify-between text-[11px] text-txt-secondary">
+          <span>{t('voice:effects.mirrorOutgoing')}</span>
+          <Toggle enabled={effects.mirrorOutgoing} onChange={(v) => setEffects({ mirrorOutgoing: v })} ariaLabel={t('voice:effects.mirrorOutgoing')} />
+        </div>
+        {effects.mirrorOutgoing && <p className="text-[10px] text-accent-amber mt-0.5">{t('voice:effects.mirrorOutgoingNote')}</p>}
       </div>
       {blurSupported && (
         <div className="flex items-center justify-between text-[11px] text-txt-secondary">
