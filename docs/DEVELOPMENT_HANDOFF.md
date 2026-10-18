@@ -1,6 +1,6 @@
 # Emix development handoff
 
-**Last updated: 2026-10-18. State: Emix 1.14.1 (Phase 0 bug fixes) is in production. The Games Hub (request of 2026-10-18, §5b) is in progress.**
+**Last updated: 2026-10-18. State: Emix 1.15.0 (Phase 0 bug fixes plus the Games Hub) is in production on `emix:b7150ed46499`. No work is in progress.**
 
 This is the starting point for a new session. It describes what Emix is, how it is built and shipped, what is done, what is open, and what to do next. It was checked against the repository, git history and the running servers on the date above.
 
@@ -27,7 +27,7 @@ Related documents (read as needed):
   - everything free (no paywalls)
   - a polished UI
 - **Current state:**
-  - Version 1.14.0 runs on staging and production, both on image `emix:1c3ab67c0ad7`.
+  - Version 1.15.0 runs on staging and production, both on image `emix:b7150ed46499`.
   - Production has 3 user accounts.
   - The working tree is clean, `main` is pushed, and CI, CodeQL and Security pass on `a354a05d`.
 
@@ -77,6 +77,7 @@ Related documents (read as needed):
   - `0032_emix_profile_changelog`: `users.profile_style` and the What's New acknowledgment.
   - `0033_emix_themes`: `users.app_theme`, plus the `themes` and `theme_likes` tables.
   - `0034_emix_username_ringtones`: `users.username_changed_at`, `users.ringtone_settings`, and the `ringtones` table (cascades with its owner).
+  - `0035_emix_games`: `game_sessions`, `game_results`, `game_daily`, and `users.show_game_stats` (default 1).
 - **How to create one.** Run `npx drizzle-kit generate --name emix_<topic>` in `packages/server`, inside the dev container (see §5). Keep migrations additive.
 
 ## 3. Completed features (implemented, deployed, verified by automated checks)
@@ -98,6 +99,8 @@ Each release's design notes are in `deploy/HANDOFF.md`.
   - app themes: 12 built-ins, an editor, share links and cards, the community gallery, `.emixtheme` import/export
   - account sync and an emergency reset (Ctrl+Shift+Alt+T, `?resetTheme`)
 - **1.14.0:** all eight items in §5 below.
+- **1.14.1:** Phase 0 profile and mobile fixes (§5b).
+- **1.15.0:** the Games hub, Play Together and twelve games plus Daily Word (§5b; spec in `docs/systems/games.md`).
 
 ## 4. Recent changes (git)
 
@@ -172,9 +175,49 @@ The manual two-device checklist is in `deploy/HANDOFF.md` → "Emix 1.14.0" → 
 1. On a real phone: You → Customize Profile, upload a photo, move the darkness slider, Save, then reopen it.
 2. Switch your app theme while a friend with a custom background is open: their card must not change.
 
+### Phases 1–12: Games Hub (Emix 1.15.0, in production since 2026-10-18)
+
+The full design and contract is in `docs/systems/games.md`.
+
+| Phase | Status | Evidence |
+|---|---|---|
+| 1 Games hub (cards, art, categories, player counts, recently played, invitations, your games, loading and error states, responsive) | **Completed** | `/games` on desktop and You → Games on phones. Browser check: 12 cards, no overflow at 390 px. |
+| 2 Play Together in calls | **Completed; needs a real two-device check** | Gamepad button in the desktop and mobile call bars. The call's people are pre-invited. The game shows in the call view beside the camera tiles, the tiles are not recreated, the call survives leaving the game, and mute, camera and hang-up stay in the game header. From a DM: a gamepad button in the DM header. |
+| 3 Tic-Tac-Toe, Connect Four, Rock Paper Scissors | **Completed** | Rules tests. A full Connect Four game played through the UI by two accounts, with the same result for both, then a rematch. The RPS pick stays hidden (API check). |
+| 4 Chess, Checkers, Battleship, Memory Match | **Completed** | Rules tests (mate, castling, en passant, promotion, flag, draw offers; forced and multi-jump captures; hidden fleets; memory turn flow). A first move through each board in the browser. Chess clock and match history (SAN list) included. |
+| 5 Daily Word, Word Race, Hangman, Word Duel | **Completed** | Same daily word for everyone, 00:00 UTC reset, streaks, distribution, spoiler-free share, colour-blind palette, on-screen and physical keyboard. Rules tests and browser checks. |
+| 6 Trivia Battle, Sketch & Guess | **Completed** | 132 original questions. Drawing strokes reach the other player (browser pixel check). Hints, scoring and leaderboard. |
+| 7 Invitations and private lobbies | **Completed** | Only friends, shared-DM people or call members can be invited (API check). No duplicate invites, 10-minute expiry, DND silences popups and sounds (unit test). Leave, reconnect (90 s grace), abandonment forfeit, idle close. |
+| 8 Real-time architecture | **Completed** | The server holds all rules and hidden state; moves are sequence-checked; there are timers; sessions are persisted and restored after a restart (tests). |
+| 9 Statistics on profiles | **Completed** | Totals, per game, favourite, recent matches and the Daily Word streak. A Games tab on profiles, hideable from the hub. Personal profile styling is untouched. |
+| 10 Game audio | **Completed** | 7 original sounds on the speaker bus with their own volume and mute (unit test). DND silences invites. Ringtones untouched. |
+| 11 Mobile, Windows, performance | **Completed; needs manual checks** | Responsive boards, touch drawing (`touch-none` canvas), no new dependencies on the client (chess.js and word-list are server only), rate limits on moves. Windows loads the web app, so no installer change was needed. |
+| 12 Tests and deployment | **Completed** | See below. |
+
+**Tests:**
+- Server: 41 game tests (rules for every game, sessions, daily) plus the existing suites.
+- Web: 3,332 tests, including `gameStore.test.ts`.
+- Staging API checks (`feature_check.py`): 45/45, of which 11 are games.
+- Browser checks on staging: 12/12 for game flows, 9/9 per board, 13/13 for the 1.14 call regression and 15/15 for Phase 0.
+
+**Manual checks (two real devices):**
+1. In a video call, press Play Together, start Chess, and play a few moves. Cameras keep running beside the board, the other person stays audible, and hanging up from the game header ends the call.
+2. On a phone, accept an invite from the popup, play Connect Four, minimize with the dock pill, then restore.
+3. In Sketch & Guess, draw with a finger on a phone and check that the other device sees it as you draw.
+4. Set yourself to DND, receive an invitation, and confirm there is no popup or sound, and that it is waiting in the Games hub.
+5. In the Windows app, open Games and play one match.
+
 ## 6. Outstanding bugs
 
-**Confirmed open bugs: none known.** No bug report is open after 1.14.0.
+**Confirmed open bugs: none known** after 1.15.0. The one bug found while testing games (the last player to leave was not told the session closed) was fixed before release.
+
+**Games: known limitations (by design or not yet built):**
+- Word, daily and trivia content is English only; the UI says so in every language.
+- Games work only between accounts on this instance (no federation).
+- No spectators, and nobody can join a match already in progress (they join the lobby for the next one).
+- Chess pieces are Unicode glyphs, so their look depends on the device's fonts.
+- On phones, a call's game opens full screen over the call view (with mute, camera and hang-up in its header), not split with the tiles.
+- Sketch & Guess strokes of the drawing in progress are kept in memory, so a server restart mid-drawing loses them. The game itself resumes.
 
 **Hypotheses and unverified risks:**
 - The hover and softness fix relies on Chrome compositor behaviour (`opacity: 0.999` keeps video off the hardware overlay path). This is inferred from Chromium's behaviour and the symptoms. It is not confirmed on the owner's GPU and display. If softness remains with no hover, look at overlay promotion and the GPU driver before touching the WebRTC settings.
@@ -212,7 +255,7 @@ The manual two-device checklist is in `deploy/HANDOFF.md` → "Emix 1.14.0" → 
    - macOS and Linux desktop builds
    - a screen-share auto-watch option
 
-**Version note.** `packages/desktop/package.json` is already `1.14.0` (from `scripts/bump-version.mjs`), but no `v1.14.0` tag exists. Pushing a `v1.14.0` tag would build a 1.14.0 installer draft. That is optional, because Electron code did not change.
+**Version note.** `packages/desktop/package.json` is already `1.15.0` (from `scripts/bump-version.mjs`), but no `v1.14.x` or `v1.15.0` tag exists. Electron code did not change, so the installed app already gets every feature from the server. A tag is optional.
 
 ## 8. Important decisions (keep following them)
 
@@ -299,9 +342,19 @@ deploy/scripts/emixctl status
 
 ## 12. Exact next steps for the next session
 
-1. Read this file and the top section of `CLAUDE.md`. Run `git -C /opt/emix status` and `deploy/scripts/emixctl status`, and confirm prod and staging still run `emix:1c3ab67c0ad7` (or note what changed).
-2. Ask the owner for the results of the 1.14 manual checklist (`deploy/HANDOFF.md` → "Emix 1.14.0" → "Manual checks"). **Fix any reported regressions first**, starting with call video (P1) and noise suppression (P4). Those are the two areas automated tests could not judge.
+1. Read this file and the top section of `CLAUDE.md`. Run `git -C /opt/emix status` and `deploy/scripts/emixctl status`, and confirm prod and staging still run `emix:b7150ed46499` (or note what changed).
+2. Ask the owner for the results of the manual checks:
+   - Phase 0 (§5b): a real phone, and a friend's profile under several themes
+   - Games (§5b): two real devices in a video call, mobile drawing, and the Windows app
+   - the older 1.14 checklist (`deploy/HANDOFF.md`)
+
+   Fix any reported regressions first.
 3. Help with the Windows `v1.13.0` publish when the owner has tested it, then run `emixctl set-desktop-release 1.13.0`.
 4. Settle the registration discrepancy (item 5 in §7) and correct the wrong document.
-5. Otherwise wait for the owner's next feature request, and start it with an audit (decision 1 in §8).
-6. After any release, update this file (status, image tag, next steps) and add a section to `deploy/HANDOFF.md`.
+5. **Games follow-ups, if the owner wants them:**
+   - spectators
+   - localized word lists and trivia
+   - a split in-call layout on phones
+   - more games, following "Adding a game" in `docs/systems/games.md`
+6. Otherwise wait for the owner's next feature request, and start it with an audit (decision 1 in §8).
+7. After any release, update this file (status, image tag, next steps) and add a section to `deploy/HANDOFF.md`.

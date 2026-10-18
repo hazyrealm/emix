@@ -18,7 +18,7 @@ Day-to-day operations are in [README.md](README.md).
 | Backups | restic repository at `/var/backups/emix-restic` (local disk only, see "Not done") |
 | Ops tool | `deploy/scripts/emixctl` (build, deploy staging, promote, rollback, status, snapshot, landing, set-desktop-release) |
 
-Production and staging both run image `emix:1c3ab67c0ad7` (Emix 1.14.0). Releases
+Production and staging both run image `emix:b7150ed46499` (Emix 1.15.0). Releases
 are described newest first below. The current state and next steps are in
 [docs/DEVELOPMENT_HANDOFF.md](../docs/DEVELOPMENT_HANDOFF.md).
 
@@ -179,6 +179,17 @@ real networks cannot show real quality.
   preview → Edit → Upload an image, and upload
   `.github/assets/social-preview.png` (1280×640).
 - Private vulnerability reporting is enabled (Security → Advisories).
+
+## Emix 1.15.0: Games hub and Play Together (2026-10-18)
+
+- 12 multiplayer games plus Daily Word, private lobbies and Play Together in calls. The design is in `docs/systems/games.md`; status, tests and manual checks are in `docs/DEVELOPMENT_HANDOFF.md` §5b.
+- Migration `0035_emix_games` (additive). A restic backup and the pre-migration snapshot were taken before the promote. All 3 production accounts are intact.
+- New server dependencies: `chess.js` 1.4.0 (BSD-2-Clause) and `word-list` 4.1.0 (MIT).
+- No Windows installer change (Electron untouched).
+
+## Emix 1.14.1: profiles on every theme, mobile profile buttons (2026-10-18)
+
+- Profile cards with their own background are no longer covered or tinted by the viewer's theme. Uploaded backgrounds show clearly, with a darkness slider. Mobile Profile and Customize Profile work. Details are in `docs/DEVELOPMENT_HANDOFF.md` §5b.
 
 ## Emix 1.14.0: calls, ringtones, usernames, presence
 
