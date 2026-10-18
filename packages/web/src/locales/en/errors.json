@@ -234,5 +234,16 @@
   "username_change_unavailable": "This account's username can't be changed here.",
   "ringtone_invalid_audio": "Upload an MP3, WAV or OGG audio file of at most {{max}} MB.",
   "ringtone_limit_reached": "You can keep up to {{max}} ringtones. Delete one to upload another.",
-  "ringtone_not_found": "That ringtone no longer exists."
+  "ringtone_not_found": "That ringtone no longer exists.",
+  "game_not_found": "That game has ended or no longer exists.",
+  "game_forbidden": "You're not part of this game.",
+  "game_illegal_move": "That move isn't allowed.",
+  "game_stale": "The game moved on. You are seeing the latest position.",
+  "game_not_your_turn": "It's not your turn.",
+  "game_full": "This game is full.",
+  "game_not_enough_players": "More players need to join first.",
+  "game_wrong_state": "That isn't possible right now in this game.",
+  "game_unknown_word": "That word isn't in the dictionary.",
+  "game_invite_unreachable": "You can only invite friends, people you share a conversation with, or people in your call.",
+  "game_limit_reached": "You have too many games open. Finish or leave one first."
 }

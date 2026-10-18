@@ -36,6 +36,8 @@ export const users = sqliteTable('users', {
   usernameChangedAt: integer('username_changed_at'),
   /** Call sound preferences (`RingtoneSettings` JSON); null = defaults. */
   ringtoneSettings: text('ringtone_settings'),
+  /** Emix: show game statistics on the profile (1) or keep them private (0). */
+  showGameStats: integer('show_game_stats').notNull().default(1),
   isDeleted: integer('is_deleted').default(0),
   discoverable: integer('discoverable').default(1),
   profileUpdatedAt: integer('profile_updated_at'),
@@ -861,4 +863,51 @@ export const themeLikes = sqliteTable('theme_likes', {
   createdAt: integer('created_at').notNull(),
 }, (table) => ({
   pk: primaryKey({ columns: [table.themeId, table.userId] }),
+}));
+
+/**
+ * Emix games: one row per session (a lobby and the matches played in it).
+ * Live sessions are restored from here after a restart; `state` is the
+ * server-only rules state (hidden information included) and never leaves the
+ * server as-is.
+ */
+export const gameSessions = sqliteTable('game_sessions', {
+  id: text('id').primaryKey(),
+  gameId: text('game_id').notNull(),
+  hostId: text('host_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  context: text('context').notNull(),
+  status: text('status').notNull(),
+  /** JSON: players, invited, options, rules state, result, series, rematch votes. */
+  data: text('data').notNull(),
+  seq: integer('seq').notNull(),
+  createdAt: integer('created_at').notNull(),
+  updatedAt: integer('updated_at').notNull(),
+}, (table) => ({
+  statusIdx: index('idx_game_sessions_status').on(table.status),
+}));
+
+/** Emix games: one row per player per finished match, for statistics and history. */
+export const gameResults = sqliteTable('game_results', {
+  id: text('id').primaryKey(),
+  sessionId: text('session_id').notNull(),
+  gameId: text('game_id').notNull(),
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  outcome: text('outcome').notNull(),
+  /** JSON array of the other players' ids. */
+  opponents: text('opponents').notNull(),
+  finishedAt: integer('finished_at').notNull(),
+}, (table) => ({
+  userIdx: index('idx_game_results_user').on(table.userId, table.finishedAt),
+}));
+
+/** Emix games: each player's daily word puzzle. */
+export const gameDaily = sqliteTable('game_daily', {
+  userId: text('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  day: text('day').notNull(),
+  /** JSON array of guessed words. */
+  guesses: text('guesses').notNull(),
+  status: text('status').notNull(),
+  updatedAt: integer('updated_at').notNull(),
+}, (table) => ({
+  pk: primaryKey({ columns: [table.userId, table.day] }),
 }));

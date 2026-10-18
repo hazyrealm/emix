@@ -1,6 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { and, asc, count, eq, isNull } from 'drizzle-orm';
-import { alias } from 'drizzle-orm/sqlite-core';
+import { and, asc, count, eq } from 'drizzle-orm';
 import { execFile as execFileCb } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
@@ -16,6 +15,7 @@ import { sendError } from '../utils/httpErrors.js';
 import { generateSnowflake } from '../utils/snowflake.js';
 import { createFixedWindowLimit } from '../utils/fixedWindowLimit.js';
 import { ringtoneDir, ringtoneFile } from '../utils/ringtoneStorage.js';
+import { canReach } from '../utils/reachability.js';
 
 const execFile = promisify(execFileCb);
 
@@ -95,29 +95,10 @@ function normalizeName(raw: unknown): string | null {
   return name || null;
 }
 
-/**
- * Whether `viewerId` may hear `ownerId`'s shared ringtone: only people who can
- * call them (a friend, or someone in a conversation with them).
- */
-export function canReachForRingtone(viewerId: string, ownerId: string): boolean {
-  if (viewerId === ownerId) return true;
-  const db = getDb();
-  const friend = db.select({ id: schema.friends.userId }).from(schema.friends)
-    .where(and(eq(schema.friends.userId, viewerId), eq(schema.friends.friendId, ownerId))).get();
-  if (friend) return true;
-  const other = alias(schema.dmMembers, 'other');
-  const shared = db.select({ id: schema.dmMembers.dmChannelId }).from(schema.dmMembers)
-    .innerJoin(other, eq(other.dmChannelId, schema.dmMembers.dmChannelId))
-    .innerJoin(schema.dmChannels, eq(schema.dmChannels.id, schema.dmMembers.dmChannelId))
-    .where(and(eq(schema.dmMembers.userId, viewerId), eq(other.userId, ownerId), isNull(schema.dmChannels.deletedAt)))
-    .get();
-  return !!shared;
-}
-
 /** The ringtone `ownerId` shares, if sharing is on and the viewer may hear it. */
 function sharedFor(viewerId: string, ownerId: string): SharedRingtoneInfo['ringtone'] {
   const settings = settingsOf(ownerId);
-  if (!settings.shareEnabled || !settings.shared || !canReachForRingtone(viewerId, ownerId)) return null;
+  if (!settings.shareEnabled || !settings.shared || !canReach(viewerId, ownerId)) return null;
   if (settings.shared.kind === 'builtin') return { kind: 'builtin', id: settings.shared.id };
   const sharedId = settings.shared.id;
   const row = getDb().select().from(schema.ringtones)

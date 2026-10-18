@@ -284,6 +284,18 @@ export const ERROR_CODES = [
   'ringtone_invalid_audio',
   'ringtone_limit_reached',
   'ringtone_not_found',
+  // Emix: games
+  'game_not_found',
+  'game_forbidden',
+  'game_illegal_move',
+  'game_stale',
+  'game_not_your_turn',
+  'game_full',
+  'game_not_enough_players',
+  'game_wrong_state',
+  'game_unknown_word',
+  'game_invite_unreachable',
+  'game_limit_reached',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

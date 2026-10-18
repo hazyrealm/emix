@@ -14,6 +14,7 @@ import {
   toggleMuteFromControl,
 } from '../../utils/voiceActions';
 import { VoiceGrid } from '../voice/VoiceGrid';
+import { GamepadIcon, openPlayTogether } from '../games/GameHost';
 import { deriveGridTiles } from '../../hooks/useLiveKit';
 import { requestMicPermission } from '../../utils/voice';
 
@@ -32,7 +33,7 @@ import { requestMicPermission } from '../../utils/voice';
  * "render-everything-then-let-the-user-pick" pattern.
  */
 export function MobileVoiceFullScreen() {
-  const { t } = useTranslation(['voice', 'common']);
+  const { t } = useTranslation(['voice', 'common', 'games']);
   const popMobileScreen = useUIStore((s) => s.popMobileScreen);
   const pushMobileScreen = useUIStore((s) => s.pushMobileScreen);
 
@@ -380,9 +381,18 @@ export function MobileVoiceFullScreen() {
 
       {/* Control bar */}
       <div
-        className="glass-bubble mx-2 mb-2 rounded-2xl flex items-center justify-center gap-4 px-4 py-3 shrink-0"
+        className="glass-bubble mx-2 mb-2 rounded-2xl flex items-center justify-center gap-2.5 min-[400px]:gap-4 px-3 py-3 shrink-0"
         style={{ marginBottom: 'calc(0.5rem + var(--safe-bottom))' }}
       >
+        {/* Play Together */}
+        <button
+          onClick={openPlayTogether}
+          className="w-12 h-12 rounded-full flex items-center justify-center transition-colors bg-surface-elevated text-txt-primary hover:bg-interactive-hover"
+          aria-label={t('games:nav.playTogether')}
+        >
+          <GamepadIcon />
+        </button>
+
         {/* Mute */}
         <button
           onClick={toggleMuteFromControl}

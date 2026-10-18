@@ -3,6 +3,7 @@ import type { ChangelogResponse, ChangelogStateResponse } from '@backspace/share
 import type { AppThemeSelection, ThemeData, ThemeRecord } from '@backspace/shared/src/theme';
 import type { UsernameCheck, UsernameStatus } from '@backspace/shared/src/username';
 import type { RingtoneRecord, RingtoneSettings, SharedRingtoneInfo } from '@backspace/shared/src/ringtones';
+import type { DailyWordState, DrawingStroke, GameContext, GameId, GameMove, GameOptions, GameSessionView, GameStats } from '@backspace/shared/src/games';
 import { isErrorCode, type ErrorCode, type ErrorDetails } from '@backspace/shared/src/errors';
 import type {
   NotificationSetting,
@@ -389,6 +390,25 @@ export class BackspaceApiClient {
     settings: () => Promise<{ settings: RingtoneSettings }>;
     saveSettings: (settings: RingtoneSettings) => Promise<{ settings: RingtoneSettings }>;
     sharedBy: (userId: string) => Promise<SharedRingtoneInfo>;
+  };
+
+  readonly games: {
+    sessions: () => Promise<{ sessions: GameSessionView[] }>;
+    create: (input: { gameId: GameId; options?: GameOptions; context?: GameContext | { kind: 'voice' }; invite: string[] }) => Promise<{ session: GameSessionView }>;
+    get: (id: string) => Promise<{ session: GameSessionView }>;
+    canvas: (id: string) => Promise<{ strokes: DrawingStroke[] }>;
+    invite: (id: string, userIds: string[]) => Promise<{ session: GameSessionView | null }>;
+    accept: (id: string) => Promise<{ session: GameSessionView | null }>;
+    decline: (id: string) => Promise<{ session: GameSessionView | null }>;
+    leave: (id: string) => Promise<{ session: GameSessionView | null }>;
+    start: (id: string) => Promise<{ session: GameSessionView | null }>;
+    rematch: (id: string) => Promise<{ session: GameSessionView | null }>;
+    changeGame: (id: string, gameId: GameId, options?: GameOptions) => Promise<{ session: GameSessionView | null }>;
+    move: (id: string, move: GameMove, seq?: number) => Promise<{ session: GameSessionView | null }>;
+    daily: () => Promise<{ daily: DailyWordState }>;
+    dailyGuess: (word: string) => Promise<{ daily: DailyWordState }>;
+    stats: (userId: string) => Promise<{ stats: GameStats | null }>;
+    setStatsVisible: (visible: boolean) => Promise<{ visible: boolean }>;
   };
 
   readonly changelog: {
@@ -852,6 +872,27 @@ export class BackspaceApiClient {
       settings: () => request('GET', '/users/@me/ringtone-settings'),
       saveSettings: (settings) => request('PUT', '/users/@me/ringtone-settings', { settings }),
       sharedBy: (userId) => request('GET', `/users/${encodeURIComponent(userId)}/shared-ringtone`),
+    };
+
+    const game = (id: string, action: string, body: Record<string, unknown> = {}) =>
+      request<{ session: GameSessionView | null }>('POST', `/games/sessions/${encodeURIComponent(id)}/${action}`, body);
+    this.games = {
+      sessions: () => request('GET', '/games/sessions'),
+      create: (input) => request('POST', '/games/sessions', input),
+      get: (id) => request('GET', `/games/sessions/${encodeURIComponent(id)}`),
+      canvas: (id) => request('GET', `/games/sessions/${encodeURIComponent(id)}/canvas`),
+      invite: (id, userIds) => game(id, 'invite', { userIds }),
+      accept: (id) => game(id, 'accept'),
+      decline: (id) => game(id, 'decline'),
+      leave: (id) => game(id, 'leave'),
+      start: (id) => game(id, 'start'),
+      rematch: (id) => game(id, 'rematch'),
+      changeGame: (id, gameId, options) => game(id, 'game', { gameId, options }),
+      move: (id, move, seq) => game(id, 'move', seq === undefined ? { move } : { move, seq }),
+      daily: () => request('GET', '/games/daily'),
+      dailyGuess: (word) => request('POST', '/games/daily/guess', { word }),
+      stats: (userId) => request('GET', `/games/stats/${encodeURIComponent(userId)}`),
+      setStatsVisible: (visible) => request('PUT', '/games/stats/visibility', { visible }),
     };
 
     this.changelog = {

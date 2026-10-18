@@ -234,5 +234,16 @@
   "username_change_unavailable": "O nome de usuário desta conta não pode ser alterado aqui.",
   "ringtone_invalid_audio": "Envie um arquivo de áudio MP3, WAV ou OGG de no máximo {{max}} MB.",
   "ringtone_limit_reached": "Você pode manter até {{max}} toques. Exclua um para enviar outro.",
-  "ringtone_not_found": "Esse toque não existe mais."
+  "ringtone_not_found": "Esse toque não existe mais.",
+  "game_not_found": "Esse jogo terminou ou não existe mais.",
+  "game_forbidden": "Você não faz parte deste jogo.",
+  "game_illegal_move": "Esse lance não é permitido.",
+  "game_stale": "O jogo avançou. Você está vendo a posição atual.",
+  "game_not_your_turn": "Não é a sua vez.",
+  "game_full": "Este jogo está cheio.",
+  "game_not_enough_players": "Mais jogadores precisam entrar primeiro.",
+  "game_wrong_state": "Isso não é possível agora neste jogo.",
+  "game_unknown_word": "Essa palavra não está no dicionário.",
+  "game_invite_unreachable": "Você só pode convidar amigos, pessoas de uma conversa em comum ou pessoas da sua chamada.",
+  "game_limit_reached": "Você tem jogos demais abertos. Termine ou saia de um primeiro."
 }

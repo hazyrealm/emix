@@ -2,6 +2,7 @@ import { normalizeProfileStyle } from '@backspace/shared/src/profileStyle.js';
 import crypto from 'crypto';
 import fs from 'node:fs';
 import { ringtoneFile } from './ringtoneStorage.js';
+import { runAccountDeletedHooks } from './deletionHooks.js';
 import { eq, or, and, inArray, isNotNull } from 'drizzle-orm';
 import { getDb, schema } from '../db/index.js';
 import { forgetReplicaProjection } from '../ws/replicaPresence.js';
@@ -275,6 +276,9 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
     tx.delete(schema.themes).where(eq(schema.themes.ownerId, uid)).run();
     // Uploaded ringtones too (their files are removed after the transaction).
     tx.delete(schema.ringtones).where(eq(schema.ringtones.ownerId, uid)).run();
+    // Game history and daily puzzles; open game sessions are left after the transaction.
+    tx.delete(schema.gameResults).where(eq(schema.gameResults.userId, uid)).run();
+    tx.delete(schema.gameDaily).where(eq(schema.gameDaily.userId, uid)).run();
 
     // Tombstone user row — rename username to free it for reuse
     tx.update(schema.users).set({
@@ -302,6 +306,7 @@ export function tombstoneUser(uid: string, options?: TombstoneOptions): string[]
   for (const id of ringtoneIds) {
     try { fs.rmSync(ringtoneFile(id), { force: true }); } catch (e) { console.warn('[userDeletion] ringtone file removal failed', e); }
   }
+  runAccountDeletedHooks(uid);
 
   return filesToDelete;
 }

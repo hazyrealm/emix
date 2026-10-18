@@ -234,5 +234,16 @@
   "username_change_unavailable": "无法在此更改该账户的用户名。",
   "ringtone_invalid_audio": "请上传不超过 {{max}} MB 的 MP3、WAV 或 OGG 音频文件。",
   "ringtone_limit_reached": "最多可保存 {{max}} 个铃声。请删除一个后再上传。",
-  "ringtone_not_found": "该铃声已不存在。"
+  "ringtone_not_found": "该铃声已不存在。",
+  "game_not_found": "该游戏已结束或不存在。",
+  "game_forbidden": "你不在这个游戏中。",
+  "game_illegal_move": "不允许这样走。",
+  "game_stale": "游戏已经继续了，你看到的是最新局面。",
+  "game_not_your_turn": "还没轮到你。",
+  "game_full": "这个游戏已满。",
+  "game_not_enough_players": "需要先有更多玩家加入。",
+  "game_wrong_state": "现在在这个游戏里无法这样做。",
+  "game_unknown_word": "词典里没有这个单词。",
+  "game_invite_unreachable": "你只能邀请好友、有共同对话的人或通话中的人。",
+  "game_limit_reached": "你打开的游戏太多了，请先结束或离开一个。"
 }

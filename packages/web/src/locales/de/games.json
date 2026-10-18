@@ -1,0 +1,418 @@
+{
+  "nav": {
+    "label": "Spiele",
+    "playTogether": "Zusammen spielen",
+    "playInDm": "Ein Spiel spielen"
+  },
+  "common": {
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "loading": "Wird geladen…",
+    "loadFailed": "Konnte nicht geladen werden.",
+    "retry": "Erneut versuchen",
+    "saveFailed": "Konnte nicht gespeichert werden. Versuch es noch einmal."
+  },
+  "hub": {
+    "title": "Spiele",
+    "subtitle": "Kostenlose Spiele mit Freunden: im Anruf, im Chat oder allein.",
+    "startGame": "Spiel starten",
+    "invites": "Einladungen",
+    "yourGames": "Deine Spiele",
+    "recent": "Zuletzt gespielt",
+    "allGames": "Alle Spiele",
+    "categoriesLabel": "Kategorien",
+    "categories": {
+      "all": "Alle",
+      "classic": "Klassiker",
+      "strategy": "Strategie",
+      "word": "Wortspiele",
+      "party": "Party"
+    },
+    "playersExact_one": "{{count}} Spieler",
+    "playersExact_other": "{{count}} Spieler",
+    "playersRange": "{{min}}–{{max}} Spieler",
+    "minutes_one": "~{{count}} Min.",
+    "minutes_other": "~{{count}} Min.",
+    "play": "Spielen",
+    "open": "Öffnen",
+    "back": "Zurück zu den Spielen",
+    "invitedYou": "hat dich eingeladen",
+    "waitingForPlayers": "Warten auf Mitspieler",
+    "status": {
+      "invited": "Einladung",
+      "lobby": "in der Lobby",
+      "playing": "läuft",
+      "finished": "Partie vorbei"
+    },
+    "free": "Jedes Spiel ist kostenlos. Keine Käufe, keine Wetten, keine Werbung."
+  },
+  "catalog": {
+    "tictactoe": {
+      "name": "Tic-Tac-Toe",
+      "blurb": "Drei in einer Reihe gewinnt.",
+      "rules": "Setzt abwechselnd euer Zeichen. Wer zuerst drei in einer Reihe hat (waagerecht, senkrecht oder diagonal), gewinnt. Ein volles Feld ohne Reihe ist ein Unentschieden. Wer beginnt, wechselt jede Partie."
+    },
+    "connect4": {
+      "name": "Vier gewinnt",
+      "blurb": "Scheiben werfen, vier in eine Reihe.",
+      "rules": "Werft abwechselnd eine Scheibe in eine der sieben Spalten; sie fällt auf den tiefsten freien Platz. Vier eigene Scheiben in einer Reihe (waagerecht, senkrecht oder diagonal) gewinnen. Ein volles Brett ist ein Unentschieden."
+    },
+    "rps": {
+      "name": "Schere, Stein, Papier",
+      "blurb": "Verdeckte Wahl, Best of 3 oder 5.",
+      "rules": "Beide wählen gleichzeitig; keiner sieht die Wahl des anderen, bevor beide gewählt haben. Stein schlägt Schere, Schere schlägt Papier, Papier schlägt Stein. Wer nicht innerhalb von 30 Sekunden wählt, verliert die Runde. Wer die Mehrheit der Runden gewinnt, gewinnt die Partie."
+    },
+    "chess": {
+      "name": "Schach",
+      "blurb": "Der Klassiker, mit Uhr nach Wahl.",
+      "rules": "Normale Schachregeln mit Rochade, En passant und Umwandlung. Schachmatt gewinnt. Patt, ungenügendes Material, dreifache Stellungswiederholung und die 50-Züge-Regel sind remis; du kannst Remis anbieten oder aufgeben. Mit Uhr verliert, wer keine Zeit mehr hat. Die Farben wechseln jede Partie."
+    },
+    "checkers": {
+      "name": "Dame",
+      "blurb": "Amerikanische Regeln, Schlagzwang.",
+      "rules": "Amerikanisches Dame auf einem 8×8-Brett. Steine ziehen ein Feld diagonal vorwärts, Damen ein Feld diagonal in jede Richtung. Es besteht Schlagzwang, und ein Schlag geht weiter, solange derselbe Stein noch springen kann; welche Schlagfolge du nimmst, ist dir überlassen. Ein Stein, der die gegnerische Grundreihe erreicht, wird zur Dame, und der Zug endet. Wer nicht ziehen kann, verliert; 40 Züge je Spieler ohne Schlagen oder Umwandlung sind remis."
+    },
+    "battleship": {
+      "name": "Schiffe versenken",
+      "blurb": "Flotte verstecken, ihre versenken.",
+      "rules": "Platziere deine fünf Schiffe (5, 4, 3, 3 und 2 Felder) verdeckt; Schiffe dürfen sich berühren, aber nicht überlappen. Dann schießt ihr abwechselnd auf das andere Feld. Wer alle gegnerischen Schiffe versenkt, gewinnt. Dein Gegner sieht ein Schiff von dir erst, wenn es versenkt ist."
+    },
+    "memory": {
+      "name": "Memory",
+      "blurb": "Karten aufdecken, Paare finden.",
+      "rules": "Decke in deinem Zug zwei Karten auf. Ein Paar bringt einen Punkt und du bist noch einmal dran; sonst bleiben beide kurz sichtbar und der andere ist dran. Wer die meisten Paare hat, gewinnt."
+    },
+    "wordrace": {
+      "name": "Wortrennen",
+      "blurb": "Dasselbe Wort, wer ist schneller?",
+      "rules": "Beide suchen dasselbe Wort mit fünf Buchstaben, mit je sechs Versuchen. Grün: richtiger Buchstabe an der richtigen Stelle. Gelb: im Wort, aber an anderer Stelle. Vom Gegner siehst du nur, wie viele Versuche er gemacht hat. Wer es zuerst löst, gewinnt; löst es niemand, ist es unentschieden. Die Wörter sind englisch."
+    },
+    "hangman": {
+      "name": "Galgenmännchen",
+      "blurb": "Das Wort Buchstabe für Buchstabe erraten.",
+      "rules": "Ein Spieler wählt ein Wort (oder ein zufälliges); der andere rät Buchstaben oder das ganze Wort. Nach sechs Fehlern gewinnt, wer das Wort gewählt hat. Die Rollen wechseln jede Partie. Die Wörter sind englisch."
+    },
+    "wordduel": {
+      "name": "Wortduell",
+      "blurb": "Eine Wortkette mit Punkten.",
+      "rules": "Das erste Wort beginnt mit einem zufälligen Buchstaben; jedes weitere Wort muss mit dem letzten Buchstaben des vorigen beginnen. Wörter brauchen mindestens drei Buchstaben und dürfen sich nicht wiederholen. Jedes Wort bringt einen Punkt pro Buchstabe, +1 für jedes K, V, W oder Y und +3 für jedes J, Q, X oder Z. Jeder hat 8 Züge à 30 Sekunden; die höhere Summe gewinnt. Die Wörter sind englisch."
+    },
+    "trivia": {
+      "name": "Quizduell",
+      "blurb": "Schnelle Fragen für 2–8 Spieler.",
+      "rules": "Alle beantworten dieselbe Frage innerhalb von 20 Sekunden. Eine richtige Antwort bringt 500 Punkte und bis zu 500 weitere für Schnelligkeit. Nach der letzten Frage gewinnt die höchste Punktzahl. Die Fragen sind englisch."
+    },
+    "drawing": {
+      "name": "Zeichnen & Raten",
+      "blurb": "Einer zeichnet, alle raten.",
+      "rules": "In jeder Runde zeichnet jeder einmal. Wer zeichnet, wählt eines von drei Wörtern und zeichnet es; die anderen tippen ihre Tipps. Richtig raten bringt 100 Punkte plus bis zu 200 für Schnelligkeit, und der Zeichner bekommt 50 für jeden richtigen Tipp. Mit ablaufender Zeit werden Buchstaben aufgedeckt. Am Ende gewinnt die höchste Punktzahl. Die Wörter sind englisch."
+    }
+  },
+  "options": {
+    "bestOf": "Partielänge",
+    "bestOfN_one": "Best of {{count}}",
+    "bestOfN_other": "Best of {{count}}",
+    "clock": "Uhr",
+    "noClock": "Ohne Uhr",
+    "cards": "Karten",
+    "cardsN_one": "{{count}} Karte",
+    "cardsN_other": "{{count}} Karten",
+    "timer": "Zeitlimit",
+    "noTimer": "Ohne Zeitlimit",
+    "minutes_one": "{{count}} Minute",
+    "minutes_other": "{{count}} Minuten",
+    "category": "Kategorie",
+    "questions": "Fragen",
+    "rounds": "Runden",
+    "drawTime": "Zeichenzeit",
+    "seconds_one": "{{count}} Sekunde",
+    "seconds_other": "{{count}} Sekunden",
+    "trivia": {
+      "mixed": "Gemischt",
+      "science": "Wissenschaft",
+      "geography": "Geografie",
+      "history": "Geschichte",
+      "nature": "Natur",
+      "arts": "Kunst & Bücher",
+      "sports": "Sport"
+    }
+  },
+  "new": {
+    "title": "Spiel starten",
+    "pickGame": "Spiel auswählen",
+    "invite": "Einladen",
+    "inviteHint": "Nur wen du einlädst, kann beitreten. Du kannst Freunde einladen, Leute aus einer gemeinsamen Unterhaltung oder Leute aus deinem Anruf.",
+    "search": "Freunde suchen",
+    "inCall": "In deinem Anruf",
+    "noFriends": "Noch keine Freunde zum Einladen.",
+    "noMatches": "Niemand passt dazu.",
+    "selected_one": "{{count}} von {{max}} eingeladen",
+    "selected_other": "{{count}} von {{max}} eingeladen",
+    "tooMany": "In diesem Spiel ist Platz für {{max}} weitere Spieler.",
+    "create": "Lobby erstellen",
+    "creating": "Wird erstellt…"
+  },
+  "lobby": {
+    "players_one": "Spieler ({{count}}/{{max}})",
+    "players_other": "Spieler ({{count}}/{{max}})",
+    "host": "Gastgeber",
+    "invited": "eingeladen",
+    "inviteMore": "Weitere Leute einladen",
+    "sendInvites": "Einladungen senden",
+    "changeGame": "Anderes Spiel wählen",
+    "useGame": "Dieses Spiel nehmen",
+    "needPlayers_one": "Warten auf {{count}} weiteren Spieler",
+    "needPlayers_other": "Warten auf {{count}} weitere Spieler",
+    "ready": "Alle sind da. Starte, wenn du bereit bist.",
+    "waitingHost": "Warten, bis der Gastgeber startet:",
+    "start": "Spiel starten"
+  },
+  "window": {
+    "yourTurn": "Du bist dran",
+    "waitingFor": "Warten auf",
+    "away": "abwesend",
+    "minimize": "Minimieren",
+    "restore": "Spiel anzeigen",
+    "leave": "Verlassen",
+    "leaveConfirm": "Dieses Spiel verlassen?",
+    "leaveForfeit": "Wenn du jetzt gehst, gibst du die Partie auf.",
+    "howToPlay": "Spielregeln",
+    "secondsShort": "{{seconds}} s",
+    "timeLeft": "Noch {{seconds}} Sekunden",
+    "draws_one": "{{count}} Remis",
+    "draws_other": "{{count}} Remis"
+  },
+  "result": {
+    "youWin": "Du gewinnst!",
+    "youLose": "Du verlierst",
+    "draw": "Unentschieden",
+    "tied": "Gemeinsam auf Platz eins",
+    "over": "Partie vorbei",
+    "winner": "Gewinner:",
+    "sharedBy": "Geteilt zwischen",
+    "reasons": {
+      "resigned": "durch Aufgabe",
+      "timeout": "Zeit abgelaufen",
+      "abandoned": "ein Spieler ist gegangen",
+      "agreed": "Remis vereinbart",
+      "stalemate": "Patt",
+      "repetition": "dreifache Wiederholung",
+      "fifty": "zu lange kein Fortschritt",
+      "material": "zu wenig Material zum Gewinnen",
+      "flag": "auf Zeit"
+    },
+    "rematch": "Revanche",
+    "rematchWaiting": "Warten auf die anderen…",
+    "rematchVotes_one": "{{count}} von {{total}} wollen eine Revanche",
+    "rematchVotes_other": "{{count}} von {{total}} wollen eine Revanche",
+    "anotherGame": "Anderes Spiel"
+  },
+  "invite": {
+    "title": "Spieleinladung",
+    "invitedYou": "hat dich zu {{game}} eingeladen",
+    "accept": "Beitreten",
+    "decline": "Ablehnen",
+    "later": "Später",
+    "notificationTitle": "Spieleinladung",
+    "notificationBody": "Du bist zu {{game}} eingeladen"
+  },
+  "board": {
+    "cell": "Zeile {{row}}, Spalte {{col}}: {{value}}",
+    "empty": "leer",
+    "dropColumn": "In Spalte {{col}} werfen",
+    "offerDraw": "Remis anbieten",
+    "drawOffered": "Remis angeboten",
+    "acceptDraw": "Remis annehmen",
+    "declineDraw": "Ablehnen",
+    "resign": "Aufgeben",
+    "leaderboard": "Punkte",
+    "rps": {
+      "round": "Runde {{round}} · Best of {{bestOf}}",
+      "rock": "Stein",
+      "paper": "Papier",
+      "scissors": "Schere",
+      "choose": "Triff deine Wahl",
+      "waiting": "Warten auf deinen Gegner…",
+      "opponentReady": "Dein Gegner hat gewählt.",
+      "revealing": "Wird aufgedeckt…",
+      "tie": "Gleichstand",
+      "roundWon": "Runde gewonnen",
+      "roundLost": "Runde verloren",
+      "noChoice": "keine Wahl"
+    },
+    "memory": {
+      "hidden": "Karte {{n}}, verdeckt",
+      "shown": "Karte {{n}}: Symbol {{face}}"
+    },
+    "chess": {
+      "white": "Weiß",
+      "black": "Schwarz",
+      "check": "Schach!",
+      "promote": "Umwandeln in",
+      "moves": "Züge",
+      "noMoves": "Noch keine Züge.",
+      "pieces": {
+        "k": "König",
+        "q": "Dame",
+        "r": "Turm",
+        "b": "Läufer",
+        "n": "Springer",
+        "p": "Bauer"
+      }
+    },
+    "checkers": {
+      "mustCapture": "Du musst schlagen",
+      "yours": "deine",
+      "theirs": "gegnerische",
+      "king": "Dame",
+      "quiet_one": "{{count}} Zug ohne Schlagen",
+      "quiet_other": "{{count}} Züge ohne Schlagen"
+    },
+    "battleship": {
+      "place": "Platziere deine Flotte",
+      "placeHint": "Wähle für jedes Schiff ein Feld, das längste zuerst. Klicke ein platziertes Schiff an, um es zu entfernen.",
+      "horizontal": "Waagerecht",
+      "vertical": "Senkrecht",
+      "random": "Zufällig",
+      "clear": "Leeren",
+      "ready": "Bereit",
+      "next": "Nächstes Schiff: {{len}} Felder",
+      "allPlaced": "Alle Schiffe platziert.",
+      "waitingPlacement": "Warten, bis dein Gegner seine Flotte platziert hat…",
+      "yourWaters": "Deine Gewässer",
+      "enemyWaters": "Feindliche Gewässer",
+      "sunkCount": "Versenkt: {{mine}}/{{total}} gegnerische · {{theirs}}/{{total}} eigene"
+    },
+    "word": {
+      "enter": "Eingabe",
+      "backspace": "Löschen",
+      "keyboard": "Tastatur",
+      "solved": "Gelöst!",
+      "outOfGuesses": "Keine Versuche mehr",
+      "answerWas": "Das Wort war",
+      "guessesMade_one": "{{count}} Versuch",
+      "guessesMade_other": "{{count}} Versuche",
+      "marks": {
+        "correct": "an der richtigen Stelle",
+        "present": "im Wort",
+        "absent": "nicht im Wort"
+      }
+    },
+    "hangman": {
+      "chooseWord": "Wähle ein Wort für deinen Gegner",
+      "wordPlaceholder": "Dein geheimes Wort",
+      "wordHint": "4 bis 12 Buchstaben, ein echtes englisches Wort.",
+      "useWord": "Dieses Wort nehmen",
+      "randomWord": "Zufälliges Wort",
+      "choosing": "wählt ein Wort…",
+      "youSet": "Du hast das Wort gewählt. Schau beim Raten zu.",
+      "theySet": "hat das Wort gewählt.",
+      "pattern": "Das Wort bisher",
+      "misses": "Fehler: {{misses}}/{{max}}",
+      "solvePlaceholder": "Kennst du das Wort?",
+      "solve": "Wort raten"
+    },
+    "duel": {
+      "you": "Du",
+      "turnsLeft_one": "noch {{count}} Zug",
+      "turnsLeft_other": "noch {{count}} Züge",
+      "startWith": "Das nächste Wort beginnt mit",
+      "placeholder": "Ein Wort mit {{letter}}",
+      "play": "Legen",
+      "rejected": {
+        "not_a_word": "nicht im Wörterbuch",
+        "wrong_letter": "beginnt mit dem falschen Buchstaben",
+        "used": "schon gespielt",
+        "too_short": "braucht mindestens 3 Buchstaben"
+      }
+    },
+    "trivia": {
+      "question": "Frage {{n}} von {{total}}",
+      "pick": "Wähle eine Antwort.",
+      "answered_one": "{{count}} von {{total}} haben geantwortet",
+      "answered_other": "{{count}} von {{total}} haben geantwortet",
+      "correct": "richtige Antwort",
+      "youGotIt": "Richtig! +{{points}}",
+      "missed": "Diesmal nicht."
+    },
+    "drawing": {
+      "round": "Runde {{round}}/{{rounds}}",
+      "isDrawing": "zeichnet",
+      "pickWord": "Wähle ein Wort zum Zeichnen",
+      "choosing": "wählt ein Wort…",
+      "wordWas": "Das Wort war",
+      "hint": "{{letters}} Zeichen",
+      "canvas": "Zeichnung",
+      "color": "Farbe",
+      "sizeN": "Pinsel {{size}} px",
+      "size": "Pinselgröße",
+      "eraser": "Radierer",
+      "undo": "Rückgängig",
+      "clear": "Leeren",
+      "guesses": "Tipps",
+      "guessedIt": "hat es erraten!",
+      "close": "Fast!",
+      "youGotIt": "Richtig! Warte auf die anderen.",
+      "guessPlaceholder": "Dein Tipp",
+      "send": "Raten"
+    }
+  },
+  "daily": {
+    "title": "Tageswort #{{number}}",
+    "cardTitle": "Tageswort",
+    "cardSubtitle": "Jeden Tag ein neues Wort mit fünf Buchstaben, für alle dasselbe (auf Englisch).",
+    "cardStreak_one": "Aktuelle Serie: {{count}} Tag",
+    "cardStreak_other": "Aktuelle Serie: {{count}} Tage",
+    "play": "Heutiges Wort spielen",
+    "notAWord": "Nicht in der Wortliste",
+    "won_one": "Gelöst mit {{count}} Versuch!",
+    "won_other": "Gelöst mit {{count}} Versuchen!",
+    "lost": "Morgen klappt es bestimmt",
+    "share": "Ergebnis kopieren",
+    "copied": "Ergebnis kopiert (ohne Spoiler).",
+    "copyFailed": "Konnte nicht in die Zwischenablage kopieren.",
+    "next": "Nächstes Wort in",
+    "rules": "Errate das englische Wort mit fünf Buchstaben in sechs Versuchen. Grün: richtiger Buchstabe, richtige Stelle. Gelb: im Wort, falsche Stelle. Ein neues Wort kommt um 00:00 UTC.",
+    "stats": {
+      "played": "Gespielt",
+      "winRate": "Gewonnen %",
+      "current": "Aktuelle Serie",
+      "best": "Beste Serie",
+      "distribution": "Verteilung der Versuche"
+    }
+  },
+  "stats": {
+    "title": "Deine Statistik",
+    "played": "Gespielt",
+    "wins": "Siege",
+    "losses": "Niederlagen",
+    "draws": "Remis",
+    "winRate": "Siegquote",
+    "favorite": "Lieblingsspiel",
+    "dailyStreak": "Tageswort-Serie",
+    "best": "Rekord",
+    "game": "Spiel",
+    "recent": "Letzte Partien",
+    "vs": "gegen",
+    "outcomes": {
+      "win": "Gewonnen",
+      "loss": "Verloren",
+      "draw": "Remis"
+    },
+    "none": "Noch keine Spiele gespielt.",
+    "showOnProfile": "Meine Spielstatistik auf meinem Profil zeigen"
+  },
+  "audio": {
+    "title": "Spieleinstellungen",
+    "volume": "Spiellautstärke",
+    "mute": "Spielsounds stumm",
+    "unmute": "Spielsounds an",
+    "muteAll": "Alle Spielsounds stumm",
+    "colorblind": "Farben für Farbenblindheit",
+    "hint": "Spielsounds laufen nur auf deinem Gerät, getrennt vom Sprachchat; niemand in deinem Anruf hört sie. Bitte nicht stören schaltet Einladungen stumm."
+  },
+  "profile": {
+    "tab": "Spiele",
+    "hidden": "Diese Person hält ihre Spielstatistik privat."
+  }
+}

@@ -19,6 +19,7 @@ import { getChannelNotificationPolicy } from '../hooks/useNotificationSettings';
 const ALERT_SOUNDS: Record<AlertKind, string> = {
   message: 'message',
   incoming_call: 'call_ringing',
+  game_invite: 'games/invite',
 };
 
 /**

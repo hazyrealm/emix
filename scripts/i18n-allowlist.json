@@ -111,5 +111,11 @@
   "Design",
   "Designs",
   "Inputs",
-  "Marimba"
+  "Marimba",
+  "Tic-Tac-Toe",
+  "Party",
+  "Best of {{count}}",
+  "Horizontal",
+  "Vertical",
+  "~{{count}} min"
 ]

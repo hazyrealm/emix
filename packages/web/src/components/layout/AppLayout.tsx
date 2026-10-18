@@ -15,6 +15,7 @@ import { CreateChannelModal } from '../modals/CreateChannel';
 import { CreateCategoryModal } from '../modals/CreateCategory';
 import { InviteModal } from '../modals/InviteModal';
 import { UserSettingsModal } from '../modals/UserSettings';
+import { GameHost } from '../games/GameHost';
 import { SpaceSettingsModal } from '../modals/SpaceSettings';
 import { ChannelSettingsModal } from '../modals/ChannelSettingsModal';
 import { CategorySettingsModal } from '../modals/CategorySettingsModal';
@@ -461,7 +462,8 @@ export function AppLayout() {
         <NotificationController />
         <UpdateToast />
         <InstanceUpdateToast />
-        <ToastContainer />
+        <GameHost />
+      <ToastContainer />
         <ContextMenuRenderer />
       </>
     );
@@ -516,6 +518,7 @@ export function AppLayout() {
           useFederationToasts() hook above); this also mounts the instance
           update toast. */}
       <InstanceUpdateToast />
+      <GameHost />
       <ToastContainer />
       <ContextMenuRenderer />
     </div>

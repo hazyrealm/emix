@@ -742,3 +742,7 @@ html[data-theme-mode="dark"] { color-scheme: dark; }
 html[data-emx-motion="off"] #emx-theme-bg .emx-bg-animated { animation: none; }
 /* Accent glow (0 = none): selected rows and primary buttons pick up a soft halo. */
 html[data-theme-glow] .bg-accent-primary { box-shadow: 0 0 calc(var(--theme-glow) * 18px) rgb(var(--accent-primary) / calc(var(--theme-glow) * 0.55)); }
+/* Emix games: a disc dropping into Connect Four, a word row shaking off a rejected guess. */
+@keyframes emx-drop { from { transform: translateY(-420%); } to { transform: translateY(0); } }
+@keyframes emx-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@media (prefers-reduced-motion: reduce) { [class*="animate-[emx-drop"], [class*="animate-[emx-shake"] { animation: none !important; } }

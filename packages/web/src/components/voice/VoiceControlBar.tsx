@@ -9,6 +9,8 @@ import { hasPermissionBit, PermissionBits } from '../../utils/permissions';
 import { handleMuteAction, handleDeafenAction, handleScreenShareAction, handleDisconnectAction } from '../../utils/voiceActions';
 import { VOICE_CHROME_ATTR } from '../../hooks/usePointerReveal';
 import { AudioDeviceMenu, CameraDeviceMenu, MenuArrowButton, requestCameraToggle } from './DeviceControls';
+import { GamepadIcon, openPlayTogether } from '../games/GameHost';
+import { useGameStore } from '../../stores/gameStore';
 
 const btnBase = 'w-10 h-10 flex items-center justify-center rounded-full transition-colors';
 const btnDefault = `${btnBase} bg-surface-channel text-txt-secondary hover:bg-surface-elevated hover:text-txt-primary`;
@@ -21,7 +23,9 @@ const btnGreen = `${btnBase} bg-surface-channel text-status-online hover:bg-surf
  * while docked, where plain hover on the voice panel is the right model.
  */
 export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
-  const { t } = useTranslation(['voice', 'common']);
+  const { t } = useTranslation(['voice', 'common', 'games']);
+  const myId = useAuthStore((s) => s.user?.id ?? '');
+  const hasCallGame = useGameStore((s) => Object.values(s.sessions).some((g) => g.context.kind === 'voice' && g.status !== 'closed' && g.players.includes(myId)));
   const isMuted = useVoiceStore((s) => s.isMuted);
   const isDeafened = useVoiceStore((s) => s.isDeafened);
   const isCameraOn = useVoiceStore((s) => s.isCameraOn);
@@ -221,6 +225,16 @@ export function VoiceControlBar({ revealed = false }: { revealed?: boolean }) {
 
         {/* Separator */}
         <div className="w-[1px] h-6 bg-white/10 mx-0.5" />
+
+        {/* Play Together: games with everyone in the call; the call keeps running */}
+        <button
+          onClick={openPlayTogether}
+          className={hasCallGame ? `${btnBase} bg-accent-primary/20 text-accent-primary hover:bg-accent-primary/30` : btnDefault}
+          title={t('games:nav.playTogether')}
+          aria-label={t('games:nav.playTogether')}
+        >
+          <GamepadIcon />
+        </button>
 
         {/* Chat Toggle */}
         <button

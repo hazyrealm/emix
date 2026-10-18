@@ -27,6 +27,9 @@ import { changelogRoutes } from './routes/changelog.js';
 import { themeRoutes } from './routes/themes.js';
 import { usernameRoutes } from './routes/username.js';
 import { ringtoneRoutes } from './routes/ringtones.js';
+import { gameRoutes } from './routes/games.js';
+import { removeUserFromGames, restoreGameSessions } from './games/sessions.js';
+import { onAccountDeleted } from './utils/deletionHooks.js';
 import { invitesRoutes } from './routes/invites.js';
 import { exploreRoutes } from './routes/explore.js';
 import { directoryRoutes } from './routes/directory.js';
@@ -242,6 +245,7 @@ async function main(): Promise<void> {
   await app.register(themeRoutes);
   await app.register(usernameRoutes);
   await app.register(ringtoneRoutes);
+  await app.register(gameRoutes);
   await app.register(invitesRoutes);
   await app.register(exploreRoutes);
   await app.register(directoryRoutes);
@@ -284,6 +288,10 @@ async function main(): Promise<void> {
 
   // Register WS-layer call relay hooks (ring-timeout fan-out).
   registerCallRelayHooks();
+
+  // Emix games: bring back open sessions and their timers; deleted accounts leave them.
+  restoreGameSessions();
+  onAccountDeleted(removeUserFromGames);
 
   // Start federation background workers (outbox delivery, file download, health check,
   // storage janitor, federated-call sentinel). Skip when DISABLE_FEDERATION_WORKERS is

@@ -1,5 +1,6 @@
 import type { ErrorCode, ErrorDetails } from './errors.js';
 import type { ProfileStyle } from './profileStyle.js';
+import type { DrawingCanvasOp, GameSessionView } from './games.js';
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -695,6 +696,7 @@ export interface DmCallUndeliverableFailure {
 
 // Client → Server Events
 export type ClientEvent =
+  | { type: 'game_draw'; sessionId: string; op: DrawingCanvasOp }
   | { type: 'auth'; token: string; client?: ClientKind }
   | { type: 'message_create'; channelId: string; content: string; replyToId?: string }
   | { type: 'message_edit'; messageId: string; content: string }
@@ -797,6 +799,9 @@ export type ServerEvent =
   | { type: 'voice_moved'; userId: string; oldChannelId: string; newChannelId: string }
   | { type: 'voice_disconnected'; userId: string; channelId: string; reason?: 'displaced' | 'session_closed' | 'rejected' }
   | { type: 'user_updated'; user: User }
+  | { type: 'game_session'; session: GameSessionView }
+  | { type: 'game_session_removed'; sessionId: string }
+  | { type: 'game_draw'; sessionId: string; op: DrawingCanvasOp }
   | { type: 'member_banned'; spaceId: string; reason: string | null }
   | { type: 'category_created'; category: ChannelCategory; spaceId: string }
   | { type: 'category_updated'; category: ChannelCategory; spaceId: string }

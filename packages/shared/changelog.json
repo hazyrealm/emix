@@ -1,5 +1,27 @@
 [
   {
+    "version": "1.15.0",
+    "date": "2026-10-18",
+    "status": "published",
+    "major": true,
+    "title": "Games: play together in calls and chats",
+    "summary": "A new Games hub with twelve free multiplayer games and a daily word puzzle. Start one from a call with Play Together and keep talking while you play.",
+    "sections": {
+      "new": [
+        "Games hub (gamepad icon in the sidebar, or You → Games on phones): Tic-Tac-Toe, Connect Four, Rock Paper Scissors, Chess, Checkers, Battleship, Memory Match, Word Race, Hangman, Word Duel, Trivia Battle and Sketch & Guess",
+        "Play Together in voice and video calls: pick a game, everyone in the call is invited, and the game shows next to the cameras while the call keeps going",
+        "Invite friends from the hub or from a conversation; private lobbies only the people you invite can join",
+        "Daily Word: one five-letter word a day, the same for everyone, with streaks and a spoiler-free result to share",
+        "Rematches, switching games, series scores, and minimizing a game to come back to it later",
+        "Game statistics on your profile (wins, losses, draws, favourite game, recent matches), which you can hide",
+        "Game sounds with their own volume and mute; Do Not Disturb silences game invitations"
+      ],
+      "improved": [
+        "The server checks every move, so nobody can see hidden cards, ships or answers early or change a result"
+      ]
+    }
+  },
+  {
     "version": "1.14.1",
     "date": "2026-10-18",
     "status": "published",

@@ -1,0 +1,435 @@
+{
+  "nav": {
+    "label": "Jogos",
+    "playTogether": "Jogar juntos",
+    "playInDm": "Jogar um jogo"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "loading": "Carregando…",
+    "loadFailed": "Não foi possível carregar.",
+    "retry": "Tentar de novo",
+    "saveFailed": "Não foi possível salvar. Tente de novo."
+  },
+  "hub": {
+    "title": "Jogos",
+    "subtitle": "Jogos grátis para jogar com amigos: numa chamada, num chat ou sozinho.",
+    "startGame": "Começar um jogo",
+    "invites": "Convites",
+    "yourGames": "Seus jogos",
+    "recent": "Jogados recentemente",
+    "allGames": "Todos os jogos",
+    "categoriesLabel": "Categorias",
+    "categories": {
+      "all": "Todos",
+      "classic": "Clássicos",
+      "strategy": "Estratégia",
+      "word": "Palavras",
+      "party": "Festa"
+    },
+    "playersExact_one": "{{count}} jogador",
+    "playersExact_many": "{{count}} jogadores",
+    "playersExact_other": "{{count}} jogadores",
+    "playersRange": "{{min}}–{{max}} jogadores",
+    "minutes_one": "~{{count}} min",
+    "minutes_many": "~{{count}} min",
+    "minutes_other": "~{{count}} min",
+    "play": "Jogar",
+    "open": "Abrir",
+    "back": "Voltar aos jogos",
+    "invitedYou": "convidou você",
+    "waitingForPlayers": "Aguardando jogadores",
+    "status": {
+      "invited": "convite",
+      "lobby": "no saguão",
+      "playing": "em andamento",
+      "finished": "partida encerrada"
+    },
+    "free": "Todos os jogos são grátis. Sem compras, sem apostas, sem anúncios."
+  },
+  "catalog": {
+    "tictactoe": {
+      "name": "Jogo da velha",
+      "blurb": "Três em linha vence.",
+      "rules": "Coloquem sua marca em turnos. Quem fizer três em linha primeiro (na horizontal, vertical ou diagonal) vence. Tabuleiro cheio sem linha é empate. Quem começa alterna a cada partida."
+    },
+    "connect4": {
+      "name": "Lig 4",
+      "blurb": "Solte fichas, alinhe quatro.",
+      "rules": "Em turnos, soltem uma ficha numa das sete colunas; ela cai no espaço livre mais baixo. Quatro fichas suas em linha (horizontal, vertical ou diagonal) vencem. Tabuleiro cheio é empate."
+    },
+    "rps": {
+      "name": "Pedra, papel e tesoura",
+      "blurb": "Escolhas ocultas, melhor de 3 ou 5.",
+      "rules": "Os dois escolhem ao mesmo tempo; ninguém vê a escolha do outro até ambos escolherem. Pedra vence tesoura, tesoura vence papel, papel vence pedra. Quem não escolher em 30 segundos perde a rodada. Vença a maioria das rodadas para vencer a partida."
+    },
+    "chess": {
+      "name": "Xadrez",
+      "blurb": "O clássico, com relógio opcional.",
+      "rules": "Regras normais do xadrez, com roque, en passant e promoção. Xeque-mate vence. Afogamento, material insuficiente, repetição tripla e a regra dos cinquenta lances são empate; você pode propor empate ou desistir. Com relógio, quem fica sem tempo perde. As cores alternam a cada partida."
+    },
+    "checkers": {
+      "name": "Damas",
+      "blurb": "Regras americanas, captura obrigatória.",
+      "rules": "Damas americanas num tabuleiro 8×8. Peças andam uma casa na diagonal para frente; damas andam uma casa na diagonal em qualquer direção. A captura é obrigatória e continua enquanto a mesma peça puder saltar de novo; você escolhe qualquer sequência de captura. Uma peça que chega à última fileira vira dama e o lance termina. Quem não tem lance legal perde; 40 lances de cada um sem captura nem promoção é empate."
+    },
+    "battleship": {
+      "name": "Batalha naval",
+      "blurb": "Esconda sua frota, afunde a deles.",
+      "rules": "Posicione seus cinco navios (5, 4, 3, 3 e 2 casas) em segredo; os navios podem se encostar, mas não se sobrepor. Depois, em turnos, deem um tiro no outro tabuleiro. Afunde todos os navios inimigos para vencer. O adversário só vê um navio seu depois que ele afunda."
+    },
+    "memory": {
+      "name": "Jogo da memória",
+      "blurb": "Vire cartas, encontre pares.",
+      "rules": "Na sua vez, vire duas cartas. Um par vale um ponto e você joga de novo; senão, as duas ficam visíveis por um momento e a vez passa. Quem tiver mais pares vence."
+    },
+    "wordrace": {
+      "name": "Corrida de palavras",
+      "blurb": "Mesma palavra, quem é mais rápido?",
+      "rules": "Os dois tentam achar a mesma palavra de cinco letras, com seis tentativas cada. Verde: letra certa no lugar certo. Amarelo: está na palavra, mas em outro lugar. Do adversário você só vê quantas tentativas ele fez. Quem resolver primeiro vence; se ninguém resolver, é empate. As palavras são em inglês."
+    },
+    "hangman": {
+      "name": "Forca",
+      "blurb": "Descubra a palavra letra por letra.",
+      "rules": "Um jogador escolhe uma palavra (ou uma aleatória); o outro chuta letras ou a palavra inteira. Com seis erros, quem escolheu a palavra vence. Os papéis trocam a cada partida. As palavras são em inglês."
+    },
+    "wordduel": {
+      "name": "Duelo de palavras",
+      "blurb": "Uma corrente de palavras com pontos.",
+      "rules": "A primeira palavra começa com uma letra sorteada; cada palavra seguinte começa com a última letra da anterior. As palavras precisam de pelo menos três letras e não podem se repetir. Cada palavra vale um ponto por letra, +1 por K, V, W ou Y e +3 por J, Q, X ou Z. Cada jogador tem 8 vezes de 30 segundos; o maior total vence. As palavras são em inglês."
+    },
+    "trivia": {
+      "name": "Batalha de perguntas",
+      "blurb": "Perguntas rápidas para 2–8 jogadores.",
+      "rules": "Todos respondem a mesma pergunta em até 20 segundos. Uma resposta certa vale 500 pontos e até mais 500 pela rapidez. Depois da última pergunta, vence a maior pontuação. As perguntas são em inglês."
+    },
+    "drawing": {
+      "name": "Desenhe e adivinhe",
+      "blurb": "Um desenha, todos adivinham.",
+      "rules": "A cada rodada, cada um desenha uma vez. Quem desenha escolhe uma de três palavras e a desenha; os outros digitam palpites. Acertar vale 100 pontos e até mais 200 pela rapidez, e quem desenha ganha 50 por acerto. Letras aparecem conforme o tempo passa. No fim, vence a maior pontuação. As palavras são em inglês."
+    }
+  },
+  "options": {
+    "bestOf": "Duração da partida",
+    "bestOfN_one": "Melhor de {{count}}",
+    "bestOfN_many": "Melhor de {{count}}",
+    "bestOfN_other": "Melhor de {{count}}",
+    "clock": "Relógio",
+    "noClock": "Sem relógio",
+    "cards": "Cartas",
+    "cardsN_one": "{{count}} carta",
+    "cardsN_many": "{{count}} cartas",
+    "cardsN_other": "{{count}} cartas",
+    "timer": "Tempo",
+    "noTimer": "Sem tempo",
+    "minutes_one": "{{count}} minuto",
+    "minutes_many": "{{count}} minutos",
+    "minutes_other": "{{count}} minutos",
+    "category": "Categoria",
+    "questions": "Perguntas",
+    "rounds": "Rodadas",
+    "drawTime": "Tempo para desenhar",
+    "seconds_one": "{{count}} segundo",
+    "seconds_many": "{{count}} segundos",
+    "seconds_other": "{{count}} segundos",
+    "trivia": {
+      "mixed": "Misturado",
+      "science": "Ciência",
+      "geography": "Geografia",
+      "history": "História",
+      "nature": "Natureza",
+      "arts": "Artes e livros",
+      "sports": "Esportes"
+    }
+  },
+  "new": {
+    "title": "Começar um jogo",
+    "pickGame": "Escolha um jogo",
+    "invite": "Convidar",
+    "inviteHint": "Só quem você convidar pode entrar. Você pode convidar amigos, pessoas de uma conversa em comum ou pessoas da sua chamada.",
+    "search": "Buscar amigos",
+    "inCall": "Na sua chamada",
+    "noFriends": "Ainda não há amigos para convidar.",
+    "noMatches": "Ninguém corresponde.",
+    "selected_one": "{{count}} de {{max}} convidado",
+    "selected_many": "{{count}} de {{max}} convidados",
+    "selected_other": "{{count}} de {{max}} convidados",
+    "tooMany": "Este jogo tem lugar para mais {{max}} jogadores.",
+    "create": "Criar saguão",
+    "creating": "Criando…"
+  },
+  "lobby": {
+    "players_one": "Jogadores ({{count}}/{{max}})",
+    "players_many": "Jogadores ({{count}}/{{max}})",
+    "players_other": "Jogadores ({{count}}/{{max}})",
+    "host": "anfitrião",
+    "invited": "convidado",
+    "inviteMore": "Convidar mais pessoas",
+    "sendInvites": "Enviar convites",
+    "changeGame": "Escolher outro jogo",
+    "useGame": "Usar este jogo",
+    "needPlayers_one": "Aguardando mais {{count}} jogador",
+    "needPlayers_many": "Aguardando mais {{count}} jogadores",
+    "needPlayers_other": "Aguardando mais {{count}} jogadores",
+    "ready": "Todos chegaram. Comece quando quiser.",
+    "waitingHost": "Aguardando o anfitrião começar:",
+    "start": "Começar jogo"
+  },
+  "window": {
+    "yourTurn": "Sua vez",
+    "waitingFor": "Aguardando",
+    "away": "ausente",
+    "minimize": "Minimizar",
+    "restore": "Mostrar o jogo",
+    "leave": "Sair",
+    "leaveConfirm": "Sair deste jogo?",
+    "leaveForfeit": "Sair agora entrega a partida.",
+    "howToPlay": "Como jogar",
+    "secondsShort": "{{seconds}} s",
+    "timeLeft": "Faltam {{seconds}} segundos",
+    "draws_one": "{{count}} empate",
+    "draws_many": "{{count}} empates",
+    "draws_other": "{{count}} empates"
+  },
+  "result": {
+    "youWin": "Você venceu!",
+    "youLose": "Você perdeu",
+    "draw": "Empate",
+    "tied": "Empatado em primeiro",
+    "over": "Partida encerrada",
+    "winner": "Vencedor:",
+    "sharedBy": "Dividido entre",
+    "reasons": {
+      "resigned": "por desistência",
+      "timeout": "o tempo acabou",
+      "abandoned": "um jogador saiu",
+      "agreed": "empate combinado",
+      "stalemate": "afogamento",
+      "repetition": "repetição tripla",
+      "fifty": "sem progresso por tempo demais",
+      "material": "material insuficiente para vencer",
+      "flag": "por tempo"
+    },
+    "rematch": "Revanche",
+    "rematchWaiting": "Aguardando os outros…",
+    "rematchVotes_one": "{{count}} de {{total}} quer revanche",
+    "rematchVotes_many": "{{count}} de {{total}} querem revanche",
+    "rematchVotes_other": "{{count}} de {{total}} querem revanche",
+    "anotherGame": "Outro jogo"
+  },
+  "invite": {
+    "title": "Convite para jogo",
+    "invitedYou": "convidou você para jogar {{game}}",
+    "accept": "Entrar",
+    "decline": "Recusar",
+    "later": "Depois",
+    "notificationTitle": "Convite para jogo",
+    "notificationBody": "Você foi convidado para jogar {{game}}"
+  },
+  "board": {
+    "cell": "Linha {{row}}, coluna {{col}}: {{value}}",
+    "empty": "vazia",
+    "dropColumn": "Soltar na coluna {{col}}",
+    "offerDraw": "Propor empate",
+    "drawOffered": "Empate proposto",
+    "acceptDraw": "Aceitar empate",
+    "declineDraw": "Recusar",
+    "resign": "Desistir",
+    "leaderboard": "Pontuação",
+    "rps": {
+      "round": "Rodada {{round}} · melhor de {{bestOf}}",
+      "rock": "Pedra",
+      "paper": "Papel",
+      "scissors": "Tesoura",
+      "choose": "Faça sua escolha",
+      "waiting": "Aguardando o adversário…",
+      "opponentReady": "O adversário já escolheu.",
+      "revealing": "Revelando…",
+      "tie": "Empate",
+      "roundWon": "Rodada vencida",
+      "roundLost": "Rodada perdida",
+      "noChoice": "sem escolha"
+    },
+    "memory": {
+      "hidden": "Carta {{n}}, virada para baixo",
+      "shown": "Carta {{n}}: símbolo {{face}}"
+    },
+    "chess": {
+      "white": "brancas",
+      "black": "pretas",
+      "check": "Xeque!",
+      "promote": "Promover a",
+      "moves": "Lances",
+      "noMoves": "Nenhum lance ainda.",
+      "pieces": {
+        "k": "rei",
+        "q": "dama",
+        "r": "torre",
+        "b": "bispo",
+        "n": "cavalo",
+        "p": "peão"
+      }
+    },
+    "checkers": {
+      "mustCapture": "Você precisa capturar",
+      "yours": "suas",
+      "theirs": "do adversário",
+      "king": "dama",
+      "quiet_one": "{{count}} lance sem captura",
+      "quiet_many": "{{count}} lances sem captura",
+      "quiet_other": "{{count}} lances sem captura"
+    },
+    "battleship": {
+      "place": "Posicione sua frota",
+      "placeHint": "Escolha uma casa para cada navio, do maior para o menor. Clique num navio posicionado para tirá-lo.",
+      "horizontal": "Horizontal",
+      "vertical": "Vertical",
+      "random": "Aleatório",
+      "clear": "Limpar",
+      "ready": "Pronto",
+      "next": "Próximo navio: {{len}} casas",
+      "allPlaced": "Todos os navios posicionados.",
+      "waitingPlacement": "Aguardando o adversário posicionar a frota…",
+      "yourWaters": "Suas águas",
+      "enemyWaters": "Águas inimigas",
+      "sunkCount": "Afundados: {{mine}}/{{total}} deles · {{theirs}}/{{total}} seus"
+    },
+    "word": {
+      "enter": "Enviar",
+      "backspace": "Apagar",
+      "keyboard": "Teclado",
+      "solved": "Resolvido!",
+      "outOfGuesses": "Sem tentativas",
+      "answerWas": "A palavra era",
+      "guessesMade_one": "{{count}} tentativa",
+      "guessesMade_many": "{{count}} tentativas",
+      "guessesMade_other": "{{count}} tentativas",
+      "marks": {
+        "correct": "no lugar certo",
+        "present": "na palavra",
+        "absent": "fora da palavra"
+      }
+    },
+    "hangman": {
+      "chooseWord": "Escolha uma palavra para o adversário",
+      "wordPlaceholder": "Sua palavra secreta",
+      "wordHint": "De 4 a 12 letras, uma palavra real em inglês.",
+      "useWord": "Usar esta palavra",
+      "randomWord": "Palavra aleatória",
+      "choosing": "está escolhendo uma palavra…",
+      "youSet": "Você escolheu a palavra. Veja o outro tentar.",
+      "theySet": "escolheu a palavra.",
+      "pattern": "A palavra até agora",
+      "misses": "Erros: {{misses}}/{{max}}",
+      "solvePlaceholder": "Sabe a palavra?",
+      "solve": "Chutar palavra"
+    },
+    "duel": {
+      "you": "Você",
+      "turnsLeft_one": "falta {{count}} vez",
+      "turnsLeft_many": "faltam {{count}} vezes",
+      "turnsLeft_other": "faltam {{count}} vezes",
+      "startWith": "A próxima palavra começa com",
+      "placeholder": "Uma palavra com {{letter}}",
+      "play": "Jogar",
+      "rejected": {
+        "not_a_word": "não está no dicionário",
+        "wrong_letter": "começa com a letra errada",
+        "used": "já foi jogada",
+        "too_short": "precisa de pelo menos 3 letras"
+      }
+    },
+    "trivia": {
+      "question": "Pergunta {{n}} de {{total}}",
+      "pick": "Escolha uma resposta.",
+      "answered_one": "{{count}} de {{total}} respondeu",
+      "answered_many": "{{count}} de {{total}} responderam",
+      "answered_other": "{{count}} de {{total}} responderam",
+      "correct": "resposta certa",
+      "youGotIt": "Certo! +{{points}}",
+      "missed": "Não foi desta vez."
+    },
+    "drawing": {
+      "round": "Rodada {{round}}/{{rounds}}",
+      "isDrawing": "está desenhando",
+      "pickWord": "Escolha uma palavra para desenhar",
+      "choosing": "está escolhendo uma palavra…",
+      "wordWas": "A palavra era",
+      "hint": "{{letters}} caracteres",
+      "canvas": "Desenho",
+      "color": "Cor",
+      "sizeN": "Pincel de {{size}} px",
+      "size": "Tamanho do pincel",
+      "eraser": "Borracha",
+      "undo": "Desfazer",
+      "clear": "Limpar",
+      "guesses": "Palpites",
+      "guessedIt": "acertou!",
+      "close": "Quase!",
+      "youGotIt": "Acertou! Aguarde os outros.",
+      "guessPlaceholder": "Digite seu palpite",
+      "send": "Palpitar"
+    }
+  },
+  "daily": {
+    "title": "Palavra do dia #{{number}}",
+    "cardTitle": "Palavra do dia",
+    "cardSubtitle": "Uma nova palavra de cinco letras por dia, a mesma para todos (em inglês).",
+    "cardStreak_one": "Sequência atual: {{count}} dia",
+    "cardStreak_many": "Sequência atual: {{count}} dias",
+    "cardStreak_other": "Sequência atual: {{count}} dias",
+    "play": "Jogar a palavra de hoje",
+    "notAWord": "Não está na lista de palavras",
+    "won_one": "Resolvido em {{count}} tentativa!",
+    "won_many": "Resolvido em {{count}} tentativas!",
+    "won_other": "Resolvido em {{count}} tentativas!",
+    "lost": "Mais sorte amanhã",
+    "share": "Copiar resultado",
+    "copied": "Resultado copiado (sem spoilers).",
+    "copyFailed": "Não foi possível copiar.",
+    "next": "Próxima palavra em",
+    "rules": "Descubra a palavra em inglês de cinco letras em seis tentativas. Verde: letra certa no lugar certo. Amarelo: está na palavra, em outro lugar. Uma nova palavra chega às 00:00 UTC.",
+    "stats": {
+      "played": "Jogos",
+      "winRate": "% de vitórias",
+      "current": "Sequência atual",
+      "best": "Melhor sequência",
+      "distribution": "Distribuição de tentativas"
+    }
+  },
+  "stats": {
+    "title": "Suas estatísticas",
+    "played": "Jogos",
+    "wins": "Vitórias",
+    "losses": "Derrotas",
+    "draws": "Empates",
+    "winRate": "Aproveitamento",
+    "favorite": "Jogo favorito",
+    "dailyStreak": "Sequência da palavra do dia",
+    "best": "recorde",
+    "game": "Jogo",
+    "recent": "Partidas recentes",
+    "vs": "contra",
+    "outcomes": {
+      "win": "Vitória",
+      "loss": "Derrota",
+      "draw": "Empate"
+    },
+    "none": "Nenhum jogo ainda.",
+    "showOnProfile": "Mostrar minhas estatísticas de jogos no meu perfil"
+  },
+  "audio": {
+    "title": "Configurações de jogo",
+    "volume": "Volume dos jogos",
+    "mute": "Silenciar sons do jogo",
+    "unmute": "Ativar sons do jogo",
+    "muteAll": "Silenciar todos os sons de jogos",
+    "colorblind": "Cores para daltonismo",
+    "hint": "Os sons dos jogos tocam só no seu dispositivo, separados do chat de voz; ninguém na sua chamada os ouve. Não perturbe silencia convites."
+  },
+  "profile": {
+    "tab": "Jogos",
+    "hidden": "Esta pessoa mantém suas estatísticas de jogos privadas."
+  }
+}

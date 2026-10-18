@@ -108,12 +108,14 @@ export function isMessageAlert(input: MessageAlertInput): boolean {
  * - `message`: `message.ogg` and the new-message OS notification.
  * - `incoming_call`: the `call_ringing.ogg` loop and the "is calling you" OS
  *   notification.
+ * - `game_invite`: the game invitation chime, popup and OS notification
+ *   (the invitation itself still arrives and waits in the Games hub).
  *
  * Cues that answer the user's own action (mute, deafen, camera, join/leave,
  * watch/stop watching, the outgoing `call_calling` loop) and the unread badge
  * are not alerts and never pass through this gate.
  */
-export type AlertKind = 'message' | 'incoming_call';
+export type AlertKind = 'message' | 'incoming_call' | 'game_invite';
 
 /**
  * The Do Not Disturb rule, in one place. `selfStatus` is the user's chosen
@@ -128,6 +130,7 @@ export function isAlertAllowed(kind: AlertKind, selfStatus: UserStatus | null | 
   switch (kind) {
     case 'message':
     case 'incoming_call':
+    case 'game_invite':
       return selfStatus !== 'dnd';
   }
 }

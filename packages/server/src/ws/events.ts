@@ -1,4 +1,5 @@
 import { handleChannelPoke } from './channelPoke.js';
+import { relayDrawing } from '../games/sessions.js';
 import type { WebSocket } from 'ws';
 import { addsMassMention, hasMassMention } from '@backspace/shared/src/mentions.js';
 import { eq, inArray, and } from 'drizzle-orm';
@@ -164,6 +165,9 @@ export function handleClientEvent(
       break;
     case 'presence_update':
       handlePresenceUpdate(event, userId);
+      break;
+    case 'game_draw':
+      if (typeof event.sessionId === 'string') relayDrawing(event.sessionId, userId, event.op);
       break;
     case 'activity_state':
       connectionManager.setSocketIdle(ws, event.idle === true);

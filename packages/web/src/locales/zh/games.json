@@ -1,0 +1,401 @@
+{
+  "nav": {
+    "label": "游戏",
+    "playTogether": "一起玩",
+    "playInDm": "玩个游戏"
+  },
+  "common": {
+    "cancel": "取消",
+    "close": "关闭",
+    "loading": "加载中…",
+    "loadFailed": "无法加载。",
+    "retry": "重试",
+    "saveFailed": "无法保存，请重试。"
+  },
+  "hub": {
+    "title": "游戏",
+    "subtitle": "和朋友一起玩的免费游戏：在通话中、在聊天里，或者独自一人。",
+    "startGame": "开始游戏",
+    "invites": "邀请",
+    "yourGames": "你的游戏",
+    "recent": "最近玩过",
+    "allGames": "全部游戏",
+    "categoriesLabel": "分类",
+    "categories": {
+      "all": "全部",
+      "classic": "经典",
+      "strategy": "策略",
+      "word": "文字",
+      "party": "派对"
+    },
+    "playersExact_other": "{{count}} 名玩家",
+    "playersRange": "{{min}}–{{max}} 名玩家",
+    "minutes_other": "约 {{count}} 分钟",
+    "play": "开玩",
+    "open": "打开",
+    "back": "返回游戏",
+    "invitedYou": "邀请了你",
+    "waitingForPlayers": "等待玩家",
+    "status": {
+      "invited": "邀请",
+      "lobby": "在大厅",
+      "playing": "进行中",
+      "finished": "对局结束"
+    },
+    "free": "所有游戏都是免费的。没有购买、没有赌注、没有广告。"
+  },
+  "catalog": {
+    "tictactoe": {
+      "name": "井字棋",
+      "blurb": "三子连线即胜。",
+      "rules": "轮流落下你的记号。谁先连成三个（横、竖或斜）谁就赢。棋盘下满仍无连线则为平局。每局轮换先手。"
+    },
+    "connect4": {
+      "name": "四子棋",
+      "blurb": "投下棋子，连成四个。",
+      "rules": "轮流把棋子投进七列中的一列，棋子会落到最下方的空位。你的四个棋子连成一线（横、竖或斜）即获胜。棋盘满了则为平局。"
+    },
+    "rps": {
+      "name": "石头剪刀布",
+      "blurb": "隐藏出拳，三局或五局两胜。",
+      "rules": "双方同时出拳，在双方都选好之前，谁也看不到对方的选择。石头赢剪刀，剪刀赢布，布赢石头。30 秒内没有出拳的一方输掉该局。赢得多数局者赢得整场。"
+    },
+    "chess": {
+      "name": "国际象棋",
+      "blurb": "经典棋局，可选计时。",
+      "rules": "标准国际象棋规则，包括王车易位、吃过路兵和兵升变。将死获胜。逼和、子力不足、三次重复和五十步规则为和棋；你可以提和或认输。使用计时时，时间用完的一方判负。每局交换执子颜色。"
+    },
+    "checkers": {
+      "name": "跳棋",
+      "blurb": "美式规则，必须吃子。",
+      "rules": "8×8 棋盘上的美式跳棋（英式国际跳棋）。普通棋子沿斜线向前走一格，王棋可沿斜线向任意方向走一格。必须吃子，同一枚棋子能继续跳吃就要继续；可以任选一种吃子路线。棋子到达对方底线即升为王棋，本步结束。无棋可走的一方判负；双方各走 40 步都没有吃子或升王则为和棋。"
+    },
+    "battleship": {
+      "name": "海战棋",
+      "blurb": "藏好你的舰队，击沉对方的。",
+      "rules": "秘密布置你的五艘船（5、4、3、3 和 2 格）；船可以相邻但不能重叠。然后轮流向对方海域开炮。击沉所有敌舰即获胜。对手只有在你的船被击沉后才能看到它。"
+    },
+    "memory": {
+      "name": "记忆翻牌",
+      "blurb": "翻开卡片，找出配对。",
+      "rules": "轮到你时翻开两张牌。配对成功得一分并再翻一次；否则两张牌会短暂显示，然后轮到对方。配对最多的玩家获胜。"
+    },
+    "wordrace": {
+      "name": "猜词竞速",
+      "blurb": "同一个词，谁更快？",
+      "rules": "双方猜同一个五字母单词，每人六次机会。绿色：字母和位置都对。黄色：单词里有这个字母，但位置不对。对手那边你只能看到他猜了几次。先猜中者获胜；都没猜中则为平局。单词为英文。"
+    },
+    "hangman": {
+      "name": "猜单词",
+      "blurb": "一个字母一个字母地猜。",
+      "rules": "一名玩家出一个单词（或随机单词），另一名玩家猜字母或整个单词。猜错六次则出题者获胜。每局交换角色。单词为英文。"
+    },
+    "wordduel": {
+      "name": "单词对决",
+      "blurb": "带分数的单词接龙。",
+      "rules": "第一个单词以随机字母开头；之后每个单词都必须以前一个单词的最后一个字母开头。单词至少三个字母且不能重复。每个字母得 1 分，每个 K、V、W、Y 加 1 分，每个 J、Q、X、Z 加 3 分。每人 8 个回合，每回合 30 秒；总分高者获胜。单词为英文。"
+    },
+    "trivia": {
+      "name": "知识竞答",
+      "blurb": "2–8 人快速问答。",
+      "rules": "所有人在 20 秒内回答同一道题。答对得 500 分，答得越快最多再加 500 分。最后一题结束后，分数最高者获胜。题目为英文。"
+    },
+    "drawing": {
+      "name": "你画我猜",
+      "blurb": "一人画，大家猜。",
+      "rules": "每一轮每人轮流画一次。画的人从三个词里选一个画出来，其他人输入猜测。猜对得 100 分，速度最多再加 200 分，每有一人猜对，画的人得 50 分。随着时间流逝会逐渐显示字母。最后分数最高者获胜。词语为英文。"
+    }
+  },
+  "options": {
+    "bestOf": "对局长度",
+    "bestOfN_other": "{{count}} 局制",
+    "clock": "计时",
+    "noClock": "不计时",
+    "cards": "卡片",
+    "cardsN_other": "{{count}} 张",
+    "timer": "计时器",
+    "noTimer": "不限时",
+    "minutes_other": "{{count}} 分钟",
+    "category": "分类",
+    "questions": "题目数",
+    "rounds": "轮数",
+    "drawTime": "绘画时间",
+    "seconds_other": "{{count}} 秒",
+    "trivia": {
+      "mixed": "混合",
+      "science": "科学",
+      "geography": "地理",
+      "history": "历史",
+      "nature": "自然",
+      "arts": "艺术与书籍",
+      "sports": "体育"
+    }
+  },
+  "new": {
+    "title": "开始游戏",
+    "pickGame": "选择游戏",
+    "invite": "邀请",
+    "inviteHint": "只有你邀请的人才能加入。你可以邀请好友、有共同对话的人，或通话中的人。",
+    "search": "搜索好友",
+    "inCall": "在你的通话中",
+    "noFriends": "还没有可以邀请的好友。",
+    "noMatches": "没有匹配的人。",
+    "selected_other": "已邀请 {{count}}/{{max}}",
+    "tooMany": "这个游戏还能再容纳 {{max}} 名玩家。",
+    "create": "创建大厅",
+    "creating": "创建中…"
+  },
+  "lobby": {
+    "players_other": "玩家（{{count}}/{{max}}）",
+    "host": "房主",
+    "invited": "已邀请",
+    "inviteMore": "邀请更多人",
+    "sendInvites": "发送邀请",
+    "changeGame": "选择其他游戏",
+    "useGame": "选用这个游戏",
+    "needPlayers_other": "还需等待 {{count}} 名玩家",
+    "ready": "人齐了，准备好就开始吧。",
+    "waitingHost": "等待房主开始：",
+    "start": "开始游戏"
+  },
+  "window": {
+    "yourTurn": "轮到你了",
+    "waitingFor": "等待",
+    "away": "离开",
+    "minimize": "最小化",
+    "restore": "显示游戏",
+    "leave": "离开",
+    "leaveConfirm": "离开这个游戏？",
+    "leaveForfeit": "现在离开将判负。",
+    "howToPlay": "玩法",
+    "secondsShort": "{{seconds}} 秒",
+    "timeLeft": "剩余 {{seconds}} 秒",
+    "draws_other": "{{count}} 次平局"
+  },
+  "result": {
+    "youWin": "你赢了！",
+    "youLose": "你输了",
+    "draw": "平局",
+    "tied": "并列第一",
+    "over": "对局结束",
+    "winner": "获胜者：",
+    "sharedBy": "并列：",
+    "reasons": {
+      "resigned": "对方认输",
+      "timeout": "时间到",
+      "abandoned": "有玩家离开",
+      "agreed": "双方同意和棋",
+      "stalemate": "逼和",
+      "repetition": "三次重复",
+      "fifty": "长时间没有进展",
+      "material": "子力不足以获胜",
+      "flag": "超时"
+    },
+    "rematch": "再来一局",
+    "rematchWaiting": "等待其他人…",
+    "rematchVotes_other": "{{count}}/{{total}} 人想再来一局",
+    "anotherGame": "换个游戏"
+  },
+  "invite": {
+    "title": "游戏邀请",
+    "invitedYou": "邀请你玩{{game}}",
+    "accept": "加入",
+    "decline": "拒绝",
+    "later": "稍后",
+    "notificationTitle": "游戏邀请",
+    "notificationBody": "有人邀请你玩{{game}}"
+  },
+  "board": {
+    "cell": "第 {{row}} 行，第 {{col}} 列：{{value}}",
+    "empty": "空",
+    "dropColumn": "投入第 {{col}} 列",
+    "offerDraw": "提和",
+    "drawOffered": "已提和",
+    "acceptDraw": "接受和棋",
+    "declineDraw": "拒绝",
+    "resign": "认输",
+    "leaderboard": "得分",
+    "rps": {
+      "round": "第 {{round}} 局 · {{bestOf}} 局制",
+      "rock": "石头",
+      "paper": "布",
+      "scissors": "剪刀",
+      "choose": "请出拳",
+      "waiting": "等待对手…",
+      "opponentReady": "对手已出拳。",
+      "revealing": "揭晓中…",
+      "tie": "平",
+      "roundWon": "本局获胜",
+      "roundLost": "本局失利",
+      "noChoice": "未出拳"
+    },
+    "memory": {
+      "hidden": "第 {{n}} 张牌，背面朝上",
+      "shown": "第 {{n}} 张牌：图案 {{face}}"
+    },
+    "chess": {
+      "white": "白方",
+      "black": "黑方",
+      "check": "将军！",
+      "promote": "升变为",
+      "moves": "着法",
+      "noMoves": "还没有着法。",
+      "pieces": {
+        "k": "王",
+        "q": "后",
+        "r": "车",
+        "b": "象",
+        "n": "马",
+        "p": "兵"
+      }
+    },
+    "checkers": {
+      "mustCapture": "必须吃子",
+      "yours": "你的",
+      "theirs": "对方的",
+      "king": "王棋",
+      "quiet_other": "{{count}} 步未吃子"
+    },
+    "battleship": {
+      "place": "布置你的舰队",
+      "placeHint": "为每艘船选一个格子，从最长的开始。点击已放置的船可以移除。",
+      "horizontal": "横向",
+      "vertical": "纵向",
+      "random": "随机",
+      "clear": "清空",
+      "ready": "就绪",
+      "next": "下一艘船：{{len}} 格",
+      "allPlaced": "所有船只已布置。",
+      "waitingPlacement": "等待对手布置舰队…",
+      "yourWaters": "我方海域",
+      "enemyWaters": "敌方海域",
+      "sunkCount": "已击沉：敌方 {{mine}}/{{total}} · 我方 {{theirs}}/{{total}}"
+    },
+    "word": {
+      "enter": "确定",
+      "backspace": "删除",
+      "keyboard": "键盘",
+      "solved": "猜中了！",
+      "outOfGuesses": "次数用完",
+      "answerWas": "答案是",
+      "guessesMade_other": "已猜 {{count}} 次",
+      "marks": {
+        "correct": "位置正确",
+        "present": "在单词中",
+        "absent": "不在单词中"
+      }
+    },
+    "hangman": {
+      "chooseWord": "给对手出一个单词",
+      "wordPlaceholder": "你的秘密单词",
+      "wordHint": "4 到 12 个字母的真实英文单词。",
+      "useWord": "使用这个单词",
+      "randomWord": "随机单词",
+      "choosing": "正在选单词…",
+      "youSet": "单词是你出的，看对方怎么猜。",
+      "theySet": "出了这个单词。",
+      "pattern": "当前的单词",
+      "misses": "猜错：{{misses}}/{{max}}",
+      "solvePlaceholder": "知道答案了？",
+      "solve": "猜整个单词"
+    },
+    "duel": {
+      "you": "你",
+      "turnsLeft_other": "剩余 {{count}} 回合",
+      "startWith": "下一个单词的首字母",
+      "placeholder": "以 {{letter}} 开头的单词",
+      "play": "出词",
+      "rejected": {
+        "not_a_word": "词典里没有",
+        "wrong_letter": "首字母不对",
+        "used": "已经用过了",
+        "too_short": "至少需要 3 个字母"
+      }
+    },
+    "trivia": {
+      "question": "第 {{n}} 题，共 {{total}} 题",
+      "pick": "请选择答案。",
+      "answered_other": "{{count}}/{{total}} 人已作答",
+      "correct": "正确答案",
+      "youGotIt": "答对了！+{{points}}",
+      "missed": "这次没答对。"
+    },
+    "drawing": {
+      "round": "第 {{round}}/{{rounds}} 轮",
+      "isDrawing": "正在画",
+      "pickWord": "选一个词来画",
+      "choosing": "正在选词…",
+      "wordWas": "这个词是",
+      "hint": "{{letters}} 个字符",
+      "canvas": "画布",
+      "color": "颜色",
+      "sizeN": "笔刷 {{size}} 像素",
+      "size": "笔刷大小",
+      "eraser": "橡皮擦",
+      "undo": "撤销",
+      "clear": "清空",
+      "guesses": "猜测",
+      "guessedIt": "猜对了！",
+      "close": "很接近了！",
+      "youGotIt": "你猜对了！等等其他人。",
+      "guessPlaceholder": "输入你的猜测",
+      "send": "猜"
+    }
+  },
+  "daily": {
+    "title": "每日一词 #{{number}}",
+    "cardTitle": "每日一词",
+    "cardSubtitle": "每天一个新的五字母英文单词，所有人都一样。",
+    "cardStreak_other": "当前连胜：{{count}} 天",
+    "play": "玩今天的单词",
+    "notAWord": "不在词表中",
+    "won_other": "{{count}} 次猜中！",
+    "lost": "明天会更好",
+    "share": "复制结果",
+    "copied": "结果已复制（不剧透）。",
+    "copyFailed": "无法复制到剪贴板。",
+    "next": "下一个单词还有",
+    "rules": "在六次之内猜出五字母英文单词。绿色：字母和位置都对。黄色：单词里有，但位置不对。新单词在 UTC 00:00 发布。",
+    "stats": {
+      "played": "已玩",
+      "winRate": "胜率 %",
+      "current": "当前连胜",
+      "best": "最长连胜",
+      "distribution": "猜测次数分布"
+    }
+  },
+  "stats": {
+    "title": "你的统计",
+    "played": "已玩",
+    "wins": "胜",
+    "losses": "负",
+    "draws": "平",
+    "winRate": "胜率",
+    "favorite": "最爱的游戏",
+    "dailyStreak": "每日一词连胜",
+    "best": "最佳",
+    "game": "游戏",
+    "recent": "最近对局",
+    "vs": "对",
+    "outcomes": {
+      "win": "胜",
+      "loss": "负",
+      "draw": "平"
+    },
+    "none": "还没有玩过游戏。",
+    "showOnProfile": "在我的个人资料中显示游戏统计"
+  },
+  "audio": {
+    "title": "游戏设置",
+    "volume": "游戏音量",
+    "mute": "静音游戏音效",
+    "unmute": "开启游戏音效",
+    "muteAll": "静音所有游戏音效",
+    "colorblind": "色盲友好配色",
+    "hint": "游戏音效只在你的设备上播放，与语音聊天分开，通话中的其他人听不到。勿扰模式会静音邀请。"
+  },
+  "profile": {
+    "tab": "游戏",
+    "hidden": "此人设置为不公开游戏统计。"
+  }
+}

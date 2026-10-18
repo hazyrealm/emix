@@ -97,6 +97,14 @@ export function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/games/*"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/theme/:code" element={<ThemeLinkRoute />} />
           <Route path="/" element={<Navigate to="/channels/@me" replace />} />
           <Route path="*" element={<Navigate to="/channels/@me" replace />} />

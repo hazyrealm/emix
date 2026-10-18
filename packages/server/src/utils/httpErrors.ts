@@ -259,6 +259,17 @@ export const ERROR_MESSAGES: Record<ErrorCode, string> = {
   ringtone_invalid_audio: 'Upload an MP3, WAV or OGG audio file of at most {{max}} MB',
   ringtone_limit_reached: 'Ringtone limit reached',
   ringtone_not_found: 'Ringtone not found',
+  game_not_found: 'That game no longer exists',
+  game_forbidden: 'You are not part of this game',
+  game_illegal_move: 'That move is not allowed',
+  game_stale: 'The game moved on; your view has been refreshed',
+  game_not_your_turn: 'It is not your turn',
+  game_full: 'This game is full',
+  game_not_enough_players: 'More players need to join first',
+  game_wrong_state: 'That is not possible at this point of the game',
+  game_unknown_word: 'That word is not in the dictionary',
+  game_invite_unreachable: 'You can only invite friends, people you share a conversation with, or people in your call',
+  game_limit_reached: 'You have too many games open; finish or leave one first',
 };
 
 function fillPlaceholders(text: string, details: ErrorDetails | undefined): string {

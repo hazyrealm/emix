@@ -1,6 +1,6 @@
 {
   "name": "@backspace/shared",
-  "version": "1.14.1",
+  "version": "1.15.0",
   "private": true,
   "license": "AGPL-3.0-only",
   "author": "Jannis Braun",
@@ -36,7 +36,9 @@
     "./src/username": "./src/username.ts",
     "./src/username.js": "./src/username.ts",
     "./src/ringtones": "./src/ringtones.ts",
-    "./src/ringtones.js": "./src/ringtones.ts"
+    "./src/ringtones.js": "./src/ringtones.ts",
+    "./src/games": "./src/games.ts",
+    "./src/games.js": "./src/games.ts"
   },
   "scripts": {
     "build": "tsc",

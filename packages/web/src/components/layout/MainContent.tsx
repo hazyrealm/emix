@@ -7,6 +7,10 @@ import { useUIStore } from '../../stores/uiStore';
 import { MessageList } from '../chat/MessageList';
 import { MessageInput } from '../chat/MessageInput';
 import { VoiceGrid } from '../voice/VoiceGrid';
+import { CallGameStage } from '../games/CallGameStage';
+import { GamesHubPage } from '../games/GamesHubPage';
+import { GamepadIcon } from '../games/gameUi';
+import { useGameStore } from '../../stores/gameStore';
 import { VoiceControlBar } from '../voice/VoiceControlBar';
 import { requestVideoCall } from '../../stores/cameraPreviewStore';
 import { VoiceChatPanel } from '../voice/VoiceChatPanel';
@@ -60,7 +64,7 @@ function voiceHeaderClassName(fullscreen: boolean, revealed: boolean): string {
 
 export function MainContent() {
   // 1. ALL HOOKS AT THE TOP
-  const { t } = useTranslation(['spaces', 'common']);
+  const { t } = useTranslation(['spaces', 'common', 'games']);
   const channels = useSpaceStore((s) => s.channels);
   const currentChannelId = useChatStore((s) => s.currentChannelId);
   const currentSpaceId = useSpaceStore((s) => s.currentSpaceId);
@@ -75,6 +79,7 @@ export function MainContent() {
   const location = useLocation();
   const isExplorePage = location.pathname === '/explore';
   const isProjectHubPage = location.pathname === '/backspace';
+  const isGamesPage = location.pathname.startsWith('/games');
   // The DM call's conversation as this client opens it (never the call's key).
   const { dmChannelId: dmCallChannel } = useActiveDmCall();
   const outgoingCall = useVoiceStore((s) => s.outgoingCall);
@@ -192,6 +197,8 @@ export function MainContent() {
   const channel = channels.find(c => c.id === currentChannelId);
   const isVoiceChannel = channel?.type === 'voice';
 
+  if (isGamesPage) return <GamesHubPage />;
+
   if (showDms || isExplorePage || isProjectHubPage || !currentSpaceId) {
     if (!currentChannelId) {
       return isExplorePage ? (
@@ -285,7 +292,7 @@ export function MainContent() {
 
           <div className="flex-1 flex overflow-hidden min-h-0">
             <div className={`flex-1 min-w-0 flex relative ${voiceFullscreen ? '' : 'pb-20'}`}>
-              <VoiceGrid participants={participants} />
+              <CallGameStage><VoiceGrid participants={participants} /></CallGameStage>
               <VoiceControlBar revealed={chromeRevealed} />
             </div>
             {voiceChatOpen && !voiceFullscreen && (
@@ -402,6 +409,16 @@ export function MainContent() {
                   </svg>
                 </button>
               </>
+            )}
+            {!dmPartnerDeleted && currentChannelId && (
+              <button
+                onClick={() => useGameStore.getState().openPicker({ context: { kind: 'dm', dmChannelId: currentChannelId }, invite: otherMembers.map((m) => m.id) })}
+                className="w-8 h-8 flex items-center justify-center text-txt-tertiary hover:text-txt-primary transition-colors rounded-[6px] hover:bg-interactive-hover"
+                title={t('games:nav.playInDm')}
+                aria-label={t('games:nav.playInDm')}
+              >
+                <GamepadIcon size={22} />
+              </button>
             )}
             <button
               onClick={() => openModal('addDmMember', { dmChannelId: currentChannelId })}
@@ -529,7 +546,7 @@ export function MainContent() {
 
         <div className="flex-1 flex overflow-hidden min-h-0">
           <div className={`flex-1 min-w-0 flex relative ${voiceFullscreen ? '' : 'pb-20'}`}>
-            <VoiceGrid participants={participants} />
+            <CallGameStage><VoiceGrid participants={participants} /></CallGameStage>
             <VoiceControlBar revealed={chromeRevealed} />
           </div>
           {voiceChatOpen && !voiceFullscreen && (

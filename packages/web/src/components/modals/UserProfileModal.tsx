@@ -27,13 +27,14 @@ import { useShownStatus } from '../../hooks/useShownStatus';
 import { ProfileRoles } from '../ui/ProfileRoles';
 import { profileStyleOf } from '../../utils/profileStyle';
 import { profileGlassOn } from '@backspace/shared/src/profileStyle';
+import { ProfileGames } from '../games/ProfileGames';
 import { ProfileBackgroundLayers, ProfileBanner, ProfileEffect, ProfileExtras, StyledName, profileSurfaceClass } from '../ui/profile/ProfileVisuals';
 
-type Tab = 'about' | 'friends' | 'spaces';
+type Tab = 'about' | 'friends' | 'spaces' | 'games';
 
 export function UserProfileModal() {
   useEmojiShortcodeNames();
-  const { t } = useTranslation(['social', 'common']);
+  const { t } = useTranslation(['social', 'common', 'games']);
   const activeModal = useUIStore((s) => s.activeModal);
   const modalData = useUIStore((s) => s.modalData);
   const closeModal = useUIStore((s) => s.closeModal);
@@ -234,6 +235,8 @@ export function UserProfileModal() {
     { key: 'about', label: t('social:profile.tabs.about') },
     { key: 'friends', label: t('social:profile.tabs.mutualFriends'), count: mutualFriends.length },
     { key: 'spaces', label: t('social:profile.tabs.mutualSpaces'), count: mutualSpaces.length },
+    // Games live on this instance; a profile from another instance has none here.
+    ...(userOrigin === '' ? [{ key: 'games' as const, label: t('games:profile.tab') }] : []),
   ];
 
   const profileStyle = profileStyleOf(user);
@@ -347,6 +350,7 @@ export function UserProfileModal() {
             </div>
           )}
 
+          {activeTab === 'games' && user && <ProfileGames userId={user.id} />}
           {activeTab === 'friends' && (
             <div>
               {loadingMutuals ? (

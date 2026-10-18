@@ -234,5 +234,16 @@
   "username_change_unavailable": "Der Benutzername dieses Kontos kann hier nicht geändert werden.",
   "ringtone_invalid_audio": "Lade eine MP3-, WAV- oder OGG-Audiodatei mit höchstens {{max}} MB hoch.",
   "ringtone_limit_reached": "Du kannst bis zu {{max}} Klingeltöne behalten. Lösche einen, um einen neuen hochzuladen.",
-  "ringtone_not_found": "Dieser Klingelton existiert nicht mehr."
+  "ringtone_not_found": "Dieser Klingelton existiert nicht mehr.",
+  "game_not_found": "Dieses Spiel ist vorbei oder existiert nicht mehr.",
+  "game_forbidden": "Du bist nicht Teil dieses Spiels.",
+  "game_illegal_move": "Dieser Zug ist nicht erlaubt.",
+  "game_stale": "Das Spiel ist weitergegangen. Du siehst jetzt den aktuellen Stand.",
+  "game_not_your_turn": "Du bist nicht dran.",
+  "game_full": "Dieses Spiel ist voll.",
+  "game_not_enough_players": "Es müssen erst mehr Spieler beitreten.",
+  "game_wrong_state": "Das geht in diesem Spiel gerade nicht.",
+  "game_unknown_word": "Dieses Wort steht nicht im Wörterbuch.",
+  "game_invite_unreachable": "Du kannst nur Freunde, Leute aus einer gemeinsamen Unterhaltung oder Leute aus deinem Anruf einladen.",
+  "game_limit_reached": "Du hast zu viele Spiele offen. Beende oder verlasse zuerst eines."
 }

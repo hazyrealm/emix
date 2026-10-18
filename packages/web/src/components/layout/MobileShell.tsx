@@ -15,6 +15,7 @@ import { MobileDmsScreen } from './MobileDmsScreen';
 import { MobileYouScreen } from './MobileYouScreen';
 import { MobileChatScreen } from './MobileChatScreen';
 import { MobileSettingsScreen, MOBILE_SETTINGS_PANELS } from './MobileSettingsScreen';
+import { GamesHubPage } from '../games/GamesHubPage';
 import { MobileInstancePanel } from './MobileInstancePanel';
 import { MobileScreenHeader } from './MobileScreenHeader';
 import { TransferIndicator } from './TransferIndicator';
@@ -131,6 +132,12 @@ export const mobileScreenMap: Readonly<Record<string, (params?: Record<string, s
   'group-dm-info': (params) => <MobileGroupDmInfo params={params} />,
   'voice-full': () => <MobileVoiceFullScreen />,
   'explore': () => <ExplorePage />,
+  'games': () => (
+    <div className="flex flex-col h-full bg-surface-base">
+      <MobileScreenHeader title={i18n.t('games:nav.label')} />
+      <div className="flex-1 min-h-0 flex flex-col"><GamesHubPage /></div>
+    </div>
+  ),
   'backspace': () => <MobileBackspaceScreen />,
   'user-profile': (params) => {
     // Open the user profile modal with the userId from params

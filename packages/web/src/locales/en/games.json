@@ -1,0 +1,418 @@
+{
+  "nav": {
+    "label": "Games",
+    "playTogether": "Play Together",
+    "playInDm": "Play a game"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "loading": "Loading…",
+    "loadFailed": "Couldn't load this.",
+    "retry": "Try again",
+    "saveFailed": "Couldn't save that. Try again."
+  },
+  "hub": {
+    "title": "Games",
+    "subtitle": "Free games to play with friends: in a call, in a chat, or on your own.",
+    "startGame": "Start a game",
+    "invites": "Invitations",
+    "yourGames": "Your games",
+    "recent": "Recently played",
+    "allGames": "All games",
+    "categoriesLabel": "Categories",
+    "categories": {
+      "all": "All",
+      "classic": "Classic",
+      "strategy": "Strategy",
+      "word": "Word",
+      "party": "Party"
+    },
+    "playersExact_one": "{{count}} player",
+    "playersExact_other": "{{count}} players",
+    "playersRange": "{{min}}–{{max}} players",
+    "minutes_one": "~{{count}} min",
+    "minutes_other": "~{{count}} min",
+    "play": "Play",
+    "open": "Open",
+    "back": "Back to games",
+    "invitedYou": "invited you",
+    "waitingForPlayers": "Waiting for players",
+    "status": {
+      "invited": "invitation",
+      "lobby": "in the lobby",
+      "playing": "in progress",
+      "finished": "match over"
+    },
+    "free": "Every game is free. No purchases, no betting, no ads."
+  },
+  "catalog": {
+    "tictactoe": {
+      "name": "Tic-Tac-Toe",
+      "blurb": "Three in a row wins.",
+      "rules": "Take turns placing your mark. The first to get three in a row (across, down or diagonally) wins. A full board with no line is a draw. Who starts alternates every match."
+    },
+    "connect4": {
+      "name": "Connect Four",
+      "blurb": "Drop discs, line up four.",
+      "rules": "Take turns dropping a disc into one of the seven columns; it falls to the lowest free space. Four of your discs in a row (across, down or diagonally) wins. A full board is a draw."
+    },
+    "rps": {
+      "name": "Rock, Paper, Scissors",
+      "blurb": "Hidden picks, best of 3 or 5.",
+      "rules": "Both players pick at the same time; neither sees the other's pick until both have chosen. Rock beats scissors, scissors beat paper, paper beats rock. A player who doesn't pick within 30 seconds loses the round. Win the majority of rounds to win the match."
+    },
+    "chess": {
+      "name": "Chess",
+      "blurb": "The classic, with optional clocks.",
+      "rules": "Standard chess rules, including castling, en passant and promotion. Checkmate wins. Stalemate, insufficient material, threefold repetition and the fifty-move rule are draws, and you can offer a draw or resign. With a clock, running out of time loses. Colours alternate every match."
+    },
+    "checkers": {
+      "name": "Checkers",
+      "blurb": "American rules, compulsory captures.",
+      "rules": "American checkers (English draughts) on an 8×8 board. Men move one square diagonally forward; kings move one square in any diagonal direction. Capturing is compulsory and a capture continues while the same piece can jump again; you may choose any capturing sequence. A man reaching the far row is crowned and the move ends. A player with no legal move loses; 40 moves each without a capture or crowning is a draw."
+    },
+    "battleship": {
+      "name": "Battleship",
+      "blurb": "Hide your fleet, sink theirs.",
+      "rules": "Place your five ships (5, 4, 3, 3 and 2 squares) in secret; ships may touch but not overlap. Then take turns firing one shot at the other grid. Sink every enemy ship to win. Your opponent only sees a ship of yours once it's sunk."
+    },
+    "memory": {
+      "name": "Memory Match",
+      "blurb": "Flip cards, find pairs.",
+      "rules": "On your turn, flip two cards. A pair scores a point and you go again; otherwise both stay visible for a moment and the turn passes. The player with the most pairs wins."
+    },
+    "wordrace": {
+      "name": "Word Race",
+      "blurb": "Same hidden word, who's faster?",
+      "rules": "Both players try to find the same five-letter word, six guesses each. Green: right letter in the right place. Yellow: in the word, wrong place. You only see how many guesses your opponent has made. The first to solve it wins; if nobody does, it's a draw."
+    },
+    "hangman": {
+      "name": "Hangman",
+      "blurb": "Guess the word letter by letter.",
+      "rules": "One player picks a word (or a random one); the other guesses letters, or the whole word. Six wrong guesses and the word-setter wins. Roles swap every match."
+    },
+    "wordduel": {
+      "name": "Word Duel",
+      "blurb": "A word chain with points.",
+      "rules": "The first word starts with a random letter; every word after that must start with the last letter of the previous word. Words need at least three letters and can't repeat. Each word scores one point per letter, +1 for each K, V, W or Y and +3 for each J, Q, X or Z. Each player has 8 turns of 30 seconds; the higher total wins."
+    },
+    "trivia": {
+      "name": "Trivia Battle",
+      "blurb": "Quick questions for 2–8 players.",
+      "rules": "Everyone answers the same question within 20 seconds. A right answer scores 500 points plus up to 500 more for answering quickly. After the last question, the highest score wins."
+    },
+    "drawing": {
+      "name": "Sketch & Guess",
+      "blurb": "One draws, everyone guesses.",
+      "rules": "Each round, everyone takes a turn drawing. The drawer picks one of three words and draws it; the others type guesses. Guessing right scores 100 points plus up to 200 for speed, and the drawer gets 50 for each correct guess. Letters are revealed as time runs down. The highest score at the end wins."
+    }
+  },
+  "options": {
+    "bestOf": "Match length",
+    "bestOfN_one": "Best of {{count}}",
+    "bestOfN_other": "Best of {{count}}",
+    "clock": "Clock",
+    "noClock": "No clock",
+    "cards": "Cards",
+    "cardsN_one": "{{count}} card",
+    "cardsN_other": "{{count}} cards",
+    "timer": "Timer",
+    "noTimer": "No timer",
+    "minutes_one": "{{count}} minute",
+    "minutes_other": "{{count}} minutes",
+    "category": "Category",
+    "questions": "Questions",
+    "rounds": "Rounds",
+    "drawTime": "Drawing time",
+    "seconds_one": "{{count}} second",
+    "seconds_other": "{{count}} seconds",
+    "trivia": {
+      "mixed": "Mixed",
+      "science": "Science",
+      "geography": "Geography",
+      "history": "History",
+      "nature": "Nature",
+      "arts": "Arts & books",
+      "sports": "Sports"
+    }
+  },
+  "new": {
+    "title": "Start a game",
+    "pickGame": "Choose a game",
+    "invite": "Invite",
+    "inviteHint": "Only the people you invite can join. You can invite friends, people you share a conversation with, or people in your call.",
+    "search": "Search friends",
+    "inCall": "In your call",
+    "noFriends": "No friends to invite yet.",
+    "noMatches": "Nobody matches that.",
+    "selected_one": "{{count}} of {{max}} invited",
+    "selected_other": "{{count}} of {{max}} invited",
+    "tooMany": "This game has room for {{max}} more players.",
+    "create": "Create lobby",
+    "creating": "Creating…"
+  },
+  "lobby": {
+    "players_one": "Players ({{count}}/{{max}})",
+    "players_other": "Players ({{count}}/{{max}})",
+    "host": "host",
+    "invited": "invited",
+    "inviteMore": "Invite more people",
+    "sendInvites": "Send invitations",
+    "changeGame": "Choose another game",
+    "useGame": "Use this game",
+    "needPlayers_one": "Waiting for {{count}} more player",
+    "needPlayers_other": "Waiting for {{count}} more players",
+    "ready": "Everyone's here. Start when you're ready.",
+    "waitingHost": "Waiting for the host to start:",
+    "start": "Start game"
+  },
+  "window": {
+    "yourTurn": "Your turn",
+    "waitingFor": "Waiting for",
+    "away": "away",
+    "minimize": "Minimize",
+    "restore": "Show the game",
+    "leave": "Leave",
+    "leaveConfirm": "Leave this game?",
+    "leaveForfeit": "Leaving now forfeits the match.",
+    "howToPlay": "How to play",
+    "secondsShort": "{{seconds}}s",
+    "timeLeft": "{{seconds}} seconds left",
+    "draws_one": "{{count}} draw",
+    "draws_other": "{{count}} draws"
+  },
+  "result": {
+    "youWin": "You win!",
+    "youLose": "You lose",
+    "draw": "It's a draw",
+    "tied": "Tied for first",
+    "over": "Match over",
+    "winner": "Winner:",
+    "sharedBy": "Shared by",
+    "reasons": {
+      "resigned": "by resignation",
+      "timeout": "time ran out",
+      "abandoned": "a player left",
+      "agreed": "draw agreed",
+      "stalemate": "stalemate",
+      "repetition": "threefold repetition",
+      "fifty": "no progress for too long",
+      "material": "not enough material to win",
+      "flag": "on time"
+    },
+    "rematch": "Rematch",
+    "rematchWaiting": "Waiting for the others…",
+    "rematchVotes_one": "{{count}} of {{total}} want a rematch",
+    "rematchVotes_other": "{{count}} of {{total}} want a rematch",
+    "anotherGame": "Another game"
+  },
+  "invite": {
+    "title": "Game invitation",
+    "invitedYou": "invited you to play {{game}}",
+    "accept": "Join",
+    "decline": "Decline",
+    "later": "Later",
+    "notificationTitle": "Game invitation",
+    "notificationBody": "You're invited to play {{game}}"
+  },
+  "board": {
+    "cell": "Row {{row}}, column {{col}}: {{value}}",
+    "empty": "empty",
+    "dropColumn": "Drop in column {{col}}",
+    "offerDraw": "Offer a draw",
+    "drawOffered": "Draw offered",
+    "acceptDraw": "Accept draw",
+    "declineDraw": "Decline",
+    "resign": "Resign",
+    "leaderboard": "Scores",
+    "rps": {
+      "round": "Round {{round}} · best of {{bestOf}}",
+      "rock": "Rock",
+      "paper": "Paper",
+      "scissors": "Scissors",
+      "choose": "Make your pick",
+      "waiting": "Waiting for your opponent…",
+      "opponentReady": "Your opponent has picked.",
+      "revealing": "Revealing…",
+      "tie": "Tie",
+      "roundWon": "Round won",
+      "roundLost": "Round lost",
+      "noChoice": "no pick"
+    },
+    "memory": {
+      "hidden": "Card {{n}}, face down",
+      "shown": "Card {{n}}: symbol {{face}}"
+    },
+    "chess": {
+      "white": "white",
+      "black": "black",
+      "check": "Check!",
+      "promote": "Promote to",
+      "moves": "Moves",
+      "noMoves": "No moves yet.",
+      "pieces": {
+        "k": "king",
+        "q": "queen",
+        "r": "rook",
+        "b": "bishop",
+        "n": "knight",
+        "p": "pawn"
+      }
+    },
+    "checkers": {
+      "mustCapture": "You must capture",
+      "yours": "yours",
+      "theirs": "theirs",
+      "king": "king",
+      "quiet_one": "{{count}} move without a capture",
+      "quiet_other": "{{count}} moves without a capture"
+    },
+    "battleship": {
+      "place": "Place your fleet",
+      "placeHint": "Pick a square for each ship, longest first. Click a placed ship to remove it.",
+      "horizontal": "Horizontal",
+      "vertical": "Vertical",
+      "random": "Random",
+      "clear": "Clear",
+      "ready": "Ready",
+      "next": "Next ship: {{len}} squares",
+      "allPlaced": "All ships placed.",
+      "waitingPlacement": "Waiting for your opponent to place their fleet…",
+      "yourWaters": "Your waters",
+      "enemyWaters": "Enemy waters",
+      "sunkCount": "Sunk: {{mine}}/{{total}} theirs · {{theirs}}/{{total}} yours"
+    },
+    "word": {
+      "enter": "Enter",
+      "backspace": "Delete",
+      "keyboard": "Keyboard",
+      "solved": "Solved!",
+      "outOfGuesses": "Out of guesses",
+      "answerWas": "The word was",
+      "guessesMade_one": "{{count}} guess",
+      "guessesMade_other": "{{count}} guesses",
+      "marks": {
+        "correct": "in the right place",
+        "present": "in the word",
+        "absent": "not in the word"
+      }
+    },
+    "hangman": {
+      "chooseWord": "Choose a word for your opponent",
+      "wordPlaceholder": "Your secret word",
+      "wordHint": "4 to 12 letters, a real English word.",
+      "useWord": "Use this word",
+      "randomWord": "Random word",
+      "choosing": "is choosing a word…",
+      "youSet": "You chose the word. Watch them guess.",
+      "theySet": "chose the word.",
+      "pattern": "The word so far",
+      "misses": "Misses: {{misses}}/{{max}}",
+      "solvePlaceholder": "Know the word?",
+      "solve": "Guess word"
+    },
+    "duel": {
+      "you": "You",
+      "turnsLeft_one": "{{count}} turn left",
+      "turnsLeft_other": "{{count}} turns left",
+      "startWith": "Next word starts with",
+      "placeholder": "A word starting with {{letter}}",
+      "play": "Play",
+      "rejected": {
+        "not_a_word": "not in the dictionary",
+        "wrong_letter": "starts with the wrong letter",
+        "used": "already played",
+        "too_short": "needs at least 3 letters"
+      }
+    },
+    "trivia": {
+      "question": "Question {{n}} of {{total}}",
+      "pick": "Pick an answer.",
+      "answered_one": "{{count}} of {{total}} answered",
+      "answered_other": "{{count}} of {{total}} answered",
+      "correct": "correct answer",
+      "youGotIt": "Correct! +{{points}}",
+      "missed": "Not this time."
+    },
+    "drawing": {
+      "round": "Round {{round}}/{{rounds}}",
+      "isDrawing": "is drawing",
+      "pickWord": "Pick a word to draw",
+      "choosing": "is picking a word…",
+      "wordWas": "The word was",
+      "hint": "{{letters}} characters",
+      "canvas": "Drawing",
+      "color": "Colour",
+      "sizeN": "Brush {{size}} px",
+      "size": "Brush size",
+      "eraser": "Eraser",
+      "undo": "Undo",
+      "clear": "Clear",
+      "guesses": "Guesses",
+      "guessedIt": "guessed it!",
+      "close": "So close!",
+      "youGotIt": "You got it! Wait for the others.",
+      "guessPlaceholder": "Type your guess",
+      "send": "Guess"
+    }
+  },
+  "daily": {
+    "title": "Daily Word #{{number}}",
+    "cardTitle": "Daily Word",
+    "cardSubtitle": "A new five-letter word every day, the same for everyone.",
+    "cardStreak_one": "Current streak: {{count}} day",
+    "cardStreak_other": "Current streak: {{count}} days",
+    "play": "Play today's word",
+    "notAWord": "Not in the word list",
+    "won_one": "Solved in {{count}} guess!",
+    "won_other": "Solved in {{count}} guesses!",
+    "lost": "Better luck tomorrow",
+    "share": "Copy result",
+    "copied": "Result copied (no spoilers).",
+    "copyFailed": "Couldn't copy to the clipboard.",
+    "next": "Next word in",
+    "rules": "Guess the five-letter word in six tries. Green: right letter, right place. Yellow: in the word, wrong place. A new word arrives at 00:00 UTC.",
+    "stats": {
+      "played": "Played",
+      "winRate": "Win %",
+      "current": "Current streak",
+      "best": "Best streak",
+      "distribution": "Guess distribution"
+    }
+  },
+  "stats": {
+    "title": "Your statistics",
+    "played": "Played",
+    "wins": "Wins",
+    "losses": "Losses",
+    "draws": "Draws",
+    "winRate": "Win rate",
+    "favorite": "Favourite game",
+    "dailyStreak": "Daily Word streak",
+    "best": "best",
+    "game": "Game",
+    "recent": "Recent matches",
+    "vs": "vs",
+    "outcomes": {
+      "win": "Won",
+      "loss": "Lost",
+      "draw": "Draw"
+    },
+    "none": "No games played yet.",
+    "showOnProfile": "Show my game statistics on my profile"
+  },
+  "audio": {
+    "title": "Game settings",
+    "volume": "Game volume",
+    "mute": "Mute game sounds",
+    "unmute": "Unmute game sounds",
+    "muteAll": "Mute all game sounds",
+    "colorblind": "Colour-blind friendly colours",
+    "hint": "Game sounds play only on your device, separately from voice chat; nobody in your call hears them. Do Not Disturb silences invitations."
+  },
+  "profile": {
+    "tab": "Games",
+    "hidden": "This person keeps their game statistics private."
+  }
+}

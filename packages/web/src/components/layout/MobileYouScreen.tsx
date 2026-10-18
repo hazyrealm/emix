@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useUIStore } from '../../stores/uiStore';
 import { useAuthStore } from '../../stores/authStore';
 import { Avatar } from '../ui/Avatar';
+import { GamepadIcon } from '../games/gameUi';
 import { ConfirmDialog } from '../ui/ConfirmDialog';
 import { parseFederatedUsername } from '../../utils/identity';
 import { replaceEmojiShortcodes, useEmojiShortcodeNames } from '../../utils/emojiShortcodes';
@@ -22,7 +23,7 @@ interface ActionRow {
 
 export function MobileYouScreen() {
   useEmojiShortcodeNames();
-  const { t } = useTranslation(['mobile', 'settings', 'common', 'admin', 'project']);
+  const { t } = useTranslation(['mobile', 'settings', 'common', 'admin', 'project', 'games']);
   const pushMobileScreen = useUIStore((s) => s.pushMobileScreen);
   const openModal = useUIStore((s) => s.openModal);
   const user = useAuthStore((s) => s.user);
@@ -62,6 +63,11 @@ export function MobileYouScreen() {
         </svg>
       ),
       action: () => pushMobileScreen('settings-profile'),
+    },
+    {
+      label: t('games:nav.label'),
+      icon: <GamepadIcon />,
+      action: () => pushMobileScreen('games'),
     },
     {
       label: t('common:labels.friends'),
