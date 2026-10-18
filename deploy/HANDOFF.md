@@ -18,7 +18,7 @@ Day-to-day operations are in [README.md](README.md).
 | Backups | restic repository at `/var/backups/emix-restic` (local disk only, see "Not done") |
 | Ops tool | `deploy/scripts/emixctl` (build, deploy staging, promote, rollback, status, snapshot, landing, set-desktop-release) |
 
-Production and staging both run image `emix:b7150ed46499` (Emix 1.15.0). Releases
+Production and staging both run image `emix:08c37097af1d` (Emix 1.15.0). Releases
 are described newest first below. The current state and next steps are in
 [docs/DEVELOPMENT_HANDOFF.md](../docs/DEVELOPMENT_HANDOFF.md).
 

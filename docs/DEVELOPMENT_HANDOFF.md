@@ -1,6 +1,6 @@
 # Emix development handoff
 
-**Last updated: 2026-10-18. State: Emix 1.15.0 (Phase 0 bug fixes plus the Games Hub) is in production on `emix:b7150ed46499`. No work is in progress.**
+**Last updated: 2026-10-18. State: Emix 1.15.0 (Phase 0 bug fixes plus the Games Hub) is in production on `emix:08c37097af1d`. No work is in progress.**
 
 This is the starting point for a new session. It describes what Emix is, how it is built and shipped, what is done, what is open, and what to do next. It was checked against the repository, git history and the running servers on the date above.
 
@@ -27,7 +27,7 @@ Related documents (read as needed):
   - everything free (no paywalls)
   - a polished UI
 - **Current state:**
-  - Version 1.15.0 runs on staging and production, both on image `emix:b7150ed46499`.
+  - Version 1.15.0 runs on staging and production, both on image `emix:08c37097af1d`.
   - Production has 3 user accounts.
   - The working tree is clean, `main` is pushed, and CI, CodeQL and Security pass on `a354a05d`.
 
@@ -342,7 +342,7 @@ deploy/scripts/emixctl status
 
 ## 12. Exact next steps for the next session
 
-1. Read this file and the top section of `CLAUDE.md`. Run `git -C /opt/emix status` and `deploy/scripts/emixctl status`, and confirm prod and staging still run `emix:b7150ed46499` (or note what changed).
+1. Read this file and the top section of `CLAUDE.md`. Run `git -C /opt/emix status` and `deploy/scripts/emixctl status`, and confirm prod and staging still run `emix:08c37097af1d` (or note what changed).
 2. Ask the owner for the results of the manual checks:
    - Phase 0 (§5b): a real phone, and a friend's profile under several themes
    - Games (§5b): two real devices in a video call, mobile drawing, and the Windows app
