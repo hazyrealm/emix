@@ -178,8 +178,9 @@ function commit(s: Session, removed: string[] = []): void {
   }
 }
 
-function close(s: Session): void {
-  const removed = audience(s);
+/** Close the session for good. `also`: people already taken off it who must still be told. */
+function close(s: Session, also: string[] = []): void {
+  const removed = [...new Set([...audience(s), ...also])];
   s.status = 'closed';
   s.invited = {};
   commit(s, removed);
@@ -373,7 +374,7 @@ export function leaveSession(id: string, userId: string, reason: GameResult['rea
   s.players = s.players.filter((p) => p !== userId);
   s.rematch = s.rematch.filter((p) => p !== userId);
   delete s.awaySince[userId];
-  if (s.players.length === 0) return close(s);
+  if (s.players.length === 0) return close(s, [userId]);
   if (s.hostId === userId) s.hostId = s.players[0]!;
   if (s.status === 'finished' && s.players.length < GAMES[s.gameId].minPlayers) s.status = 'lobby';
   commit(s, [userId]);

@@ -191,6 +191,15 @@ describe('timers, disconnects and restarts', () => {
     expect(code(() => games.makeMove(s.id, 'bob', { type: 'place', index: 0 }))).toBe('ok');
   });
 
+  it('the last player to leave is told the session is gone', () => {
+    const s = startTicTacToe();
+    games.leaveSession(s.id, 'bob');
+    cm.sent.length = 0;
+    games.leaveSession(s.id, 'alice');
+    expect(cm.sent).toContainEqual({ to: 'alice', event: { type: 'game_session_removed', sessionId: s.id } });
+    expect(games.getSession(s.id)).toBeUndefined();
+  });
+
   it('a deleted account leaves its sessions', () => {
     const s = startTicTacToe();
     games.removeUserFromGames('bob');

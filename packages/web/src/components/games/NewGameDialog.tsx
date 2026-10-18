@@ -46,7 +46,7 @@ export function NewGameDialog({ request }: { request: GamePickerRequest }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[210] flex items-end desktop:items-center justify-center" role="dialog" aria-modal="true" aria-label={t('games:new.title')}>
+    <div className="fixed inset-0 z-[210] flex items-end desktop:items-center justify-center" role="dialog" aria-modal="true" aria-label={request.context?.kind === 'voice' ? t('games:nav.playTogether') : t('games:new.title')}>
       <div className="absolute inset-0 bg-black/50" onClick={close} />
       <div className="relative w-full desktop:max-w-2xl max-h-[calc(92*var(--app-vh))] desktop:max-h-[calc(85*var(--app-vh))] flex flex-col rounded-t-2xl desktop:rounded-2xl glass-modal animate-slide-up overflow-hidden">
         <header className="flex items-center gap-2 px-5 py-4 border-b border-white/[0.06]">
