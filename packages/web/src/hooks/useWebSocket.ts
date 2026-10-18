@@ -139,6 +139,7 @@ function buildWsUrl(origin: string): string {
 
 import { buildCallUndeliverableToast } from '../utils/callUndeliverableToast';
 import { peerRejectedToast } from '../utils/peerRejectedToast';
+import { emitDrawing, useGameStore } from '../stores/gameStore';
 
 export { buildCallUndeliverableToast };
 
@@ -282,7 +283,7 @@ function handleEvent(origin: string, event: ServerEvent, readyAlreadyDelivered =
         // A fresh socket counts as active on the server (automatic Away).
         void import('../utils/autoAway').then((m) => m.reportActivityStateAfterReconnect());
         // Games: a reconnect may have missed updates; take the server's list again.
-        void import('../stores/gameStore').then((m) => m.useGameStore.getState().load());
+        void useGameStore.getState().load();
         useSettingsStore.getState().setIsAdmin(event.user.isAdmin ?? false);
         useSettingsStore.getState().fetchStreamingLimits();
         useSettingsStore.getState().fetchGifEnabled();
@@ -723,13 +724,13 @@ function handleEvent(origin: string, event: ServerEvent, readyAlreadyDelivered =
     }
 
     case 'game_session':
-      if (isHome) void import('../stores/gameStore').then((m) => m.useGameStore.getState().upsert(event.session));
+      if (isHome) useGameStore.getState().upsert(event.session);
       break;
     case 'game_session_removed':
-      if (isHome) void import('../stores/gameStore').then((m) => m.useGameStore.getState().remove(event.sessionId));
+      if (isHome) useGameStore.getState().remove(event.sessionId);
       break;
     case 'game_draw':
-      if (isHome) void import('../stores/gameStore').then((m) => m.emitDrawing(event.sessionId, event.op));
+      if (isHome) emitDrawing(event.sessionId, event.op);
       break;
     case 'user_updated': {
       if (!isHome) normalizeUserAssets(event.user, origin);
